@@ -1,0 +1,22 @@
+
+const Ellipse = () => {
+    return (
+        <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 138 138"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <circle
+                cx="69"
+                cy="69"
+                r="69"
+                fill="#FFF9F9"
+                fill-opacity="0.13"
+            />
+        </svg>
+    );
+};
+
+export default Ellipse;
