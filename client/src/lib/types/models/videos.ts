@@ -1,4 +1,4 @@
-import type { FluidImageType } from "./projects";
+import type { ImageType } from "../shared";
 
 export interface VideoResource {
     data: VideoType[];
@@ -13,5 +13,5 @@ export interface VideoType {
             en: string;
         };
     };
-    image: FluidImageType;
+    image: ImageType;
 }

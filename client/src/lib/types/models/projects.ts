@@ -1,3 +1,4 @@
+import type { ImageType } from "../shared";
 
 export interface ProjectResource {
     data: ProjectType[];
@@ -18,20 +19,6 @@ export interface ProjectResource {
         total: number;
     };
 }
-
-export type FluidImageType = {
-    dkWebp: string;
-    dkAvif: string;
-    tbWebp: string;
-    tbAvif: string;
-    mbWebp: string;
-    mbAvif: string;
-    tiny: string;
-    alt: {
-        ru: string;
-        en: string;
-    };
-};
 
 export interface PaginationLink {
     url: string | null;
@@ -88,7 +75,7 @@ export interface ProjectType {
         url: string;
         link: string;
     };
-    image: FluidImageType;
+    image: ImageType;
     links: {
         self: string;
     }[];

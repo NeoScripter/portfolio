@@ -4,7 +4,7 @@ export interface FaqResource {
 
 export interface FaqType {
     id: number;
-    attributes: {
+    attr: {
         title: {
             ru: string;
             en: string;

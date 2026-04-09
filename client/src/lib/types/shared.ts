@@ -28,3 +28,13 @@ export type ImageSrcSet = {
     mbAvif3x?: string;
     mbTiny?: string;
 };
+
+export type ImageType = {
+    srcSet: ImageSrcSet;
+    alt:
+        | {
+              ru: string;
+              en: string;
+          }
+        | undefined;
+};

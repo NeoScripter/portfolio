@@ -1,3 +1,4 @@
+import type { ImageSrcSet, ImageType } from '../shared';
 
 export interface ReviewResource {
     data: ReviewType[];
@@ -5,7 +6,7 @@ export interface ReviewResource {
 
 export interface ReviewType {
     id: number;
-    attributes: {
+    attr: {
         author: {
             ru: string;
             en: string;
@@ -15,5 +16,5 @@ export interface ReviewType {
             en: string;
         };
     };
-    image: unknown;
+    image: ImageType;
 }

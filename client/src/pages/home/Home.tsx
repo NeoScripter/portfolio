@@ -1,16 +1,21 @@
 import AppTitle from "@/components/layout/AppTitle";
 import AppLayout from "@/layouts/AppLayout";
+import Hero from "./partials/Hero";
+import Intro from "./partials/Intro";
+import Featured from "./partials/Featured";
+import Services from "./partials/Services";
+import Faqs from "./partials/Faqs";
 
 const Home = () => {
         return <AppLayout>
             <AppTitle titleEn="Home" titleRu="Главная" />
-            {/* <HeroSection /> */}
-            {/* <IntroSection /> */}
-            {/* <FeaturedSection /> */}
-            {/* <ServicesSection /> */}
+            <Hero />
+            <Intro />
+            <Featured />
+            <Services />
             {/* <VideosSection /> */}
             {/* <PerksSection /> */}
-            {/* <FaqsSection /> */}
+            <Faqs />
         </AppLayout>
 };
 

@@ -5,7 +5,7 @@ import { useState } from 'preact/hooks';
 type AdaptiveImgProps = {
     prtClass?: string;
     imgClass?: string;
-    variant: 'bg' | 'fg';
+    variant?: 'bg' | 'fg';
     srcs: ImageSrcSet | undefined;
     alt?: string;
 };
@@ -13,7 +13,7 @@ type AdaptiveImgProps = {
 export default function AdaptiveImg({
     prtClass,
     imgClass,
-    variant,
+    variant = 'fg',
     srcs,
     alt,
 }: AdaptiveImgProps) {
