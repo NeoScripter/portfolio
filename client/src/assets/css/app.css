@@ -515,21 +515,18 @@ p {
 }
 
 .full-bleed-wrapper {
-    --padding: 1.125rem;
+    --padding: 0rem;
     display: grid;
     grid-template-columns:
         1fr
         calc(100% - (var(--padding) * 2))
         1fr;
 
-    @media screen and (min-width: 40rem) {
-        --padding: 3.5rem;
+    @media screen and (min-width: 64rem) {
+        --padding: 1rem;
     }
     @media screen and (min-width: 80rem) {
-        --padding: 6.5rem;
-    }
-    @media screen and (min-width: 96rem) {
-        --padding: 11.5rem;
+        --padding: 6rem;
     }
 }
 

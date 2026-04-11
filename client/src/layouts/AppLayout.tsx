@@ -14,7 +14,7 @@ const AppLayout: FC<{
         <ModalProvider>
             <main
                 class={cn(
-                    'mx-auto max-w-480 overflow-x-clip md:px-4 md:pt-4 xl:px-24',
+                    'mx-auto max-w-480 overflow-x-clip md:pt-4 full-bleed-wrapper',
                     className
                 )}
                 id="wrapper"

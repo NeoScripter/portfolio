@@ -7,7 +7,7 @@ const HeroLayout: FC<NodeProps> = ({ className, children }) => {
     return (
         <AppSection
             className={cn(
-                'relative isolate overflow-clip rounded-xl pt-12 pb-15.5 sm:pt-14 sm:pb-25 lg:pt-12 xl:pt-20.5 xl:pb-28',
+                'relative isolate overflow-clip sm:pt-42 rounded-xl pt-36 pb-15.5 sm:pb-25 lg:pt-50 xl:pb-28',
                 className,
             )}
         >

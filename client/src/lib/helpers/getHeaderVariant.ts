@@ -1,9 +1,9 @@
 export type VariantType = 'primary' | 'secondary' | 'ghost';
 
 const variantMap = new Map<VariantType, string[]>([
-    ['primary', ['']],
     ['secondary', ['about']],
     ['ghost', ['portfolio', 'project']],
+    ['primary', ['']],
 ]);
 
 export default function getHeaderVariant(path: string) {

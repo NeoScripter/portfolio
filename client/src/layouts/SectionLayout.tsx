@@ -14,7 +14,7 @@ const SectionLayout: FC<{
         <section
             inert={showModal.value}
             class={cn(
-                'content-vis-auto px-5 sm:px-15 first-of-type:sm:pt-42 md:text-xl lg:px-23 2xl:text-2xl',
+                'content-vis-auto px-5 sm:px-15 md:text-xl lg:px-23 2xl:text-2xl',
                 className,
             )}
             style={style}
