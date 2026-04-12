@@ -1,6 +1,7 @@
 import AnimatedUnderline from '@/components/ui/AnimatedUnderline';
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
 import { cn } from '@/lib/helpers/utils';
+import { locale } from '@/signals/locale';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
 import type { NavLinkType } from '../data';
@@ -15,6 +16,7 @@ const NavLink: FC<{
     const variant = getHeaderVariant(path);
 
     const active = path === link.path;
+    const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     const Icon = link.icon;
 
@@ -27,7 +29,7 @@ const NavLink: FC<{
                         'cursor-default lg:font-bold': active,
                         'slide-in': show,
                     },
-                    className
+                    className,
                 )}
                 href={link.path}
                 aria-current={active ? 'page' : undefined}
@@ -46,10 +48,10 @@ const NavLink: FC<{
                     aria-hidden="true"
                     strokeWidth={2.5}
                 />
-                <span>{link.label}</span>
+                <span>{link.label[lang]}</span>
 
                 <AnimatedUnderline
-                    className={cn('hidden lg:block lg:bg-foreground', {
+                    className={cn('lg:bg-foreground hidden lg:block', {
                         'hidden group-hover:hidden': active,
                         'h-px': !active,
                         'lg:bg-white': variant === 'primary',

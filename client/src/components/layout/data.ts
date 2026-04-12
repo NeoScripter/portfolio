@@ -4,26 +4,38 @@ export type NavLinkType = {
     id: string;
     icon: LucideIcon;
     path: string;
-    label: string;
+    label: {
+        ru: string;
+        en: string;
+    };
 };
 
 export const navLinks: NavLinkType[] = [
     {
         id: crypto.randomUUID(),
         icon: House,
-        label: 'Главная',
+        label: {
+            ru: 'Главная',
+            en: 'Home',
+        },
         path: '/',
     },
     {
         id: crypto.randomUUID(),
         icon: BriefcaseBusiness,
-        label: 'Портфолио',
-        path: '/portfolio',
+        label: {
+            ru: 'Проекты',
+            en: 'Projects',
+        },
+        path: '/gallery',
     },
     {
         id: crypto.randomUUID(),
         icon: User,
-        label: 'Обо мне',
+        label: {
+            ru: 'Обо мне',
+            en: 'About',
+        },
         path: '/about',
     },
 ];

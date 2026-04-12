@@ -19,7 +19,7 @@
                 "slug": "apartment-listing-aggregator",
                 "order": 120,
                 "link": "https://neoscripter.github.io/Lots-Vue/",
-                "url": "https://ilyaandreev.dev/portfolio/apartment-listing-aggregator"
+                "url": "http://localhost:5173/gallery/apartment-listing-aggregator"
             },
             "image": {
                 "srcSet": {
@@ -81,7 +81,7 @@
                 "slug": "note-taking-app",
                 "order": 105,
                 "link": "https://notes.ilyaandreev.dev/",
-                "url": "https://ilyaandreev.dev/portfolio/note-taking-app"
+                "url": "http://localhost:5173/gallery/note-taking-app"
             },
             "image": {
                 "srcSet": {
@@ -131,7 +131,7 @@
                 "slug": "deletename-landing-page",
                 "order": 101,
                 "link": "https://delete.name/",
-                "url": "https://ilyaandreev.dev/portfolio/deletename-landing-page"
+                "url": "http://localhost:5173/gallery/deletename-landing-page"
             },
             "image": {
                 "srcSet": {

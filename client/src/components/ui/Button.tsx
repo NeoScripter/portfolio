@@ -6,7 +6,7 @@ import { useRef } from 'preact/hooks';
 import type { JSX } from 'preact';
 
 const buttonVariants = cva(
-    'inline-flex items-center justify-center gap-[0.5em] whitespace-nowrap rounded-xl group transition-[color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*="size-"])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+    'inline-flex w-fit items-center justify-center gap-[0.5em] whitespace-nowrap rounded-xl group transition-[color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*="size-"])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
     {
         variants: {
             variant: {
@@ -30,20 +30,26 @@ const buttonVariants = cva(
     },
 );
 
-type ButtonProps = JSX.IntrinsicElements['button'] &
-    VariantProps<typeof buttonVariants>;
+type ButtonProps = Omit<JSX.IntrinsicElements['button'] & JSX.IntrinsicElements['a'], 'ref'> &
+    VariantProps<typeof buttonVariants> & {
+        href?: string;
+    };
 
 const Button = ({
     class: className,
     children,
     variant,
+    href,
     ...props
 }: ButtonProps) => {
     const arrowRef = useRef<HTMLDivElement>(null);
     useFollowCursor(arrowRef);
 
+    const Comp = href ? 'a' : 'button';
+
     return (
-        <button
+        <Comp
+            href={href}
             data-slot="button"
             class={cn(buttonVariants({ variant, className }))}
             {...props}
@@ -56,7 +62,7 @@ const Button = ({
             >
                 <ArrowDownRight class="size-[1.25em] -rotate-45" />
             </div>
-        </button>
+        </Comp>
     );
 };
 
