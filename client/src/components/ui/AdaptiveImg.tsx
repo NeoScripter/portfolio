@@ -108,7 +108,6 @@ export default function AdaptiveImg({
                         [srcs.mb3x, '3x'],
                     ])}
                     alt={isBg ? '' : (alt ?? '')}
-                    loading="lazy"
                     className={cn(
                         'block size-full object-cover',
                         isBg

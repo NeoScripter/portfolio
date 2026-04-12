@@ -7,29 +7,29 @@ import { cn } from '@/lib/helpers/utils';
 import SecondaryHeading from '../ui/SecondaryHeading';
 import PrimaryLink from '../ui/PrimaryLink';
 import Projects from './Projects';
+import { useFetch } from '@/hooks/useFetch';
 
 const SeeAlso: FC<{
     className?: string;
     title: string;
     excludedId?: number;
 }> = ({ className, title, excludedId }) => {
-    // const { fetchData, loading, errors } = useFetch();
+    const { fetchData, loading, errors } = useFetch();
     const [projects, setProjects] = useState<ProjectType[] | null>(null);
 
     useEffect(() => {
-        let req = '/api/projects?limit=3';
+        let req = '/api/projects.json';
 
         if (excludedId != null) {
             req += `${req}&exclude=${excludedId}`;
         }
-        // fetchData({
-        //     url: req,
-        //     onSuccess: (data) => {
-        //         setProjects(data.data);
-        //     },
-        // });
+        fetchData({
+            url: req,
+            onSuccess: (data) => {
+                setProjects(data.data);
+            },
+        });
     }, []);
-    let loading = true, errors = null;
 
     return (
         <AppSection
