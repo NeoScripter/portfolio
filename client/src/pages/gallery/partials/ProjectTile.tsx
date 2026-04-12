@@ -1,5 +1,5 @@
-
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
+import Badge from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
@@ -73,12 +73,7 @@ const ProjectInfo: FC<{ project: ProjectType; className?: string }> = ({
             </h2>
             <ul class="flex flex-wrap gap-x-3 gap-y-3">
                 {project.attr.stacks.map((stack) => (
-                    <li
-                        class="border-foreground flex items-center justify-center rounded-3xl border px-3 py-1"
-                        key={stack}
-                    >
-                        {stack}
-                    </li>
+                    <Badge label={stack} />
                 ))}
             </ul>
         </div>

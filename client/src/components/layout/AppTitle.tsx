@@ -1,6 +1,7 @@
 import { locale } from '@/signals/locale';
 import { pageTitle } from '@/signals/page-title';
-import { type FC, useEffect } from 'preact/compat';
+import { type FC } from 'preact/compat';
+import { useEffect } from 'preact/hooks';
 
 const AppTitle: FC<{ titleEn: string; titleRu: string }> = ({
     titleRu,

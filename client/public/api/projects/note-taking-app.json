@@ -1,0 +1,259 @@
+{
+    "data": {
+        "id": 4,
+        "attr": {
+            "title": {
+                "ru": "Приложение для ведения заметок",
+                "en": "Note-taking app"
+            },
+            "description": {
+                "ru": "Быстрое и удобное одностраничной приложение для создания и хранения записей, написанное на Реакте с аутентификацией пользователей, поиском записей по различным критериям, а также сменой тем и переключением языков.",
+                "en": "A fast and easy-to-use single-page app built with React. It includes user authentication, a Laravel backend, note searching with different filters, theme switching, and language selection."
+            },
+            "category": {
+                "ru": "Приложение",
+                "en": "App"
+            },
+            "stacks": ["Laravel", "Tailwind", "Inertia", "TypeScript", "React"],
+            "slug": "note-taking-app",
+            "order": 105,
+            "link": "https://notes.ilyaandreev.dev/",
+            "url": "https://ilyaandreev.dev/portfolio/note-taking-app"
+        },
+        "image": {
+            "srcSet": {
+                "dk": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-dk.webp",
+                "dkAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-dk.avif",
+                "dk2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-dk.webp",
+                "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-dk.avif",
+                "dk3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-dk.webp",
+                "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-dk.avif",
+                "dkTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tiny.webp",
+                "tb": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tb.webp",
+                "tbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tb.avif",
+                "tb2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tb.webp",
+                "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tb.avif",
+                "tb3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tb.webp",
+                "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tb.avif",
+                "tbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tiny.webp",
+                "mb": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-mb.webp",
+                "mbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-mb.avif",
+                "mb2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-mb.webp",
+                "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-mb.avif",
+                "mb3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-mb.webp",
+                "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-mb.avif",
+                "mbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tiny.webp"
+            },
+            "alt": {
+                "ru": "A note-taking web app with a dark theme is open on a desktop screen. The sidebar shows various note categories and tags.",
+                "en": "A note-taking web app with a dark theme is open on a desktop screen. The sidebar shows various note categories and tags."
+            }
+        },
+        "links": [
+            {
+                "self": "https://ilyaandreev.dev/api/projects/note-taking-app"
+            }
+        ],
+        "modules": [
+            {
+                "id": 8,
+                "attr": {
+                    "heading": {
+                        "ru": "Описание",
+                        "en": "Description"
+                    },
+                    "html": {
+                        "ru": "<p>Данный проект приложение реализован с помощью современных технологий веб-разработки с использованием Реакт для фронтэнда и мощного фреймворка Лараверл для бэкэнда. Данные две технологии объединены с использованием Inertia.js, которая позволяет объединить колоссальные преимущества обоих фреймворков, при этом приложение может работать даже на простом и недорогом хостинге.</p>\n",
+                        "en": "<p>This project was built using modern web development technologies—React for the frontend and the powerful Laravel framework for the backend. These two are connected through Inertia.js, which combines the strengths of both frameworks. The app runs smoothly even on simple, low-cost hosting.</p>\n"
+                    },
+                    "body": {
+                        "ru": "Данный проект приложение реализован с помощью современных технологий веб-разработки с использованием Реакт для фронтэнда и мощного фреймворка Лараверл для бэкэнда. Данные две технологии объединены с использованием Inertia.js, которая позволяет объединить колоссальные преимущества обоих фреймворков, при этом приложение может работать даже на простом и недорогом хостинге.",
+                        "en": "This project was built using modern web development technologies—React for the frontend and the powerful Laravel framework for the backend. These two are connected through Inertia.js, which combines the strengths of both frameworks. The app runs smoothly even on simple, low-cost hosting."
+                    },
+                    "order": 1,
+                    "type": "only_text"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/notes-4-6967298cceed4-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "То же приложение для заметок, но со светлой темой. Макет такой же, заметка «React Performance Optimization» открыта по центру.",
+                        "en": "Same note-taking app but in a light theme. The layout is identical to the dark version, with the \"React Performance Optimization\" note selected and expanded in the center."
+                    }
+                }
+            },
+            {
+                "id": 10,
+                "attr": {
+                    "html": {
+                        "ru": "<p>Для стилизации данного приложения я использовал последнюю версию Tailwind CSS 4.0, что позволило мне ускорить время разработки, при этом имея полную свободу кастомизации благодаря гибким классам, предлагаемым Tailwind. Приложение адаптировано под все экраны, в том числе для планшетной версии. При создании каждой страницы я проверял правильность ее работы для разрешения каждого экрана.</p>\n",
+                        "en": "<p>For styling, I used the latest version of Tailwind CSS 4.0. It helped speed up development while still giving me full control over customization thanks to Tailwind's flexible utility classes. The app is fully responsive, including tablet support. I checked every screen to make sure each page works correctly at different resolutions.</p>\n"
+                    },
+                    "body": {
+                        "ru": "Для стилизации данного приложения я использовал последнюю версию Tailwind CSS 4.0, что позволило мне ускорить время разработки, при этом имея полную свободу кастомизации благодаря гибким классам, предлагаемым Tailwind. Приложение адаптировано под все экраны, в том числе для планшетной версии. При создании каждой страницы я проверял правильность ее работы для разрешения каждого экрана.",
+                        "en": "For styling, I used the latest version of Tailwind CSS 4.0. It helped speed up development while still giving me full control over customization thanks to Tailwind's flexible utility classes. The app is fully responsive, including tablet support. I checked every screen to make sure each page works correctly at different resolutions."
+                    },
+                    "order": 2,
+                    "type": "one_image_split"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/notes-7-69672a13605af-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Заметка «React Performance Optimization» открыта в мобильном виде с тёмной темой. Контент отформатирован под маленький экран.",
+                        "en": "The note titled \"React Performance Optimization\" is open in a mobile view with a dark theme. The content is centered and formatted for small screens."
+                    }
+                }
+            },
+            {
+                "id": 11,
+                "attr": {
+                    "html": {
+                        "ru": "<p>В приложении реализована авторизация через пароль и логин, при этом я добавил возможность войти без регистрации для пользователей, которые просто хотят ознакомиться с его функционалом. Я добился этого путем создания дефолтного пользователя со списком тегов и записей, которого можно легко пересоздать в любой момент через командную строку с помощью кастомной команды artisan. Я считаю это важной частью функционала, так как многие пользователи хотят ознакомиться с интерфейсом, прежде чем решать, будут они пользоваться приложением или нет.</p>\n<p>Одной из важный деталей приложения является автоматическое определения языка браузера пользователя при начальном входе на страницу. Я реализовал это через Laravel middleware путем прописывания кода, который автоматически считывает язык предпочтения браузера пользователя при входе и сохраняет его в сессии. При входе в аккаунт пользователь имеет возможность сменить язык через настройки. На выбор доступно три языка, английский, русский и французский.</p>\n",
+                        "en": "<p>The app includes login with email and password, but I also added a guest login option for users who just want to explore the features. I did this by creating a default user with a list of tags and notes, which can easily be reset at any time from the command line using a custom artisan command. I think this feature is important because a lot of people want to try out the interface before deciding whether they want to use the app or not.</p>\n<p>One of the key features is automatic language detection based on the user's browser. I implemented this using Laravel middleware that reads the preferred browser language on the first visit and stores it in the session. After logging in, users can change the language in the settings. The app supports English, Russian, and French.</p>\n"
+                    },
+                    "body": {
+                        "ru": "В приложении реализована авторизация через пароль и логин, при этом я добавил возможность войти без регистрации для пользователей, которые просто хотят ознакомиться с его функционалом. Я добился этого путем создания дефолтного пользователя со списком тегов и записей, которого можно легко пересоздать в любой момент через командную строку с помощью кастомной команды artisan. Я считаю это важной частью функционала, так как многие пользователи хотят ознакомиться с интерфейсом, прежде чем решать, будут они пользоваться приложением или нет.\r\n\r\nОдной из важный деталей приложения является автоматическое определения языка браузера пользователя при начальном входе на страницу. Я реализовал это через Laravel middleware путем прописывания кода, который автоматически считывает язык предпочтения браузера пользователя при входе и сохраняет его в сессии. При входе в аккаунт пользователь имеет возможность сменить язык через настройки. На выбор доступно три языка, английский, русский и французский.",
+                        "en": "The app includes login with email and password, but I also added a guest login option for users who just want to explore the features. I did this by creating a default user with a list of tags and notes, which can easily be reset at any time from the command line using a custom artisan command. I think this feature is important because a lot of people want to try out the interface before deciding whether they want to use the app or not.\r\n\r\nOne of the key features is automatic language detection based on the user's browser. I implemented this using Laravel middleware that reads the preferred browser language on the first visit and stores it in the session. After logging in, users can change the language in the settings. The app supports English, Russian, and French."
+                    },
+                    "order": 3,
+                    "type": "only_text"
+                }
+            },
+            {
+                "id": 12,
+                "attr": {
+                    "html": {
+                        "ru": "<p>В добавок к этому пользователь имеет возможность поменять шрифт (из 4 на выбор), а также выбрать темную или светлую темы. При выборе темы устройства приложение считывает тему браузера пользователя и автоматически применяет ее.</p>\n<p>В приложении реализована возможность восстановление пароля через емаил, а также защита приватности записей каждого пользователя. При попытке открыть, удалить или отредактировать запись, php код проверяет, принадлежит ли она данному пользователя, и есть пользователь не является создателем записи, доступ к ней блокируется.</p>\n",
+                        "en": "<p>In addition to that, users can choose from four different fonts and switch between dark and light themes. If the device has a preferred theme, the app will automatically apply it.</p>\n<p>There's also email-based password recovery, and each user's notes are private. Whenever someone tries to view, delete, or edit a note, the PHP code checks if the note belongs to them. If not, access is blocked.</p>\n"
+                    },
+                    "body": {
+                        "ru": "В добавок к этому пользователь имеет возможность поменять шрифт (из 4 на выбор), а также выбрать темную или светлую темы. При выборе темы устройства приложение считывает тему браузера пользователя и автоматически применяет ее.\r\n\r\nВ приложении реализована возможность восстановление пароля через емаил, а также защита приватности записей каждого пользователя. При попытке открыть, удалить или отредактировать запись, php код проверяет, принадлежит ли она данному пользователя, и есть пользователь не является создателем записи, доступ к ней блокируется.",
+                        "en": "In addition to that, users can choose from four different fonts and switch between dark and light themes. If the device has a preferred theme, the app will automatically apply it.\r\n\r\nThere's also email-based password recovery, and each user's notes are private. Whenever someone tries to view, delete, or edit a note, the PHP code checks if the note belongs to them. If not, access is blocked."
+                    },
+                    "order": 4,
+                    "type": "two_image_block"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/notes-10-69672af05c2b2-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Сравнение приложения на планшете: тёмная и светлая темы рядом, в обеих версиях открыта одинаковая заметка.",
+                        "en": "Side-by-side comparison of the note app in dark and light themes on tablet screens. Both show the same note with identical layout and content."
+                    }
+                }
+            },
+            {
+                "id": 13,
+                "attr": {
+                    "heading": {
+                        "ru": "Заключение",
+                        "en": "Conclusion"
+                    },
+                    "html": {
+                        "ru": "<p>Есть еще много других интересных особенностей данного приложения, но самое главное, что мне нравится, это внешний вид, удобство использования, а главное – скорость загрузки с учетом того, что приложение хостится на самом простом и недорогом хостинге. Я очень доволен результатом и в дальнейшем планирую реализовывать другие проекты с использованием данных технологий.</p>\n",
+                        "en": "<p>There are plenty of other cool features in the app, but what I like most is the clean design, how easy it is to use, and especially the fast load times—even on the cheapest hosting plan. I'm really happy with how it turned out and plan to use the same stack for future projects.</p>\n"
+                    },
+                    "body": {
+                        "ru": "Есть еще много других интересных особенностей данного приложения, но самое главное, что мне нравится, это внешний вид, удобство использования, а главное – скорость загрузки с учетом того, что приложение хостится на самом простом и недорогом хостинге. Я очень доволен результатом и в дальнейшем планирую реализовывать другие проекты с использованием данных технологий.",
+                        "en": "There are plenty of other cool features in the app, but what I like most is the clean design, how easy it is to use, and especially the fast load times—even on the cheapest hosting plan. I'm really happy with how it turned out and plan to use the same stack for future projects."
+                    },
+                    "order": 5,
+                    "type": "only_text"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/notes-10-69672b2ee460a-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Сравнение приложения на планшете: тёмная и светлая темы рядом, в обеих версиях открыта одинаковая заметка.",
+                        "en": "Side-by-side comparison of the note app in dark and light themes on tablet screens. Both show the same note with identical layout and content."
+                    }
+                }
+            }
+        ]
+    }
+}

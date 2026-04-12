@@ -1,4 +1,5 @@
 import type { ImageType } from "../shared";
+import type { ModuleType } from "./module";
 
 export interface ProjectResource {
     data: ProjectType[];
@@ -79,5 +80,5 @@ export interface ProjectType {
     links: {
         self: string;
     }[];
-    modules?: unknown[];
+    modules?: ModuleType[];
 }

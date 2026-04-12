@@ -1,3 +1,5 @@
+import type { ImageType } from "../shared";
+
 export type LocalizedText = {
     ru: string;
     en: string;
@@ -18,6 +20,6 @@ export type ModuleAttributes = {
 export type ModuleType = {
     id: number;
     attr: ModuleAttributes;
-    firstImage?: ImageFormats;
-    secondImage?: ImageFormats;
+    firstImage?: ImageType;
+    secondImage?: ImageType;
 };

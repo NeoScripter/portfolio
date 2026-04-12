@@ -43,7 +43,7 @@ const SeeAlso: FC<{
                     {title}
                 </SecondaryHeading>
                 <PrimaryLink
-                    href="/portfolio"
+                    href="/gallery"
                     className="mx-auto mt-22 mr-0 hidden w-fit xl:flex"
                 >
                     На страницу проектов
@@ -58,7 +58,7 @@ const SeeAlso: FC<{
             />
 
             <PrimaryLink
-                href="/portfolio"
+                href="/gallery"
                 className="mx-auto mt-22 w-fit xl:hidden"
             >
                 На страницу проектов

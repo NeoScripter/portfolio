@@ -1,0 +1,294 @@
+{
+    "data": {
+        "id": 3,
+        "attr": {
+            "title": {
+                "ru": "Лендинг Delete.name",
+                "en": "Delete.name Landing Page"
+            },
+            "description": {
+                "ru": "Данный проект представляет собой лендинг для компании по удалению слитых личных данных в сети. Главная трудность проекта заключалась в очень сжатом дедлайне и необходимости соответствовать требованиям Яндекс директ для прохождения аудита.",
+                "en": "A landing page built with React, Laravel, and Inertia.js for the company Delete.name, offering personal data removal services online."
+            },
+            "category": {
+                "ru": "Лендинг",
+                "en": "Landing"
+            },
+            "stacks": ["Inertia", "Tailwind", "Laravel", "TypeScript", "React"],
+            "slug": "deletename-landing-page",
+            "order": 101,
+            "link": "https://delete.name/",
+            "url": "https://ilyaandreev.dev/portfolio/deletename-landing-page"
+        },
+        "image": {
+            "srcSet": {
+                "dk": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-dk.webp",
+                "dkAvif": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-dk.avif",
+                "dk2x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-dk.webp",
+                "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-dk.avif",
+                "dk3x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-dk.webp",
+                "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-dk.avif",
+                "dkTiny": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tiny.webp",
+                "tb": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tb.webp",
+                "tbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tb.avif",
+                "tb2x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tb.webp",
+                "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tb.avif",
+                "tb3x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tb.webp",
+                "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tb.avif",
+                "tbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tiny.webp",
+                "mb": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-mb.webp",
+                "mbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-mb.avif",
+                "mb2x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-mb.webp",
+                "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-mb.avif",
+                "mb3x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-mb.webp",
+                "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-mb.avif",
+                "mbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tiny.webp"
+            },
+            "alt": {
+                "ru": "Главная секция с пикселизированным лицом девушки и кнопками для защиты личных или бизнес-данных",
+                "en": "Hero section with a pixelated woman's face and buttons to protect personal or business data"
+            }
+        },
+        "links": [
+            {
+                "self": "https://ilyaandreev.dev/api/projects/deletename-landing-page"
+            }
+        ],
+        "modules": [
+            {
+                "id": 3,
+                "attr": {
+                    "html": {
+                        "ru": "<p>Данный проект представляет собой лендинг для компании по удалению слитых личных данных в сети. Главная трудность проекта заключалась в очень сжатом дедлайне и необходимости соответствовать требованиям Яндекс директ для прохождения аудита.</p>\n<p>В качестве стэка я выбрал Реакт и Inertia.js в силу высокой производительности, удобства масштабирования (заказчик изначально дал понять, что проект будет расширяться в будущем), а также свободе кастомизации функционала бэкэнда.</p>\n",
+                        "en": "<p>This project is a landing page for a company that removes leaked personal data from the internet. The biggest challenge was the tight deadline and the need to meet Yandex Direct's audit requirements.</p>\n<p>I chose React and Inertia.js for the stack because of their performance, scalability (the client made it clear from the start that the project would grow), and the flexibility they give for backend customization.</p>\n"
+                    },
+                    "body": {
+                        "ru": "Данный проект представляет собой лендинг для компании по удалению слитых личных данных в сети. Главная трудность проекта заключалась в очень сжатом дедлайне и необходимости соответствовать требованиям Яндекс директ для прохождения аудита.\r\n\r\nВ качестве стэка я выбрал Реакт и Inertia.js в силу высокой производительности, удобства масштабирования (заказчик изначально дал понять, что проект будет расширяться в будущем), а также свободе кастомизации функционала бэкэнда.",
+                        "en": "This project is a landing page for a company that removes leaked personal data from the internet. The biggest challenge was the tight deadline and the need to meet Yandex Direct's audit requirements.\r\n\r\nI chose React and Inertia.js for the stack because of their performance, scalability (the client made it clear from the start that the project would grow), and the flexibility they give for backend customization."
+                    },
+                    "order": 1,
+                    "type": "one_image_split"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/delete-2-6967220e22f2b-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Мобильная версия главного экрана с пикселизированным лицом и двумя кнопками",
+                        "en": "Mobile version of the hero section with pixelated woman and two call-to-action buttons"
+                    }
+                }
+            },
+            {
+                "id": 5,
+                "attr": {
+                    "html": {
+                        "ru": "<p>Благодаря этому, сайт очень легко поддерживается, его довольно просто менять при необходимости (что пришлось сделать много раз в силу многочисленных изменений, внесенных заказчиком). Весь код фронтэнда на Реакте удобно разбит по директориям, что позволяет быстро найти необходимый файл.</p>\n<p>Использование TypeScript позволило избежать большого количества багов при разработке и внесении правок, что стало ключевым моментов в разработке данного проекта в силу сжатого дедлайна. Помимо этого, использование Tailwind CSS позволило быстро сверстать сайт и расположить элементы в соответствии с дизайном для всех разрешений экранов. Сайт адаптивен и красиво смотрится на всех экранах.</p>\n",
+                        "en": "<p>Thanks to that, the site is easy to maintain and update \u2014 which came in handy, since the client requested a lot of changes during development. The React code is neatly organized into folders, making it easy to find specific components.</p>\n<p>Using TypeScript helped avoid a ton of bugs during development and when applying updates \u2014 which was crucial given the time pressure. Tailwind CSS made layout work fast and helped implement the design across all screen sizes. The site is responsive and looks great on any</p>\n"
+                    },
+                    "body": {
+                        "ru": "Благодаря этому, сайт очень легко поддерживается, его довольно просто менять при необходимости (что пришлось сделать много раз в силу многочисленных изменений, внесенных заказчиком). Весь код фронтэнда на Реакте удобно разбит по директориям, что позволяет быстро найти необходимый файл.\r\n\r\nИспользование TypeScript позволило избежать большого количества багов при разработке и внесении правок, что стало ключевым моментов в разработке данного проекта в силу сжатого дедлайна. Помимо этого, использование Tailwind CSS позволило быстро сверстать сайт и расположить элементы в соответствии с дизайном для всех разрешений экранов. Сайт адаптивен и красиво смотрится на всех экранах.",
+                        "en": "Thanks to that, the site is easy to maintain and update \u2014 which came in handy, since the client requested a lot of changes during development. The React code is neatly organized into folders, making it easy to find specific components.\r\n\r\nUsing TypeScript helped avoid a ton of bugs during development and when applying updates \u2014 which was crucial given the time pressure. Tailwind CSS made layout work fast and helped implement the design across all screen sizes. The site is responsive and looks great on any"
+                    },
+                    "order": 2,
+                    "type": "two_image_split"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/delete-3-696722e2a9c72-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Раздел отзывов клиентов со звездочками и карточками с мнениями",
+                        "en": "Customer reviews section with star ratings and feedback cards"
+                    }
+                },
+                "secondImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/delete-4-696722e51f254-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Раздел часто задаваемых вопросов с темами по защите данных и раскрывающимися ответами",
+                        "en": "FAQ section with common privacy-related questions and dropdown answers"
+                    }
+                }
+            },
+            {
+                "id": 6,
+                "attr": {
+                    "html": {
+                        "ru": "<p>Помимо этого, клиенту было важно иметь возможность самостоятельно менять контент сайта, а именно текст и фотографии. В результате чего было принято решение создать кастомную админ панель и привязать ее к нужным секциям сайта. За основу панели я взял начальный набор Laravel Breeze и адаптировал его под нужны админки, в результате чего админка сайта выглядит очень красиво, ею удобно пользоваться, так как она не содержит ничего лишнего, что запутывает пользователя, а также она очень быстрая, так как все запросы происходят асинхронно.</p>\n",
+                        "en": "<p>The client also wanted full control over the site content, including text and images. So I decided to build a custom admin panel and connect it to the relevant site sections. I based it on Laravel Breeze, adapting it to fit the admin panel's needs. The result is a clean, fast, and easy-to-use admin interface without unnecessary clutter that could confuse the user. All requests are asynchronous, so it's very responsive.</p>\n"
+                    },
+                    "body": {
+                        "ru": "Помимо этого, клиенту было важно иметь возможность самостоятельно менять контент сайта, а именно текст и фотографии. В результате чего было принято решение создать кастомную админ панель и привязать ее к нужным секциям сайта. За основу панели я взял начальный набор Laravel Breeze и адаптировал его под нужны админки, в результате чего админка сайта выглядит очень красиво, ею удобно пользоваться, так как она не содержит ничего лишнего, что запутывает пользователя, а также она очень быстрая, так как все запросы происходят асинхронно.",
+                        "en": "The client also wanted full control over the site content, including text and images. So I decided to build a custom admin panel and connect it to the relevant site sections. I based it on Laravel Breeze, adapting it to fit the admin panel's needs. The result is a clean, fast, and easy-to-use admin interface without unnecessary clutter that could confuse the user. All requests are asynchronous, so it's very responsive."
+                    },
+                    "order": 3,
+                    "type": "two_image_block"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/delete-6-696723df376c2-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Светлая тема админки",
+                        "en": "Admin panel's light theme"
+                    }
+                },
+                "secondImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/delete-7-696723e0f11d6-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Темная тема админки",
+                        "en": "Admin panel's dark theme"
+                    }
+                }
+            },
+            {
+                "id": 7,
+                "attr": {
+                    "html": {
+                        "ru": "<p>Админка включает в себя весь необходимый функционал, в том числе изменение имя пользователя и пароля, восстановление пароля и даже изменение темы (присутствуют светлая, темная и системная темы). Благодаря использованию Shadcn для создания элементов админки, с ней легко работать с использованием клавиатуры, что также значительно облегчает задачу администратора сайта.</p>\n<p>В целом, лендинг получился стильный, удобным в использовании, а также очень производительным и полностью соответствует современным стандартам веб разработки</p>\n",
+                        "en": "<p>The admin panel includes everything you'd expect: changing username and password, password recovery, and even switching themes (light, dark, and system modes). I used Shadcn to build the UI components, which made the panel easy to navigate with a keyboard \u2014 a nice bonus for the site admin.</p>\n<p>Overall, the landing page turned out stylish, easy to use, and very performant \u2014 fully in line with modern web development standards.</p>\n"
+                    },
+                    "body": {
+                        "ru": "Админка включает в себя весь необходимый функционал, в том числе изменение имя пользователя и пароля, восстановление пароля и даже изменение темы (присутствуют светлая, темная и системная темы). Благодаря использованию Shadcn для создания элементов админки, с ней легко работать с использованием клавиатуры, что также значительно облегчает задачу администратора сайта.\r\n\r\nВ целом, лендинг получился стильный, удобным в использовании, а также очень производительным и полностью соответствует современным стандартам веб разработки",
+                        "en": "The admin panel includes everything you'd expect: changing username and password, password recovery, and even switching themes (light, dark, and system modes). I used Shadcn to build the UI components, which made the panel easy to navigate with a keyboard \u2014 a nice bonus for the site admin.\r\n\r\nOverall, the landing page turned out stylish, easy to use, and very performant \u2014 fully in line with modern web development standards."
+                    },
+                    "order": 4,
+                    "type": "two_image_block"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/delete-8-6967260b9523d-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Admin panel showing image upload field for desktop banner",
+                        "en": "Admin panel showing image upload field for desktop banner"
+                    }
+                }
+            }
+        ]
+    }
+}
