@@ -4,7 +4,12 @@ export default function useAutoHideOnScroll() {
     const [hide, setHide] = useState(false);
     const lastScrollTopRef = useRef(0);
 
+    const isBrowser = typeof window !== 'undefined';
+
     useEffect(() => {
+        if (!isBrowser) {
+            return;
+        }
         const handleScrollDown = () => {
             const currentScrollTop =
                 window.scrollY || document.documentElement.scrollTop;

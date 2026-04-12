@@ -4,7 +4,13 @@ import { useEffect } from 'preact/hooks';
 export default function useFollowCursor<T extends HTMLElement>(
     ref: RefObject<T>,
 ) {
+    const isBrowser = typeof window !== 'undefined';
+
     useEffect(() => {
+
+        if (!isBrowser) {
+            return;
+        }
         let currentAngle = 45,
             isHovering = false;
 

@@ -34,21 +34,30 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
     const { isBelow: isBelowPadding } = useScrollOffset(16);
     const hide = useAutoHideOnScroll();
 
+    const isBrowser = typeof window !== 'undefined';
+
     const { isBelow: isBelowHero } = useScrollOffset(
-        getHeroOffset(window.innerWidth),
+        isBrowser ? getHeroOffset(window.innerWidth) : 0,
     );
 
     useEscapeKey(() => setShowMenu(false));
 
-    const mq = window.matchMedia(`(max-width: ${LG / 16}rem)`);
+    const mq = isBrowser
+        ? window.matchMedia(`(max-width: ${LG / 16}rem)`)
+        : null;
 
-    const [showDrawer, setShowDrawer] = useState(mq.matches);
+    const [showDrawer, setShowDrawer] = useState(
+        isBrowser ? mq?.matches : false,
+    );
 
     const toggleMenu = () => {
         setShowMenu((p) => !p);
     };
 
     useEffect(() => {
+        if (!mq) {
+            return;
+        }
         const updateDrawerStatus = (e: MediaQueryListEvent) =>
             setShowDrawer(e.matches);
 

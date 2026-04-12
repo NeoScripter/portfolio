@@ -1,24 +1,31 @@
 import { effect, signal } from '@preact/signals';
 
+const isBrowser = typeof window !== 'undefined';
+
 export const locale = signal<'en' | 'ru'>(
-    (localStorage.getItem('locale') as 'en' | 'ru') || 'ru',
+    isBrowser
+        ? ((localStorage.getItem('locale') as 'en' | 'ru') || 'ru')
+        : 'ru',
 );
 
 export const prefersRussian = () =>
-    navigator.language.startsWith('ru') || navigator.language.startsWith('ru');
+    isBrowser && (navigator.language.startsWith('ru'));
 
 const applyLocale = (lang: 'en' | 'ru') => {
+    if (!isBrowser) return;
     document.documentElement.lang = lang;
 };
 
-effect(() => {
-    const lang = locale.value;
-    localStorage.setItem('locale', lang);
-    applyLocale(lang);
-});
+if (isBrowser) {
+    effect(() => {
+        const lang = locale.value;
+        localStorage.setItem('locale', lang);
+        applyLocale(lang);
+    });
 
-window.addEventListener('languagechange', () => {
-    if (!localStorage.getItem('locale')) {
-        locale.value = prefersRussian() ? 'ru' : 'en';
-    }
-});
+    window.addEventListener('languagechange', () => {
+        if (!localStorage.getItem('locale')) {
+            locale.value = prefersRussian() ? 'ru' : 'en';
+        }
+    });
+}

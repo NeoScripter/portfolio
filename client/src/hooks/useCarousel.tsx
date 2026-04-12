@@ -115,6 +115,8 @@ export function useCarousel<T>({
         touchStartX: null,
     });
 
+    const isBrowser = typeof window !== 'undefined';
+
     const setter = (data: T[]) => {
         if (data != null) {
             dispatch({ type: 'SET_SLIDES', slides: data });
@@ -140,7 +142,7 @@ export function useCarousel<T>({
         const firstSlide = container?.firstElementChild as HTMLElement | null;
         if (!firstSlide) return 0;
 
-        const viewportWidth = Math.min(window.innerWidth, MAX_SCREEN_SIZE);
+        const viewportWidth = Math.min(isBrowser ? window.innerWidth : 0, MAX_SCREEN_SIZE);
         return (viewportWidth - firstSlide.offsetWidth) / 2;
     }, [containerRef]);
 
@@ -200,10 +202,15 @@ export function useCarousel<T>({
     );
 
     useEffect(() => {
-        const handleResize = () => requestAnimationFrame(() => applyTransform(0, false));
+        const handleResize = () =>
+            requestAnimationFrame(() => applyTransform(0, false));
+
+        if (!isBrowser) {
+            return;
+        }
+
         window.addEventListener('resize', handleResize);
-        return () =>
-            window.removeEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, [applyTransform]);
 
     return {

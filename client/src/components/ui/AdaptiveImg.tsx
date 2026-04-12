@@ -1,6 +1,6 @@
 import { buildSrcSet, cn } from '@/lib/helpers/utils';
 import type { ImageSrcSet } from '@/lib/types/shared';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 
 type AdaptiveImgProps = {
     prtClass?: string;
@@ -18,6 +18,14 @@ export default function AdaptiveImg({
     alt,
 }: AdaptiveImgProps) {
     const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (isLoading) {
+                setIsLoading(false);
+            }
+        }, 3000)
+    },[])
 
     if (!srcs) return null;
 
@@ -100,6 +108,7 @@ export default function AdaptiveImg({
                         [srcs.mb3x, '3x'],
                     ])}
                     alt={isBg ? '' : (alt ?? '')}
+                    loading="lazy"
                     className={cn(
                         'block size-full object-cover',
                         isBg
