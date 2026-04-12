@@ -1,4 +1,4 @@
-import { FC } from 'preact/compat';
+import type { FC } from 'preact/compat';
 
 const ErrorCode: FC<{ className?: string }> = ({ className }) => {
     return (

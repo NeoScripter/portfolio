@@ -86,7 +86,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                         'md:rounded-t-xl xl:max-w-432 2xl:max-w-432':
                             !isBelowHero,
                         'bg-home-hero-bg/40 text-white': variant === 'primary',
-                        'bg-muted': variant === 'secondary',
+                        'bg-muted/40': variant === 'secondary',
                         'text-foreground': variant === 'ghost',
                     },
                 )}
@@ -122,7 +122,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                 )}
 
                 {!isBelowHero &&
-                    (variant === 'primary' || variant === 'ghost') && (
+                    (variant === 'primary' || variant === 'secondary') && (
                         <Separator />
                     )}
             </div>

@@ -1,4 +1,4 @@
-import type { ComponentChildren } from 'preact';
+import type { Component, ComponentChildren } from 'preact';
 
 export type NodeProps<P = {}> = P & {
     children?: ComponentChildren | string;
@@ -37,4 +37,12 @@ export type ImageType = {
               en: string;
           }
         | undefined;
+};
+
+export type RouteMatch = {
+    path: string;
+    component: (() => Component | null) & { name: string; length: number };
+    query: Record<string, string>;
+    params: Record<string, string>;
+    rest: string;
 };

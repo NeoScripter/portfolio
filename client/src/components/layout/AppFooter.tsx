@@ -1,20 +1,28 @@
-import { useModal } from '@/context/ModalContext';
-import { cn } from '@/lib/helpers/utils';
-import { PhoneCall } from 'lucide-preact';
-import type { ComponentChildren } from 'preact';
-import type { FC } from 'preact/compat';
-import { Button } from '../ui/Button';
 import Ellipse from '@/assets/svgs/Ellipse';
 import Mail from '@/assets/svgs/Mail';
+import { useModal } from '@/context/ModalContext';
+import { cn } from '@/lib/helpers/utils';
+import type { RouteMatch } from '@/lib/types/shared';
+import { PhoneCall } from 'lucide-preact';
+import type { ComponentChildren } from 'preact';
+import { useRoute } from 'preact-iso';
+import type { FC } from 'preact/compat';
+import { Button } from '../ui/Button';
 
 const AppFooter: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
+    const { component } = useRoute() as RouteMatch;
+
+    if (component.name === 'NotFound') {
+        return null;
+    }
+
     return (
         <footer
             inert={showModal.value}
             class={cn(
                 'lg:flex lg:items-center lg:justify-between lg:gap-12 xl:gap-24 2xl:gap-40',
-                className
+                className,
             )}
         >
             <FooterInfo />
@@ -85,7 +93,7 @@ const FooterLink: FC<{
             href={href}
             class={cn(
                 'ease group flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-xl xl:text-2xl',
-                className
+                className,
             )}
         >
             <div class="size-5 shrink-0 sm:size-6 xl:size-7">{children}</div>

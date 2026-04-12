@@ -1,10 +1,10 @@
-import AppFooter from "@/components/layout/AppFooter";
-import AppHeader from "@/components/layout/AppHeader";
-import { ModalProvider } from "@/context/ModalContext";
-import { cn } from "@/lib/helpers/utils";
-import type { ComponentChildren } from "preact";
-import type { FC } from "preact/compat";
-import { Toaster } from "sonner";
+import AppFooter from '@/components/layout/AppFooter';
+import AppHeader from '@/components/layout/AppHeader';
+import { ModalProvider } from '@/context/ModalContext';
+import { cn } from '@/lib/helpers/utils';
+import type { ComponentChildren } from 'preact';
+import type { FC } from 'preact/compat';
+import { Toaster } from 'sonner';
 
 const AppLayout: FC<{
     children: ComponentChildren;
@@ -14,15 +14,12 @@ const AppLayout: FC<{
         <ModalProvider>
             <main
                 class={cn(
-                    'mx-auto max-w-480 overflow-x-clip md:pt-4 full-bleed-wrapper',
-                    className
+                    'full-bleed-wrapper mx-auto max-w-480 overflow-x-clip md:pt-4',
+                    className,
                 )}
                 id="wrapper"
             >
-                    <AppHeader />
-                {/* <AppHeaderContext.Provider value={{ variant }}> */}
-                {/*     <AppHeader /> */}
-                {/* </AppHeaderContext.Provider> */}
+                <AppHeader />
 
                 {children}
 
