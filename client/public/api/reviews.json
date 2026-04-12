@@ -1,0 +1,256 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "attr": {
+                "author": {
+                    "ru": "Дмитрий Б.",
+                    "en": "Дмитрий Б."
+                },
+                "description": {
+                    "ru": "Илья супер грамотный и профессиональный разработчик, очень ответственно подходит к делу. Также очень вежливый и терпеливый, спокойно ведет общение, даже с таким требовательным и занудным человеком, как я)) Ответит на все вопросы. Всегда подскажет и объяснит все понятным языком, а также найдет рациональные решения. Очень рад, что нашел такого специалиста. Однозначно буду работать с Ильей и дальше! \r\nВыбирайте 100% даже не раздумывая",
+                    "en": "Илья супер грамотный и профессиональный разработчик, очень ответственно подходит к делу. Также очень вежливый и терпеливый, спокойно ведет общение, даже с таким требовательным и занудным человеком, как я)) Ответит на все вопросы. Всегда подскажет и объяснит все понятным языком, а также найдет рациональные решения. Очень рад, что нашел такого специалиста. Однозначно буду работать с Ильей и дальше! \r\nВыбирайте 100% даже не раздумывая"
+                }
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-dk.avif",
+                    "dk2x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-dk.webp",
+                    "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-dk.avif",
+                    "dk3x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-dk.webp",
+                    "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-dk.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tiny.webp",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tb.avif",
+                    "tb2x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tb.webp",
+                    "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tb.avif",
+                    "tb3x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tb.webp",
+                    "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tb.avif",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tiny.webp",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-mb.avif",
+                    "mb2x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-mb.webp",
+                    "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-mb.avif",
+                    "mb3x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-mb.webp",
+                    "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-mb.avif",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-1-69672d2d898d1-tiny.webp"
+                },
+                "alt": {
+                    "ru": "Фото Дмитрия Б.",
+                    "en": "Фото Дмитрия Б."
+                }
+            }
+        },
+        {
+            "id": 2,
+            "attr": {
+                "author": {
+                    "ru": "Галина М.",
+                    "en": "Галина М."
+                },
+                "description": {
+                    "ru": "Хочу выразить огромную благодарность Илье за профессиональную верстку сложного сайта с админкой и базой данных. Работа была тщательно продумана и выполнена поэтапно, каждый шаг согласовывался, что обеспечило прозрачность процесса и отличный результат.  \r\n\r\nИлья продемонстрировал высокий уровень технической экспертизы, внимательность к деталям и ответственность за свою работу. \r\n\r\nРекомендую Илью как надежного и квалифицированного специалиста, с которым приятно и эффективно работать!",
+                    "en": "Хочу выразить огромную благодарность Илье за профессиональную верстку сложного сайта с админкой и базой данных. Работа была тщательно продумана и выполнена поэтапно, каждый шаг согласовывался, что обеспечило прозрачность процесса и отличный результат.  \r\n\r\nИлья продемонстрировал высокий уровень технической экспертизы, внимательность к деталям и ответственность за свою работу. \r\n\r\nРекомендую Илью как надежного и квалифицированного специалиста, с которым приятно и эффективно работать!"
+                }
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-dk.avif",
+                    "dk2x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-dk.webp",
+                    "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-dk.avif",
+                    "dk3x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-dk.webp",
+                    "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-dk.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tiny.webp",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tb.avif",
+                    "tb2x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tb.webp",
+                    "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tb.avif",
+                    "tb3x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tb.webp",
+                    "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tb.avif",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tiny.webp",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-mb.avif",
+                    "mb2x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-mb.webp",
+                    "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-mb.avif",
+                    "mb3x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-mb.webp",
+                    "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-mb.avif",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-2-69672d9f50b5f-tiny.webp"
+                },
+                "alt": {
+                    "ru": "Фото Галины М.",
+                    "en": "Фото Галины М."
+                }
+            }
+        },
+        {
+            "id": 3,
+            "attr": {
+                "author": {
+                    "ru": "Кирилл Г.",
+                    "en": "Кирилл Г."
+                },
+                "description": {
+                    "ru": "Илья оказался ответственным исполнителем. Сделал все очень качественно. Помимо этого давал полезные рекомендации по улучшению сайта. Работой с Ильей доволен, однозначно рекомендую специалиста!",
+                    "en": "Илья оказался ответственным исполнителем. Сделал все очень качественно. Помимо этого давал полезные рекомендации по улучшению сайта. Работой с Ильей доволен, однозначно рекомендую специалиста!"
+                }
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-dk.avif",
+                    "dk2x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-dk.webp",
+                    "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-dk.avif",
+                    "dk3x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-dk.webp",
+                    "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-dk.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tiny.webp",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tb.avif",
+                    "tb2x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tb.webp",
+                    "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tb.avif",
+                    "tb3x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tb.webp",
+                    "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tb.avif",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tiny.webp",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-mb.avif",
+                    "mb2x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-mb.webp",
+                    "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-mb.avif",
+                    "mb3x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-mb.webp",
+                    "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-mb.avif",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-3-69672fd19ee18-tiny.webp"
+                },
+                "alt": {
+                    "ru": "Фото Кирилла Г.",
+                    "en": "Фото Кирилла Г."
+                }
+            }
+        },
+        {
+            "id": 5,
+            "attr": {
+                "author": {
+                    "ru": "Екатерина И.",
+                    "en": "Екатерина И."
+                },
+                "description": {
+                    "ru": "Благодарю за работу! Все было выполнено качественно и в указанные сроки!",
+                    "en": "Благодарю за работу! Все было выполнено качественно и в указанные сроки!"
+                }
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-dk.avif",
+                    "dk2x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-dk.webp",
+                    "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-dk.avif",
+                    "dk3x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-dk.webp",
+                    "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-dk.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tiny.webp",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tb.avif",
+                    "tb2x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tb.webp",
+                    "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tb.avif",
+                    "tb3x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tb.webp",
+                    "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tb.avif",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tiny.webp",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-mb.avif",
+                    "mb2x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-mb.webp",
+                    "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-mb.avif",
+                    "mb3x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-mb.webp",
+                    "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-mb.avif",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-5-696733a21795a-tiny.webp"
+                },
+                "alt": {
+                    "ru": "Фото Екатерины И.",
+                    "en": "Фото Екатерины И."
+                }
+            }
+        },
+        {
+            "id": 6,
+            "attr": {
+                "author": {
+                    "ru": "Егор Р.",
+                    "en": "Егор Р."
+                },
+                "description": {
+                    "ru": "Илья настоящий профессионал своего дела, не смотря на некоторые недопонимания, честно выполнил свою работу и показал качественный результат.",
+                    "en": "Илья настоящий профессионал своего дела, не смотря на некоторые недопонимания, честно выполнил свою работу и показал качественный результат."
+                }
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-dk.avif",
+                    "dk2x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-dk.webp",
+                    "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-dk.avif",
+                    "dk3x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-dk.webp",
+                    "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-dk.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tiny.webp",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tb.avif",
+                    "tb2x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tb.webp",
+                    "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tb.avif",
+                    "tb3x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tb.webp",
+                    "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tb.avif",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tiny.webp",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-mb.avif",
+                    "mb2x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-mb.webp",
+                    "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-mb.avif",
+                    "mb3x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-mb.webp",
+                    "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-mb.avif",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-6-696733fde1edd-tiny.webp"
+                },
+                "alt": {
+                    "ru": "Фото Егора Р.",
+                    "en": "Фото Егора Р."
+                }
+            }
+        },
+        {
+            "id": 7,
+            "attr": {
+                "author": {
+                    "ru": "Алексей Б.",
+                    "en": "Алексей Б."
+                },
+                "description": {
+                    "ru": "Илья человек слова, сделал все четко и без лишних разговоров. Я более чем доволен результатом! Всем рекомендую к сотрудничеству",
+                    "en": "Илья человек слова, сделал все четко и без лишних разговоров. Я более чем доволен результатом! Всем рекомендую к сотрудничеству"
+                }
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-dk.avif",
+                    "dk2x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-dk.webp",
+                    "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-dk.avif",
+                    "dk3x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-dk.webp",
+                    "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-dk.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tiny.webp",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tb.avif",
+                    "tb2x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tb.webp",
+                    "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tb.avif",
+                    "tb3x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tb.webp",
+                    "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tb.avif",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tiny.webp",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-mb.avif",
+                    "mb2x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-mb.webp",
+                    "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-mb.avif",
+                    "mb3x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-mb.webp",
+                    "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-mb.avif",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/avatar-7-6967347757dca-tiny.webp"
+                },
+                "alt": {
+                    "ru": "Фото Алексея Б.",
+                    "en": "Фото Алексея Б."
+                }
+            }
+        }
+    ]
+}

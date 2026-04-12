@@ -5,21 +5,24 @@ import AppSection from '@/layouts/SectionLayout';
 import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { getTheme } from '@/signals/theme';
-import { useState, type FC } from 'preact/compat';
+import { type FC } from 'preact/compat';
+import { useEffect, useState} from 'preact/hooks';
 import { featuredBgSrcSet } from '../data';
+import { useFetch } from '@/hooks/useFetch';
+import Projects from '@/components/shared/Projects';
 
 const Featured: FC<{ className?: string }> = ({ className }) => {
-    // const { fetchData, loading, errors } = useFetch();
+    const { fetchData, loading, errors } = useFetch();
     const [projects, setProjects] = useState<ProjectType[] | null>(null);
 
-    // useEffect(() => {
-    //     fetchData({
-    //         url: '/api/projects',
-    //         onSuccess: (data) => {
-    //             setProjects(data.data);
-    //         },
-    //     });
-    // }, []);
+    useEffect(() => {
+        fetchData({
+            url: '/api/projects.json',
+            onSuccess: (data) => {
+                setProjects(data.data);
+            },
+        });
+    }, []);
 
     return (
         <AppSection
@@ -62,7 +65,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
                 мое портфолио!
             </p>
 
-            {/* <Projects errors={errors} projects={projects} loading={loading} /> */}
+            <Projects errors={errors} projects={projects} loading={loading} />
 
             <PrimaryLink href="/portfolio" className="mx-auto mt-22 w-fit">
                 На страницу проектов

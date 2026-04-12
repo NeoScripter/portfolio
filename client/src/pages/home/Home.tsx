@@ -6,6 +6,7 @@ import Hero from './partials/Hero';
 import Intro from './partials/Intro';
 import Services from './partials/Services';
 import Upsides from './partials/Upsides';
+import Videos from './partials/Videos';
 
 const Home = () => {
     return (
@@ -15,7 +16,7 @@ const Home = () => {
             <Intro />
             <Featured />
             <Services />
-            {/* <VideosSection /> */}
+            <Videos />
             <Upsides />
             <Faqs />
         </AppLayout>

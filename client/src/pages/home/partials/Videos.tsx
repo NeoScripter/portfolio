@@ -1,75 +1,77 @@
 import ApiError from '@/components/ui/ApiError';
 import { useCarousel } from '@/hooks/useCarousel';
-import type { ReviewType } from '@/lib/types/models/reviews';
-import { useEffect, useRef } from 'preact/hooks';
-import { locale } from '@/signals/locale';
-import { cn, range } from '@/lib/helpers/utils';
-import ReviewCard, { ReviewFallback } from './ReviewCard';
-import CarouselControls from '@/components/ui/CarouselControls';
 import { useFetch } from '@/hooks/useFetch';
+import AppSection from '@/layouts/SectionLayout';
+import { cn, range } from '@/lib/helpers/utils';
+import type { VideoType } from '@/lib/types/models/videos';
+import { useEffect, useRef } from 'preact/hooks';
+import VideoTile, { VideoFallback } from './VideoTile';
+import CarouselControls from '@/components/ui/CarouselControls';
 
-const Reviews = () => {
+const Videos = () => {
     const { fetchData, loading, errors } = useFetch();
     const carouselRef = useRef(null);
     const {
         slides: carouselSlides,
-        handleTouchStart,
         animatingSlide,
+        handleTouchStart,
         handleTouchEnd,
         handleIncrement,
         handleDecrement,
         currentSlide,
         setter,
-    } = useCarousel<ReviewType>({
+    } = useCarousel<VideoType>({
         containerRef: carouselRef,
     });
 
     useEffect(() => {
         fetchData({
-            url: '/api/reviews.json',
+            url: '/api/videos.json',
             onSuccess: (data) => {
                 setter(data.data);
             },
         });
     }, []);
 
-    const listLabel = locale.value === 'ru' ? "Отзывы клиентов" : "Customer reviews";
-
     if (errors != null)
         return (
-            <ApiError
-                resourceRu="отзывов клиентов"
-                resourceEn="client reviews"
-            />
+            <ApiError resourceRu="видео проектов" resourceEn="video projects" />
         );
 
+    const slides =
+        carouselSlides.length < 6
+            ? [...carouselSlides, ...carouselSlides]
+            : carouselSlides;
+
     return (
-        <div>
+        <AppSection>
             <div
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
-                className="relative mt-16 mb-13 sm:my-19 lg:mb-23"
+                className="relative mt-16 mb-40 sm:mt-19"
             >
                 <ul
                     ref={carouselRef}
                     className={cn(
-                        '-ml-5 flex w-max items-start gap-6 sm:-ml-15 sm:gap-10 md:-ml-19 lg:-ml-27 lg:gap-13 xl:-ml-47',
+                        'flex w-max items-start md:-ml-5 lg:-ml-27 xl:-ml-47',
+                        {
+                            'gap-2 sm:gap-5 md:gap-8 xl:gap-10': loading,
+                        },
                     )}
-                    role="tablist"
-                    aria-label={listLabel}
-                    aria-live="polite"
                 >
                     {!loading
-                        ? carouselSlides?.map((review, idx) => (
-                              <ReviewCard
-                                  key={`${review.id}-${idx}`}
+                        ? slides.map((video, idx) => (
+                              <VideoTile
+                                  key={idx}
                                   active={idx === animatingSlide}
-                                  review={review}
+                                  leftNei={idx === animatingSlide - 1}
+                                  rightNei={idx === animatingSlide + 1}
+                                  video={video}
                               />
                           ))
                         : range(0, 8).map((skeleton) => (
-                              <ReviewFallback
-                                  key={`review-skeleton-${skeleton}`}
+                              <VideoFallback
+                                  key={`video-skeleton-${skeleton}`}
                               />
                           ))}
                 </ul>
@@ -81,9 +83,8 @@ const Reviews = () => {
                 handlePrev={handleDecrement}
                 handleNext={handleIncrement}
             />
-        </div>
+        </AppSection>
     );
 };
 
-export default Reviews;
-
+export default Videos;
