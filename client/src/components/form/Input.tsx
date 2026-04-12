@@ -1,7 +1,7 @@
 import { cn } from '@/lib/helpers/utils';
-import type { JSX } from 'preact/jsx-runtime';
+import type { InputHTMLAttributes } from 'preact';
 
-type InputProps = JSX.InputHTMLAttributes<HTMLInputElement> & {
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
     type?: string;
 };
 

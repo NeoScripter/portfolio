@@ -5,6 +5,8 @@ import { cn } from '@/lib/helpers/utils';
 import type { ComponentChildren } from 'preact';
 import type { FC } from 'preact/compat';
 import { Toaster } from 'sonner';
+import ModalLayout from './ModalLayout';
+import Webform from '@/components/shared/Webform';
 
 const AppLayout: FC<{
     children: ComponentChildren;
@@ -25,9 +27,9 @@ const AppLayout: FC<{
 
                 <AppFooter />
 
-                {/* <ModalLayout className="max-w-100 px-10 py-14 lg:max-w-160"> */}
-                {/*     <EmailForm /> */}
-                {/* </ModalLayout> */}
+                <ModalLayout className="max-w-100 px-10 py-14 lg:max-w-160">
+                    <Webform />
+                </ModalLayout>
 
                 <Toaster position="top-center" />
             </main>

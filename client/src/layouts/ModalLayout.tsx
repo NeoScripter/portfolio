@@ -14,6 +14,8 @@ const ModalLayout: FC<{
 
     useEscapeKey(() => (showModal.value = false));
 
+    const isBrowser = typeof window !== 'undefined';
+
     const handleClick = (e: Event) => {
         const target = e.target as HTMLElement;
         if (target.id === 'email-form-modal') {
@@ -22,6 +24,8 @@ const ModalLayout: FC<{
     };
 
     useEffect(() => {
+        if (!isBrowser) return;
+
         document.documentElement.style.overflowY = !showModal.value
             ? 'auto'
             : 'clip';
@@ -30,6 +34,10 @@ const ModalLayout: FC<{
             document.documentElement.style.overflowY = 'auto';
         };
     }, [showModal.value]);
+
+    if (!isBrowser) {
+        return null;
+    }
 
     return createPortal(
         <div

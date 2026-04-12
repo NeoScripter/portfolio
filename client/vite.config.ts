@@ -10,7 +10,7 @@ export default defineConfig({
                 enabled: true,
                 renderTarget: '#app',
                 prerenderScript: import.meta.dirname + '/src/app.tsx', // absolute path
-                additionalPrerenderRoutes: ['/', '/about'],
+                additionalPrerenderRoutes: ['/', '/about', 'gallery', 'project'],
             },
         }),
         tailwindcss(),

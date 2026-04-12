@@ -18,9 +18,15 @@ const TechStack = () => {
     const content = active ? stacks?.[active].attr.html[lang] : null;
     const lastContent = useRef(content);
 
+    const isBrowser = typeof window !== 'undefined';
+
     useEscapeKey(() => handleSetActive(null));
 
     useEffect(() => {
+        if (!isBrowser) {
+            return;
+        }
+
         const onClick = (e: MouseEvent) => {
             const el = e.target as HTMLElement | null;
             if (!el) return;

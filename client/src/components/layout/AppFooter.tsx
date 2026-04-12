@@ -8,6 +8,7 @@ import type { ComponentChildren } from 'preact';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
 import { Button } from '../ui/Button';
+import Webform from '../shared/Webform';
 
 const AppFooter: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
@@ -27,9 +28,9 @@ const AppFooter: FC<{ className?: string }> = ({ className }) => {
         >
             <FooterInfo />
 
-            {/* <div class="hidden max-w-220 flex-1 lg:mt-8 lg:block lg:pr-6 lg:pb-10 xl:mt-14 xl:pr-0 xl:pb-20 2xl:mr-auto"> */}
-            {/*     <EmailForm /> */}
-            {/* </div> */}
+            <div class="hidden max-w-220 flex-1 lg:mt-8 lg:block lg:pr-6 lg:pb-10 xl:mt-14 xl:pr-0 xl:pb-20 2xl:mr-auto">
+                <Webform />
+            </div>
         </footer>
     );
 };

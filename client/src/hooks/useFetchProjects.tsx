@@ -21,6 +21,8 @@ const useFetchProjects = ({ searchQuery, isLatest }: FetchProjectsArgs) => {
     );
     const projectsRef = useRef<HTMLUListElement | null>(null);
 
+    const isBrowser = typeof window !== 'undefined';
+
     const handlePageClick = (newPage: number) => {
         if (projectData?.meta == null) return;
         const lastPage = projectData.meta.last_page;
@@ -36,6 +38,9 @@ const useFetchProjects = ({ searchQuery, isLatest }: FetchProjectsArgs) => {
     };
 
     useEffect(() => {
+        if (!isBrowser) {
+            return;
+        }
         const fetchProjects = () => {
             let url = `/api/projects.json?page=${currentPage}&search=${debouncedQuery}`;
             if (isLatest) {
