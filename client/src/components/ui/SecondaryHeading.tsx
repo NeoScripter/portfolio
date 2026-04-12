@@ -9,7 +9,7 @@ const SecondaryHeading: FC<{
     return (
         <h2
             class={cn(
-                'xs:text-4xl xs:mb-8 mb-6 text-3xl font-medium text-balance sm:mb-10 sm:text-5xl xl:mb-12 xl:text-6xl',
+                'xs:text-4xl xs:mb-8 mb-6 text-3xl font-medium text-balance sm:mb-10 sm:text-5xl xl:mb-12 xl:text-5xl',
                 className,
             )}
         >

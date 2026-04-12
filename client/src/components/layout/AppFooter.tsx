@@ -46,7 +46,7 @@ const FooterInfo = () => {
             <h3 class="mb-4 text-4xl font-bold text-white sm:text-5xl xl:mb-6">
                 Контакты
             </h3>
-            <p class="sm:mr-10 sm:text-lg xl:text-2xl">
+            <p class="sm:mr-10 sm:text-lg xl:text-[1.325rem]">
                 Всегда рад ответить на любые ваши вопросы
             </p>
 
@@ -92,7 +92,7 @@ const FooterLink: FC<{
             target="_blank"
             href={href}
             class={cn(
-                'ease group flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-xl xl:text-2xl',
+                'ease group flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-xl xl:text-[1.325rem]',
                 className,
             )}
         >

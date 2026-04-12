@@ -52,17 +52,17 @@ const StagesInfo = () => {
 
     return (
         <div class="mb-18 sm:mb-20.5 md:mx-auto md:max-w-155 xl:mx-0 xl:mb-0 xl:max-w-123.5 2xl:max-w-162">
-            <SecondaryHeading className="text-center xl:text-left xl:text-5xl 2xl:text-6xl">
+            <SecondaryHeading className="text-center xl:text-left xl:text-5xl">
                 Рабочий процесс
             </SecondaryHeading>
 
-            <p class="mb-8 text-center text-balance sm:mb-10 sm:text-lg lg:mb-12 xl:text-left xl:text-base 2xl:text-2xl">
+            <p class="mb-8 text-center text-balance sm:mb-10 sm:text-lg lg:mb-12 xl:text-left xl:text-base 2xl:text-[1.325rem]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
                 purus arcu, varius eget velit non, laoreet imperdiet orci.
                 Mauris ultrices eget lorem ac vestibulum. Suspendis imperdiet,
             </p>
             <Button
-                class="text-foreground hover:ring-muted-foreground/40 focus-visible:ring-muted-foreground/40 border-muted-none mx-auto flex hover:bg-zinc-700/20 xl:mx-0 xl:text-lg 2xl:text-2xl"
+                class="text-foreground hover:ring-muted-foreground/40 focus-visible:ring-muted-foreground/40 border-muted-none mx-auto flex hover:bg-zinc-700/20 xl:mx-0 xl:text-lg 2xl:text-[1.325rem]"
                 onClick={() => (showModal.value = true)}
                 variant="hero"
             >

@@ -18,7 +18,7 @@ const NotFound = () => {
                 <h1 class="mt-11 mb-5 text-xl font-bold sm:mb-11 sm:text-4xl xl:text-5xl">
                     Упс! Страница не найдена(
                 </h1>
-                <p class="max-w-200 sm:text-xl xl:text-2xl">
+                <p class="max-w-200 sm:text-xl xl:text-[1.325rem]">
                     Что-то пошло не так. Возможно, эта страница была перемещена
                     или удалена
                 </p>

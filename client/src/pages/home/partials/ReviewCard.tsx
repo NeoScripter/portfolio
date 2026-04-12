@@ -32,7 +32,7 @@ const ReviewCard: FC<{ review: ReviewType; active: boolean }> = ({
                 <blockquote>
                     <p class="mb-6">{review.attr.description[lang]}</p>
                 </blockquote>
-                <p class="font-bold md:text-xl xl:text-2xl">
+                <p class="font-bold md:text-xl xl:text-[1.325rem]">
                     <cite class="not-italic">
                         {review.attr.author[lang]}
                     </cite>
@@ -60,7 +60,7 @@ export const ReviewFallback = () => {
                     dignissim malesuada commodo ultrices.
                 </p>
 
-                <p class="skeleton w-40 animate-pulse font-bold md:text-xl xl:text-2xl">
+                <p class="skeleton w-40 animate-pulse font-bold md:text-xl xl:text-[1.325rem]">
                     Lorem
                 </p>
             </div>

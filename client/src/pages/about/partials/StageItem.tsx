@@ -39,7 +39,7 @@ const StageItem: FC<{
             >
                 <stage.icon class="size-8" />
             </div>
-            <h4 class="mb-3 text-xl font-bold 2xl:text-2xl">{`${order}. ${stage.title[lang]}`}</h4>
+            <h4 class="mb-3 text-xl font-bold 2xl:text-[1.325rem]">{`${order}. ${stage.title[lang]}`}</h4>
             <p class="text-sm sm:text-base xl:text-sm 2xl:text-base">
                 {stage.description[lang]}
             </p>

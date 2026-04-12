@@ -128,7 +128,7 @@ const PaginationButton: FunctionalComponent<PaginationButtonProps> = ({
     class: className,
 }) => {
     const baseClasses = cn(
-        'relative inline-flex size-8 items-center justify-center rounded-sm font-medium ring-1 transition duration-200 ease-in ring-inset 2xl:size-12 2xl:text-2xl',
+        'relative inline-flex size-8 items-center justify-center rounded-sm font-medium ring-1 transition duration-200 ease-in ring-inset 2xl:size-12 2xl:text-[1.325rem]',
         {
             'text-background ring-muted-foreground bg-foreground': link.active,
             'text-foreground ring-inherit hover:scale-110':

@@ -54,7 +54,7 @@ const FaqCard: FC<{
                 <div>
                     <h3
                         id={`faq-title-${faq.id}`}
-                        class="xs:text-lg font-bold xl:text-2xl"
+                        class="xs:text-lg font-bold xl:text-[1.325rem]"
                     >
                         {faq.attr.title[lang]}
                     </h3>
@@ -85,7 +85,7 @@ export const FaqFallback = () => {
     return (
         <li class="border-accent-foreground/10 bg-muted shadow-faq relative rounded-sm border px-5 py-7 sm:px-7 sm:pt-10 sm:pb-11 xl:px-9.5">
             <div>
-                <h3 class="xs:text-lg skeleton min-h-15 w-full rounded-sm font-bold xl:min-h-20 xl:text-2xl">
+                <h3 class="xs:text-lg skeleton min-h-15 w-full rounded-sm font-bold xl:min-h-20 xl:text-[1.325rem]">
                     Lorem ipsum Lorem ipsum Lorem ipsum
                 </h3>
             </div>
