@@ -34,7 +34,7 @@ const Faqs = () => {
 
     return (
         <AppSection>
-            <SecondaryHeading className="xl:mb-28">
+            <SecondaryHeading>
                 Ответы на вопросы
             </SecondaryHeading>
 

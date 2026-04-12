@@ -65,7 +65,31 @@ import Journey2Mb2xWebp from "@/assets/imgs/about/journey/journey-2-mb2x.webp";
 import Journey2Mb3xAvif from "@/assets/imgs/about/journey/journey-2-mb3x.avif";
 import Journey2Mb3xWebp from "@/assets/imgs/about/journey/journey-2-mb3x.webp";
 
+import CanvasDkTinyWebp from "/src/assets/imgs/about/tech-stack/canvas-dk-tiny.webp";
+import CanvasDkAvif from "/src/assets/imgs/about/tech-stack/canvas-dk.avif";
+import CanvasDkWebp from "/src/assets/imgs/about/tech-stack/canvas-dk.webp";
+import CanvasDk2xAvif from "/src/assets/imgs/about/tech-stack/canvas-dk2x.avif";
+import CanvasDk2xWebp from "/src/assets/imgs/about/tech-stack/canvas-dk2x.webp";
+import CanvasDk3xAvif from "/src/assets/imgs/about/tech-stack/canvas-dk3x.avif";
+import CanvasDk3xWebp from "/src/assets/imgs/about/tech-stack/canvas-dk3x.webp";
+import CanvasTbTinyWebp from "/src/assets/imgs/about/tech-stack/canvas-tb-tiny.webp";
+import CanvasTbAvif from "/src/assets/imgs/about/tech-stack/canvas-tb.avif";
+import CanvasTbWebp from "/src/assets/imgs/about/tech-stack/canvas-tb.webp";
+import CanvasTb2xAvif from "/src/assets/imgs/about/tech-stack/canvas-tb2x.avif";
+import CanvasTb2xWebp from "/src/assets/imgs/about/tech-stack/canvas-tb2x.webp";
+import CanvasTb3xAvif from "/src/assets/imgs/about/tech-stack/canvas-tb3x.avif";
+import CanvasTb3xWebp from "/src/assets/imgs/about/tech-stack/canvas-tb3x.webp";
+import CanvasMbTinyWebp from "/src/assets/imgs/about/tech-stack/canvas-mb-tiny.webp";
+import CanvasMbAvif from "/src/assets/imgs/about/tech-stack/canvas-mb.avif";
+import CanvasMbWebp from "/src/assets/imgs/about/tech-stack/canvas-mb.webp";
+import CanvasMb2xAvif from "/src/assets/imgs/about/tech-stack/canvas-mb2x.avif";
+import CanvasMb2xWebp from "/src/assets/imgs/about/tech-stack/canvas-mb2x.webp";
+import CanvasMb3xAvif from "/src/assets/imgs/about/tech-stack/canvas-mb3x.avif";
+import CanvasMb3xWebp from "/src/assets/imgs/about/tech-stack/canvas-mb3x.webp";
+
 import type { ImageSrcSet } from '@/lib/types/shared';
+import { ChartLine, Code, Laptop, NotepadText, Palette, Pencil, Presentation, Search, Shield, Smartphone, Users, Zap, type LucideIcon } from "lucide-preact";
+import type { ServiceType } from "../home/data";
 
 export const heroBgSrcSet: ImageSrcSet = {
     dk: BgDkWebp,
@@ -163,6 +187,30 @@ export const journey2SrcSet: ImageSrcSet = {
     mbTiny: Journey2MbTinyWebp,
 };
 
+export const canvasSrcSet: ImageSrcSet = {
+    dk: CanvasDkWebp,
+    dkAvif: CanvasDkAvif,
+    dk2x: CanvasDk2xWebp,
+    dkAvif2x: CanvasDk2xAvif,
+    dk3x: CanvasDk3xWebp,
+    dkAvif3x: CanvasDk3xAvif,
+    dkTiny: CanvasDkTinyWebp,
+    tb: CanvasTbWebp,
+    tbAvif: CanvasTbAvif,
+    tb2x: CanvasTb2xWebp,
+    tbAvif2x: CanvasTb2xAvif,
+    tb3x: CanvasTb3xWebp,
+    tbAvif3x: CanvasTb3xAvif,
+    tbTiny: CanvasTbTinyWebp,
+    mb: CanvasMbWebp,
+    mbAvif: CanvasMbAvif,
+    mb2x: CanvasMb2xWebp,
+    mbAvif2x: CanvasMb2xAvif,
+    mb3x: CanvasMb3xWebp,
+    mbAvif3x: CanvasMb3xAvif,
+    mbTiny: CanvasMbTinyWebp,
+};
+
 export type JourneyItemType = {
     id: string;
     img: ImageSrcSet;
@@ -199,6 +247,170 @@ export const journeyItems: JourneyItemType[] = [
         text: {
             ru: '<p>Я стал активно изучать и практиковать HTML, CSS и JavaScript. После Rust эти языки казались невероятно простыми, и я довольно быстро написал несколько простых сайтов и приложений буквально через пару недель после начала их изучения. Освоив базовые навыки, я создал портфолио и стал брать заказы в качестве фрилансера. В процессе работы я освоил серверный язык PHP и многие другие фреймворки и платформы. Я продолжаю регулярно изучать что-то новое в этой сфере и всегда стараюсь стать лучше. </p> <p> На данный момент я уже написал большое количество сайтов и приложений для клиентов, которые с удовольствием ими пользуются. В своей работе я руководствуюсь высокими стандартами и всегда стараюсь сделать максимально качественный продукт. Именно по этой причине я не работаю с конструкторами сайтов вроде Тильды, так как эти инструменты, по моему мнению, неспособны создать быстрый и производительный веб-сайт, который легко кастомизировать и поддерживать.</p>',
             en: '<p>So I started studying HTML, CSS, and JavaScript. Compared to Rust, they felt a lot easier. Within a few weeks, I was already building basic websites and apps. Once I got comfortable with those, I put together a portfolio and began taking on freelance jobs. Along the way, I also learned PHP and picked up various frameworks and platforms. I’m still constantly learning and trying to get better. </p> <p> Over time, I’ve built a wide range of websites and apps for clients who are happy with my work. I have high standards and always try to deliver the best possible product. That’s why I don’t use website builders like Tilda—I just don’t think they can produce sites that are as fast, efficient, and easy to maintain.</p>',
+        },
+    },
+];
+
+
+export interface StageType {
+    id: string;
+    icon: LucideIcon;
+    title: {
+        ru: string;
+        en: string;
+    };
+    description: {
+        ru: string;
+        en: string;
+    };
+}
+
+export const stages: StageType[] = [
+    {
+        id: crypto.randomUUID(),
+        icon: NotepadText,
+        title: {
+            ru: 'Обсуждение задачи',
+            en: 'Discussion',
+        },
+        description: {
+            ru: 'Профессиональные презентации, которые впечатляют клиентов и эффективно доносят ваши идеи',
+            en: 'Professional presentations that impress clients and effectively communicate your ideas',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: ChartLine,
+        title: {
+            ru: 'Анализ',
+            en: 'Analisys',
+        },
+        description: {
+            ru: 'Чистый и поддерживаемый код с использованием современных технологий и лучших практик разработки',
+            en: 'Clean, maintainable code using modern technologies and development best practices',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Pencil,
+        title: {
+            ru: 'Дизайн-макет',
+            en: 'Design mockup',
+        },
+        description: {
+            ru: 'Эстетичный дизайн, ориентированный на пользовательский опыт и визуальную привлекательность',
+            en: 'Aesthetic design focused on user experience and visual appeal',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Laptop,
+        title: {
+            ru: 'Верстка',
+            en: 'Development',
+        },
+        description: {
+            ru: 'Полная адаптивность для всех устройств — от смартфонов до десктопных компьютеров',
+            en: 'Fully responsive across all devices',
+        },
+    },
+];
+
+export const services: ServiceType[] = [
+    {
+        id: crypto.randomUUID(),
+        icon: Presentation,
+        title: {
+            ru: 'Лендинг',
+            en: 'Landing Page',
+        },
+        description: {
+            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Code,
+        title: {
+            ru: 'Веб-разработка',
+            en: 'Web Development',
+        },
+        description: {
+            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Palette,
+        title: {
+            ru: 'UI/UX Дизайн',
+            en: 'UI/UX Design',
+        },
+        description: {
+            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Smartphone,
+        title: {
+            ru: 'Мобильные приложения',
+            en: 'Mobile Applications',
+        },
+        description: {
+            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Search,
+        title: {
+            ru: 'SEO Оптимизация',
+            en: 'SEO Optimization',
+        },
+        description: {
+            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Zap,
+        title: {
+            ru: 'Технический аудит',
+            en: 'Technical Audit',
+        },
+        description: {
+            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Shield,
+        title: {
+            ru: 'Кибербезопасность',
+            en: 'Cybersecurity',
+        },
+        description: {
+            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Users,
+        title: {
+            ru: 'Техническая поддержка',
+            en: 'Technical Support',
+        },
+        description: {
+            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
         },
     },
 ];

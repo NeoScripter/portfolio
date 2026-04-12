@@ -6,7 +6,7 @@ export interface VideoResource {
 
 export interface VideoType {
     id: number;
-    attributes: {
+    attr: {
         url: string;
         title: {
             ru: string;

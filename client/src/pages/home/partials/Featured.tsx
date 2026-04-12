@@ -24,7 +24,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
     return (
         <AppSection
             className={cn(
-                'relative isolate bg-contain bg-no-repeat pt-14 pb-7 sm:pt-19 sm:pb-0 lg:pt-27 lg:pb-5',
+                'relative isolate bg-contain bg-no-repeat',
                 className,
             )}
         >

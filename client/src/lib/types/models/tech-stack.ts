@@ -1,10 +1,10 @@
-export interface StackResource {
-    data: StackType[];
+export interface TechStackResource {
+    data: TechStackType[];
 }
 
-export interface StackType {
+export interface TechStackType {
     id: number;
-    attributes: {
+    attr: {
         html: {
             ru: string;
             en: string;

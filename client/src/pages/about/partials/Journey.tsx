@@ -10,7 +10,7 @@ const Journey: FC<{ className?: string }> = ({ className }) => {
     return (
         <AppSection
             className={cn(
-                'full-bleed px-0 pt-14 sm:px-0 sm:pt-19 lg:px-0 lg:pt-17',
+                'full-bleed px-0 sm:px-0 lg:px-0',
                 className,
             )}
         >

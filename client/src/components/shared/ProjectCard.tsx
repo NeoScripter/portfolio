@@ -23,7 +23,7 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
                         srcs={project.image.srcSet}
                     />
                     <a
-                        href={`/portfolio/${project.attributes?.slug}`}
+                        href={`/portfolio/${project.attr?.slug}`}
                         class="absolute inset-0 z-1 block size-full focus:outline-none"
                     ></a>
                     <span
@@ -34,10 +34,10 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
             )}
             <div class="px-5 pt-5 pb-7 sm:px-6 sm:pt-6 md:px-7 xl:px-8 xl:pt-8">
                 <h4 class="mb-5.5 text-2xl font-medium hyphens-auto md:text-3xl xl:mb-7 2xl:text-4xl">
-                    {project.attributes?.title?.[lang]}
+                    {project.attr?.title?.[lang]}
                 </h4>
                 <p class="text-foreground/60 ellipsis-multiline text-sm md:text-base xl:text-lg">
-                    {project.attributes?.description?.[lang]}
+                    {project.attr?.description?.[lang]}
                 </p>
             </div>
         </li>

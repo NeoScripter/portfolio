@@ -7,7 +7,7 @@ import { upsides, type UpsideType } from '../data';
 
 const Upsides = () => {
     return (
-        <AppSection className="pb-10 sm:pb-8 lg:pb-4 2xl:pb-8">
+        <AppSection>
             <SecondaryHeading className="text-center text-balance">
                 Преимущества работы со мной
             </SecondaryHeading>
@@ -17,7 +17,7 @@ const Upsides = () => {
                 простых портфолио до сложных интернет-магазинов.
             </p>
 
-            <div className="mt-16 mb-13 sm:my-19 lg:mb-23">
+            <div className="mt-16 sm:mt-19">
                 <ul
                     className={cn(
                         'grid gap-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-15 md:py-5 lg:grid-cols-3 lg:gap-x-28 lg:gap-y-17 lg:py-8 xl:gap-x-32 xl:gap-y-30 xl:py-12',

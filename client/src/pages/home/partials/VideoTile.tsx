@@ -21,8 +21,8 @@ const VideoTile: FC<{
             <iframe
                 width="100%"
                 height="100%"
-                src={video.attributes.url}
-                title={video.attributes.title[lang]}
+                src={video.attr.url}
+                title={video.attr.title[lang]}
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"

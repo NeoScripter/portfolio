@@ -56,7 +56,7 @@ export interface ProjectTechnologyType {
 
 export interface ProjectType {
     id: number;
-    attributes: {
+    attr: {
         title: {
             ru: string;
             en: string;

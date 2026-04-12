@@ -28,7 +28,7 @@ export type ProjectModuleAttributes = {
 
 export type ProjectModuleType = {
     id: number;
-    attributes: ProjectModuleAttributes;
+    attr: ProjectModuleAttributes;
     firstImage?: ImageFormats;
     secondImage?: ImageFormats;
 };

@@ -4,7 +4,7 @@ import ServiceCarousel from './ServiceCarousel';
 
 const Services = () => {
     return (
-        <AppSection className="py-28 sm:pt-38 sm:pb-23 lg:pt-35 lg:pb-41 xl:pb-35">
+        <AppSection>
             <SecondaryHeading>
                 Создаю сайты, которые действительно работают
             </SecondaryHeading>
