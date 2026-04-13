@@ -3,7 +3,7 @@ import {
     createSessionSignal,
 } from '@/signals/session-store';
 import type { FormEvent } from 'preact/compat';
-import { useCallback, useRef, useState } from 'preact/hooks';
+import { useCallback, useState } from 'preact/hooks';
 
 type FormValues = Record<string, unknown>;
 type FormErrors<T extends FormValues> = Partial<Record<keyof T, string>>;
@@ -23,6 +23,9 @@ export const isServerError = (error: unknown): error is ServerError =>
     typeof error === 'object' &&
     error !== null &&
     ('message' in error || 'errors' in error);
+
+const BACKUP_KEY = 'form_backup';
+const backupSignal = createSessionSignal<FormValues>(BACKUP_KEY, {});
 
 export type UseFormReturn<T extends FormValues> = {
     values: T;
@@ -51,28 +54,24 @@ export const useForm = <T extends FormValues>(
     const [touched, setTouched] = useState<FormTouched<T>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [recentlySuccessful, setRecentlySuccessful] = useState(false);
-
-    const backupKey = useRef(
-        `form_backup_${JSON.stringify(Object.keys(initialValues))}`,
-    );
-    const backupSignal = useRef(
-        createSessionSignal<T | null>(backupKey.current, null),
-    );
-
     const [hasBackup, setHasBackup] = useState<boolean>(
-        backupSignal.current.value !== null,
+        Object.keys(backupSignal.value).length > 0,
     );
 
     const handleRestoreBackup = useCallback(() => {
-        const backup = backupSignal.current.value;
-        if (backup != null) {
-            setValues(backup);
+        if (Object.keys(backupSignal.value).length > 0) {
+            setValues(backupSignal.value as T);
         }
     }, []);
 
     const handleChange = useCallback(
         (name: keyof T, value: unknown) => {
-            setValues((prev) => ({ ...prev, [name]: value }));
+            setValues((prev) => {
+                const next = { ...prev, [name]: value };
+                backupSignal.value = next;
+                setHasBackup(true);
+                return next;
+            });
             if (errors[name]) {
                 setErrors((prev) => ({ ...prev, [name]: undefined }));
             }
@@ -84,16 +83,17 @@ export const useForm = <T extends FormValues>(
         (name: keyof T) => {
             setTouched((prev) => ({ ...prev, [name]: true }));
             if (validate) {
-                const fieldErrors = validate({ ...values });
-                if (fieldErrors[name]) {
+                setValues((current) => {
+                    const fieldErrors = validate(current);
                     setErrors((prev) => ({
                         ...prev,
-                        [name]: fieldErrors[name],
+                        [name]: fieldErrors[name] ?? undefined,
                     }));
-                }
+                    return current;
+                });
             }
         },
-        [values, validate],
+        [validate],
     );
 
     const handleSubmit = useCallback(
@@ -113,16 +113,13 @@ export const useForm = <T extends FormValues>(
             setIsSubmitting(true);
             try {
                 await onSubmit(values);
-
-                clearSessionSignal(backupKey.current);
-                backupSignal.current.value = null;
+                clearSessionSignal(BACKUP_KEY);
+                backupSignal.value = {};
                 setHasBackup(false);
                 setRecentlySuccessful(true);
-
                 setTimeout(() => setRecentlySuccessful(false), 3000);
             } catch (error) {
                 if (isServerError(error)) {
-                    console.error('Form submission error:', error);
                     if (error.errors) {
                         setErrors((prev) => ({ ...prev, ...error.errors }));
                         const serverTouched = Object.keys(error.errors).reduce<
@@ -147,14 +144,18 @@ export const useForm = <T extends FormValues>(
         setTouched({});
         setIsSubmitting(false);
         setRecentlySuccessful(false);
-        clearSessionSignal(backupKey.current);
-        backupSignal.current.value = null;
+        clearSessionSignal(BACKUP_KEY);
+        backupSignal.value = {};
         setHasBackup(false);
     }, [initialValues]);
 
     const setFormValues = useCallback((newValues: T) => {
         setValues(newValues);
-        backupSignal.current.value = newValues;
+
+        const stringOnlyValues = Object.fromEntries(
+            Object.entries(newValues).filter(([_, v]) => typeof v === 'string'),
+        ) as T;
+        backupSignal.value = stringOnlyValues;
         setHasBackup(true);
     }, []);
 

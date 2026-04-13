@@ -1,13 +1,12 @@
-import AdminBtn from '@/components/form/AdminBtn';
-import AdminInput from '@/components/form/AdminInput';
-import AdminTextArea from '@/components/form/AdminTextArea';
+import { Form } from '@/components/form/Form';
+import { FormButtons } from '@/components/form/FormButtons';
+import { FormInput } from '@/components/form/FormInput';
+import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
-import FormLayout from '@/layouts/FormLayout';
 import type { FaqType } from '@/lib/types/models/faqs';
-import { createSessionSignal } from '@/signals/session-store';
 import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
-import { useMemo, useReducer } from 'preact/hooks';
+import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
 
 type FaqUpsertState = {
@@ -17,44 +16,28 @@ type FaqUpsertState = {
     content_ru: string;
 };
 
-const faqSignal = createSessionSignal('faq', {});
+const validateFaq = (
+    values: FaqUpsertState,
+): Partial<Record<keyof FaqUpsertState, string>> => {
+    const errors: Partial<Record<keyof FaqUpsertState, string>> = {};
 
-type Action =
-    | { type: 'SET_TITLE_EN'; payload: string }
-    | { type: 'SET_TITLE_RU'; payload: string }
-    | { type: 'SET_CONTENT_EN'; payload: string }
-    | { type: 'SET_CONTENT_RU'; payload: string }
-    | { type: 'RESTORE_FROM_BACKUP'; payload: FaqUpsertState };
+    if (!values.title_en.trim())
+        errors.title_en = 'English question is required';
+    if (!values.title_ru.trim())
+        errors.title_ru = 'Russian question is required';
+    if (!values.content_en.trim())
+        errors.content_en = 'English answer is required';
+    if (!values.content_ru.trim())
+        errors.content_ru = 'Russian answer is required';
 
-function reducer(state: FaqUpsertState, action: Action): FaqUpsertState {
-    let newState: FaqUpsertState;
-
-    switch (action.type) {
-        case 'SET_TITLE_EN':
-            newState = { ...state, title_en: action.payload };
-            break;
-        case 'SET_TITLE_RU':
-            newState = { ...state, title_ru: action.payload };
-            break;
-        case 'SET_CONTENT_EN':
-            newState = { ...state, content_en: action.payload };
-            break;
-        case 'SET_CONTENT_RU':
-            newState = { ...state, content_ru: action.payload };
-            break;
-        case 'RESTORE_FROM_BACKUP':
-            return action.payload;
-        default:
-            throw new Error('Unexpected action type');
-    }
-
-    faqSignal.value = newState;
-    return newState;
-}
+    return errors;
+};
 
 const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
     const { route } = useLocation();
-    const initialState = useMemo(
+    const { fetchData } = useFetch();
+
+    const initialValues = useMemo<FaqUpsertState>(
         () => ({
             title_en: faq?.attr.title?.en ?? '',
             title_ru: faq?.attr.title?.ru ?? '',
@@ -63,24 +46,15 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
         }),
         [faq],
     );
-    const [state, dispatch] = useReducer(reducer, initialState);
 
-    const handleBackupClick = () => {
-        dispatch({
-            type: 'RESTORE_FROM_BACKUP',
-            payload: faqSignal.value as FaqUpsertState,
-        });
-    };
-    const { fetchData, loading, errors } = useFetch();
-
-    const routeName = faq != null ? `/admin/faqs/${faq.id}` : '/admin/faqs';
+    const url = faq != null ? `/admin/faqs/${faq.id}` : '/admin/faqs';
     const method = faq != null ? 'PUT' : 'POST';
 
-    async function submit() {
+    async function submit(values: FaqUpsertState) {
         await fetchData({
-            url: routeName,
-            method: method,
-            payload: state,
+            url,
+            method,
+            payload: values,
             onSuccess: () => {
                 route('/faqs');
                 toast.success('Success!');
@@ -90,45 +64,21 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
     }
 
     return (
-        <FormLayout handleBackupClick={handleBackupClick} onSubmit={submit}>
-            <AdminInput
-                key="title_en"
-                label="Question (EN)"
-                value={state.title_en}
-                onInput={(value) =>
-                    dispatch({ type: 'SET_TITLE_EN', payload: value })
-                }
-                error={errors?.errors?.title_en?.[0]}
+        <Form
+            initialValues={initialValues}
+            onSubmit={submit}
+            className="space-y-6"
+            validate={validateFaq}
+        >
+            <FormInput name="title_en" label="Question (EN)" required />
+            <FormInput name="title_ru" label="Question (RU)" required />
+            <FormTextArea name="content_en" label="Answer (EN)" required />
+            <FormTextArea name="content_ru" label="Answer (RU)" required />
+            <FormButtons
+                submitText={faq ? 'Update' : 'Create'}
+                cancelLink="/faqs"
             />
-            <AdminInput
-                key="title_ru"
-                label="Question (RU)"
-                value={state.title_ru}
-                onInput={(value) =>
-                    dispatch({ type: 'SET_TITLE_RU', payload: value })
-                }
-                error={errors?.errors?.title_ru?.[0]}
-            />
-            <AdminTextArea
-                key="content_en"
-                label="Answer (EN)"
-                value={state.content_en}
-                onInput={(value) =>
-                    dispatch({ type: 'SET_CONTENT_EN', payload: value })
-                }
-                error={errors?.errors?.content_en?.[0]}
-            />
-            <AdminTextArea
-                key="content_ru"
-                label="Answer (RU)"
-                value={state.content_ru}
-                onInput={(value) =>
-                    dispatch({ type: 'SET_CONTENT_RU', payload: value })
-                }
-                error={errors?.errors?.content_ru?.[0]}
-            />
-            <AdminBtn cancelLink="/faqs" loading={loading} />
-        </FormLayout>
+        </Form>
     );
 };
 

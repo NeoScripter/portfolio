@@ -10,8 +10,10 @@ type FormProps<T extends FormValues> = {
     onSubmit: (values: T) => Promise<void> | void;
     validate?: (values: T) => Partial<Record<keyof T, string>>;
     className?: string;
-    children: ComponentChildren | ((formState: UseFormReturn<T>) => ComponentChildren);
-}
+    children:
+        | ComponentChildren
+        | ((formState: UseFormReturn<T>) => ComponentChildren);
+};
 
 export const Form = <T extends FormValues>({
     initialValues = {} as T,
@@ -25,7 +27,7 @@ export const Form = <T extends FormValues>({
         <FormContext.Provider value={formState}>
             <form
                 onSubmit={formState.handleSubmit}
-                className={cn(className)}
+                className={cn('max-w-160', className)}
                 noValidate
             >
                 {typeof children === 'function'

@@ -1,7 +1,9 @@
 import { useFormContext } from '@/context/FormContext';
 import InputError from './InputError';
+import Label from './Label';
+import TextArea from './TextArea';
 
-type FormTextareaProps = {
+type FormTextAreaProps = {
     name: string;
     label?: string;
     placeholder?: string;
@@ -9,25 +11,25 @@ type FormTextareaProps = {
     required?: boolean;
 };
 
-export const FormTextarea = ({
+export const FormTextArea = ({
     name,
     label,
     placeholder,
     rows = 4,
     required = false,
-}: FormTextareaProps) => {
+}: FormTextAreaProps) => {
     const { values, errors, touched, handleChange, handleBlur } =
         useFormContext();
     const hasError = touched[name] && errors[name];
     return (
-        <div className="flex gap-2">
+        <div className="grid gap-2">
             {label && (
-                <label htmlFor={name} className="form-label">
+                <Label htmlFor={name}>
                     {label}
-                    {required && <span className="required">*</span>}
-                </label>
+                    {required && <span className="text-orange-500">*</span>}
+                </Label>
             )}
-            <textarea
+            <TextArea
                 id={name}
                 name={name}
                 value={(values[name] as string) ?? ''}
@@ -37,10 +39,9 @@ export const FormTextarea = ({
                 onBlur={() => handleBlur(name)}
                 placeholder={placeholder}
                 rows={rows}
-                className="rounded border p-1"
                 aria-invalid={hasError ? 'true' : 'false'}
             />
-            {hasError && <InputError message={errors[name]} />}
+            <InputError message={errors[name]} />
         </div>
     );
 };

@@ -23,9 +23,6 @@ export const FormInput = ({
         useFormContext();
     const hasError = touched[name] && errors[name];
 
-    console.log(touched[name]);
-    console.log(errors[name]);
-
     return (
         <div className="grid gap-2">
             {label && (

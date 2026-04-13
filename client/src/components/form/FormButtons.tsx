@@ -7,55 +7,54 @@ type FormButtonsProps = {
     showReset?: boolean;
     resetText?: string;
     onCancel?: () => void;
+    cancelLink?: string;
     successMessage?: string;
     cancelText?: string;
-}
+};
 
 export const FormButtons = ({
     submitText = 'Submit',
     showReset = false,
     resetText = 'Reset',
     onCancel,
+    cancelLink,
     successMessage = 'Saved',
     cancelText = 'Cancel',
 }: FormButtonsProps) => {
-    const { isSubmitting, resetForm, recentlySuccessful } = useFormContext();
+    const { isSubmitting, resetForm, recentlySuccessful, handleRestoreBackup } =
+        useFormContext();
 
-    const label = isSubmitting ? 'Submitting...' :
-        recentlySuccessful ? successMessage :
-            submitText;
+    const label = isSubmitting
+        ? 'Submitting...'
+        : recentlySuccessful
+          ? successMessage
+          : submitText;
 
     return (
-        <div className="flex gap-1.5">
-            <AuthButton
-                type="submit"
-                class="mt-4"
-                disabled={isSubmitting}
-            >
+        <div className="flex gap-2.5">
+            <AuthButton type="submit" disabled={isSubmitting}>
                 {isSubmitting && <LoaderCircle class="h-4 w-4 animate-spin" />}
                 {label}
             </AuthButton>
 
             {showReset && (
-                <button
-                    type="button"
-                    className="cursor-pointer rounded bg-gray-200 p-1 text-black"
-                    onClick={resetForm}
-                    disabled={isSubmitting}
-                >
+                <AuthButton onClick={resetForm} variant="secondary">
                     {resetText}
-                </button>
+                </AuthButton>
             )}
-            {onCancel && (
-                <button
-                    type="button"
-                    className="cursor-pointer rounded bg-red-500 p-1"
-                    onClick={onCancel}
-                    disabled={isSubmitting}
-                >
-                    {cancelText}
-                </button>
-            )}
+            {onCancel ||
+                (cancelLink && (
+                    <AuthButton
+                        href={cancelLink}
+                        onClick={onCancel}
+                        variant="secondary"
+                    >
+                        {cancelText}
+                    </AuthButton>
+                ))}
+            <AuthButton type='button' onClick={handleRestoreBackup} disabled={isSubmitting}>
+                Restore
+            </AuthButton>
         </div>
     );
 };
