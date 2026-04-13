@@ -9,6 +9,7 @@ import { useClickOutside } from '@/hooks/useClickOutside';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import AccountMenu from './partials/AccountMenu';
 import Monogram from '../ui/Monogram';
+import { locale } from '@/signals/locale';
 
 function Sidebar() {
     const id = useId();
@@ -54,6 +55,8 @@ function Sidebar() {
 export default Sidebar;
 
 const Header = () => {
+    const lang = locale.value === 'ru' ? 'ru' : 'en';
+
     return (
         <header
             class={cn('flex items-center', {
@@ -74,7 +77,7 @@ const Header = () => {
                     !isMini.value ? 'max-w-64' : 'max-w-0',
                 )}
             >
-                Admin Panel
+                {lang === 'en' ? 'Admin Panel' : ' Админ панель'}
             </div>
         </header>
     );

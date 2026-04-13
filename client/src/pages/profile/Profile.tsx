@@ -61,7 +61,7 @@ export default function Profile() {
                         }}
                     />
 
-                    <AppTitle titleRu="Вход" titleEn="Login" />
+                    <AppTitle titleRu="Настройки профиля" titleEn="Profile Settings" />
 
                     <Form
                         initialValues={{
