@@ -35,7 +35,7 @@ const AccountMenu: FC<{ id: string; name: string; show: boolean }> = ({
 
                 <SidebarLink
                     onClick={hide}
-                    url="/settings/profile"
+                    url="/admin/settings/profile"
                     icon={Settings}
                     label="Settings"
                     collapses={false}

@@ -29,7 +29,7 @@ export const FormButtons = ({
         <div className="flex gap-1.5">
             <AuthButton
                 type="submit"
-                class="mt-4 w-full"
+                class="mt-4"
                 disabled={isSubmitting}
             >
                 {isSubmitting && <LoaderCircle class="h-4 w-4 animate-spin" />}

@@ -7,6 +7,7 @@ const Gallery = lazy(() => import('./pages/gallery/Gallery'));
 const Project = lazy(() => import('./pages/project/Project'));
 const Login = lazy(() => import('./pages/login/Login'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
+const Profile = lazy(() => import('./pages/profile/Profile'));
 
 export const routes = [
     { component: Home, path: '/' },
@@ -17,6 +18,7 @@ export const routes = [
 
     // Admin Panel
     { component: Dashboard, path: '/admin' },
+    { component: Profile, path: '/admin/settings/profile' },
 
     { component: NotFound, path: '*' },
 ];

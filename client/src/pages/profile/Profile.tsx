@@ -1,9 +1,12 @@
+import { Form } from '@/components/form/Form';
+import { FormButtons } from '@/components/form/FormButtons';
+import { FormInput } from '@/components/form/FormInput';
+import AppTitle from '@/components/layout/AppTitle';
 import SubHeader from '@/components/ui/SubHeader';
 import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import ProfileLayout from '@/layouts/ProfileLayout';
 import { currentUser } from '@/signals/auth';
-import type { TargetedEvent } from 'preact';
 import { toast } from 'sonner';
 
 interface State {
@@ -11,20 +14,26 @@ interface State {
     email: string;
 }
 
-type Action =
-    | { type: 'SET_NAME'; payload: string }
-    | { type: 'SET_EMAIL'; payload: string };
+const validateProfile = (values: State): Partial<Record<keyof State, string>> => {
+    const errors: Partial<Record<keyof State, string>> = {};
 
-const initialState: State = {
-    name: currentUser.value?.name || '',
-    email: currentUser.value?.email || '',
+    if (!values.email.trim()) {
+        errors.email = 'Email is required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
+    }
+
+    if (!values.name.trim()) {
+        errors.name = 'Username is required';
+    } 
+
+    return errors;
 };
 
 export default function Profile() {
-    const { fetchData, resentlySuccessful, loading, errors } = useFetch();
+    const { fetchData } = useFetch();
 
     async function submit(values: State) {
-
         await fetchData({
             url: '/settings/profile',
             method: 'PATCH',
@@ -52,68 +61,32 @@ export default function Profile() {
                         }}
                     />
 
-                    <form onSubmit={submit} className="space-y-6">
-                        <div className="grid gap-2">
-                            <Label htmlFor="name">Name</Label>
+                    <AppTitle titleRu="Вход" titleEn="Login" />
 
-                            <Input
-                                id="name"
-                                class="mt-1 block w-full"
-                                value={state.name}
-                                required
-                                autoComplete="name"
-                                placeholder="Full name"
-                                onInput={(e) =>
-                                    dispatch({
-                                        type: 'SET_NAME',
-                                        payload: (e.target as HTMLInputElement)
-                                            .value,
-                                    })
-                                }
-                            />
+                    <Form
+                        initialValues={{
+                            name: currentUser.value?.name || '',
+                            email: currentUser.value?.email || '',
+                        }}
+                        onSubmit={submit}
+                        className="space-y-6"
+                        validate={validateProfile}
+                    >
+                        <FormInput
+                            name="name"
+                            label="Full name"
+                            type="text"
+                            required
+                        />
+                        <FormInput
+                            name="email"
+                            label="Email Address"
+                            type="email"
+                            required
+                        />
 
-                            <InputError
-                                className="mt-2"
-                                message={errors?.name?.[0] || ''}
-                            />
-                        </div>
-
-                        <div className="grid gap-2">
-                            <Label htmlFor="email">Email address</Label>
-
-                            <Input
-                                id="email"
-                                type="email"
-                                class="mt-1 block w-full"
-                                value={state.email}
-                                required
-                                autoComplete="username"
-                                placeholder="Email address"
-                                onInput={(e) =>
-                                    dispatch({
-                                        type: 'SET_EMAIL',
-                                        payload: (e.target as HTMLInputElement)
-                                            .value,
-                                    })
-                                }
-                            />
-
-                            <InputError
-                                className="mt-2"
-                                message={errors?.email?.[0] || ''}
-                            />
-                        </div>
-
-                        <div className="flex items-center gap-4">
-                            <Button disabled={loading}>Save</Button>
-
-                            {resentlySuccessful && (
-                                <p className="text-sm text-neutral-600">
-                                    Saved
-                                </p>
-                            )}
-                        </div>
-                    </form>
+                        <FormButtons submitText="Save" />
+                    </Form>
                 </div>
             </ProfileLayout>
         </AdminLayout>
