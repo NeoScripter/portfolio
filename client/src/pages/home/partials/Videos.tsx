@@ -38,10 +38,10 @@ const Videos = () => {
             <ApiError resourceRu="видео проектов" resourceEn="video projects" />
         );
 
-    const slides =
-        carouselSlides.length < 6
-            ? [...carouselSlides, ...carouselSlides]
-            : carouselSlides;
+    // const slides =
+    //     carouselSlides.length < 6
+    //         ? [...carouselSlides, ...carouselSlides]
+    //         : carouselSlides;
 
     return (
         <AppSection>
@@ -60,9 +60,9 @@ const Videos = () => {
                     )}
                 >
                     {!loading
-                        ? slides.map((video, idx) => (
+                        ? carouselSlides.map((video, idx) => (
                               <VideoTile
-                                  key={idx}
+                                  key={video.id}
                                   active={idx === animatingSlide}
                                   leftNei={idx === animatingSlide - 1}
                                   rightNei={idx === animatingSlide + 1}

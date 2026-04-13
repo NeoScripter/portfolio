@@ -62,7 +62,7 @@ const Reviews = () => {
                     {!loading
                         ? carouselSlides?.map((review, idx) => (
                               <ReviewCard
-                                  key={`${review.id}-${idx}`}
+                                  key={`${review.id}`}
                                   active={idx === animatingSlide}
                                   review={review}
                               />
