@@ -2,7 +2,7 @@ import { useFormContext } from '@/context/FormContext';
 import { LoaderCircle } from 'lucide-preact';
 import { AuthButton } from '../ui/AuthButton';
 
-interface FormButtonsProps {
+type FormButtonsProps = {
     submitText?: string;
     showReset?: boolean;
     resetText?: string;

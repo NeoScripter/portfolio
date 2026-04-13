@@ -1,3 +1,4 @@
+import AppTitle from '@/components/layout/AppTitle';
 import SubHeader from '@/components/ui/SubHeader';
 import AdminLayout from '@/layouts/AdminLayout';
 import ProfileLayout from '@/layouts/ProfileLayout';
@@ -8,6 +9,7 @@ export default function Appearance() {
         <AdminLayout
             title={{ en: 'Appearance settings', ru: 'Настройки темы' }}
         >
+            <AppTitle titleEn="Appearance" titleRu="Настройки темы" />
             <ProfileLayout>
                 <div className="space-y-6">
                     <SubHeader

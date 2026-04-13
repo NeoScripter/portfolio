@@ -13,7 +13,7 @@ const SidebarLink: FC<{
     onClick?: (e: Event) => void;
 }> = ({ icon: Icon, label, url, className, collapses = true, onClick }) => {
     const { path } = useLocation();
-    const active = path.startsWith(url);
+    const active = path === url;
 
     return (
         <li>

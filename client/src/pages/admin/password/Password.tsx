@@ -12,7 +12,7 @@ type State = {
     current_password: string;
     password: string;
     password_confirmation: string;
-}
+};
 
 const validatePassword = (
     values: State,
@@ -63,6 +63,10 @@ export default function Password() {
             title={{ en: 'Password settings', ru: 'Настройки пароля' }}
         >
             <ProfileLayout>
+                <AppTitle
+                    titleRu="Password settings"
+                    titleEn="Изменение пароля"
+                />
                 <div className="space-y-6">
                     <SubHeader
                         title={{

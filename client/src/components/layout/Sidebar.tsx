@@ -1,15 +1,16 @@
-import { currentUser } from '@/signals/auth';
-import { hide, isHidden, isMini, isWide } from '@/signals/sidebar-state';
-import { BriefcaseBusiness, ChevronsUpDown, Keyboard, LayoutGrid, MessageSquareCode, TableOfContents, Video } from 'lucide-preact';
-import { useId } from 'preact/hooks';
-import AuthLogo from '../ui/AuthLogo';
-import SidebarLink from './partials/SidebarLink';
-import { cn } from '@/lib/helpers/utils';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
-import AccountMenu from './partials/AccountMenu';
-import Monogram from '../ui/Monogram';
+import { cn } from '@/lib/helpers/utils';
+import { currentUser } from '@/signals/auth';
 import { locale } from '@/signals/locale';
+import { hide, isHidden, isMini, isWide } from '@/signals/sidebar-state';
+import { ChevronsUpDown } from 'lucide-preact';
+import { useId } from 'preact/hooks';
+import AuthLogo from '../ui/AuthLogo';
+import Monogram from '../ui/Monogram';
+import { sidebarLinks } from './data';
+import AccountMenu from './partials/AccountMenu';
+import SidebarLink from './partials/SidebarLink';
 
 function Sidebar() {
     const id = useId();
@@ -66,7 +67,7 @@ const Header = () => {
         >
             <div
                 class={cn(
-                    'bg-sidebar-primary text-sidebar-primary-foreground flex size-8 p-1 shrink-0 items-center justify-center rounded-[2px]',
+                    'bg-sidebar-primary text-sidebar-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-[2px] p-1',
                 )}
             >
                 <AuthLogo />
@@ -84,6 +85,8 @@ const Header = () => {
 };
 
 const NavMenu = () => {
+    const lang = locale.value === 'ru' ? 'ru' : 'en';
+
     return (
         <div>
             {!isMini.value && (
@@ -93,16 +96,14 @@ const NavMenu = () => {
             )}
 
             <ul class="text-sidebar-accent-foreground/70">
-                <SidebarLink
-                    url="/dashboard"
-                    icon={LayoutGrid}
-                    label="Dashboard"
-                />
-                <SidebarLink url="/faqs" icon={TableOfContents} label="Faqs" />
-                <SidebarLink url="/reviews" icon={MessageSquareCode} label="Reviews" />
-                <SidebarLink url="/videos" icon={Video} label="Videos" />
-                <SidebarLink url="/stacks" icon={Keyboard} label="Stacks" />
-                <SidebarLink url="/projects" icon={BriefcaseBusiness} label="Projects" />
+                {sidebarLinks.map((link) => (
+                    <SidebarLink
+                        key={link.id}
+                        url={link.path}
+                        icon={link.icon}
+                        label={link.label[lang]}
+                    />
+                ))}
             </ul>
         </div>
     );

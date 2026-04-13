@@ -6,10 +6,15 @@ const Home = lazy(() => import('./pages/home/Home'));
 const Gallery = lazy(() => import('./pages/gallery/Gallery'));
 const Project = lazy(() => import('./pages/project/Project'));
 const Login = lazy(() => import('./pages/login/Login'));
-const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
-const Profile = lazy(() => import('./pages/profile/Profile'));
-const Password = lazy(() => import('./pages/password/Password'));
-const Appearance = lazy(() => import('./pages/appearance/Appearance'));
+
+const Dashboard = lazy(() => import('./pages/admin/dashboard/Dashboard'));
+const Profile = lazy(() => import('./pages/admin/profile/Profile'));
+const Password = lazy(() => import('./pages/admin/password/Password'));
+const Appearance = lazy(() => import('./pages/admin/appearance/Appearance'));
+
+const FaqIndex = lazy(() => import('./pages/admin/faqs/Index'));
+const FaqEdit = lazy(() => import('./pages/admin/faqs/Edit'));
+const FaqCreate = lazy(() => import('./pages/admin/faqs/Create'));
 
 export const routes = [
     { component: Home, path: '/' },
@@ -23,6 +28,10 @@ export const routes = [
     { component: Profile, path: '/admin/settings/profile' },
     { component: Password, path: '/admin/settings/password' },
     { component: Appearance, path: '/admin/settings/appearance' },
+
+    { component: FaqIndex, path: '/admin/faqs' },
+    { component: FaqCreate, path: '/admin/faqs/create' },
+    { component: FaqEdit, path: '/admin/faqs/:id' },
 
     { component: NotFound, path: '*' },
 ];

@@ -48,6 +48,7 @@ export default function Profile() {
 
     return (
         <AdminLayout title={{ en: 'Profile settings', ru: 'Данные профиля' }}>
+            <AppTitle titleEn="Profile settings" titleRu="Данные профиля" />
             <ProfileLayout>
                 <div className="space-y-6">
                     <SubHeader
