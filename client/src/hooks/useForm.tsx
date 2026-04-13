@@ -1,5 +1,9 @@
+import {
+    clearSessionSignal,
+    createSessionSignal,
+} from '@/signals/session-store';
 import type { FormEvent } from 'preact/compat';
-import { useCallback, useState } from 'preact/hooks';
+import { useCallback, useRef, useState } from 'preact/hooks';
 
 type FormValues = Record<string, unknown>;
 type FormErrors<T extends FormValues> = Partial<Record<keyof T, string>>;
@@ -32,6 +36,9 @@ export type UseFormReturn<T extends FormValues> = {
     setFormValues: (newValues: T) => void;
     setFieldValue: (name: keyof T, value: unknown) => void;
     setFieldError: (name: keyof T, error: string) => void;
+    recentlySuccessful: boolean;
+    hasBackup: boolean;
+    handleRestoreBackup: () => void;
 };
 
 export const useForm = <T extends FormValues>(
@@ -43,6 +50,25 @@ export const useForm = <T extends FormValues>(
     const [errors, setErrors] = useState<FormErrors<T>>({});
     const [touched, setTouched] = useState<FormTouched<T>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [recentlySuccessful, setRecentlySuccessful] = useState(false);
+
+    const backupKey = useRef(
+        `form_backup_${JSON.stringify(Object.keys(initialValues))}`,
+    );
+    const backupSignal = useRef(
+        createSessionSignal<T | null>(backupKey.current, null),
+    );
+
+    const [hasBackup, setHasBackup] = useState<boolean>(
+        backupSignal.current.value !== null,
+    );
+
+    const handleRestoreBackup = useCallback(() => {
+        const backup = backupSignal.current.value;
+        if (backup != null) {
+            setValues(backup);
+        }
+    }, []);
 
     const handleChange = useCallback(
         (name: keyof T, value: unknown) => {
@@ -87,6 +113,13 @@ export const useForm = <T extends FormValues>(
             setIsSubmitting(true);
             try {
                 await onSubmit(values);
+
+                clearSessionSignal(backupKey.current);
+                backupSignal.current.value = null;
+                setHasBackup(false);
+                setRecentlySuccessful(true);
+
+                setTimeout(() => setRecentlySuccessful(false), 3000);
             } catch (error) {
                 if (isServerError(error)) {
                     console.error('Form submission error:', error);
@@ -113,10 +146,16 @@ export const useForm = <T extends FormValues>(
         setErrors({});
         setTouched({});
         setIsSubmitting(false);
+        setRecentlySuccessful(false);
+        clearSessionSignal(backupKey.current);
+        backupSignal.current.value = null;
+        setHasBackup(false);
     }, [initialValues]);
 
     const setFormValues = useCallback((newValues: T) => {
         setValues(newValues);
+        backupSignal.current.value = newValues;
+        setHasBackup(true);
     }, []);
 
     const setFieldValue = useCallback(
@@ -142,5 +181,8 @@ export const useForm = <T extends FormValues>(
         setFormValues,
         setFieldValue,
         setFieldError,
+        recentlySuccessful,
+        hasBackup,
+        handleRestoreBackup,
     };
 };

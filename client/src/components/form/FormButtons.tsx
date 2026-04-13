@@ -7,6 +7,7 @@ interface FormButtonsProps {
     showReset?: boolean;
     resetText?: string;
     onCancel?: () => void;
+    successMessage?: string;
     cancelText?: string;
 }
 
@@ -15,9 +16,14 @@ export const FormButtons = ({
     showReset = false,
     resetText = 'Reset',
     onCancel,
+    successMessage = 'Saved',
     cancelText = 'Cancel',
 }: FormButtonsProps) => {
-    const { isSubmitting, resetForm } = useFormContext();
+    const { isSubmitting, resetForm, recentlySuccessful } = useFormContext();
+
+    const label = isSubmitting ? 'Submitting...' :
+        recentlySuccessful ? successMessage :
+            submitText;
 
     return (
         <div className="flex gap-1.5">
@@ -27,7 +33,7 @@ export const FormButtons = ({
                 disabled={isSubmitting}
             >
                 {isSubmitting && <LoaderCircle class="h-4 w-4 animate-spin" />}
-                {isSubmitting ? 'Submitting...' : submitText}
+                {label}
             </AuthButton>
 
             {showReset && (
