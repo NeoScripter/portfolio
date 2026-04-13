@@ -332,49 +332,19 @@ p {
     transition: 0.3s;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
-.lang-switch label:after {
-    content: '';
-    position: absolute;
-    top: 48%;
-    transform: translateY(-50%);
-    left: 3%;
-    width: 47%;
-    aspect-ratio: 1/1;
-    background-color: oklch(0.985 0 0);
-    background-repeat: no-repeat;
-    border-radius: 90px;
-    transition: 0.3s;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-}
 .lang-switch input:checked + label:after {
-    left: 99%;
+    left: 96%;
     transform: translate(-100%, -50%);
 }
-.lang-switch label {
-    overflow: clip;
-    background-position: right;
-    background-repeat: repeat;
-    background-size: 70% 150%;
-    background-image: var(--ru-flag);
-}
-.lang-switch input:checked + label {
-    background-position: left;
+.lang-switch label:after {
+    background-position: center;
+    background-size: 140%;
     background-image: var(--en-flag);
 }
-.lang-switch label::before {
-    content: '';
-    inset: 0;
-    position: absolute;
-    background-position: left;
-    background-repeat: repeat;
-    background-size: 70% 150%;
+.lang-switch input:checked + label:after {
     background-image: var(--ru-flag);
-    z-index: -1;
 }
-.lang-switch input:checked + label::before {
-    background-position: right;
-    background-image: var(--en-flag);
-}
+
 .theme-switch label:after {
     background-position: center;
     background-size: 80%;
@@ -386,12 +356,6 @@ p {
     border-color: oklch(0.985 0 0);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='oklch(0.985 0 0)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-moon'%3E%3Cpath d='M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401'/%3E%3C/svg%3E");
 }
-/* @media screen and (min-width: 1024px) { */
-/*     .theme-switch label:after { */
-/*         border-color: oklch(0.985 0 0); */
-/*     } */
-/* } */
-
 .theme-switch input:checked + label {
     background: transparent;
 }
