@@ -10,12 +10,12 @@ type SubmitFn<T extends FormValues> = (values: T) => Promise<void> | void;
 
 type ServerFieldErrors = Record<string, string>;
 
-type ServerError = {
+export type ServerError = {
     message?: string;
     errors?: ServerFieldErrors;
 };
 
-const isServerError = (error: unknown): error is ServerError =>
+export const isServerError = (error: unknown): error is ServerError =>
     typeof error === 'object' &&
     error !== null &&
     ('message' in error || 'errors' in error);

@@ -36,7 +36,7 @@ const validateLogin = (values: State): Partial<Record<keyof State, string>> => {
 const Login = () => {
     const { route } = useLocation();
 
-    const { fetchData, loading, errors } = useFetch();
+    const { fetchData } = useFetch();
 
     async function submit(values: State) {
         await fetchData({
@@ -44,7 +44,10 @@ const Login = () => {
             method: 'POST',
             payload: values,
             onSuccess: () => route('/dashboard'),
-            onError: () => toast.error('Login failed'),
+            onError: (err) => {
+                toast.error('Login failed');
+                throw err;
+            },
         });
     }
 

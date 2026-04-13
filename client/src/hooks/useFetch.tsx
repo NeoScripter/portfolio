@@ -1,27 +1,26 @@
 import { useReducer } from 'preact/hooks';
-
-export type ValidationErrors = Record<string, string[]>;
+import { isServerError, type ServerError } from './useForm';
 
 interface FetchOptions {
     url: string;
     method?: string;
     payload?: unknown;
     onSuccess?: (data: any) => void;
-    onError?: () => void;
+    onError?: (error: ServerError) => void;
 }
 
 interface State {
     data: any;
     loading: boolean;
     resentlySuccessful: boolean;
-    errors: ValidationErrors | null;
+    errors: ServerError | null;
 }
 
 type Action =
     | { type: 'FETCH_START' }
     | { type: 'FETCH_SUCCESS'; payload: any }
-    | { type: 'FETCH_ERROR'; payload: ValidationErrors | null }
-    | { type: 'SET_ERRORS'; payload: ValidationErrors | null }
+    | { type: 'FETCH_ERROR'; payload: ServerError | null }
+    | { type: 'SET_ERRORS'; payload: ServerError | null }
     | { type: 'RESET_SUCCESS' }
     | { type: 'RESET' };
 
@@ -89,29 +88,36 @@ export function useFetch() {
             const data = await res.json().catch(() => ({}));
 
             if (!res.ok) {
-                if (res.status === 422 && data.errors) {
-                    dispatch({ type: 'FETCH_ERROR', payload: data.errors });
-                } else {
-                    throw new Error(data.message || res.statusText);
-                }
-                onError?.();
-                return;
+                const serverError: ServerError = {
+                    message: data.message || res.statusText,
+                    errors: res.status === 422 ? data.errors : undefined,
+                };
+                dispatch({
+                    type: 'FETCH_ERROR',
+                    payload: serverError.errors ?? null,
+                });
+                onError?.(serverError);
+                throw serverError;
             }
 
             dispatch({ type: 'FETCH_SUCCESS', payload: data });
             onSuccess?.(data);
             setTimeout(() => dispatch({ type: 'RESET_SUCCESS' }), 2000);
         } catch (err) {
-            const message =
-                err instanceof Error ? err.message : 'API fetching error';
-
-            console.error(message);
-            dispatch({ type: 'FETCH_ERROR', payload: { general: [message] } });
-            onError?.();
+            if (isServerError(err)) {
+                throw err;
+            }
+            const serverError: ServerError = {
+                message:
+                    err instanceof Error ? err.message : 'API fetching error',
+            };
+            dispatch({ type: 'FETCH_ERROR', payload: null });
+            onError?.(serverError);
+            throw serverError;
         }
     }
 
-    function setErrors(errors: ValidationErrors | null) {
+    function setErrors(errors: ServerError | null) {
         dispatch({ type: 'SET_ERRORS', payload: errors });
     }
 

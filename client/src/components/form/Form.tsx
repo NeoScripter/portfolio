@@ -5,7 +5,7 @@ import type { ComponentChildren } from 'preact';
 
 type FormValues = Record<string, unknown>;
 
-interface FormProps<T extends FormValues> {
+type FormProps<T extends FormValues> = {
     initialValues?: T;
     onSubmit: (values: T) => Promise<void> | void;
     validate?: (values: T) => Partial<Record<keyof T, string>>;
