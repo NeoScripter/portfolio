@@ -19,6 +19,7 @@ import NavDrawer from './partials/NavDrawer';
 import { NavMenu } from './partials/NavMenu';
 import Overlay from './partials/Overlay';
 import Separator from './partials/Separator';
+import { locale } from '@/signals/locale';
 
 const AppHeader: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
@@ -49,6 +50,8 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
     const [showDrawer, setShowDrawer] = useState(
         isBrowser ? mq?.matches : false,
     );
+
+    const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     const toggleMenu = () => {
         setShowMenu((p) => !p);
@@ -91,7 +94,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     },
                 )}
             >
-                <div class="w-40">
+                <div key={lang} class="w-40 animate-fade-in">
                     <Logo />
                 </div>
 

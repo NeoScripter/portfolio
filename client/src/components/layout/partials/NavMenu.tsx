@@ -1,9 +1,10 @@
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
+import { cn } from '@/lib/helpers/utils';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
-import NavLink from './NavLink';
 import { navLinks } from '../data';
-import { cn } from '@/lib/helpers/utils';
+import NavLink from './NavLink';
+import { locale } from '@/signals/locale';
 
 export const NavMenu: FC<{ show?: boolean; className?: string }> = ({
     show = false,
@@ -11,6 +12,7 @@ export const NavMenu: FC<{ show?: boolean; className?: string }> = ({
 }) => {
     const { path } = useRoute();
     const variant = getHeaderVariant(path);
+    const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     return (
         <nav
@@ -19,16 +21,16 @@ export const NavMenu: FC<{ show?: boolean; className?: string }> = ({
         >
             <ul
                 class={cn(
-                    'my-17 space-y-13 lg:my-0 lg:flex lg:items-center lg:gap-12 lg:space-y-0 xl:gap-14',
+                    'my-17 space-y-13 lg:my-0 lg:flex lg:min-w-80 lg:items-center lg:gap-12 lg:space-y-0 xl:gap-14',
                     {
                         'lg:text-white': variant === 'primary',
-                    }
+                    },
                 )}
             >
                 {navLinks.map((navLink, idx) => (
                     <NavLink
                         show={show}
-                        key={navLink.id}
+                        key={`${navLink.id}-${lang}`}
                         idx={idx}
                         link={navLink}
                     />

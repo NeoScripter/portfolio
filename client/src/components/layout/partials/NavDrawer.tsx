@@ -8,12 +8,14 @@ import { cn } from '@/lib/helpers/utils';
 import { getTheme } from '@/signals/theme';
 import { useRoute } from 'preact-iso';
 import { NavMenu } from './NavMenu';
+import { locale } from '@/signals/locale';
 
 type NavDrawerProps = { show: boolean };
 
 export default function NavDrawer({ show }: NavDrawerProps) {
     const { path } = useRoute();
     const variant = getHeaderVariant(path);
+    const lang = locale.value === 'en' ? 'en' : 'ru';
 
     return (
         <div
@@ -22,7 +24,7 @@ export default function NavDrawer({ show }: NavDrawerProps) {
             aria-modal="true"
             aria-label="Навигационное меню"
             class={cn(
-                'bg-background ease-nav-drawer fixed top-0 right-0 z-0 w-80 max-w-full overflow-y-auto rounded-bl-[2rem] bg-cover bg-top-left bg-no-repeat px-8 py-7 transition-transform duration-1000',
+                'bg-background ease-nav-drawer fixed top-0 right-0 z-0 w-80 max-w-full overflow-y-auto rounded-bl-2xl bg-cover bg-top-left bg-no-repeat px-8 py-7 transition-transform duration-1000',
                 !show && 'translate-x-full'
             )}
             style={{
@@ -32,7 +34,8 @@ export default function NavDrawer({ show }: NavDrawerProps) {
             <header>
                 <div>
                     <div
-                        class={cn('mt-3 mb-8 w-36', show && 'slide-in', {
+                        key={lang}
+                        class={cn('mt-3 animate-fade-in mb-8 w-36', show && 'slide-in', {
                             'text-foreground': variant === 'primary',
                         })}
                     >
