@@ -1,6 +1,7 @@
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
 import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
+import type { TargetedEvent } from 'preact';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
 
@@ -8,16 +9,41 @@ const LangToggle: FC<{ className?: string }> = ({ className }) => {
     const { path } = useRoute();
     const variant = getHeaderVariant(path);
 
+    const handleChange = (e: TargetedEvent<HTMLInputElement, Event>) => {
+        if (e.currentTarget.checked) {
+            locale.value = 'en';
+        } else {
+            locale.value = 'ru';
+        }
+    };
+
     return (
         <div
-            class={cn(
-                'divide-foreground flex items-center divide-x-2 text-base lg:divide-none lg:border-input lg:rounded-full lg:border lg:px-4 lg:py-1',
-                { 'lg:border-white/30': variant === 'primary' },
+            className={cn(
+                'flex items-center justify-center gap-3',
                 className,
             )}
         >
-            <Button lang="ru" className="pr-3 lg:pr-2" />
-            <Button lang="en" className="pl-3 lg:pl-1" />
+            <Button lang='ru' />
+            <div class={cn('lang-switch relative flex items-center gap-3')}>
+                <input
+                    id="lang-toggle"
+                    type="checkbox"
+                    checked={locale.value === 'en'}
+                    onChange={handleChange}
+                    aria-label="Переключить тему"
+                    aria-checked={locale.value === 'en'}
+                    role="switch"
+                />
+                <label
+                    htmlFor="lang-toggle"
+                    class={cn('border-foreground/50 w-15 border-2 border-dotted xl:w-16', {
+                        'lg:border-white/50': variant === 'primary',
+                    })}
+                    aria-hidden="true"
+                />
+            </div>
+            <Button lang='en' />
         </div>
     );
 };
