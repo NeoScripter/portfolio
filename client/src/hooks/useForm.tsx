@@ -25,7 +25,7 @@ export const isServerError = (error: unknown): error is ServerError =>
     ('message' in error || 'errors' in error);
 
 const BACKUP_KEY = 'form_backup';
-const backupSignal = createSessionSignal<FormValues>(BACKUP_KEY, {});
+const backupSignal = createSessionSignal<FormValues | undefined>(BACKUP_KEY, undefined);
 
 export type UseFormReturn<T extends FormValues> = {
     values: T;
@@ -55,11 +55,11 @@ export const useForm = <T extends FormValues>(
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [recentlySuccessful, setRecentlySuccessful] = useState(false);
     const [hasBackup, setHasBackup] = useState<boolean>(
-        Object.keys(backupSignal.value).length > 0,
+        backupSignal.value != null,
     );
 
     const handleRestoreBackup = useCallback(() => {
-        if (Object.keys(backupSignal.value).length > 0) {
+        if (backupSignal.value != null) {
             setValues(backupSignal.value as T);
         }
     }, []);

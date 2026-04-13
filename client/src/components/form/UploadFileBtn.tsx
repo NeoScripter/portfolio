@@ -20,7 +20,7 @@ export default function UploadFileBtn({
                 disabled && 'cursor-not-allowed opacity-50',
             )}
         >
-            <ArrowUpRightFromSquare className="size-5" />
+            <ArrowUpRightFromSquare className="size-4.5" />
             {label}
         </label>
     );

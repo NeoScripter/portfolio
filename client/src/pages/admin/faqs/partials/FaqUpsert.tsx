@@ -76,7 +76,8 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
             <FormTextArea name="content_ru" label="Answer (RU)" required />
             <FormButtons
                 submitText={faq ? 'Update' : 'Create'}
-                cancelLink="/faqs"
+                cancelLink="/admin/faqs"
+                shouldBackup={true}
             />
         </Form>
     );

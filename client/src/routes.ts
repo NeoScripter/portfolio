@@ -16,6 +16,10 @@ const FaqIndex = lazy(() => import('./pages/admin/faqs/Index'));
 const FaqEdit = lazy(() => import('./pages/admin/faqs/Edit'));
 const FaqCreate = lazy(() => import('./pages/admin/faqs/Create'));
 
+const ReviewIndex = lazy(() => import('./pages/admin/reviews/Index'));
+const ReviewEdit = lazy(() => import('./pages/admin/reviews/Edit'));
+const ReviewCreate = lazy(() => import('./pages/admin/reviews/Create'));
+
 export const routes = [
     { component: Home, path: '/' },
     { component: About, path: '/about' },
@@ -32,6 +36,10 @@ export const routes = [
     { component: FaqIndex, path: '/admin/faqs' },
     { component: FaqCreate, path: '/admin/faqs/create' },
     { component: FaqEdit, path: '/admin/faqs/:id' },
+
+    { component: ReviewIndex, path: '/admin/reviews' },
+    { component: ReviewCreate, path: '/admin/reviews/create' },
+    { component: ReviewEdit, path: '/admin/reviews/:id' },
 
     { component: NotFound, path: '*' },
 ];

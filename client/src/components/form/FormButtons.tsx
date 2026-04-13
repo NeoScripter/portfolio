@@ -1,5 +1,5 @@
 import { useFormContext } from '@/context/FormContext';
-import { LoaderCircle } from 'lucide-preact';
+import { LoaderCircle, Save } from 'lucide-preact';
 import { AuthButton } from '../ui/AuthButton';
 
 type FormButtonsProps = {
@@ -10,6 +10,7 @@ type FormButtonsProps = {
     cancelLink?: string;
     successMessage?: string;
     cancelText?: string;
+    shouldBackup?: boolean;
 };
 
 export const FormButtons = ({
@@ -20,6 +21,7 @@ export const FormButtons = ({
     cancelLink,
     successMessage = 'Saved',
     cancelText = 'Cancel',
+    shouldBackup = false,
 }: FormButtonsProps) => {
     const { isSubmitting, resetForm, recentlySuccessful, handleRestoreBackup } =
         useFormContext();
@@ -52,9 +54,16 @@ export const FormButtons = ({
                         {cancelText}
                     </AuthButton>
                 ))}
-            <AuthButton type='button' onClick={handleRestoreBackup} disabled={isSubmitting}>
-                Restore
-            </AuthButton>
+            {shouldBackup && (
+                <AuthButton
+                    type="button"
+                    onClick={handleRestoreBackup}
+                    disabled={isSubmitting}
+                >
+                    <Save />
+                    Restore
+                </AuthButton>
+            )}
         </div>
     );
 };

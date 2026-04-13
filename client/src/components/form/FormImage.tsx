@@ -1,4 +1,4 @@
-import Placeholder from '@/assets/images/shared/placeholder.webp';
+import Placeholder from '@/assets/imgs/shared/placeholder.webp';
 import { useFormContext } from '@/context/FormContext';
 import { cn } from '@/lib/helpers/utils';
 import { useEffect, useId, useState } from 'preact/hooks';
