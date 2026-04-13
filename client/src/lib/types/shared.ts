@@ -46,3 +46,8 @@ export type RouteMatch = {
     params: Record<string, string>;
     rest: string;
 };
+
+export type PageTitleType = {
+    en: string;
+    ru: string;
+};

@@ -9,7 +9,7 @@ import type { TargetedEvent } from 'preact';
 import { useReducer } from 'preact/hooks';
 import { toast } from 'sonner';
 import InputError from '../form/InputError';
-import Label from '../form/Label';
+import GhostLabel from '../form/GhostLabel';
 import GhostTextArea from '../form/GhostTextArea';
 import { Button } from '../ui/Button';
 import GhostInput from '../form/GhostInput';
@@ -96,7 +96,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
         <form class={cn('w-full max-w-220', className)} onSubmit={submit}>
             <div class="grid items-start gap-11 lg:grid-cols-2">
                 <div class="group grid gap-2">
-                    <Label htmlFor="name">Full Name</Label>
+                    <GhostLabel htmlFor="name">Full Name</GhostLabel>
                     <GhostInput
                         id="name"
                         autoComplete="name"
@@ -113,7 +113,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                 </div>
 
                 <div class="group grid gap-2">
-                    <Label htmlFor="email">Email</Label>
+                    <GhostLabel htmlFor="email">Email</GhostLabel>
                     <GhostInput
                         id="email"
                         type="email"
@@ -131,7 +131,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                 </div>
 
                 <div class="group grid gap-2">
-                    <Label htmlFor="telegram">Telegram</Label>
+                    <GhostLabel htmlFor="telegram">Telegram</GhostLabel>
                     <GhostInput
                         id="telegram"
                         autoComplete="telegram"
@@ -148,7 +148,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                 </div>
 
                 <div class="group grid gap-2">
-                    <Label htmlFor="whatsapp">Whatsapp</Label>
+                    <GhostLabel htmlFor="whatsapp">Whatsapp</GhostLabel>
                     <GhostInput
                         id="whatsapp"
                         autoComplete="whatsapp"
@@ -166,7 +166,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
             </div>
 
             <div class="group mt-11 grid gap-2">
-                <Label htmlFor="message">Message</Label>
+                <GhostLabel htmlFor="message">Message</GhostLabel>
                 <GhostTextArea
                     id="message"
                     autoComplete="message"

@@ -1,3 +1,4 @@
+import { effect } from '@preact/signals';
 import {
     ErrorBoundary,
     hydrate,
@@ -8,8 +9,21 @@ import {
 } from 'preact-iso';
 import './assets/css/app.css';
 import { routes } from './routes';
+import { theme } from './signals/theme';
 
 export function App() {
+    if (typeof window !== 'undefined') {
+        effect(() => {
+            document.documentElement.classList.toggle(
+                'dark',
+                theme.value === 'dark' ||
+                    (theme.value === 'system' &&
+                        window.matchMedia('(prefers-color-scheme: dark)')
+                            .matches),
+            );
+        });
+    }
+
     return (
         <LocationProvider>
             <ErrorBoundary>
