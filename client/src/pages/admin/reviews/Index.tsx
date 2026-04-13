@@ -6,7 +6,7 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import { range } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import { useEffect, useState } from 'preact/hooks';
-import ReviewCard, { ReviewCardSkeleton } from './partials/ReviewCard';
+import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
 import ReviewDelete from './partials/ReviewDelete';
 import ModalLayout from '@/layouts/ModalLayout';
 
@@ -17,7 +17,7 @@ const Reviews = () => {
     useEffect(() => {
         const fetchReviews = () => {
             fetchData({
-                url: '/api/reviews?latest=true',
+                url: '/api/reviews.json',
                 onSuccess: (data) => {
                     setReviews(data.data);
                 },
@@ -41,13 +41,13 @@ const Reviews = () => {
                 <AdminShellLayout>
                     <AdminShellNav href={'/admin/reviews/create'} />
                     {loading ? (
-                        <ul className="space-y-6">
+                        <ul className="space-y-12">
                             {range(0, 8).map((idx) => (
-                                <ReviewCardSkeleton key={idx} />
+                                <ReviewFallback key={idx} />
                             ))}
                         </ul>
                     ) : (
-                        <ul className="space-y-6">
+                        <ul className="space-y-12">
                             {reviews &&
                                 reviews.map((review) => (
                                     <ReviewCard

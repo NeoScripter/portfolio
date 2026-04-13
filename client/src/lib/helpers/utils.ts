@@ -10,7 +10,8 @@ export function capitalize(sentence: string) {
         .split(' ')
         .map(
             (word) =>
-                word.charAt(0).toUpperCase() + word.slice(1).toLocaleLowerCase()
+                word.charAt(0).toUpperCase() +
+                word.slice(1).toLocaleLowerCase(),
         )
         .join(' ');
 }
@@ -28,7 +29,7 @@ export function range(start: number, end: number) {
 
 export default function throttle<T extends (...args: any[]) => any>(
     fn: T,
-    delay: number = 400
+    delay: number = 400,
 ): (...args: Parameters<T>) => void {
     let lastCall = 0;
     return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
@@ -38,4 +39,11 @@ export default function throttle<T extends (...args: any[]) => any>(
             fn.apply(this, args);
         }
     };
+}
+
+export function shortenDescription(desc: string, limit = 15) {
+    return (
+        desc.split(' ').slice(0, limit).join(' ') +
+        (desc.split(' ').length > limit ? '...' : '')
+    );
 }
