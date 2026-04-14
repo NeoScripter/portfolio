@@ -1,20 +1,23 @@
-import { DeleteModalProvider } from "@/context/DeleteModelContext";
-import { useFetch } from "@/hooks/useFetch";
-import AccordionLayout from "@/layouts/AccordionLayout";
-import AdminLayout from "@/layouts/AdminLayout";
-import AdminShellLayout from "@/layouts/AdminShellLayout";
-import type { ProjectType } from "@/lib/types/models/projects";
-import {  type FC } from "preact/compat";
-import { useEffect, useState } from "preact/hooks";
-import ProjectUpsert from "./partials/ProjectUpsert";
-import ModuleUpsert from "./partials/ModuleUpsert";
-import ModalLayout from "@/layouts/ModalLayout";
-import ModuleDelete from "./partials/ModuleDelete";
+import { DeleteModalProvider } from '@/context/DeleteModelContext';
+import { useFetch } from '@/hooks/useFetch';
+import AccordionLayout from '@/layouts/AccordionLayout';
+import AdminLayout from '@/layouts/AdminLayout';
+import AdminShellLayout from '@/layouts/AdminShellLayout';
+import ModalLayout from '@/layouts/ModalLayout';
+import type { ProjectType } from '@/lib/types/models/projects';
+import { useRoute } from 'preact-iso';
+import { useEffect, useState } from 'preact/hooks';
+import ModuleDelete from './partials/ModuleDelete';
+import ModuleUpsert from './partials/ModuleUpsert';
+import ProjectUpsert from './partials/ProjectUpsert';
 
-const EditProject: FC<{ slug: string }> = ({ slug }) => {
+const EditProject = () => {
     const { fetchData, loading, errors } = useFetch();
     const [project, setProject] = useState<ProjectType | null>(null);
     const [visibleItem, setVisibleItem] = useState<number | null>(null);
+    const {
+        params: { slug },
+    } = useRoute();
 
     const handleAccordionClick = (idx: number) => {
         if (idx === visibleItem) {
@@ -27,7 +30,7 @@ const EditProject: FC<{ slug: string }> = ({ slug }) => {
     useEffect(() => {
         const fetchProject = () => {
             fetchData({
-                url: `/api/projects/${slug}`,
+                url: `/api/projects/${slug}.json`,
                 onSuccess: (data) => {
                     setProject(data.data);
                 },
@@ -47,7 +50,9 @@ const EditProject: FC<{ slug: string }> = ({ slug }) => {
 
     return (
         <DeleteModalProvider>
-            <AdminLayout title={{en: "Edit project", ru: "Редактировать проект"}}>
+            <AdminLayout
+                title={{ en: 'Edit project', ru: 'Редактировать проект' }}
+            >
                 <AdminShellLayout>
                     <AccordionLayout
                         label="Project"
@@ -62,32 +67,6 @@ const EditProject: FC<{ slug: string }> = ({ slug }) => {
                             <ProjectUpsert project={project} />
                         )}
                     </AccordionLayout>
-                    {project && (
-                        <AccordionLayout
-                            key="newModule"
-                            label="New Module"
-                            handleClick={() => handleAccordionClick(1)}
-                            show={visibleItem === 1}
-                        >
-                            <ModuleUpsert projectId={project.id} />
-                        </AccordionLayout>
-                    )}
-                    {project?.modules &&
-                        project.modules.map((module, idx) => (
-                            <AccordionLayout
-                                key={module.id}
-                                label={`Module ${idx + 1}`}
-                                handleClick={() =>
-                                    handleAccordionClick(idx + 2)
-                                }
-                                show={visibleItem === idx + 2}
-                            >
-                                <ModuleUpsert
-                                    module={module}
-                                    projectId={project.id}
-                                />
-                            </AccordionLayout>
-                        ))}
                     <ModalLayout className="max-w-9/10 px-10 py-14 sm:max-w-100 lg:max-w-160">
                         <ModuleDelete />
                     </ModalLayout>
@@ -98,3 +77,31 @@ const EditProject: FC<{ slug: string }> = ({ slug }) => {
 };
 
 export default EditProject;
+
+                    // {project && (
+                    //     <AccordionLayout
+                    //         key="newModule"
+                    //         label="New Module"
+                    //         handleClick={() => handleAccordionClick(1)}
+                    //         show={visibleItem === 1}
+                    //     >
+                    //         <ModuleUpsert projectId={project.id} />
+                    //     </AccordionLayout>
+                    // )}
+                    // {project?.modules &&
+                    //     project.modules.map((module, idx) => (
+                    //         <AccordionLayout
+                    //             key={module.id}
+                    //             label={`Module ${idx + 1}`}
+                    //             handleClick={() =>
+                    //                 handleAccordionClick(idx + 2)
+                    //             }
+                    //             show={visibleItem === idx + 2}
+                    //         >
+                    //             <ModuleUpsert
+                    //                 module={module}
+                    //                 projectId={project.id}
+                    //             />
+                    //         </AccordionLayout>
+                    //     ))}
+

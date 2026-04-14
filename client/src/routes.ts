@@ -64,7 +64,7 @@ export const routes = [
 
     { component: ProjectIndex, path: '/admin/projects' },
     { component: ProjectCreate, path: '/admin/projects/create' },
-    { component: ProjectEdit, path: '/admin/projects/:id' },
+    { component: ProjectEdit, path: '/admin/projects/:slug' },
 
     { component: NotFound, path: '*' },
 ];

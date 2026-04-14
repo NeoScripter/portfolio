@@ -1,15 +1,16 @@
 import { useFormContext } from '@/context/FormContext';
-import type { HTMLInputTypeAttribute } from 'preact';
+import type { HTMLInputTypeAttribute, InputHTMLAttributes } from 'preact';
 import Input from './Input';
 import InputError from './InputError';
 import Label from './Label';
 
-type FormInputProps = {
+type FormInputProps = InputHTMLAttributes<HTMLInputElement> & {
     name: string;
     label?: string;
     type?: HTMLInputTypeAttribute;
     placeholder?: string;
     required?: boolean;
+    className?: string;
 };
 
 export const FormInput = ({
@@ -18,6 +19,8 @@ export const FormInput = ({
     type = 'text',
     placeholder,
     required = false,
+    className,
+    ...props
 }: FormInputProps) => {
     const { values, errors, touched, handleChange, handleBlur } =
         useFormContext();
@@ -39,9 +42,11 @@ export const FormInput = ({
                 onInput={(e) =>
                     handleChange(name, (e.target as HTMLInputElement).value)
                 }
+                class={className}
                 onBlur={() => handleBlur(name)}
                 placeholder={placeholder}
                 aria-invalid={hasError ? 'true' : 'false'}
+                {...props}
             />
 
             {hasError && <InputError message={errors[name]} />}

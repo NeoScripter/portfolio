@@ -26,7 +26,7 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
             )}
 
             <CardActions
-                path={`/admin/projects/${project.id}`}
+                path={`/admin/projects/${project.attr.slug}`}
                 onClick={() => (itemToDelete.value = project)}
             />
         </li>

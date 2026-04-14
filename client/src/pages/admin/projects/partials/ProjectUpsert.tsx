@@ -181,8 +181,8 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                         <FormInput
                             name="order"
                             label="Order"
-                            type="number"
-                            // className="max-w-40 px-0 [&>input]:h-auto [&>input]:text-center [&>input]:text-3xl! [&>input]:tracking-[0.5em]"
+                            inputmode="numeric" pattern="\d*"
+                            className="max-w-40 px-0 h-auto text-center text-3xl! tracking-[0.5em]"
                         />
                         <FormMockupPicker name="mockup" label="Mockup" />
                         <FormImage name="image" label="Project Image" />

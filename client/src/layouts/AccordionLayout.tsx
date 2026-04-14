@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button';
+import { AuthButton } from '@/components/ui/AuthButton';
 import { cn } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
 import type { FC } from 'preact/compat';
@@ -8,9 +8,9 @@ const AccordionLayout: FC<
 > = ({ children, label, show = false, handleClick }) => {
     return (
         <div>
-            <Button class="w-35" variant="outline" onClick={handleClick}>
+            <AuthButton class="w-35" variant="outline" onClick={handleClick}>
                 {show ? 'Hide' : label}
-            </Button>
+            </AuthButton>
             <div
                 inert={!show}
                 class={cn(

@@ -37,8 +37,6 @@ const MockupPicker: FC<MockupPickerProps> = ({
 
     return (
         <div className={cn('grid gap-4', className)}>
-            <label className="ml-1 text-base font-medium">Mockup</label>
-
             <div className="grid grid-cols-3 gap-4">
                 {mockups.map((mockup) => (
                     <button
