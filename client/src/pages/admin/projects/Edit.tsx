@@ -5,10 +5,10 @@ import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import ModalLayout from '@/layouts/ModalLayout';
 import type { ProjectType } from '@/lib/types/models/projects';
+import { Clapperboard } from 'lucide-preact';
 import { useRoute } from 'preact-iso';
 import { useEffect, useState } from 'preact/hooks';
 import ModuleDelete from './partials/ModuleDelete';
-import ModuleUpsert from './partials/ModuleUpsert';
 import ProjectUpsert from './partials/ProjectUpsert';
 
 const EditProject = () => {
@@ -58,6 +58,7 @@ const EditProject = () => {
                         label="Project"
                         handleClick={() => handleAccordionClick(0)}
                         show={visibleItem === 0}
+                        showIcon={Clapperboard}
                     >
                         {errors != null ? (
                             <p>{errors.errors?.message}</p>
@@ -78,30 +79,29 @@ const EditProject = () => {
 
 export default EditProject;
 
-                    // {project && (
-                    //     <AccordionLayout
-                    //         key="newModule"
-                    //         label="New Module"
-                    //         handleClick={() => handleAccordionClick(1)}
-                    //         show={visibleItem === 1}
-                    //     >
-                    //         <ModuleUpsert projectId={project.id} />
-                    //     </AccordionLayout>
-                    // )}
-                    // {project?.modules &&
-                    //     project.modules.map((module, idx) => (
-                    //         <AccordionLayout
-                    //             key={module.id}
-                    //             label={`Module ${idx + 1}`}
-                    //             handleClick={() =>
-                    //                 handleAccordionClick(idx + 2)
-                    //             }
-                    //             show={visibleItem === idx + 2}
-                    //         >
-                    //             <ModuleUpsert
-                    //                 module={module}
-                    //                 projectId={project.id}
-                    //             />
-                    //         </AccordionLayout>
-                    //     ))}
-
+// {project && (
+//     <AccordionLayout
+//         key="newModule"
+//         label="New Module"
+//         handleClick={() => handleAccordionClick(1)}
+//         show={visibleItem === 1}
+//     >
+//         <ModuleUpsert projectId={project.id} />
+//     </AccordionLayout>
+// )}
+// {project?.modules &&
+//     project.modules.map((module, idx) => (
+//         <AccordionLayout
+//             key={module.id}
+//             label={`Module ${idx + 1}`}
+//             handleClick={() =>
+//                 handleAccordionClick(idx + 2)
+//             }
+//             show={visibleItem === idx + 2}
+//         >
+//             <ModuleUpsert
+//                 module={module}
+//                 projectId={project.id}
+//             />
+//         </AccordionLayout>
+//     ))}

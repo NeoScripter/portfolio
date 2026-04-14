@@ -1,15 +1,35 @@
 import { AuthButton } from '@/components/ui/AuthButton';
 import { cn } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
+import { ArrowUpToLine, type LucideIcon } from 'lucide-preact';
 import type { FC } from 'preact/compat';
 
 const AccordionLayout: FC<
-    NodeProps<{ label: string; show?: boolean; handleClick: () => void }>
-> = ({ children, label, show = false, handleClick }) => {
+    NodeProps<{
+        label: string;
+        show?: boolean;
+        showIcon: LucideIcon;
+        handleClick: () => void;
+    }>
+> = ({ children, label, show = false, handleClick, showIcon: Icon }) => {
     return (
         <div>
-            <AuthButton class="w-35" variant="outline" onClick={handleClick}>
-                {show ? 'Hide' : label}
+            <AuthButton
+                class="w-fit px-5!"
+                variant="outline"
+                onClick={handleClick}
+            >
+                {show ? (
+                    <>
+                        <ArrowUpToLine />
+                        Hide
+                    </>
+                ) : (
+                    <>
+                        <Icon />
+                        {label}
+                    </>
+                )}
             </AuthButton>
             <div
                 inert={!show}
