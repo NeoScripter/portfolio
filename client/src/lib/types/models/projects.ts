@@ -1,7 +1,7 @@
 import type { ImageType } from "../shared";
 import type { ModuleType } from "./module";
 
-export interface ProjectResource {
+export type ProjectResource = {
     data: ProjectType[];
     links?: {
         first: string | null;
@@ -21,13 +21,13 @@ export interface ProjectResource {
     };
 }
 
-export interface PaginationLink {
+export type PaginationLink = {
     url: string | null;
     label: string;
     active: boolean;
 }
 
-export interface PaginationMeta<T> {
+export type PaginationMeta<T> = {
     current_page: number;
     data: T[];
     first_page_url: string;
@@ -43,7 +43,7 @@ export interface PaginationMeta<T> {
     total: number;
 }
 
-export interface ProjectCategoryType {
+export type CategoryType = {
     id: number;
     name: {
         ru: string;
@@ -51,11 +51,11 @@ export interface ProjectCategoryType {
     };
 }
 
-export interface ProjectTechnologyType {
+export type TechnologyType = {
     name: string;
 }
 
-export interface ProjectType {
+export type ProjectType = {
     id: number;
     attr: {
         title: {

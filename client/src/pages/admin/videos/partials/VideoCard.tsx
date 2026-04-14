@@ -1,6 +1,7 @@
 import AdaptiveImg from "@/components/ui/AdaptiveImg";
 import { AuthButton } from "@/components/ui/AuthButton";
 import { Button } from "@/components/ui/Button";
+import CardActions from "@/components/ui/CardActions";
 import { useDeleteModal } from "@/context/DeleteModelContext";
 import type { VideoType } from "@/lib/types/models/videos";
 import { locale } from "@/signals/locale";
@@ -19,22 +20,10 @@ const VideoCard: FC<{ video: VideoType }> = ({ video }) => {
                 />
             )}
 
-            <div class="flex items-center gap-2">
-                <Button
-                    href={`/admin/videos/${video.id}`}
-                    class="h-9 rounded-sm text-sm"
-                    variant="primary"
-                >
-                    Edit
-                </Button>
-                <AuthButton
-                    class="rounded-sm"
-                    onClick={() => (itemToDelete.value = video)}
-                    variant="destructive"
-                >
-                    Delete
-                </AuthButton>
-            </div>
+            <CardActions
+                path={`/admin/videos/${video.id}`}
+                onClick={() => (itemToDelete.value = video)}
+            />
         </li>
     );
 };

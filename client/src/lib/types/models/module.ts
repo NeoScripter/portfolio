@@ -1,4 +1,4 @@
-import type { ImageType } from "../shared";
+import type { ImageType } from '../shared';
 
 export type LocalizedText = {
     ru: string;
@@ -23,3 +23,9 @@ export type ModuleType = {
     firstImage?: ImageType;
     secondImage?: ImageType;
 };
+
+export type ModuleOptionType =
+    | 'only_text'
+    | 'two_image_split'
+    | 'two_image_block'
+    | 'one_image_split';

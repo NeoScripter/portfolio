@@ -1,6 +1,7 @@
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import { AuthButton } from '@/components/ui/AuthButton';
 import { Button } from '@/components/ui/Button';
+import CardActions from '@/components/ui/CardActions';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { shortenDescription } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
@@ -28,22 +29,10 @@ const ReviewCard: FC<{ review: ReviewType }> = ({ review }) => {
                 </div>
             </div>
 
-            <div class="flex items-center gap-2">
-                <Button
-                    href={`/admin/reviews/${review.id}`}
-                    class="h-9 rounded-sm text-sm"
-                    variant="primary"
-                >
-                    Edit
-                </Button>
-                <AuthButton
-                    class="rounded-sm"
-                    onClick={() => (itemToDelete.value = review)}
-                    variant="destructive"
-                >
-                    Delete
-                </AuthButton>
-            </div>
+            <CardActions
+                path={`/admin/reviews/${review.id}`}
+                onClick={() => (itemToDelete.value = review)}
+            />
         </li>
     );
 };
