@@ -11,7 +11,7 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
     const lang = locale.value === 'en' ? 'en' : 'ru';
 
     return (
-        <li className="max-w-140 text-base">
+        <li className="not-last-of-type:border-foreground/40 max-w-140 text-base not-last-of-type:border-b not-last-of-type:pb-8">
             <h3 class="mb-3 font-bold">{project.attr?.title?.[lang]}</h3>
             <div className="mb-6 text-sm">
                 {shortenDescription(project.attr.description[lang])}

@@ -49,13 +49,13 @@ const Index = () => {
                     {/* )} */}
 
                     {loading ? (
-                        <ul ref={projectsRef} className="space-y-10">
+                        <ul ref={projectsRef} className="space-y-8">
                             {range(0, 8).map((idx) => (
                                 <ProjectFallback key={idx} />
                             ))}
                         </ul>
                     ) : (
-                        <ul className="space-y-10">
+                        <ul className="space-y-8">
                             {projectData?.data &&
                             projectData.data.length > 0 ? (
                                 projectData.data.map((project) => (
