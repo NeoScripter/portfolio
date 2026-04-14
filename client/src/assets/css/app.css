@@ -339,10 +339,10 @@ p {
 .lang-switch label:after {
     background-position: center;
     background-size: 140%;
-    background-image: var(--en-flag);
+    background-image: var(--ru-flag);
 }
 .lang-switch input:checked + label:after {
-    background-image: var(--ru-flag);
+    background-image: var(--en-flag);
 }
 
 .theme-switch label:after {

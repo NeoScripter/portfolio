@@ -20,6 +20,14 @@ const ReviewIndex = lazy(() => import('./pages/admin/reviews/Index'));
 const ReviewEdit = lazy(() => import('./pages/admin/reviews/Edit'));
 const ReviewCreate = lazy(() => import('./pages/admin/reviews/Create'));
 
+const VideoIndex = lazy(() => import('./pages/admin/videos/Index'));
+const VideoEdit = lazy(() => import('./pages/admin/videos/Edit'));
+const VideoCreate = lazy(() => import('./pages/admin/videos/Create'));
+
+const TechStackIndex = lazy(() => import('./pages/admin/tech-stack/Index'));
+const TechStackEdit = lazy(() => import('./pages/admin/tech-stack/Edit'));
+const TechStackCreate = lazy(() => import('./pages/admin/tech-stack/Create'));
+
 export const routes = [
     { component: Home, path: '/' },
     { component: About, path: '/about' },
@@ -40,6 +48,14 @@ export const routes = [
     { component: ReviewIndex, path: '/admin/reviews' },
     { component: ReviewCreate, path: '/admin/reviews/create' },
     { component: ReviewEdit, path: '/admin/reviews/:id' },
+
+    { component: VideoIndex, path: '/admin/videos' },
+    { component: VideoCreate, path: '/admin/videos/create' },
+    { component: VideoEdit, path: '/admin/videos/:id' },
+
+    { component: TechStackIndex, path: '/admin/stacks' },
+    { component: TechStackCreate, path: '/admin/stacks/create' },
+    { component: TechStackEdit, path: '/admin/stacks/:id' },
 
     { component: NotFound, path: '*' },
 ];

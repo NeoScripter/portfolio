@@ -30,7 +30,7 @@ const ReviewCard: FC<{ review: ReviewType }> = ({ review }) => {
 
             <div class="flex items-center gap-2">
                 <Button
-                    href={`/reviews/${review.id}`}
+                    href={`/admin/reviews/${review.id}`}
                     class="h-9 rounded-sm text-sm"
                     variant="primary"
                 >
