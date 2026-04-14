@@ -13,7 +13,7 @@ const SidebarLink: FC<{
     onClick?: (e: Event) => void;
 }> = ({ icon: Icon, label, url, className, collapses = true, onClick }) => {
     const { path } = useLocation();
-    const active = path === url;
+    const active = path === url || (url !== '/admin' && path.includes(url));
 
     return (
         <li>
