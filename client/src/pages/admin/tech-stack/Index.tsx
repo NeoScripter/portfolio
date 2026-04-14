@@ -1,4 +1,5 @@
 import AdminShellNav from '@/components/layout/AdminShellNav';
+import AppTitle from '@/components/layout/AppTitle';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
@@ -38,6 +39,7 @@ const Index = () => {
     return (
         <DeleteModalProvider>
             <AdminLayout title={{ en: 'Stacks', ru: 'Навыки' }}>
+                <AppTitle titleEn="Stacks" titleRu="Навыки" />
                 <AdminShellLayout>
                     <AdminShellNav href={'/admin/stacks/create'} />
                     {loading ? (

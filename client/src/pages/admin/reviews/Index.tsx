@@ -9,6 +9,7 @@ import { useEffect, useState } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
 import ReviewDelete from './partials/ReviewDelete';
 import ModalLayout from '@/layouts/ModalLayout';
+import AppTitle from '@/components/layout/AppTitle';
 
 const Reviews = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -38,6 +39,7 @@ const Reviews = () => {
     return (
         <DeleteModalProvider>
             <AdminLayout title={{en:"Reviews", ru: "Отзывы"}}>
+                <AppTitle titleEn="Reviews" titleRu="Отзывы" />
                 <AdminShellLayout>
                     <AdminShellNav href={'/admin/reviews/create'} />
                     {loading ? (

@@ -1,14 +1,15 @@
-import AdminShellNav from "@/components/layout/AdminShellNav";
-import { DeleteModalProvider } from "@/context/DeleteModelContext";
-import { useFetch } from "@/hooks/useFetch";
-import AdminLayout from "@/layouts/AdminLayout";
-import AdminShellLayout from "@/layouts/AdminShellLayout";
-import ModalLayout from "@/layouts/ModalLayout";
-import { range } from "@/lib/helpers/utils";
-import type { VideoType } from "@/lib/types/models/videos";
-import { useEffect, useState } from "preact/hooks";
-import VideoCard, { VideoFallback } from "./partials/VideoCard";
-import VideoDelete from "./partials/VideoDelete";
+import AdminShellNav from '@/components/layout/AdminShellNav';
+import AppTitle from '@/components/layout/AppTitle';
+import { DeleteModalProvider } from '@/context/DeleteModelContext';
+import { useFetch } from '@/hooks/useFetch';
+import AdminLayout from '@/layouts/AdminLayout';
+import AdminShellLayout from '@/layouts/AdminShellLayout';
+import ModalLayout from '@/layouts/ModalLayout';
+import { range } from '@/lib/helpers/utils';
+import type { VideoType } from '@/lib/types/models/videos';
+import { useEffect, useState } from 'preact/hooks';
+import VideoCard, { VideoFallback } from './partials/VideoCard';
+import VideoDelete from './partials/VideoDelete';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -37,7 +38,8 @@ const Index = () => {
 
     return (
         <DeleteModalProvider>
-            <AdminLayout title={{en: "Videos", ru: "Видео"}}>
+            <AdminLayout title={{ en: 'Videos', ru: 'Видео' }}>
+                <AppTitle titleEn="Videos" titleRu="Видео" />
                 <AdminShellLayout>
                     <AdminShellNav href={'videos/create'} />
                     {loading ? (

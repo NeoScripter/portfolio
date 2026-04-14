@@ -28,6 +28,11 @@ const TechStackIndex = lazy(() => import('./pages/admin/tech-stack/Index'));
 const TechStackEdit = lazy(() => import('./pages/admin/tech-stack/Edit'));
 const TechStackCreate = lazy(() => import('./pages/admin/tech-stack/Create'));
 
+const ProjectIndex = lazy(() => import('./pages/admin/projects/Index'));
+const ProjectEdit = lazy(() => import('./pages/admin/projects/Edit'));
+const ProjectCreate = lazy(() => import('./pages/admin/projects/Create'));
+
+
 export const routes = [
     { component: Home, path: '/' },
     { component: About, path: '/about' },
@@ -56,6 +61,10 @@ export const routes = [
     { component: TechStackIndex, path: '/admin/stacks' },
     { component: TechStackCreate, path: '/admin/stacks/create' },
     { component: TechStackEdit, path: '/admin/stacks/:id' },
+
+    { component: ProjectIndex, path: '/admin/projects' },
+    { component: ProjectCreate, path: '/admin/projects/create' },
+    { component: ProjectEdit, path: '/admin/projects/:id' },
 
     { component: NotFound, path: '*' },
 ];
