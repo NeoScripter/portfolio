@@ -41,13 +41,13 @@ const Index = () => {
                 <AdminShellLayout>
                     <AdminShellNav href={'/admin/stacks/create'} />
                     {loading ? (
-                        <ul className="space-y-6">
+                        <ul className="flex flex-wrap gap-6">
                             {range(0, 8).map((idx) => (
                                 <TechStackFallback key={idx} />
                             ))}
                         </ul>
                     ) : (
-                        <ul className="space-y-6">
+                        <ul className="flex flex-wrap gap-6">
                             {stacks &&
                                 stacks.map((stack) => (
                                     <TechStackCard
