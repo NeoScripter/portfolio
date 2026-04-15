@@ -1,10 +1,11 @@
+import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
+import type { ReviewType } from '@/lib/types/models/reviews';
 import type { FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 import ReviewUpsert from './partials/ReviewUpsert';
-import { useFetch } from '@/hooks/useFetch';
-import type { ReviewType } from '@/lib/types/models/reviews';
+import AppTitle from '@/components/layout/AppTitle';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -24,7 +25,8 @@ const Edit: FC<{ id: number }> = ({ id }) => {
     }
 
     return (
-        <AdminLayout title={{en: "Edit Review", ru: "Редактировать отзыв"}}>
+        <AdminLayout title={{ en: 'Edit Review', ru: 'Редактировать отзыв' }}>
+            <AppTitle titleEn="Edit Review" titleRu="Редактировать отзыв" />
             <AdminShellLayout>
                 {errors != null ? (
                     <p>{errors.errors?.message}</p>

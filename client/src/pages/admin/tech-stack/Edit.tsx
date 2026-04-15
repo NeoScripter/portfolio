@@ -4,6 +4,7 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { useEffect, useState, type FC } from 'preact/compat';
 import TechStackUpsert from './partials/TechStackUpsert';
+import AppTitle from '@/components/layout/AppTitle';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -24,6 +25,7 @@ const Edit: FC<{ id: number }> = ({ id }) => {
 
     return (
         <AdminLayout title={{ en: 'Edit Stack', ru: 'Редактировать навык' }}>
+            <AppTitle titleEn="Edit Stack" titleRu="Редактировать навык" />
             <AdminShellLayout>
                 {errors != null ? (
                     <p>{errors.errors?.message}</p>

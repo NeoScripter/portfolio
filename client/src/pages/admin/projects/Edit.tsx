@@ -1,3 +1,4 @@
+import AppTitle from '@/components/layout/AppTitle';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import AccordionLayout from '@/layouts/AccordionLayout';
@@ -54,6 +55,10 @@ const EditProject = () => {
             <AdminLayout
                 title={{ en: 'Edit project', ru: 'Редактировать проект' }}
             >
+                <AppTitle
+                    titleEn="Edit Project"
+                    titleRu="Редактировать проект"
+                />
                 <AdminShellLayout>
                     <AccordionLayout
                         showIcon={Clapperboard}

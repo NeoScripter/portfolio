@@ -4,6 +4,7 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useState, type FC } from 'preact/compat';
 import VideoUpsert from './partials/VideoUpsert';
+import AppTitle from '@/components/layout/AppTitle';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -24,6 +25,7 @@ const Edit: FC<{ id: number }> = ({ id }) => {
 
     return (
         <AdminLayout title={{ en: 'Edit Video', ru: 'Редактировать видео' }}>
+            <AppTitle titleEn="Edit Video" titleRu="Редактировать видео" />
             <AdminShellLayout>
                 {errors != null ? (
                     <p>{errors.errors?.message}</p>
