@@ -27,7 +27,10 @@ export const isServerError = (error: unknown): error is ServerError =>
     ('message' in error || 'errors' in error);
 
 const BACKUP_KEY = 'form_backup';
-const backupSignal = createSessionSignal<FormValues | undefined>(BACKUP_KEY, undefined);
+const backupSignal = createSessionSignal<FormValues | undefined>(
+    BACKUP_KEY,
+    undefined,
+);
 
 export type UseFormReturn<T extends FormValues> = {
     values: T;
@@ -109,7 +112,8 @@ export const useForm = <T extends FormValues>(
                     const allTouched = Object.keys(values).reduce<
                         FormTouched<T>
                     >((acc, key) => ({ ...acc, [key]: true }), {});
-                    setTouched(allTouched);
+                    await setTouched(allTouched);
+                    scrollToFirstError();
                     return;
                 }
             }
@@ -151,6 +155,20 @@ export const useForm = <T extends FormValues>(
         backupSignal.value = {};
         setHasBackup(false);
     }, [initialValues]);
+
+    const scrollToFirstError = useCallback(() => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
+        const errorField = document.querySelector('.input-error');
+
+        if (!errorField) {
+            return;
+        }
+
+        errorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, []);
 
     const setFormValues = useCallback((newValues: T) => {
         setValues(newValues);
