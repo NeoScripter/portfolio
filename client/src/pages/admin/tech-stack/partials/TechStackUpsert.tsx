@@ -5,6 +5,7 @@ import { FormTextArea } from '@/components/form/FormTextArea';
 import { FormWysiwyg } from '@/components/form/FormWysiwyg';
 import { useFetch } from '@/hooks/useFetch';
 import { buildFormData } from '@/lib/helpers/buildFormData';
+import type { ValidationRules } from '@/lib/helpers/validation';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
@@ -19,17 +20,11 @@ type TechStackUpsertState = {
     image: File | string | null;
 };
 
-const validateTechStack = (
-    values: TechStackUpsertState,
-): Partial<Record<keyof TechStackUpsertState, string>> => {
-    const errors: Partial<Record<keyof TechStackUpsertState, string>> = {};
-
-    if (!values.body_en.trim()) errors.body_en = 'English content is required';
-    if (!values.body_ru.trim()) errors.body_ru = 'Russian content is required';
-    if (!values.alt_en.trim()) errors.alt_en = 'English alt text is required';
-    if (!values.alt_ru.trim()) errors.alt_ru = 'Russian alt text is required';
-
-    return errors;
+const validationRules: ValidationRules<TechStackUpsertState> = {
+    body_en: ['required'],
+    body_ru: ['required'],
+    alt_en: ['required'],
+    alt_ru: ['required'],
 };
 
 const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
@@ -70,7 +65,7 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
             initialValues={initialValues}
             onSubmit={submit}
             className="space-y-6"
-            validate={validateTechStack}
+            rules={validationRules}
         >
             <FormWysiwyg name="body_en" label="Stack (EN)" required />
             <FormWysiwyg name="body_ru" label="Stack (RU)" required />

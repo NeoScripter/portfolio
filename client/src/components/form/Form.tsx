@@ -1,6 +1,8 @@
 import { FormContext } from '@/context/FormContext';
 import { useForm, type UseFormReturn } from '@/hooks/useForm';
 import { cn } from '@/lib/helpers/utils';
+import type { ValidationRules } from '@/lib/helpers/validation';
+import { locale } from '@/signals/locale';
 import type { ComponentChildren } from 'preact';
 
 type FormValues = Record<string, unknown>;
@@ -8,7 +10,7 @@ type FormValues = Record<string, unknown>;
 type FormProps<T extends FormValues> = {
     initialValues?: T;
     onSubmit: (values: T) => Promise<void> | void;
-    validate?: (values: T) => Partial<Record<keyof T, string>>;
+    rules?: ValidationRules<T>;
     className?: string;
     children:
         | ComponentChildren
@@ -19,10 +21,11 @@ export const Form = <T extends FormValues>({
     initialValues = {} as T,
     onSubmit,
     className,
-    validate,
+    rules,
     children,
 }: FormProps<T>) => {
-    const formState = useForm<T>(initialValues, onSubmit, validate);
+    const lang = locale.value === 'en' ? 'en' : 'ru';
+    const formState = useForm<T>(initialValues, onSubmit, rules, lang);
     return (
         <FormContext.Provider value={formState}>
             <form

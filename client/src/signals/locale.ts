@@ -2,7 +2,9 @@ import { effect, signal } from '@preact/signals';
 
 const isBrowser = typeof window !== 'undefined';
 
-export const locale = signal<'en' | 'ru'>(
+export type LocaleType = 'en' | 'ru';
+
+export const locale = signal<LocaleType>(
     isBrowser
         ? ((localStorage.getItem('locale') as 'en' | 'ru') || 'ru')
         : 'ru',

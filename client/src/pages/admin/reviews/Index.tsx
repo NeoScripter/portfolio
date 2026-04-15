@@ -1,15 +1,15 @@
 import AdminShellNav from '@/components/layout/AdminShellNav';
+import AppTitle from '@/components/layout/AppTitle';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
+import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { range } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import { useEffect, useState } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
 import ReviewDelete from './partials/ReviewDelete';
-import ModalLayout from '@/layouts/ModalLayout';
-import AppTitle from '@/components/layout/AppTitle';
 
 const Reviews = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -38,7 +38,7 @@ const Reviews = () => {
 
     return (
         <DeleteModalProvider>
-            <AdminLayout title={{en:"Reviews", ru: "Отзывы"}}>
+            <AdminLayout title={{ en: 'Reviews', ru: 'Отзывы' }}>
                 <AppTitle titleEn="Reviews" titleRu="Отзывы" />
                 <AdminShellLayout>
                     <AdminShellNav href={'/admin/reviews/create'} />
@@ -59,9 +59,9 @@ const Reviews = () => {
                                 ))}
                         </ul>
                     )}
-                    <ModalLayout className="max-w-9/10 px-10 py-14 sm:max-w-100 lg:max-w-160">
+                    <DeleteModalLayout>
                         <ReviewDelete />
-                    </ModalLayout>
+                    </DeleteModalLayout>
                 </AdminShellLayout>
             </AdminLayout>
         </DeleteModalProvider>

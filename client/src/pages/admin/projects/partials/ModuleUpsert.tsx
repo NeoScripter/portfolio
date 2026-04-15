@@ -12,6 +12,7 @@ import type { FC } from 'preact/compat';
 import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
 import { FormLayoutPicker } from './FormLayoutPicker';
+import type { ValidationRules } from '@/lib/helpers/validation';
 
 export type ModuleTypeOptions =
     | 'only_text'
@@ -68,6 +69,14 @@ const validateModule = (
     return errors;
 };
 
+const validationRules: ValidationRules<ModuleUpsertState> = {
+    heading_en: ['required'],
+    heading_ru: ['required'],
+    body_en: ['required'],
+    body_ru: ['required'],
+    type: ['required'],
+};
+
 const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
     module,
     projectId,
@@ -84,8 +93,8 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
             body_ru: module?.attr?.body?.ru ?? '',
             order: module?.attr?.order ?? 1,
             type: module?.attr?.type ?? 'only_text',
-            first_image: module?.firstImage?.srcSet.dk ?? null,
-            second_image: module?.secondImage?.srcSet.dk ?? null,
+            first_image: null,
+            second_image: null,
             first_alt_en: module?.firstImage?.alt?.en ?? '',
             first_alt_ru: module?.firstImage?.alt?.ru ?? '',
             second_alt_en: module?.secondImage?.alt?.en ?? '',
@@ -120,7 +129,7 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
             initialValues={initialValues}
             onSubmit={submit}
             className="space-y-6"
-            validate={validateModule}
+            rules={validationRules}
         >
             {({ values }) => (
                 <>
@@ -140,7 +149,11 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
 
                     {(values.type as ModuleTypeOptions) !== 'only_text' && (
                         <>
-                            <FormImage name="first_image" label="First Image" />
+                            <FormImage
+                                name="first_image"
+                                src={module?.firstImage?.srcSet.dk}
+                                label="First Image"
+                            />
                             <FormTextArea
                                 name="first_alt_en"
                                 label="First Alt (EN)"
@@ -160,6 +173,7 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
                             <FormImage
                                 name="second_image"
                                 label="Second Image"
+                                src={module?.secondImage?.srcSet.dk}
                             />
                             <FormTextArea
                                 name="second_alt_en"
@@ -177,17 +191,10 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
                     <FormButtons
                         submitText={module ? 'Update' : 'Create'}
                         shouldBackup={true}
-                    >
-                        {/* {module && ( */}
-                        {/*     <Button */}
-                        {/*         type="button" */}
-                        {/*         onClick={() => (itemToDelete.value = module)} */}
-                        {/*         variant="destructive" */}
-                        {/*     > */}
-                        {/*         Delete */}
-                        {/*     </Button> */}
-                        {/* )} */}
-                    </FormButtons>
+                        onDelete={() => {
+                            itemToDelete.value = module;
+                        }}  
+                    />
                 </>
             )}
         </Form>

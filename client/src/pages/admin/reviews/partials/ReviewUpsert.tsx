@@ -5,6 +5,7 @@ import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
 import { buildFormData } from '@/lib/helpers/buildFormData';
+import type { ValidationRules } from '@/lib/helpers/validation';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
@@ -21,23 +22,13 @@ type ReviewUpsertState = {
     image: File | string | null;
 };
 
-const validateReview = (
-    values: ReviewUpsertState,
-): Partial<Record<keyof ReviewUpsertState, string>> => {
-    const errors: Partial<Record<keyof ReviewUpsertState, string>> = {};
-
-    if (!values.name_en.trim())
-        errors.name_en = 'English author name is required';
-    if (!values.name_ru.trim())
-        errors.name_ru = 'Russian author name is required';
-    if (!values.content_en.trim())
-        errors.content_en = 'English review is required';
-    if (!values.content_ru.trim())
-        errors.content_ru = 'Russian review is required';
-    if (!values.alt_en.trim()) errors.alt_en = 'English alt text is required';
-    if (!values.alt_ru.trim()) errors.alt_ru = 'Russian alt text is required';
-
-    return errors;
+const validationRules: ValidationRules<ReviewUpsertState> = {
+    name_en: ['required'],
+    name_ru: ['required'],
+    alt_en: ['required'],
+    alt_ru: ['required'],
+    content_en: ['required'],
+    content_ru: ['required'],
 };
 
 const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
@@ -83,7 +74,7 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
             initialValues={initialValues}
             onSubmit={submit}
             className="space-y-6"
-            validate={validateReview}
+            rules={validationRules}
         >
             <FormInput name="name_en" label="Author (EN)" required />
             <FormInput name="name_ru" label="Author (RU)" required />

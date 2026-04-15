@@ -1,3 +1,5 @@
+import { validate, type ValidationRules } from '@/lib/helpers/validation';
+import type { LocaleType } from '@/signals/locale';
 import {
     clearSessionSignal,
     createSessionSignal,
@@ -5,7 +7,7 @@ import {
 import type { FormEvent } from 'preact/compat';
 import { useCallback, useState } from 'preact/hooks';
 
-type FormValues = Record<string, unknown>;
+export type FormValues = Record<string, unknown>;
 type FormErrors<T extends FormValues> = Partial<Record<keyof T, string>>;
 type FormTouched<T extends FormValues> = Partial<Record<keyof T, boolean>>;
 
@@ -47,7 +49,8 @@ export type UseFormReturn<T extends FormValues> = {
 export const useForm = <T extends FormValues>(
     initialValues: T = {} as T,
     onSubmit: SubmitFn<T>,
-    validate?: ValidateFn<T>,
+    rules?: ValidationRules<T>,
+    locale?: LocaleType,
 ): UseFormReturn<T> => {
     const [values, setValues] = useState<T>(initialValues);
     const [errors, setErrors] = useState<FormErrors<T>>({});
@@ -82,9 +85,9 @@ export const useForm = <T extends FormValues>(
     const handleBlur = useCallback(
         (name: keyof T) => {
             setTouched((prev) => ({ ...prev, [name]: true }));
-            if (validate) {
+            if (rules) {
                 setValues((current) => {
-                    const fieldErrors = validate(current);
+                    const fieldErrors = validate(current, rules, locale);
                     setErrors((prev) => ({
                         ...prev,
                         [name]: fieldErrors[name] ?? undefined,
@@ -93,14 +96,14 @@ export const useForm = <T extends FormValues>(
                 });
             }
         },
-        [validate],
+        [validate, rules],
     );
 
     const handleSubmit = useCallback(
         async (e?: FormEvent) => {
             e?.preventDefault();
-            if (validate) {
-                const validationErrors = validate(values);
+            if (rules) {
+                const validationErrors = validate(values, rules, locale);
                 setErrors(validationErrors);
                 if (Object.keys(validationErrors).length > 0) {
                     const allTouched = Object.keys(values).reduce<
@@ -135,7 +138,7 @@ export const useForm = <T extends FormValues>(
                 setIsSubmitting(false);
             }
         },
-        [values, validate, onSubmit],
+        [values, validate, rules, onSubmit],
     );
 
     const resetForm = useCallback(() => {

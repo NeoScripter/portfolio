@@ -4,7 +4,7 @@ import { DeleteModalProvider } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
-import ModalLayout from '@/layouts/ModalLayout';
+import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { range } from '@/lib/helpers/utils';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useState } from 'preact/hooks';
@@ -56,9 +56,9 @@ const Index = () => {
                                 ))}
                         </ul>
                     )}
-                    <ModalLayout className="max-w-9/10 px-10 py-14 sm:max-w-100 lg:max-w-160">
+                    <DeleteModalLayout>
                         <VideoDelete />
-                    </ModalLayout>
+                    </DeleteModalLayout>
                 </AdminShellLayout>
             </AdminLayout>
         </DeleteModalProvider>

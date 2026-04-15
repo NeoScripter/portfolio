@@ -3,6 +3,7 @@ import { FormButtons } from '@/components/form/FormButtons';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
+import type { ValidationRules } from '@/lib/helpers/validation';
 import type { FaqType } from '@/lib/types/models/faqs';
 import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
@@ -16,21 +17,11 @@ type FaqUpsertState = {
     content_ru: string;
 };
 
-const validateFaq = (
-    values: FaqUpsertState,
-): Partial<Record<keyof FaqUpsertState, string>> => {
-    const errors: Partial<Record<keyof FaqUpsertState, string>> = {};
-
-    if (!values.title_en.trim())
-        errors.title_en = 'English question is required';
-    if (!values.title_ru.trim())
-        errors.title_ru = 'Russian question is required';
-    if (!values.content_en.trim())
-        errors.content_en = 'English answer is required';
-    if (!values.content_ru.trim())
-        errors.content_ru = 'Russian answer is required';
-
-    return errors;
+const validationRules: ValidationRules<FaqUpsertState> = {
+    title_en: ['required'],
+    title_ru: ['required'],
+    content_en: ['required'],
+    content_ru: ['required'],
 };
 
 const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
@@ -68,7 +59,7 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
             initialValues={initialValues}
             onSubmit={submit}
             className="space-y-6"
-            validate={validateFaq}
+            rules={validationRules}
         >
             <FormInput name="title_en" label="Question (EN)" required />
             <FormInput name="title_ru" label="Question (RU)" required />

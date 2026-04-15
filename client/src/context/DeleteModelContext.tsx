@@ -17,6 +17,7 @@ interface DeleteModalContext {
         | ProjectType
         | ModuleType
         | null
+        | undefined
     >;
 }
 
@@ -43,6 +44,7 @@ export function DeleteModalProvider({
         | ModuleType
         | null
     >(null);
+
     return (
         <DeleteModalContext.Provider value={{ itemToDelete }}>
             {children}

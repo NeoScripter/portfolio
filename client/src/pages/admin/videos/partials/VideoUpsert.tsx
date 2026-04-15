@@ -5,6 +5,7 @@ import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
 import { buildFormData } from '@/lib/helpers/buildFormData';
+import type { ValidationRules } from '@/lib/helpers/validation';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
@@ -20,18 +21,12 @@ type VideoUpsertState = {
     image: File | string | null;
 };
 
-const validateVideo = (
-    values: VideoUpsertState,
-): Partial<Record<keyof VideoUpsertState, string>> => {
-    const errors: Partial<Record<keyof VideoUpsertState, string>> = {};
-
-    if (!values.title_en.trim()) errors.title_en = 'English title is required';
-    if (!values.title_ru.trim()) errors.title_ru = 'Russian title is required';
-    if (!values.url.trim()) errors.url = 'URL is required';
-    if (!values.alt_en.trim()) errors.alt_en = 'English alt text is required';
-    if (!values.alt_ru.trim()) errors.alt_ru = 'Russian alt text is required';
-
-    return errors;
+const validationRules: ValidationRules<VideoUpsertState> = {
+    title_en: ['required'],
+    title_ru: ['required'],
+    alt_en: ['required'],
+    alt_ru: ['required'],
+    url: ['required'],
 };
 
 const VideoUpsert: FC<{ video?: VideoType }> = ({ video }) => {
@@ -73,7 +68,7 @@ const VideoUpsert: FC<{ video?: VideoType }> = ({ video }) => {
             initialValues={initialValues}
             onSubmit={submit}
             className="space-y-6"
-            validate={validateVideo}
+            rules={validationRules}
         >
             <FormInput name="title_en" label="Title (EN)" required />
             <FormInput name="title_ru" label="Title (RU)" required />

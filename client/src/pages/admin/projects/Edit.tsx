@@ -3,7 +3,7 @@ import { useFetch } from '@/hooks/useFetch';
 import AccordionLayout from '@/layouts/AccordionLayout';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
-import ModalLayout from '@/layouts/ModalLayout';
+import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { Clapperboard, PanelsTopLeft } from 'lucide-preact';
 import { useRoute } from 'preact-iso';
@@ -97,9 +97,9 @@ const EditProject = () => {
                                 />
                             </AccordionLayout>
                         ))}
-                    <ModalLayout className="max-w-9/10 px-10 py-14 sm:max-w-100 lg:max-w-160">
+                    <DeleteModalLayout>
                         <ModuleDelete />
-                    </ModalLayout>
+                    </DeleteModalLayout>
                 </AdminShellLayout>
             </AdminLayout>
         </DeleteModalProvider>

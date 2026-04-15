@@ -11,6 +11,7 @@ type FormButtonsProps = {
     successMessage?: string;
     cancelText?: string;
     shouldBackup?: boolean;
+    onDelete?: () => void;
 };
 
 export const FormButtons = ({
@@ -22,6 +23,7 @@ export const FormButtons = ({
     successMessage = 'Saved',
     cancelText = 'Cancel',
     shouldBackup = false,
+    onDelete,
 }: FormButtonsProps) => {
     const { isSubmitting, resetForm, recentlySuccessful, handleRestoreBackup } =
         useFormContext();
@@ -34,19 +36,24 @@ export const FormButtons = ({
 
     return (
         <div className="flex gap-2.5">
-            <AuthButton type="submit" disabled={isSubmitting}>
+            <AuthButton key="submit-btn" type="submit" disabled={isSubmitting}>
                 {isSubmitting && <LoaderCircle class="h-4 w-4 animate-spin" />}
                 {label}
             </AuthButton>
 
             {showReset && (
-                <AuthButton onClick={resetForm} variant="secondary">
+                <AuthButton
+                    key="reset-btn"
+                    onClick={resetForm}
+                    variant="secondary"
+                >
                     {resetText}
                 </AuthButton>
             )}
             {onCancel ||
                 (cancelLink && (
                     <AuthButton
+                        key="cancel-btn"
                         href={cancelLink}
                         onClick={onCancel}
                         variant="secondary"
@@ -56,12 +63,22 @@ export const FormButtons = ({
                 ))}
             {shouldBackup && (
                 <AuthButton
+                    key="delete-btn"
                     type="button"
                     onClick={handleRestoreBackup}
                     disabled={isSubmitting}
                 >
                     <Save />
                     Restore
+                </AuthButton>
+            )}
+            {onDelete && (
+                <AuthButton
+                    type="button"
+                    onClick={onDelete}
+                    variant="destructive"
+                >
+                    Delete
                 </AuthButton>
             )}
         </div>

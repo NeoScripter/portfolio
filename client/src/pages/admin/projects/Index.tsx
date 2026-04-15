@@ -1,16 +1,14 @@
 import AdminShellNav from '@/components/layout/AdminShellNav';
 import AppTitle from '@/components/layout/AppTitle';
-import Pagination from '@/components/ui/Pagination';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
 import useFetchProjects from '@/hooks/useFetchProjects';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
-import ModalLayout from '@/layouts/ModalLayout';
+import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { range } from '@/lib/helpers/utils';
 import { useState } from 'preact/hooks';
 import ProjectCard, { ProjectFallback } from './partials/ProjectCard';
 import ProjectDelete from './partials/ProjectDelete';
-import SearchBox from './partials/SearchBox';
 
 const Index = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -72,9 +70,9 @@ const Index = () => {
                             )}
                         </ul>
                     )}
-                    <ModalLayout className="max-w-9/10 px-10 py-14 sm:max-w-100 lg:max-w-160">
+                    <DeleteModalLayout>
                         <ProjectDelete />
-                    </ModalLayout>
+                    </DeleteModalLayout>
                 </AdminShellLayout>
             </AdminLayout>
         </DeleteModalProvider>

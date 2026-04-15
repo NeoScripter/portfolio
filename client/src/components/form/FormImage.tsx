@@ -9,18 +9,19 @@ import UploadFileBtn from './UploadFileBtn';
 type FormImageProps = {
     name: string;
     label?: string;
+    src?: string;
     required?: boolean;
 };
 
 export const FormImage = ({
     name,
     label,
+    src,
     required = false,
 }: FormImageProps) => {
-    const { values, errors, touched, handleChange, handleBlur, isSubmitting } =
+    const { errors, touched, handleChange, handleBlur, isSubmitting } =
         useFormContext();
 
-    const src = values[name] as string | undefined;
     const hasError = touched[name] && errors[name];
     const id = useId();
 

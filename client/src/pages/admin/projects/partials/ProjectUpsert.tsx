@@ -4,17 +4,17 @@ import { FormImage } from '@/components/form/FormImage';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
+import useFetchCategories from '@/hooks/useFetchCategories';
+import useFetchStacks from '@/hooks/useFetchStacks';
 import { buildFormData } from '@/lib/helpers/buildFormData';
+import { type ValidationRules } from '@/lib/helpers/validation';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
-import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
 import CategoryPicker from './CategoryPicker';
-import useFetchStacks from '@/hooks/useFetchStacks';
-import useFetchCategories from '@/hooks/useFetchCategories';
-import { FormStackPicker } from './FormStackPicker';
 import { FormMockupPicker } from './FormMockupPicker';
+import { FormStackPicker } from './FormStackPicker';
 
 type ProjectUpsertState = {
     title_en: string;
@@ -27,55 +27,42 @@ type ProjectUpsertState = {
     technologies: string[];
     order: number;
     mockup: number;
-    image: File | string | null;
+    image: File | null;
     alt_en: string;
     alt_ru: string;
 };
 
-const validateProject = (
-    values: ProjectUpsertState,
-): Partial<Record<keyof ProjectUpsertState, string>> => {
-    const errors: Partial<Record<keyof ProjectUpsertState, string>> = {};
-
-    if (!values.title_en.trim()) errors.title_en = 'English title is required';
-    if (!values.title_ru.trim()) errors.title_ru = 'Russian title is required';
-    if (!values.description_en.trim())
-        errors.description_en = 'English description is required';
-    if (!values.description_ru.trim())
-        errors.description_ru = 'Russian description is required';
-    if (!values.link.trim()) errors.link = 'Link is required';
-    if (!values.category_en.trim())
-        errors.category_en = 'English category is required';
-    if (!values.category_ru.trim())
-        errors.category_ru = 'Russian category is required';
-    if (!values.alt_en.trim()) errors.alt_en = 'English alt text is required';
-    if (!values.alt_ru.trim()) errors.alt_ru = 'Russian alt text is required';
-
-    return errors;
+const validationRules: ValidationRules<ProjectUpsertState> = {
+    category_en: ['required'],
+    category_ru: ['required'],
+    title_en: ['required'],
+    title_ru: ['required'],
+    link: ['required'],
+    description_en: ['required'],
+    description_ru: ['required'],
+    alt_en: ['required'],
+    alt_ru: ['required'],
 };
 
 const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
     const { route } = useLocation();
     const { fetchData } = useFetch();
 
-    const initialValues = useMemo<ProjectUpsertState>(
-        () => ({
-            title_en: project?.attr?.title?.en ?? '',
-            title_ru: project?.attr?.title?.ru ?? '',
-            description_en: project?.attr?.description?.en ?? '',
-            description_ru: project?.attr?.description?.ru ?? '',
-            link: project?.attr?.link ?? '',
-            category_en: project?.attr?.category?.en ?? '',
-            category_ru: project?.attr?.category?.ru ?? '',
-            technologies: project?.attr?.stacks ?? [],
-            order: project?.attr?.order ?? 100,
-            mockup: 1,
-            image: project?.image?.srcSet?.dk ?? null,
-            alt_en: project?.image?.alt?.en ?? '',
-            alt_ru: project?.image?.alt?.ru ?? '',
-        }),
-        [project],
-    );
+    const initialValues: ProjectUpsertState = {
+        title_en: project?.attr?.title?.en ?? '',
+        title_ru: project?.attr?.title?.ru ?? '',
+        description_en: project?.attr?.description?.en ?? '',
+        description_ru: project?.attr?.description?.ru ?? '',
+        link: project?.attr?.link ?? '',
+        category_en: project?.attr?.category?.en ?? '',
+        category_ru: project?.attr?.category?.ru ?? '',
+        technologies: project?.attr?.stacks ?? [],
+        order: project?.attr?.order ?? 100,
+        mockup: 1,
+        image: null,
+        alt_en: project?.image?.alt?.en ?? '',
+        alt_ru: project?.image?.alt?.ru ?? '',
+    };
 
     async function submit(values: ProjectUpsertState) {
         const formData = buildFormData({
@@ -103,7 +90,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
             initialValues={initialValues}
             onSubmit={submit}
             className="space-y-6"
-            validate={validateProject}
+            rules={validationRules}
         >
             {({ values, setFieldValue }) => {
                 const { stacks, loading: stacksLoading } = useFetchStacks();
@@ -181,11 +168,16 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                         <FormInput
                             name="order"
                             label="Order"
-                            inputmode="numeric" pattern="\d*"
-                            className="max-w-40 px-0 h-auto text-center text-3xl! tracking-[0.5em]"
+                            inputmode="numeric"
+                            pattern="\d*"
+                            className="h-auto max-w-40 px-0 text-center text-3xl! tracking-[0.5em]"
                         />
                         <FormMockupPicker name="mockup" label="Mockup" />
-                        <FormImage name="image" label="Project Image" />
+                        <FormImage
+                            name="image"
+                            src={project?.image?.srcSet?.dk}
+                            label="Project Image"
+                        />
                         <FormTextArea
                             name="alt_en"
                             label="Alt Text (EN)"
