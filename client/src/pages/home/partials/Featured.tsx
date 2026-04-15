@@ -41,18 +41,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
                     srcs={featuredBgSrcSet}
                     imgClass="w-full object-contain"
                 />
-                <div
-                    class="absolute inset-0 z-5"
-                    style={
-                        getTheme() === 'dark'
-                            ? {
-                                  background: `linear-gradient(180deg, rgba(30, 32, 33, 0.83) 0%, #1E2021 90.87%)`,
-                              }
-                            : {
-                                  background: `linear-gradient(180deg, rgba(242,246,250,0) 0%, #fff 90.87%)`,
-                              }
-                    }
-                />
+                  <div class="absolute inset-0 z-5 bg-[linear-gradient(180deg,rgba(242,246,250,0.3)0%,#fff_50%)] dark:bg-[linear-gradient(180deg,rgba(30,32,33,0.5)0%,#1E2021_50%)]" />
             </div>
             <SecondaryHeading
                 className="motion-safe:animate-fade-in max-w-258 text-balance"
@@ -72,7 +61,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
                 мое портфолио!
             </p>
 
-            <Projects errors={errors} projects={projects} loading={loading} />
+            <Projects className='-mx-5 xl:-mx-15' errors={errors} projects={projects} loading={loading} />
 
             <PrimaryLink
                 key={`${lang}-gallery-btn`}
