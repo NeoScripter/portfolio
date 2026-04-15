@@ -1,14 +1,18 @@
+import AdaptiveImg from '@/components/ui/AdaptiveImg';
+import { cn, shortenDescription } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import { locale } from '@/signals/locale';
-import { cn } from '@/lib/helpers/utils';
 import type { FC } from 'preact/compat';
-import AdaptiveImg from '@/components/ui/AdaptiveImg';
 
 const ReviewCard: FC<{ review: ReviewType; active: boolean }> = ({
-    review,
+    review: { attr, image },
     active,
 }) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
+
+    const description = active
+        ? attr.description[lang]
+        : shortenDescription(attr.description[lang]);
 
     return (
         <li
@@ -17,25 +21,23 @@ const ReviewCard: FC<{ review: ReviewType; active: boolean }> = ({
                 !active && 'opacity-30',
             )}
             role="tabpanel"
-            aria-label={`Review by ${review.attr.author[lang]}`}
+            aria-label={`Review by ${attr.author[lang]}`}
             aria-hidden={!active}
             tabIndex={active ? 0 : -1}
         >
-            {review.image && (
+            {image && (
                 <AdaptiveImg
                     prtClass="size-32 md:size-40 lg:size-51 shrink-0 rounded-full"
-                    alt={review.image.alt?.[lang]}
-                    srcs={review.image.srcSet}
+                    alt={image.alt?.[lang]}
+                    srcs={image.srcSet}
                 />
             )}
             <div>
                 <blockquote>
-                    <p class="mb-6">{review.attr.description[lang]}</p>
+                    <p class="mb-6">{description}</p>
                 </blockquote>
                 <p class="font-bold md:text-xl xl:text-[1.325rem]">
-                    <cite class="not-italic">
-                        {review.attr.author[lang]}
-                    </cite>
+                    <cite class="not-italic">{attr.author[lang]}</cite>
                 </p>
             </div>
         </li>

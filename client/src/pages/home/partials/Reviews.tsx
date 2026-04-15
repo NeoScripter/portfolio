@@ -53,7 +53,9 @@ const Reviews = () => {
                 <ul
                     ref={carouselRef}
                     className={cn(
-                        '-ml-5 flex w-max items-start gap-6 sm:-ml-15 sm:gap-10 md:-ml-19 lg:-ml-27 lg:gap-13 xl:-ml-47',
+                        // '-ml-5 flex w-max items-start gap-6 sm:-ml-15 sm:gap-10 md:-ml-19 lg:-ml-27 lg:gap-13 xl:-ml-47',
+                        // TODO adjsut carousel left offset
+                        'flex w-max items-start gap-6 sm:gap-10 lg:gap-13',
                     )}
                     role="tablist"
                     aria-label={listLabel}

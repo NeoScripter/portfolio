@@ -73,7 +73,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
         <header
             inert={showModal.value}
             class={cn(
-                'sticky inset-x-0 top-0 -mt-[100%] isolate z-10 transition-all',
+                'sticky inset-x-0 top-0 h-fit -mt-[100%] isolate z-10 transition-all',
                 isBelowPadding ? 'md:top-0' : 'md:top-4',
                 isBelowHero && 'full-bleed',
                 {
