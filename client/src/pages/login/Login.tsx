@@ -6,31 +6,19 @@ import { FormPasswordInput } from '@/components/form/FormPasswordInput';
 import AppTitle from '@/components/layout/AppTitle';
 import { useFetch } from '@/hooks/useFetch';
 import AuthLayout from '@/layouts/AuthLayout';
+import type { ValidationRules } from '@/lib/helpers/validation';
 import { useLocation } from 'preact-iso';
 import { toast } from 'sonner';
 
-interface State {
+type State = {
     email: string;
     password: string;
     remember: boolean;
 }
 
-const validateLogin = (values: State): Partial<Record<keyof State, string>> => {
-    const errors: Partial<Record<keyof State, string>> = {};
-
-    if (!values.email.trim()) {
-        errors.email = 'Email is required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-    }
-
-    if (!values.password.trim()) {
-        errors.password = 'Password is required';
-    } else if (values.password.length < 8) {
-        errors.password = 'Password must be at least 8 characters';
-    }
-
-    return errors;
+const validationRules: ValidationRules<State> = {
+    email: ['required', 'email'],
+    password: ['required', 'min'],
 };
 
 const Login = () => {
@@ -66,7 +54,7 @@ const Login = () => {
                 }}
                 onSubmit={submit}
                 className="flex flex-col gap-6"
-                validate={validateLogin}
+                rules={validationRules}
             >
                 <FormInput
                     name="email"

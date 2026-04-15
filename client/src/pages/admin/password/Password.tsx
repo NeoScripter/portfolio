@@ -6,6 +6,7 @@ import SubHeader from '@/components/ui/SubHeader';
 import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import ProfileLayout from '@/layouts/ProfileLayout';
+import type { ValidationRules } from '@/lib/helpers/validation';
 import { toast } from 'sonner';
 
 type State = {
@@ -14,28 +15,10 @@ type State = {
     password_confirmation: string;
 };
 
-const validatePassword = (
-    values: State,
-): Partial<Record<keyof State, string>> => {
-    const errors: Partial<Record<keyof State, string>> = {};
-
-    if (!values.current_password.trim()) {
-        errors.current_password = 'Current password is required';
-    }
-
-    if (!values.password.trim()) {
-        errors.password = 'New password is required';
-    } else if (values.password.length < 8) {
-        errors.password = 'Password must be at least 8 characters';
-    }
-
-    if (!values.password_confirmation.trim()) {
-        errors.password_confirmation = 'Please confirm your new password';
-    } else if (values.password !== values.password_confirmation) {
-        errors.password_confirmation = 'Passwords do not match';
-    }
-
-    return errors;
+const validationRules: ValidationRules<State> = {
+    current_password: ['required'],
+    password: ['required', 'min'],
+    password_confirmation: ['required', 'min'],
 };
 
 const initialValues: State = {
@@ -86,7 +69,7 @@ export default function Password() {
                         initialValues={initialValues}
                         onSubmit={submit}
                         className="space-y-6"
-                        validate={validatePassword}
+                        rules={validationRules}
                     >
                         <FormPasswordInput
                             name="current_password"

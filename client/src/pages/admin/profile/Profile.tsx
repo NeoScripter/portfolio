@@ -6,28 +6,18 @@ import SubHeader from '@/components/ui/SubHeader';
 import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import ProfileLayout from '@/layouts/ProfileLayout';
+import type { ValidationRules } from '@/lib/helpers/validation';
 import { currentUser } from '@/signals/auth';
 import { toast } from 'sonner';
 
-interface State {
+type State = {
     name: string;
     email: string;
 }
 
-const validateProfile = (values: State): Partial<Record<keyof State, string>> => {
-    const errors: Partial<Record<keyof State, string>> = {};
-
-    if (!values.email.trim()) {
-        errors.email = 'Email is required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-    }
-
-    if (!values.name.trim()) {
-        errors.name = 'Username is required';
-    } 
-
-    return errors;
+const validationRules: ValidationRules<State> = {
+    email: ['required', 'email'],
+    name: ['required'],
 };
 
 export default function Profile() {
@@ -71,7 +61,7 @@ export default function Profile() {
                         }}
                         onSubmit={submit}
                         className="space-y-6"
-                        validate={validateProfile}
+                        rules={validationRules}
                     >
                         <FormInput
                             name="name"
