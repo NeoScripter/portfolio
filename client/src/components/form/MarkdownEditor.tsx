@@ -53,11 +53,11 @@ export default function MarkdownEditor({
     return (
         <div
             className={cn(
-                'focus-within:border-ring border-input focus-within:ring-accent/80 bg-background rounded-lg border px-3 py-2 text-base shadow-xs focus-within:ring-[1px]',
+                'focus-within:border-ring border-input focus-within:ring-accent/80 bg-background dark:shadow-muted-foreground/25 rounded-lg border px-3 py-2 text-base shadow-xs focus-within:ring-[1px]',
                 className,
             )}
         >
-            <menu className="bg-background sticky top-15 z-10 mb-8 flex flex-wrap items-center gap-1 rounded-md p-2 shadow-md sm:top-25 md:top-30">
+            <menu className="bg-background dark:shadow-muted-foreground/25 sticky top-15 z-10 mb-8 flex flex-wrap items-center gap-1 rounded-md p-2 shadow-md sm:top-25 md:top-30">
                 {markdownBtns.map((btn, i) => (
                     <MarkdownBtn
                         key={btn.title}
