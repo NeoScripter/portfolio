@@ -1,13 +1,12 @@
-
-import AppSection from '@/layouts/SectionLayout';
-import { useEffect, useState } from 'preact/hooks';
-import type { FC } from 'preact/compat';
-import type { ProjectType } from '@/lib/types/models/projects';
-import { cn } from '@/lib/helpers/utils';
-import SecondaryHeading from '../ui/SecondaryHeading';
-import PrimaryLink from '../ui/PrimaryLink';
-import Projects from './Projects';
 import { useFetch } from '@/hooks/useFetch';
+import AppSection from '@/layouts/SectionLayout';
+import { cn } from '@/lib/helpers/utils';
+import type { ProjectType } from '@/lib/types/models/projects';
+import type { FC } from 'preact/compat';
+import { useEffect, useState } from 'preact/hooks';
+import PrimaryLink from '../ui/PrimaryLink';
+import SecondaryHeading from '../ui/SecondaryHeading';
+import Projects from './Projects';
 
 const SeeAlso: FC<{
     className?: string;
@@ -32,12 +31,7 @@ const SeeAlso: FC<{
     }, []);
 
     return (
-        <AppSection
-            className={cn(
-                'xl:px-0',
-                className,
-            )}
-        >
+        <AppSection className={cn('xl:px-0', className)}>
             <div className="xl:flex xl:items-baseline xl:justify-between">
                 <SecondaryHeading className="xs:text-center xs:text-balance text-center text-4xl xl:text-5xl">
                     {title}
@@ -54,7 +48,7 @@ const SeeAlso: FC<{
                 errors={errors}
                 projects={projects}
                 loading={loading}
-                className="max-w-100 mx-auto sm:max-w-full sm:grid-cols-4 sm:*:col-span-2 sm:*:last-of-type:col-start-2 xl:grid-cols-3 xl:*:col-span-1 xl:*:last-of-type:col-start-auto"
+                className="mx-auto max-w-100 sm:max-w-full sm:grid-cols-4 sm:*:col-span-2 sm:*:last-of-type:col-start-2 xl:grid-cols-3 xl:*:col-span-1 xl:*:last-of-type:col-start-auto"
             />
 
             <PrimaryLink

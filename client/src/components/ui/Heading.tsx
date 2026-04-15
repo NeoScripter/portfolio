@@ -1,3 +1,5 @@
+import { locale } from '@/signals/locale';
+
 export default function Heading({
     title,
     description,
@@ -5,11 +7,23 @@ export default function Heading({
     title: string;
     description?: string;
 }) {
+    const lang = locale.value === 'en' ? 'en' : 'ru';
+
     return (
         <div className="mb-8 space-y-0.5">
-            <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
+            <h2
+                key={`${lang}-primary-heading`}
+                className="motion-safe:animate-fade-in text-xl font-semibold tracking-tight hyphens-auto"
+            >
+                {title}
+            </h2>
             {description && (
-                <p className="text-muted-foreground text-sm">{description}</p>
+                <p
+                    key={`${lang}-primary-heading-description`}
+                    className="text-muted-foreground motion-safe:animate-fade-in text-sm"
+                >
+                    {description}
+                </p>
             )}
         </div>
     );

@@ -19,14 +19,6 @@ export default function AdaptiveImg({
 }: AdaptiveImgProps) {
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        setTimeout(() => {
-            if (isLoading) {
-                setIsLoading(false);
-            }
-        }, 3000)
-    },[])
-
     if (!srcs) return null;
 
     const isBg = variant === 'bg';

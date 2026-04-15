@@ -44,7 +44,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
     useEscapeKey(() => setShowMenu(false));
 
     const mq = isBrowser
-        ? window.matchMedia(`(max-width: ${LG / 16}rem)`)
+        ? window.matchMedia(`(max-width: ${LG}px)`)
         : null;
 
     const [showDrawer, setShowDrawer] = useState(
@@ -73,9 +73,9 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
         <header
             inert={showModal.value}
             class={cn(
-                'fixed inset-x-0 top-0 isolate z-10 transition-all',
+                'sticky inset-x-0 top-0 -mt-[100%] isolate z-10 transition-all',
                 isBelowPadding ? 'md:top-0' : 'md:top-4',
-                !isBelowHero && 'md:inset-x-4 xl:inset-x-24',
+                isBelowHero && 'full-bleed',
                 {
                     '-translate-y-full': hide,
                 },

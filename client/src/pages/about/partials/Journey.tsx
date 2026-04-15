@@ -3,16 +3,13 @@ import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import AppSection from '@/layouts/SectionLayout';
 import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
-import type { FC } from 'preact/compat';
+import { useId, type FC } from 'preact/compat';
 import { journeyItems, type JourneyItemType } from '../data';
 
 const Journey: FC<{ className?: string }> = ({ className }) => {
     return (
         <AppSection
-            className={cn(
-                'full-bleed px-0 sm:px-0 lg:px-0',
-                className,
-            )}
+            className={cn('full-bleed px-0 sm:px-0 lg:px-0', className)}
         >
             <SecondaryHeading className="xs:text-center xs:text-balance">
                 Как я стал программистом
@@ -38,10 +35,11 @@ const JourneyItem: FC<{ item: JourneyItemType; isEven: boolean }> = ({
     isEven,
 }) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
+    const id = useId();
 
     return (
         <div
-            class={cn('xl:flex xl:items-stretch 2xl:px-23 xl:gap-16', {
+            class={cn('xl:flex xl:items-stretch xl:gap-16 2xl:px-23', {
                 'xl:pl-23': isEven,
                 'xl:pr-23': !isEven,
             })}
@@ -62,7 +60,8 @@ const JourneyItem: FC<{ item: JourneyItemType; isEven: boolean }> = ({
                 })}
             />
             <div
-                class="prose sm:prose-base prose-sm lg:prose-lg 2xl:prose-xl text-foreground [&>h2]:text-foreground max-w-full self-center px-5 sm:px-15 xl:px-0"
+                key={`${lang}-${id}`}
+                class="prose motion-safe:animate-fade-in sm:prose-base prose-sm lg:prose-lg 2xl:prose-xl text-foreground [&>h2]:text-foreground max-w-full px-5 sm:px-15 xl:px-0"
                 dangerouslySetInnerHTML={{
                     __html: item.text[lang] || '',
                 }}

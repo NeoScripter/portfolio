@@ -16,6 +16,7 @@ export const prefersRussian = () =>
 const applyLocale = (lang: 'en' | 'ru') => {
     if (!isBrowser) return;
     document.documentElement.lang = lang;
+    // window.scrollTo(0, 0);
 };
 
 if (isBrowser) {

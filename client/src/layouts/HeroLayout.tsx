@@ -7,7 +7,7 @@ const HeroLayout: FC<NodeProps> = ({ className, children }) => {
     return (
         <AppSection
             className={cn(
-                'relative isolate overflow-clip sm:pt-42 rounded-xl pt-36 pb-15.5 sm:pb-25 lg:pt-50 xl:pt-50 xl:pb-28',
+                'content-visibility-default relative isolate overflow-clip rounded-xl pt-36 pb-15.5 sm:pt-42 sm:pb-25 lg:pt-50 xl:pt-50 xl:pb-28',
                 className,
             )}
         >
@@ -17,5 +17,3 @@ const HeroLayout: FC<NodeProps> = ({ className, children }) => {
 };
 
 export default HeroLayout;
-// first-of-type:pt-36 first-of-type:lg:pt-50
-

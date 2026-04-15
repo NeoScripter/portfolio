@@ -1,7 +1,7 @@
-import type { ProjectType } from '@/lib/types/models/projects';
-import { getTheme } from '@/signals/theme';
-import { locale } from '@/signals/locale';
 import { cn } from '@/lib/helpers/utils';
+import type { ProjectType } from '@/lib/types/models/projects';
+import { locale } from '@/signals/locale';
+import { getTheme } from '@/signals/theme';
 import type { FC } from 'preact/compat';
 import AdaptiveImg from '../ui/AdaptiveImg';
 
@@ -33,10 +33,16 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
                 </div>
             )}
             <div class="px-5 pt-5 pb-7 sm:px-6 sm:pt-6 md:px-7 xl:px-8 xl:pt-8">
-                <h4 class="mb-5.5 text-2xl font-medium hyphens-auto md:text-3xl xl:mb-7 2xl:text-4xl">
+                <h4
+                    key={`${lang}-heading`}
+                    class="motion-safe:animate-fade-in mb-5.5 text-2xl font-medium hyphens-auto md:text-3xl xl:mb-7 2xl:text-4xl"
+                >
                     {project.attr?.title?.[lang]}
                 </h4>
-                <p class="text-foreground/60 ellipsis-multiline text-sm md:text-base xl:text-lg">
+                <p
+                    key={`${lang}-content`}
+                    class="text-foreground/60 ellipsis-multiline motion-safe:animate-fade-in text-sm md:text-base xl:text-lg"
+                >
                     {project.attr?.description?.[lang]}
                 </p>
             </div>

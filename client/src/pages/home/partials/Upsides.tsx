@@ -6,12 +6,22 @@ import type { FC } from 'preact/compat';
 import { upsides, type UpsideType } from '../data';
 
 const Upsides = () => {
+    const lang = locale.value === 'en' ? 'en' : 'ru';
+
     return (
         <AppSection>
-            <SecondaryHeading className="text-center text-balance">
-                Преимущества работы со мной
+            <SecondaryHeading
+                key={`${lang}-heading`}
+                className="motion-safe:animate-fade-in text-balance"
+            >
+                {lang === 'en'
+                    ? 'Why should you hire me?'
+                    : 'Преимущества работы со мной'}
             </SecondaryHeading>
-            <p class="mx-auto max-w-258 text-center">
+            <p
+                key={`${lang}-subheading`}
+                class="motion-safe:animate-fade-in max-w-208"
+            >
                 Я специализируюсь на создании качественных и надежных сайтов. За
                 годы работы я помог многим клиентам реализовать их проекты — от
                 простых портфолио до сложных интернет-магазинов.
@@ -34,17 +44,22 @@ const Upsides = () => {
 
 export default Upsides;
 
-const UpsideCard: FC<{ upside: UpsideType }> = ({ upside }) => {
+const UpsideCard: FC<{ upside: UpsideType }> = ({
+    upside: { icon: Icon, description },
+}) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     return (
         <li>
-            <upside.icon
+            <Icon
                 strokeWidth={1.5}
                 class="mx-auto mb-3 size-8 sm:mb-4.5 sm:ml-0 lg:mb-6 xl:mb-7 xl:size-12"
             />
-            <p class="mx-auto max-w-110 text-center text-balance sm:mx-0 sm:max-w-full sm:text-left">
-                {upside.description[lang]}
+            <p
+                key={`${lang}-content`}
+                class="motion-safe:animate-fade-in mx-auto max-w-110 text-center text-balance sm:mx-0 sm:max-w-full sm:text-left"
+            >
+                {description[lang]}
             </p>
         </li>
     );

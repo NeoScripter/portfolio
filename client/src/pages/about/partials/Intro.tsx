@@ -9,7 +9,6 @@ const Intro: FC<{ className?: string }> = ({ className }) => {
     return (
         <AppSection
             className={cn(
-                // 'py-14 sm:pt-19 sm:pb-12 lg:pt-17 lg:pb-22 xl:pb-18',
                 className,
             )}
         >

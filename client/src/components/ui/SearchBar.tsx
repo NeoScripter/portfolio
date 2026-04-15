@@ -2,13 +2,14 @@ import { cn } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
 import { locale } from '@/signals/locale';
 import { Search } from 'lucide-preact';
-import type { ChangeEvent, FC, JSX } from 'preact/compat';
+import type { TargetedEvent } from 'preact';
+import type { ChangeEvent, FC } from 'preact/compat';
 import Input from '../form/Input';
 
 const SearchBar: FC<
     NodeProps<{
         value: string;
-        handleSubmit: (e: JSX.TargetedEvent<HTMLFormElement, Event>) => void;
+        handleSubmit: (e: TargetedEvent<HTMLFormElement, Event>) => void;
         handleChange: (val: string) => void;
     }>
 > = ({ className, value, handleSubmit, handleChange }) => {
@@ -39,7 +40,12 @@ const SearchBar: FC<
                 type="submit"
                 className="focus-visible:border-ring bg-foreground text-user-background hover:ring-footer-text focus-visible:ring-footer-text flex items-center justify-center gap-[0.5em] rounded-xl py-[0.5em] pr-[1em] pl-[1.5em] font-medium shadow-xs transition-[color,box-shadow,opacity] outline-none hover:ring-[3px] focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0"
             >
-                Найти
+                <span
+                    key={`${lang}-find-btn`}
+                    className="motion-safe:animate-fade-in"
+                >
+                    Найти
+                </span>
                 <Search className="size-5" />
             </button>
         </form>

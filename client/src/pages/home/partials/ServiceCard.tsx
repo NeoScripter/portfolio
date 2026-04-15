@@ -1,7 +1,7 @@
+import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import type { FC } from 'preact/compat';
 import type { ServiceType } from '../data';
-import { cn } from '@/lib/helpers/utils';
 
 const ServiceCard: FC<{ service: ServiceType; active: boolean }> = ({
     service,
@@ -20,10 +20,18 @@ const ServiceCard: FC<{ service: ServiceType; active: boolean }> = ({
             <div class="mb-4.5">
                 <Icon class="size-12" strokeWidth={1.5} />
             </div>
-            <p class="mb-6.5 text-xl font-semibold sm:text-[1.325rem]">
+            <p
+                key={`${lang}-heading`}
+                class="motion-safe:animate-fade-in mb-6.5 text-xl font-semibold sm:text-[1.325rem]"
+            >
                 {service.title[lang]}
             </p>
-            <p class="sm:text-xl">{service.description[lang]}</p>
+            <p
+                key={`${lang}-content`}
+                class="motion-safe:animate-fade-in sm:text-xl"
+            >
+                {service.description[lang]}
+            </p>
         </li>
     );
 };

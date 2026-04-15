@@ -12,9 +12,17 @@ export default function SubHeader({
 
     return (
         <header>
-            <h3 className="mb-0.5 text-base font-medium">{title[lang]}</h3>
+            <h3
+                key={`${lang}-subheader`}
+                className="motion-safe:animate-fade-in mb-0.5 text-base font-medium hyphens-auto"
+            >
+                {title[lang]}
+            </h3>
             {description && (
-                <p className="text-muted-foreground text-sm">
+                <p
+                    key={`${lang}-subheader-description`}
+                    className="text-muted-foreground motion-safe:animate-fade-in text-sm"
+                >
                     {description[lang]}
                 </p>
             )}

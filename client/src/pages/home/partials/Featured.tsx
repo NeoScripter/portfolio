@@ -1,19 +1,21 @@
+import Projects from '@/components/shared/Projects';
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import PrimaryLink from '@/components/ui/PrimaryLink';
 import SecondaryHeading from '@/components/ui/SecondaryHeading';
+import { useFetch } from '@/hooks/useFetch';
 import AppSection from '@/layouts/SectionLayout';
 import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
+import { locale } from '@/signals/locale';
 import { getTheme } from '@/signals/theme';
 import { type FC } from 'preact/compat';
-import { useEffect, useState} from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { featuredBgSrcSet } from '../data';
-import { useFetch } from '@/hooks/useFetch';
-import Projects from '@/components/shared/Projects';
 
 const Featured: FC<{ className?: string }> = ({ className }) => {
     const { fetchData, loading, errors } = useFetch();
     const [projects, setProjects] = useState<ProjectType[] | null>(null);
+    const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     useEffect(() => {
         fetchData({
@@ -52,11 +54,16 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
                     }
                 />
             </div>
-            <SecondaryHeading>
+            <SecondaryHeading
+                className="motion-safe:animate-fade-in max-w-258 text-balance"
+            >
                 Адаптивный дизайн, высокая производительность и удобство
                 интерфейсов.
             </SecondaryHeading>
-            <p class="max-w-208">
+            <p
+                key={`${lang}-content`}
+                class="motion-safe:animate-fade-in max-w-208"
+            >
                 Здесь представлены мои проекты, а также информация о моем опыте
                 и профессиональной деятельности. Я подробно рассказываю, как
                 создавался каждый проект, и описываю ключевые этапы работы. Если
@@ -67,8 +74,12 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
 
             <Projects errors={errors} projects={projects} loading={loading} />
 
-            <PrimaryLink href="/portfolio" className="mx-auto mt-22 w-fit">
-                На страницу проектов
+            <PrimaryLink
+                key={`${lang}-gallery-btn`}
+                href="/gallery"
+                className="motion-safe:animate-fade-in mx-auto mt-22 w-fit"
+            >
+                {lang === 'en' ? 'Project Gallery' : 'На страницу проектов'}
             </PrimaryLink>
         </AppSection>
     );

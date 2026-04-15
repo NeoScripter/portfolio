@@ -1,9 +1,10 @@
 import useFollowCursor from '@/hooks/useFollowCursor';
 import { cn } from '@/lib/helpers/utils';
+import { locale } from '@/signals/locale';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ArrowDownRight } from 'lucide-preact';
-import { useRef } from 'preact/hooks';
 import type { JSX } from 'preact';
+import { useId, useRef } from 'preact/hooks';
 
 const buttonVariants = cva(
     'inline-flex w-fit items-center justify-center gap-[0.5em] whitespace-nowrap rounded-xl group transition-[color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*="size-"])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
@@ -30,7 +31,10 @@ const buttonVariants = cva(
     },
 );
 
-type ButtonProps = Omit<JSX.IntrinsicElements['button'] & JSX.IntrinsicElements['a'], 'ref'> &
+type ButtonProps = Omit<
+    JSX.IntrinsicElements['button'] & JSX.IntrinsicElements['a'],
+    'ref'
+> &
     VariantProps<typeof buttonVariants> & {
         href?: string;
     };
@@ -45,6 +49,9 @@ const Button = ({
     const arrowRef = useRef<HTMLDivElement>(null);
     useFollowCursor(arrowRef);
 
+    const id = useId();
+
+    const lang = locale.value === 'en' ? 'en' : 'ru';
     const Comp = href ? 'a' : 'button';
 
     return (
@@ -54,7 +61,9 @@ const Button = ({
             class={cn(buttonVariants({ variant, className }))}
             {...props}
         >
-            {children}
+            <span key={`${lang}-${id}`} className="motion-safe:animate-fade-in">
+                {children}
+            </span>
 
             <div
                 ref={arrowRef}

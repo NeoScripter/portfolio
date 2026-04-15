@@ -17,7 +17,12 @@
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
 
-    --breakpoint-xs: 31.25rem;
+    --breakpoint-xs: 500px;
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
 
     --shadow-video: 0 18px 39px 0 rgba(0, 0, 0, 0.25);
     --shadow-faq: 0 24.556px 32.742px -14.734px rgba(149, 149, 149, 0.25);
@@ -285,6 +290,18 @@ h5 {
     line-height: 125% !important;
 }
 
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+    overflow-wrap: break-word;
+    hyphens: auto;
+
+    -webkit-hyphens: auto;
+}
+
 .burger {
     transform-origin: center;
 }
@@ -549,12 +566,12 @@ h5 {
         1fr;
 
     /* lg */
-    @media screen and (min-width: 64rem) {
+    @media screen and (min-width: 1024px) {
         --padding: 1rem;
     }
     /* xl */
-    @media screen and (min-width: 80rem) {
-        --padding: 6rem;
+    @media screen and (min-width: 1280px) {
+        --padding: 8rem;
     }
 }
 
