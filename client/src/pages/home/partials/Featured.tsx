@@ -10,7 +10,7 @@ import { locale } from '@/signals/locale';
 import { getTheme } from '@/signals/theme';
 import { type FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
-import { featuredBgSrcSet } from '../data';
+import { featuredBgDarkSrcSet, featuredBgSrcSet } from '../data';
 
 const Featured: FC<{ className?: string }> = ({ className }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -38,7 +38,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
                 class="absolute inset-0 isolate -z-5 h-fit overflow-clip md:rounded-xl"
             >
                 <AdaptiveImg
-                    srcs={featuredBgSrcSet}
+                    srcs={getTheme() === 'light' ? featuredBgSrcSet : featuredBgDarkSrcSet}
                     imgClass="w-full object-contain"
                 />
                   <div class="absolute inset-0 z-5 bg-[linear-gradient(180deg,rgba(242,246,250,0.3)0%,#fff_50%)] dark:bg-[linear-gradient(180deg,rgba(30,32,33,0.5)0%,#1E2021_50%)]" />
