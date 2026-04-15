@@ -64,7 +64,7 @@ const FooterInfo = () => {
                 label="+63 950 464 35 91"
                 href="tel:+639504643591"
             >
-                <PhoneCall class="group-hover:animate-wiggle size-full" />
+                <PhoneCall class="group-hover:motion-safe:animate-wiggle size-full" />
             </FooterLink>
 
             <FooterLink

@@ -1,3 +1,7 @@
+import OneImageSplit from '@/assets/svgs/OneImageSplit';
+import OnlyText, { type SVGIconProps } from '@/assets/svgs/OnlyText';
+import TwoImageBlock from '@/assets/svgs/TwoImageBlock';
+import TwoImageSplit from '@/assets/svgs/TwoImageSplit';
 import { cn } from '@/lib/helpers/utils';
 import type { ModuleOptionType } from '@/lib/types/models/module';
 import type { NodeProps } from '@/lib/types/shared';
@@ -8,7 +12,7 @@ import {
     PanelLeft,
     Rows2,
 } from 'lucide-preact';
-import type { FC } from 'preact/compat';
+import type { FC, FunctionComponent } from 'preact/compat';
 
 type LayoutPickerProps = NodeProps & {
     value: ModuleOptionType;
@@ -18,7 +22,7 @@ type LayoutPickerProps = NodeProps & {
 
 type LayoutOption = {
     type: ModuleOptionType;
-    icon: LucideIcon;
+    icon: FunctionComponent<SVGIconProps>;
 };
 
 const LayoutPicker: FC<LayoutPickerProps> = ({
@@ -28,10 +32,10 @@ const LayoutPicker: FC<LayoutPickerProps> = ({
     error,
 }) => {
     const layouts: LayoutOption[] = [
-        { type: 'only_text', icon: Rows2 },
-        { type: 'two_image_split', icon: LayoutPanelLeft },
-        { type: 'two_image_block', icon: LayoutPanelTop },
-        { type: 'one_image_split', icon: PanelLeft },
+        { type: 'only_text', icon: OnlyText },
+        { type: 'two_image_split', icon: TwoImageSplit },
+        { type: 'two_image_block', icon: TwoImageBlock },
+        { type: 'one_image_split', icon: OneImageSplit },
     ];
 
     return (
@@ -39,36 +43,22 @@ const LayoutPicker: FC<LayoutPickerProps> = ({
             <label className="ml-1 text-base font-medium">Layout</label>
 
             <div className="grid grid-cols-4 gap-4">
-                {layouts.map((layout) => (
+                {layouts.map(({type, icon: Icon }) => (
                     <button
-                        key={layout}
+                        key={type}
                         type="button"
-                        onClick={() => onChange(layout.type)}
+                        onClick={() => onChange(type)}
                         className={cn(
                             'group relative aspect-square overflow-hidden rounded-lg border-4 border-accent-foreground/80 transition-all',
-                            value === layout.type
+                            value === type
                                 ? 'ring-accent/50 ring-2'
-                                : 'shadow-md',
+                                : 'shadow-md opacity-25',
                         )}
                     >
-                        <layout.icon className="size-full object-cover stroke-1 text-accent-foreground/80" />
-
-                        {/* Overlay */}
-                        <div
-                            className={cn(
-                                'absolute hidden inset-0 items-center justify-center bg-black/20 transition-opacity',
-                                value === layout.type
-                                    ? 'opacity-0'
-                                    : 'opacity-0 group-hover:opacity-100',
-                            )}
-                        >
-                            <span className="text-5xl font-bold text-white">
-                                {layout}
-                            </span>
-                        </div>
+                        <Icon className="size-full object-cover stroke-1 text-foreground" />
 
                         {/* Selected indicator */}
-                        {value === layout.type && (
+                        {value === type && (
                             <div className="bg-accent-foreground/60 absolute top-2 right-2 flex size-12 items-center justify-center rounded-full text-white">
                                 <svg
                                     className="size-8"

@@ -23,7 +23,7 @@ export default function MarkdownEditor({
         extensions: [StarterKit, Markdown],
         editorProps: {
             attributes: {
-                class: 'prose prose-md leading-7! [&>p>strong,h2,h3,h4]:text-foreground! [&>blockquote,a]:text-foreground! min-h-40 max-w-full outline-none transition-[color,box-shadow] text-foreground! bg-background selection:bg-foreground selection:text-background placeholder:text-gray-500 disabled:opacity-50',
+                class: 'prose prose-md text-sm leading-7! [&>p>strong,h2,h3,h4]:text-foreground! p-3 pt-0 [&>blockquote,a]:text-foreground! min-h-40 max-w-full outline-none transition-[color,box-shadow] text-foreground! bg-background selection:bg-foreground selection:text-background placeholder:text-gray-500 disabled:opacity-50',
             },
         },
         content: value,

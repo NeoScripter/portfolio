@@ -4,7 +4,6 @@ import { FormImage } from '@/components/form/FormImage';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { FormWysiwyg } from '@/components/form/FormWysiwyg';
-import { Button } from '@/components/ui/Button';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import { buildFormData } from '@/lib/helpers/buildFormData';
@@ -12,6 +11,7 @@ import type { ModuleType } from '@/lib/types/models/module';
 import type { FC } from 'preact/compat';
 import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
+import { FormLayoutPicker } from './FormLayoutPicker';
 
 export type ModuleTypeOptions =
     | 'only_text'
@@ -40,20 +40,29 @@ const validateModule = (
 ): Partial<Record<keyof ModuleUpsertState, string>> => {
     const errors: Partial<Record<keyof ModuleUpsertState, string>> = {};
 
-    if (!values.heading_en.trim()) errors.heading_en = 'English title is required';
-    if (!values.heading_ru.trim()) errors.heading_ru = 'Russian title is required';
+    if (!values.heading_en.trim())
+        errors.heading_en = 'English title is required';
+    if (!values.heading_ru.trim())
+        errors.heading_ru = 'Russian title is required';
     if (!values.body_en.trim()) errors.body_en = 'English content is required';
     if (!values.body_ru.trim()) errors.body_ru = 'Russian content is required';
     if (!values.type) errors.type = 'Layout type is required';
 
     if (values.type !== 'only_text') {
-        if (!values.first_alt_en.trim()) errors.first_alt_en = 'English alt text is required';
-        if (!values.first_alt_ru.trim()) errors.first_alt_ru = 'Russian alt text is required';
+        if (!values.first_alt_en.trim())
+            errors.first_alt_en = 'English alt text is required';
+        if (!values.first_alt_ru.trim())
+            errors.first_alt_ru = 'Russian alt text is required';
     }
 
-    if (values.type === 'two_image_split' || values.type === 'two_image_block') {
-        if (!values.second_alt_en.trim()) errors.second_alt_en = 'English alt text is required';
-        if (!values.second_alt_ru.trim()) errors.second_alt_ru = 'Russian alt text is required';
+    if (
+        values.type === 'two_image_split' ||
+        values.type === 'two_image_block'
+    ) {
+        if (!values.second_alt_en.trim())
+            errors.second_alt_en = 'English alt text is required';
+        if (!values.second_alt_ru.trim())
+            errors.second_alt_ru = 'Russian alt text is required';
     }
 
     return errors;
@@ -92,9 +101,10 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
         });
 
         await fetchData({
-            url: module != null
-                ? `/admin/project-modules/${module.id}`
-                : '/admin/project-modules',
+            url:
+                module != null
+                    ? `/admin/project-modules/${module.id}`
+                    : '/admin/project-modules',
             method: 'POST',
             payload: formData,
             onSuccess: () => {
@@ -122,23 +132,44 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
                     <FormInput
                         name="order"
                         label="Order"
-                        type="number"
-                        className="max-w-40 px-0 [&>input]:h-auto [&>input]:text-center [&>input]:text-3xl! [&>input]:tracking-[0.5em]"
+                        inputmode="numeric"
+                        pattern="\d*"
+                        className="h-auto max-w-40 px-0 text-center text-3xl! tracking-[0.5em]"
                     />
 
                     {(values.type as ModuleTypeOptions) !== 'only_text' && (
                         <>
                             <FormImage name="first_image" label="First Image" />
-                            <FormTextArea name="first_alt_en" label="First Alt (EN)" required />
-                            <FormTextArea name="first_alt_ru" label="First Alt (RU)" required />
+                            <FormTextArea
+                                name="first_alt_en"
+                                label="First Alt (EN)"
+                                required
+                            />
+                            <FormTextArea
+                                name="first_alt_ru"
+                                label="First Alt (RU)"
+                                required
+                            />
                         </>
                     )}
 
-                    {(values.type === 'two_image_split' || values.type === 'two_image_block') && (
+                    {(values.type === 'two_image_split' ||
+                        values.type === 'two_image_block') && (
                         <>
-                            <FormImage name="second_image" label="Second Image" />
-                            <FormTextArea name="second_alt_en" label="Second Alt (EN)" required />
-                            <FormTextArea name="second_alt_ru" label="Second Alt (RU)" required />
+                            <FormImage
+                                name="second_image"
+                                label="Second Image"
+                            />
+                            <FormTextArea
+                                name="second_alt_en"
+                                label="Second Alt (EN)"
+                                required
+                            />
+                            <FormTextArea
+                                name="second_alt_ru"
+                                label="Second Alt (RU)"
+                                required
+                            />
                         </>
                     )}
 

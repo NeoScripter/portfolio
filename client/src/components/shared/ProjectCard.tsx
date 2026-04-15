@@ -28,7 +28,7 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
                     ></a>
                     <span
                         aria-hidden="true"
-                        class="shine-element block group-hover:animate-[shine_750ms]"
+                        class="shine-element block group-hover:motion-safe:animate-[shine_750ms]"
                     />
                 </div>
             )}

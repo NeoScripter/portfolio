@@ -2,9 +2,11 @@ import AnimatedUnderline from '@/components/ui/AnimatedUnderline';
 import { Button } from '@/components/ui/Button';
 import { useModal } from '@/context/ModalContext';
 import { cn } from '@/lib/helpers/utils';
+import { locale } from '@/signals/locale';
 
 const HeroActions = () => {
     const { showModal } = useModal();
+    const lang = locale.value === 'en' ? 'en' : 'ru';
 
     return (
         <nav
@@ -12,11 +14,11 @@ const HeroActions = () => {
             aria-label="Основные действия"
         >
             <Button onClick={() => (showModal.value = true)} variant="hero">
-                Нанять меня
+                {lang === 'en' ? 'Hire me' : 'Нанять меня'}
             </Button>
 
             <a href="/about" class="group relative ml-5">
-                Узнать больше
+                {lang === 'en' ? 'About me' : 'Узнать больше'}
                 <AnimatedUnderline className={cn('z-10 bg-white')} />
             </a>
         </nav>

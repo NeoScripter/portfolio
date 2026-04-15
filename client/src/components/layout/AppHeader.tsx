@@ -94,7 +94,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     },
                 )}
             >
-                <div key={lang} class="w-40 animate-fade-in">
+                <div key={lang} class="w-40 motion-safe:animate-fade-in">
                     <Logo />
                 </div>
 

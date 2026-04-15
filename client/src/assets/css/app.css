@@ -164,7 +164,7 @@
         }
     }
 
-    --animate-fade-in: fade-in 1s ease-in forwards;
+    --animate-fade-in: fade-in 0.75s ease-in forwards;
     @keyframes fade-in {
         0% {
             opacity: 0;
@@ -277,6 +277,13 @@
 p {
     line-height: 165% !important;
 }
+h1,
+h2,
+h3,
+h4,
+h5 {
+    line-height: 125% !important;
+}
 
 .burger {
     transform-origin: center;
@@ -368,7 +375,6 @@ p {
 .theme-switch label:active:after {
     width: 55%;
 }
-
 
 .lang-switch label:active:after {
     width: 55%;

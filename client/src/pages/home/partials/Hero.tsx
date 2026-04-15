@@ -1,9 +1,12 @@
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import HeroLayout from '@/layouts/HeroLayout';
+import { locale } from '@/signals/locale';
 import { heroSrcSet } from '../data';
 import HeroActions from './HeroActions';
 
 const Hero = () => {
+    const lang = locale.value === 'en' ? 'en' : 'ru';
+
     return (
         <HeroLayout className="min-h-210 text-white sm:min-h-291 md:min-h-212">
             <AdaptiveImg
@@ -17,15 +20,11 @@ const Hero = () => {
                 class="absolute inset-0 -z-5 bg-black/40"
             ></span>
 
-            <div class="lg:max-w-2/3 xl:max-w-1/2">
+            <div key={lang} class="lg:max-w-2/3 motion-safe:animate-fade-in xl:max-w-1/2">
                 <h1 class="xs:text-5xl mb-8 text-4xl font-medium text-balance sm:mb-10 sm:text-6xl">
-                    Элегантные и быстрые сайты
+                    {heading[lang]}
                 </h1>
-                <p class="mb-8 sm:mb-10 lg:mb-12">
-                    Здравствуйте! Меня зовут Илья и я - веб-разработчик,
-                    создающий быстрые и производительные сайты и веб приложения
-                    с красивыми и современными интерфейсами.
-                </p>
+                <p class="mb-8 sm:mb-10 lg:mb-12">{intro[lang]}</p>
 
                 <HeroActions />
             </div>
@@ -34,3 +33,12 @@ const Hero = () => {
 };
 
 export default Hero;
+
+const heading = {
+    en: 'Elegant and fast websites',
+    ru: 'Элегантные и быстрые сайты',
+};
+const intro = {
+    en: 'Hello there! My name is Ilya, I am a web dev who creates fast and performant websites and web apps with modern and good-looking interfaces',
+    ru: 'Здравствуйте! Меня зовут Илья и я - веб-разработчик, создающий быстрые и производительные сайты и веб приложения с красивыми и современными интерфейсами.',
+};

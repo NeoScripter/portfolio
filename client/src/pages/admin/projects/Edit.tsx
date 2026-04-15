@@ -5,10 +5,11 @@ import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import ModalLayout from '@/layouts/ModalLayout';
 import type { ProjectType } from '@/lib/types/models/projects';
-import { Clapperboard } from 'lucide-preact';
+import { Clapperboard, PanelsTopLeft } from 'lucide-preact';
 import { useRoute } from 'preact-iso';
 import { useEffect, useState } from 'preact/hooks';
 import ModuleDelete from './partials/ModuleDelete';
+import ModuleUpsert from './partials/ModuleUpsert';
 import ProjectUpsert from './partials/ProjectUpsert';
 
 const EditProject = () => {
@@ -55,10 +56,10 @@ const EditProject = () => {
             >
                 <AdminShellLayout>
                     <AccordionLayout
+                        showIcon={Clapperboard}
                         label="Project"
                         handleClick={() => handleAccordionClick(0)}
                         show={visibleItem === 0}
-                        showIcon={Clapperboard}
                     >
                         {errors != null ? (
                             <p>{errors.errors?.message}</p>
@@ -68,6 +69,34 @@ const EditProject = () => {
                             <ProjectUpsert project={project} />
                         )}
                     </AccordionLayout>
+                    {project && (
+                        <AccordionLayout
+                            showIcon={PanelsTopLeft}
+                            key="newModule"
+                            label="Add Section"
+                            handleClick={() => handleAccordionClick(1)}
+                            show={visibleItem === 1}
+                        >
+                            <ModuleUpsert projectId={project.id} />
+                        </AccordionLayout>
+                    )}
+                    {project?.modules &&
+                        project.modules.map((module, idx) => (
+                            <AccordionLayout
+                                showIcon={PanelsTopLeft}
+                                key={module.id}
+                                label={`Section ${idx + 1}`}
+                                handleClick={() =>
+                                    handleAccordionClick(idx + 2)
+                                }
+                                show={visibleItem === idx + 2}
+                            >
+                                <ModuleUpsert
+                                    module={module}
+                                    projectId={project.id}
+                                />
+                            </AccordionLayout>
+                        ))}
                     <ModalLayout className="max-w-9/10 px-10 py-14 sm:max-w-100 lg:max-w-160">
                         <ModuleDelete />
                     </ModalLayout>
@@ -78,30 +107,3 @@ const EditProject = () => {
 };
 
 export default EditProject;
-
-// {project && (
-//     <AccordionLayout
-//         key="newModule"
-//         label="New Module"
-//         handleClick={() => handleAccordionClick(1)}
-//         show={visibleItem === 1}
-//     >
-//         <ModuleUpsert projectId={project.id} />
-//     </AccordionLayout>
-// )}
-// {project?.modules &&
-//     project.modules.map((module, idx) => (
-//         <AccordionLayout
-//             key={module.id}
-//             label={`Module ${idx + 1}`}
-//             handleClick={() =>
-//                 handleAccordionClick(idx + 2)
-//             }
-//             show={visibleItem === idx + 2}
-//         >
-//             <ModuleUpsert
-//                 module={module}
-//                 projectId={project.id}
-//             />
-//         </AccordionLayout>
-//     ))}

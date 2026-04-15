@@ -1,0 +1,98 @@
+import type { FunctionComponent } from 'preact';
+
+interface SVGIconProps {
+    width?: number | string;
+    height?: number | string;
+    fill?: string;
+    stroke?: string;
+    strokeWidth?: number | string;
+    className?: string;
+}
+
+const TwoImageBlock: FunctionComponent<SVGIconProps> = ({
+    width = 1000,
+    height = 1000,
+    fill = 'transparent',
+    stroke = 'currentColor',
+    strokeWidth = 25,
+    className = '',
+}) => {
+    return (
+        <svg
+            width={width}
+            height={height}
+            viewBox="0 0 1000 1000"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}
+        >
+            <rect width="1000" height="1000" fill={fill} />
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M451.335 601.667C451.335 574.053 428.95 551.667 401.335 551.667H134.668C107.054 551.667 84.668 574.053 84.668 601.667V868.334C84.668 895.949 107.054 918.334 134.668 918.334H401.335C428.95 918.334 451.335 895.949 451.335 868.334V601.667ZM418.001 601.667C418.001 592.462 410.54 585 401.335 585H134.668C125.463 585 118.001 592.462 118.001 601.667V868.334C118.001 877.539 125.463 885 134.668 885H401.335C410.54 885 418.001 877.539 418.001 868.334V601.667Z"
+                fill={stroke}
+            />
+            <path
+                d="M148.109 827.018L220.034 695.157C226.351 683.576 242.98 683.576 249.297 695.157L302.107 791.976L320.195 760.323C326.594 749.126 342.737 749.126 349.135 760.323L387.084 826.731C393.432 837.841 385.409 851.666 372.612 851.666H162.741C150.09 851.666 142.051 838.125 148.109 827.018Z"
+                fill={stroke}
+            />
+            <path
+                d="M367.999 668.333C367.999 686.743 353.075 701.667 334.665 701.667C316.255 701.667 301.332 686.743 301.332 668.333C301.332 649.924 316.255 635 334.665 635C353.075 635 367.999 649.924 367.999 668.333Z"
+                fill={stroke}
+            />
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M914.335 601.667C914.335 574.053 891.95 551.667 864.335 551.667H597.668C570.054 551.667 547.668 574.053 547.668 601.667V868.334C547.668 895.949 570.054 918.334 597.668 918.334H864.335C891.95 918.334 914.335 895.949 914.335 868.334V601.667ZM881.001 601.667C881.001 592.462 873.54 585 864.335 585H597.668C588.463 585 581.001 592.462 581.001 601.667V868.334C581.001 877.539 588.463 885 597.668 885H864.335C873.54 885 881.001 877.539 881.001 868.334V601.667Z"
+                fill={stroke}
+            />
+            <path
+                d="M611.109 827.018L683.034 695.157C689.351 683.576 705.98 683.576 712.297 695.157L765.107 791.976L783.195 760.323C789.594 749.126 805.737 749.126 812.135 760.323L850.084 826.731C856.432 837.841 848.409 851.666 835.612 851.666H625.741C613.09 851.666 605.051 838.125 611.109 827.018Z"
+                fill={stroke}
+            />
+            <path
+                d="M830.999 668.333C830.999 686.743 816.075 701.667 797.665 701.667C779.255 701.667 764.332 686.743 764.332 668.333C764.332 649.924 779.255 635 797.665 635C816.075 635 830.999 649.924 830.999 668.333Z"
+                fill={stroke}
+            />
+            <path
+                d="M85 86.2812H931"
+                stroke={stroke}
+                strokeWidth={strokeWidth}
+                strokeMiterlimit="10"
+            />
+            <path
+                d="M85 160.969H693.062"
+                stroke={stroke}
+                strokeWidth={strokeWidth}
+                strokeMiterlimit="10"
+            />
+            <path
+                d="M85 235.656H931"
+                stroke={stroke}
+                strokeWidth={strokeWidth}
+                strokeMiterlimit="10"
+            />
+            <path
+                d="M85 310.344H745.938"
+                stroke={stroke}
+                strokeWidth={strokeWidth}
+                strokeMiterlimit="10"
+            />
+            <path
+                d="M85 385.031H931"
+                stroke={stroke}
+                strokeWidth={strokeWidth}
+                strokeMiterlimit="10"
+            />
+            <path
+                d="M85 459.719H798.812"
+                stroke={stroke}
+                strokeWidth={strokeWidth}
+                strokeMiterlimit="10"
+            />
+        </svg>
+    );
+};
+
+export default TwoImageBlock;

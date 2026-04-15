@@ -55,8 +55,8 @@ const ModalLayout: FC<{
                 class={cn(
                     'bg-user-background relative m-auto w-full rounded-sm',
                     {
-                        'animate-shrink': !showModal.value,
-                        'animate-expand': showModal.value,
+                        'motion-safe:animate-shrink': !showModal.value,
+                        'motion-safe:animate-expand': showModal.value,
                     },
 
                     className

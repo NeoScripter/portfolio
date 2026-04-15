@@ -35,7 +35,7 @@ export default function NavDrawer({ show }: NavDrawerProps) {
                 <div>
                     <div
                         key={lang}
-                        class={cn('mt-3 animate-fade-in mb-8 w-36', show && 'slide-in', {
+                        class={cn('mt-3 motion-safe:animate-fade-in mb-8 w-36', show && 'slide-in', {
                             'text-foreground': variant === 'primary',
                         })}
                     >

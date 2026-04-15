@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from "preact/hooks";
-import { services } from "../data";
-import ServiceItem from "./ServiceItem";
+import checkMotionPreferences from '@/lib/helpers/checkMotionPreference';
+import { useEffect, useRef, useState } from 'preact/hooks';
+import { services } from '../data';
+import ServiceItem from './ServiceItem';
 
 const ServiceList = () => {
     const [active, setActive] = useState(0);
     const [offset, setOffset] = useState(3);
+    const isMotionEnabled = checkMotionPreferences();
 
     const handleMouseEnter = (idx: number) => {
         setActive(idx);
@@ -16,6 +18,9 @@ const ServiceList = () => {
     const intervalRef = useRef<number | null>(null);
 
     useEffect(() => {
+        if (!isMotionEnabled) {
+            return;
+        }
         intervalRef.current = setInterval(() => {
             setOffset((prev) => (prev < services.length - 1 ? prev + 1 : 3));
         }, 5000);
@@ -23,7 +28,7 @@ const ServiceList = () => {
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
-    }, []);
+    }, [isMotionEnabled]);
 
     return (
         <ul class="mx-auto grid w-fit justify-items-center gap-11 sm:gap-6 lg:max-w-142 xl:mr-0 xl:gap-9 2xl:max-w-189">
