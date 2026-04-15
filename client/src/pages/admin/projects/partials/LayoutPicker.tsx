@@ -40,8 +40,6 @@ const LayoutPicker: FC<LayoutPickerProps> = ({
 
     return (
         <div className={cn('grid gap-4', className)}>
-            <label className="ml-1 text-base font-medium">Layout</label>
-
             <div className="grid grid-cols-4 gap-4">
                 {layouts.map(({type, icon: Icon }) => (
                     <button

@@ -128,10 +128,11 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
                     <FormInput name="heading_ru" label="Title (RU)" required />
                     <FormWysiwyg name="body_en" label="Content (EN)" required />
                     <FormWysiwyg name="body_ru" label="Content (RU)" required />
-                    <FormLayoutPicker name="type" />
+                    <FormLayoutPicker name="type" label="Layout" required />
                     <FormInput
                         name="order"
                         label="Order"
+                        required
                         inputmode="numeric"
                         pattern="\d*"
                         className="h-auto max-w-40 px-0 text-center text-3xl! tracking-[0.5em]"
