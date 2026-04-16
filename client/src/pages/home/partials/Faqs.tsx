@@ -3,12 +3,12 @@ import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import { useFetch } from '@/hooks/useFetch';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import AppSection from '@/layouts/SectionLayout';
+import { PREFIX } from '@/lib/const/api';
 import { cn, range } from '@/lib/helpers/utils';
 import type { FaqResource } from '@/lib/types/models/faqs';
 import { locale } from '@/signals/locale';
 import { useEffect, useState } from 'preact/hooks';
 import FaqCard, { FaqFallback } from './FaqCard';
-import { PREFIX } from '@/lib/const/api';
 
 const Faqs = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -31,7 +31,8 @@ const Faqs = () => {
 
     const faqs = data?.data;
 
-    if (errors != null) return <ApiError resourceRu="FAQs" resourceEn="FAQs" />;
+    if (errors != null)
+        return <ApiError resourceRu="FAQs" mb={true} resourceEn="FAQs" />;
 
     return (
         <AppSection>
