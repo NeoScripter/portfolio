@@ -9,7 +9,8 @@ define('APP_DIR', dirname(__DIR__));
 require APP_DIR . '/vendor/autoload.php';
 
 $f3 = Base::instance();
-$f3->set('DEBUG', 3);
+
+$f3->set('DEBUG', $f3->get('app.debug'));
 $f3->set('AUTOLOAD', APP_DIR . '/app/;' . APP_DIR . '/db/');
 $f3->set('DB', new SQL('sqlite:' . APP_DIR . '/db/database.sqlite'));
 $f3->config(APP_DIR . '/config/setup.ini');
