@@ -1,6 +1,7 @@
 {
     "require": {
         "bcosca/fatfree-core": "^3.9",
-        "bcosca/fatfree": "^3.9"
+        "bcosca/fatfree": "^3.9",
+        "fakerphp/faker": "^1.24"
     }
 }
