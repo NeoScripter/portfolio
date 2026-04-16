@@ -1,5 +1,5 @@
 import { useReducer } from 'preact/hooks';
-import { isServerError, type ServerError } from './useForm';
+import { type ServerError } from './useForm';
 
 interface FetchOptions {
     url: string;
@@ -90,11 +90,11 @@ export function useFetch() {
             if (!res.ok) {
                 const serverError: ServerError = {
                     message: data.message || res.statusText,
-                    errors: res.status === 422 ? data.errors : undefined,
+                    errors: res.status === 422 ? data.message : undefined,
                 };
                 dispatch({
                     type: 'FETCH_ERROR',
-                    payload: serverError.errors ?? null,
+                    payload: serverError,
                 });
                 onError?.(serverError);
                 throw serverError;
@@ -104,14 +104,11 @@ export function useFetch() {
             onSuccess?.(data);
             setTimeout(() => dispatch({ type: 'RESET_SUCCESS' }), 2000);
         } catch (err) {
-            if (isServerError(err)) {
-                throw err;
-            }
             const serverError: ServerError = {
                 message:
                     err instanceof Error ? err.message : 'API fetching error',
             };
-            dispatch({ type: 'FETCH_ERROR', payload: null });
+            dispatch({ type: 'FETCH_ERROR', payload: serverError });
             onError?.(serverError);
             throw serverError;
         }

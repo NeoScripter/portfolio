@@ -1,14 +1,17 @@
+import ApiError from '@/components/ui/ApiError';
 import SecondaryHeading from '@/components/ui/SecondaryHeading';
+import { useFetch } from '@/hooks/useFetch';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import AppSection from '@/layouts/SectionLayout';
 import { cn, range } from '@/lib/helpers/utils';
-import FaqCard, { FaqFallback } from './FaqCard';
-import ApiError from '@/components/ui/ApiError';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-import { useState } from 'preact/hooks';
 import type { FaqResource } from '@/lib/types/models/faqs';
+import { locale } from '@/signals/locale';
+import { useEffect, useState } from 'preact/hooks';
+import FaqCard, { FaqFallback } from './FaqCard';
+import { PREFIX } from '@/lib/const/api';
 
 const Faqs = () => {
-    // const { fetchData, loading, errors } = useFetch();
+    const { fetchData, loading, errors } = useFetch();
     const [data, setData] = useState<FaqResource | null>(null);
     const [currentIdx, setCurrentIdx] = useState<number | null>(null);
     const [ref, isIntersecting] = useIntersectionObserver<HTMLUListElement>();
@@ -17,25 +20,23 @@ const Faqs = () => {
         setCurrentIdx((prev) => (idx === prev ? null : idx));
     };
 
-    // useEffect(() => {
-    //     fetchData({
-    //         url: '/api/faqs',
-    //         onSuccess: (data) => {
-    //             setData(data);
-    //         },
-    //     });
-    // }, []);
+    useEffect(() => {
+        fetchData({
+            url: PREFIX + 'faqs',
+            onSuccess: (data) => {
+                setData(data);
+            },
+        });
+    }, []);
 
     const faqs = data?.data;
-    let loading = true;
 
-    // if (errors != null)
-    //     return <ApiError resourceRu="ответы на вопросы" resourceEn="FAQs" />;
+    if (errors != null) return <ApiError resourceRu="FAQs" resourceEn="FAQs" />;
 
     return (
         <AppSection>
             <SecondaryHeading>
-                Ответы на вопросы
+                {locale.value === 'en' ? 'Часто задаваемые вопросы' : 'FAQs'}
             </SecondaryHeading>
 
             <div>
@@ -46,7 +47,7 @@ const Faqs = () => {
                             'isolate grid items-start gap-7 lg:grid-cols-2 lg:gap-x-11',
                         )}
                     >
-                        {!loading
+                        {faqs
                             ? faqs?.map((faq, idx) => (
                                   <FaqCard
                                       isReached={isIntersecting}

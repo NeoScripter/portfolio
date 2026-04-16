@@ -9,7 +9,7 @@ export interface FaqType {
             ru: string;
             en: string;
         };
-        description: {
+        content: {
             ru: string;
             en: string;
         };

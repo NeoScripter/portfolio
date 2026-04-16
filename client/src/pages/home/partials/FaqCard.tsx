@@ -53,24 +53,26 @@ const FaqCard: FC<{
                 </div>
                 <div>
                     <h3
+                        key={`title-${lang}`}
                         id={`faq-title-${faq.id}`}
-                        class="xs:text-lg font-bold xl:text-[1.325rem]"
+                        class="xs:text-lg motion-safe:animate-fade-in font-bold xl:text-[1.325rem]"
                     >
                         {faq.attr.title[lang]}
                     </h3>
 
                     <div
+                        key={`content-${lang}`}
                         id={`faq-content-${faq.id}`}
                         role="region"
                         aria-labelledby={`faq-title-${faq.id}`}
                         className={cn(
-                            'overflow-hidden transition-[max-height] duration-750 ease-[cubic-bezier(0.85,0.09,0.15,0.91)]',
+                            'motion-safe:animate-fade-in overflow-hidden transition-[max-height] duration-750 ease-[cubic-bezier(0.85,0.09,0.15,0.91)]',
                             open ? 'max-h-200' : 'max-h-0',
                         )}
                         aria-hidden={!open}
                     >
                         <p class="mt-6 text-sm text-pretty lg:mt-7 xl:text-xl">
-                            {faq.attr.description[lang]}
+                            {faq.attr.content?.[lang]}
                         </p>
                     </div>
                 </div>
