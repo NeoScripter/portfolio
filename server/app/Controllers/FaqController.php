@@ -1,8 +1,10 @@
 <?php
 
-namespace controllers;
+namespace Controllers;
 
-class Faq
+use Support\Validator;
+
+class FaqController
 {
     private function toResource($faq)
     {
@@ -56,21 +58,20 @@ class Faq
 
     public function update($f3)
     {
-        $f3->error(404, 'Some example error');
-        $result = $f3->get('DB')->exec(
-            '
-            select * from faqs where faqs.id = ?',
-            [$f3->get('PARAMS.id')]
+        $request = json_decode(
+            $f3->get('BODY'),
+            true
         );
+        $validator = Validator::make($request, [
+            'name' => ['required']
+        ]);
 
-        if (empty($result)) {
-            $f3->error(404, "FAQ not found");
+        if ($validator->fails()) {
+            dd(json_encode(['errors' => $validator->errors()]));
         }
 
-        $faq = $result[0];
-
-        json(
-            ["data" => $this->toResource($faq)]
-        );
+        $res = $validator->validated();
+        dd(json_encode($res));
+        dd($res['errors']);
     }
 }

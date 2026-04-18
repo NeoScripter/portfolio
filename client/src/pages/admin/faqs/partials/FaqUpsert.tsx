@@ -32,8 +32,8 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
         () => ({
             title_en: faq?.attr.title?.en ?? '',
             title_ru: faq?.attr.title?.ru ?? '',
-            content_en: faq?.attr.description?.en ?? '',
-            content_ru: faq?.attr.description?.ru ?? '',
+            content_en: faq?.attr.content?.en ?? '',
+            content_ru: faq?.attr.content?.ru ?? '',
         }),
         [faq],
     );

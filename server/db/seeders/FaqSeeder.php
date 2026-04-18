@@ -20,5 +20,8 @@ class FaqSeeder
                 array_values($row)
             );
         }
+
+
+        echo "Faqs seeded.\n";
     }
 }

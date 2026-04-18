@@ -49,9 +49,6 @@ const Button = ({
     const arrowRef = useRef<HTMLDivElement>(null);
     useFollowCursor(arrowRef);
 
-    const id = useId();
-
-    const lang = locale.value === 'en' ? 'en' : 'ru';
     const Comp = href ? 'a' : 'button';
 
     return (
@@ -61,7 +58,7 @@ const Button = ({
             class={cn(buttonVariants({ variant, className }))}
             {...props}
         >
-            <span key={`${lang}-${id}`} className="motion-safe:animate-fade-in">
+            <span>
                 {children}
             </span>
 

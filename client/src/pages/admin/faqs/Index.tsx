@@ -10,6 +10,7 @@ import type { FaqType } from '@/lib/types/models/faqs';
 import { useEffect, useState } from 'preact/hooks';
 import FaqCard, { FaqCardSkeleton } from './partials/FaqCard';
 import FaqDelete from './partials/FaqDelete';
+import { PREFIX } from '@/lib/const/api';
 
 const Faqs = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -18,7 +19,7 @@ const Faqs = () => {
     useEffect(() => {
         const fetchFaqs = () => {
             fetchData({
-                url: '/api/faqs.json',
+                url: PREFIX + 'faqs',
                 onSuccess: (data) => {
                     setFaqs(data.data);
                 },

@@ -1,8 +1,8 @@
 <?php
 
-namespace controllers;
+namespace Controllers;
 
-class Console
+class ConsoleController
 {
     private function execSql($f3, string $file): void
     {

@@ -1,6 +1,4 @@
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
-import { AuthButton } from '@/components/ui/AuthButton';
-import { Button } from '@/components/ui/Button';
 import CardActions from '@/components/ui/CardActions';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { shortenDescription } from '@/lib/helpers/utils';

@@ -23,16 +23,9 @@ $f3->set('CORS', [
     'ttl'         => 86400
 ]);
 
-// $f3->route('OPTIONS /*', function() use ($f3) {
-//     // F3 will send CORS headers, just return 200
-//     http_response_code(200);
-// });
+$f3->config(APP_DIR . '/config/config.ini');
 
-$f3->config(APP_DIR . '/config/setup.ini');
-
-$f3->route('GET /migrate [cli]', 'controllers\Console->migrate');
-$f3->route('GET /drop [cli]', 'controllers\Console->drop');
-$f3->route('GET /fresh [cli]', 'controllers\Console->fresh');
 $f3->route('GET /seed [cli]', 'seeders\Seeder->run');
+$f3->route('GET /@action [cli]', 'controllers\ConsoleController->@action');
 
 $f3->run();

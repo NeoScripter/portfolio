@@ -100,8 +100,8 @@ export function useFetch() {
                 throw serverError;
             }
 
-            dispatch({ type: 'FETCH_SUCCESS', payload: data });
             onSuccess?.(data);
+            dispatch({ type: 'FETCH_SUCCESS', payload: data });
             setTimeout(() => dispatch({ type: 'RESET_SUCCESS' }), 2000);
         } catch (err) {
             const serverError: ServerError = {

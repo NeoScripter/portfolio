@@ -7,9 +7,9 @@ const FaqCard: FC<{ faq: FaqType }> = ({ faq }) => {
     const { itemToDelete } = useDeleteModal();
 
     return (
-        <li className="max-w-140 text-base">
+        <li className="max-w-140 text-sm">
             <h3 class="mb-3 font-bold">{faq.attr.title.en}</h3>
-            <div className="mb-4">{faq.attr.description.en}</div>
+            <div className="mb-4">{faq.attr.content.en}</div>
 
             <CardActions
                 path={`/admin/faqs/${faq.id}`}
@@ -23,7 +23,7 @@ export default FaqCard;
 
 export const FaqCardSkeleton = () => {
     return (
-        <li className="w-full max-w-140 list-none text-base">
+        <li className="w-full max-w-140 list-none text-sm">
             <h3 class="skeleton mb-3 w-fit rounded-sm font-bold">
                 Lorem ipsum dolor sit
             </h3>
