@@ -28,13 +28,12 @@ class Validator
 
         foreach ($this->rules as $key => $rule_set) {
 
-            if (! isset($this->values[$key]) && in_array('nullable', $rule_set)) {
-                $this->result[$key] = null;
-                continue;
-            }
-
             if (! isset($this->values[$key])) {
-                $this->errors[$key] = 'This field is required';
+                if (! in_array('sometimes', $rule_set) && ! in_array('nullable', $rule_set)) {
+                    $this->errors[$key] = 'This field is required';
+                } else if (in_array('nullable', $rule_set)) {
+                    $this->result[$key] = null;
+                }
                 continue;
             }
 
@@ -46,6 +45,7 @@ class Validator
                     'min' => $this->min_length($this->values[$key], (int) $param),
                     'max' => $this->max_length($this->values[$key], (int) $param),
                     'nullable' => '',
+                    'sometimes' => '',
                     default => throw new InvalidArgumentException("Unknown validation rule: '$name'"),
                 };
 
