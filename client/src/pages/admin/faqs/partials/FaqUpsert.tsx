@@ -3,9 +3,9 @@ import { FormButtons } from '@/components/form/FormButtons';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
+import { PREFIX } from '@/lib/const/api';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { FaqType } from '@/lib/types/models/faqs';
-import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
 import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
@@ -25,7 +25,6 @@ const validationRules: ValidationRules<FaqUpsertState> = {
 };
 
 const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
-    const { route } = useLocation();
     const { fetchData } = useFetch();
 
     const initialValues = useMemo<FaqUpsertState>(
@@ -38,7 +37,7 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
         [faq],
     );
 
-    const url = faq != null ? `/admin/faqs/${faq.id}` : '/admin/faqs';
+    const url = faq != null ? `${PREFIX}faqs/${faq.id}` : `${PREFIX}faqs`;
     const method = faq != null ? 'PUT' : 'POST';
 
     async function submit(values: FaqUpsertState) {
@@ -46,9 +45,8 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
             url,
             method,
             payload: values,
-            onSuccess: () => {
-                route('/faqs');
-                toast.success('Success!');
+            onSuccess: (data) => {
+                toast.success(data.message ?? 'Success!');
             },
             onError: () => toast.error('Error'),
         });

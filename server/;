@@ -65,9 +65,9 @@ class FaqController
 
         $validator = Validator::make($request, [
             'title_en' => ['sometimes', 'string', 'min:3', 'max:255'],
-            'title_ru' => ['sometimes', 'string', 'min:3', 'max:255'],
-            'content_en' => ['sometimes', 'string', 'min:3', 'max:2255'],
-            'content_ru' => ['sometimes', 'string', 'min:3', 'max:2255'],
+            'title_ru' => ['sometimes', 'string', 'max:255'],
+            'content_en' => ['sometimes', 'string'],
+            'content_ru' => ['sometimes', 'string'],
         ]);
 
         if ($validator->fails()) {

@@ -35,7 +35,7 @@ export const FormButtons = ({
           : submitText;
 
     return (
-        <div className="flex gap-2.5">
+        <div className="flex justify-between gap-2.5">
             <AuthButton key="submit-btn" type="submit" disabled={isSubmitting}>
                 {isSubmitting && <LoaderCircle class="h-4 w-4 animate-spin" />}
                 {label}
@@ -57,6 +57,7 @@ export const FormButtons = ({
                         href={cancelLink}
                         onClick={onCancel}
                         variant="secondary"
+                        class="mr-auto"
                     >
                         {cancelText}
                     </AuthButton>
