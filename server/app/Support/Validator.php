@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Support;
 
+use Base;
 use InvalidArgumentException;
 
 class Validator
@@ -42,8 +43,10 @@ class Validator
 
                 $error = match ($name) {
                     'required' => $this->required($this->values[$key]),
+                    'string' => $this->string($this->values[$key]),
                     'min' => $this->min_length($this->values[$key], (int) $param),
                     'max' => $this->max_length($this->values[$key], (int) $param),
+                    'exists' => $this->exists($this->values[$key], ...explode(',', $param)),
                     'nullable' => '',
                     'sometimes' => '',
                     default => throw new InvalidArgumentException("Unknown validation rule: '$name'"),
@@ -61,6 +64,31 @@ class Validator
         }
 
         return $this;
+    }
+
+    private function exists(mixed $value, string $table, string $field): string
+    {
+        $db = Base::instance()->get('DB');
+
+        $res = $db->exec("
+            SELECT EXISTS (
+                SELECT 1 FROM `$table` WHERE `$field` = ?
+            ) AS `exists`
+        ", [$value]);
+
+        if (empty($res) || !$res[0]['exists']) {
+            return 'We could not find the existing record';
+        }
+
+        return '';
+    }
+
+    private function string($value)
+    {
+        if (! is_string($value))
+            return 'This field must be a string';
+
+        return '';
     }
 
     private function required($value)

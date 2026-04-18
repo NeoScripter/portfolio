@@ -62,16 +62,18 @@ class FaqController
             $f3->get('BODY'),
             true
         );
+
         $validator = Validator::make($request, [
-            'name' => ['required']
+            'title_en' => ['sometimes', 'string', 'max:255'],
+            'title_ru' => ['sometimes', 'string', 'max:255'],
+            'content_en' => ['sometimes', 'string'],
+            'content_ru' => ['sometimes', 'string'],
         ]);
 
         if ($validator->fails()) {
-            dd(json_encode(['errors' => $validator->errors()]));
+            return json_encode(['errors' => $validator->errors()]);
         }
 
-        $res = $validator->validated();
-        dd(json_encode($res));
-        dd($res['errors']);
+        $data = $validator->validated();
     }
 }
