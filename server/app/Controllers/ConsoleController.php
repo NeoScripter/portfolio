@@ -39,7 +39,7 @@ class ConsoleController
     public function link()
     {
         $storage = APP_DIR  . '/storage/public';
-        $link    = APP_DIR  . '/public/uploads';
+        $link    = APP_DIR  . '/public/storage';
 
         if (file_exists($link)) {
             echo "Link already exists at {$link}" . PHP_EOL;

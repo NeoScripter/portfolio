@@ -64,11 +64,11 @@ class TechStackController
     public function store($f3)
     {
         $validator = Validator::make(get_json(), [
-            'url' => ['required', 'string', 'min:3', 'max:2000'],
+            'url' => ['required', 'image:1024'],
             'body_en' => ['nullable', 'string', 'max:10000'],
             'body_ru' => ['nullable', 'string', 'max:10000'],
-            'alt_en' => ['required', 'string', 'max:10000'],
-            'alt_ru' => ['required', 'string', 'max:10000'],
+            'alt_en' => ['required', 'string', 'max:500'],
+            'alt_ru' => ['required', 'string', 'max:500'],
         ]);
 
         if ($validator->fails()) {
