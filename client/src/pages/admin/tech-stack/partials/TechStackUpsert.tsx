@@ -37,7 +37,7 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
             body_ru: stack?.attr?.body?.ru ?? '',
             alt_en: stack?.attr?.alt?.en ?? '',
             alt_ru: stack?.attr?.alt?.ru ?? '',
-            image: stack?.attr?.image ?? null,
+            image: stack?.attr?.url ?? null,
         }),
         [stack],
     );

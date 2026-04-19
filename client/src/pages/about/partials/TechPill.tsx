@@ -26,7 +26,7 @@ const TechPill: FC<{
                 )}
             >
                 <img
-                    src={stack.attr.image}
+                    src={stack.attr.url}
                     alt={stack.attr.alt[locale.value]}
                     class="m-auto size-3/4 object-contain"
                 />

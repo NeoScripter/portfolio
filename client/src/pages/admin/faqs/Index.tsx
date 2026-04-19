@@ -13,7 +13,7 @@ import FaqDelete from './partials/FaqDelete';
 import { PREFIX } from '@/lib/const/api';
 
 const Faqs = () => {
-    const { fetchData, loading, errors } = useFetch();
+    const { fetchData, loading } = useFetch();
     const [faqs, setFaqs] = useState<FaqType[] | null>(null);
 
     useEffect(() => {

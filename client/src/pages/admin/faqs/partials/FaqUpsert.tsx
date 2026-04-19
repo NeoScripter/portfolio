@@ -20,8 +20,6 @@ type FaqUpsertState = {
 const validationRules: ValidationRules<FaqUpsertState> = {
     title_en: ['required'],
     title_ru: ['required'],
-    content_en: ['required'],
-    content_ru: ['required'],
 };
 
 const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {

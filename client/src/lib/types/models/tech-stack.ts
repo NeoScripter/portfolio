@@ -17,6 +17,6 @@ export interface TechStackType {
             ru: string;
             en: string;
         };
-        image: string;
+        url: string;
     };
 };

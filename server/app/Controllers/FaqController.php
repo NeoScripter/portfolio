@@ -127,4 +127,19 @@ class FaqController
 
         send_json(['message' => 'Faq successfully updated!']);
     }
+
+    public function destroy($f3)
+    {
+        $affected = $f3->get('DB')->exec(
+            '
+            delete from faqs where faqs.id = ?',
+            [$f3->get('PARAMS.id')]
+        );
+
+        if (!$affected) {
+            send_json(['message' => 'FAQ not found'], 422);
+        }
+
+        send_json(['message' => 'Faq successfully deleted!']);
+    }
 }
