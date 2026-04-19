@@ -63,8 +63,8 @@ class TechStackController
 
     public function store($f3)
     {
-        $validator = Validator::make(get_json(), [
-            'url' => ['required', 'image:1024'],
+        $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
+            'url' => ['required', 'image:2'],
             'body_en' => ['nullable', 'string', 'max:10000'],
             'body_ru' => ['nullable', 'string', 'max:10000'],
             'alt_en' => ['required', 'string', 'max:500'],
@@ -76,6 +76,17 @@ class TechStackController
         }
 
         $data = $validator->validated();
+        $file     = $data['url'];
+        $dest_dir = APP_DIR . '/public/storage/uploads/stacks';
+
+        $abs_path = resize_image(
+            source: $file['tmp_name'],
+            dest_dir: $dest_dir,
+            name: $file['name'],
+            width: 120,
+        );
+
+        $data['url'] = str_replace(APP_DIR . '/public/', '', $abs_path);
 
         $cols = implode(
             ', ',
@@ -102,11 +113,12 @@ class TechStackController
 
     public function update($f3)
     {
-        $validator = Validator::make(get_json(), [
-            'title_en' => ['sometimes', 'string', 'min:3', 'max:255'],
-            'title_ru' => ['sometimes', 'string', 'min:3', 'max:255'],
-            'content_en' => ['sometimes', 'string', 'min:3', 'max:2255'],
-            'content_ru' => ['sometimes', 'string', 'min:3', 'max:2255'],
+        $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
+            'url' => ['sometimes', 'image:2'],
+            'body_en' => ['sometimes', 'string', 'max:10000'],
+            'body_ru' => ['sometimes', 'string', 'max:10000'],
+            'alt_en' => ['sometimes', 'string', 'max:500'],
+            'alt_ru' => ['sometimes', 'string', 'max:500'],
         ]);
 
         if ($validator->fails()) {
@@ -114,6 +126,29 @@ class TechStackController
         }
 
         $data = $validator->validated();
+
+        if (isset($data['url'])) {
+            $row = $f3->get('DB')->exec(
+                'SELECT url FROM stacks WHERE id = ? LIMIT 1',
+                [(int) $f3->get('PARAMS.id')]
+            );
+
+            if (!empty($row)) {
+                $old_path = APP_DIR . '/public/' . $row[0]['url'];
+                if (file_exists($old_path)) {
+                    unlink($old_path);
+                }
+            }
+
+            $file = $data['url'];
+            $abs_path = resize_image(
+                source: $file['tmp_name'],
+                dest_dir: APP_DIR . '/public/storage/uploads/stacks',
+                name: $file['name'],
+                width: 120,
+            );
+            $data['url'] = str_replace(APP_DIR . '/public/', '', $abs_path);
+        }
 
         $set = implode(
             ', ',
@@ -136,15 +171,30 @@ class TechStackController
 
     public function destroy($f3)
     {
-        $affected = $f3->get('DB')->exec(
-            '
-            delete from stacks where stacks.id = ?',
-            [$f3->get('PARAMS.id')]
+        $db = $f3->get('DB');
+        $db->begin();
+
+        $row = $db->exec(
+            'SELECT url FROM stacks WHERE id = ? LIMIT 1',
+            [(int) $f3->get('PARAMS.id')]
         );
 
-        if (!$affected) {
-            send_json(['message' => 'stack not found'], 422);
+        if (empty($row)) {
+            send_json(['message' => 'Stack not found'], 404);
+            return;
         }
+
+        $path = APP_DIR . '/public/' . $row[0]['url'];
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        $db->exec(
+            'DELETE FROM stacks WHERE id = ?',
+            [(int) $f3->get('PARAMS.id')]
+        );
+
+        $db->commit();
 
         send_json(['message' => 'Stack successfully deleted!']);
     }

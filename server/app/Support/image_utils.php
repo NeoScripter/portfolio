@@ -5,6 +5,7 @@ declare(strict_types=1);
 function resize_image(
     string $source,
     string $dest_dir,
+    string $name,
     int $width,
     ?string $format = 'webp',
 ): string {
@@ -12,7 +13,7 @@ function resize_image(
         throw new RuntimeException("Failed to create directory: $dest_dir");
     }
 
-    $filename = image_filename($source);
+    $filename = image_filename($name);
 
     $dest = "{$dest_dir}/{$filename}.{$format}";
     $quality = $format === 'webp' ? 75 : 50;
@@ -20,7 +21,7 @@ function resize_image(
     $src_arg  = escapeshellarg($source);
     $dest_arg = escapeshellarg($dest);
 
-    $cmd = "convert {$src_arg} -resize {$width}x> -strip -quality {$quality} {$dest_arg}";
+    $cmd = "convert {$src_arg} -resize '{$width}x>' -strip -quality {$quality} {$dest_arg}";
 
     exec($cmd, output: $output, result_code: $code);
 
@@ -95,17 +96,18 @@ function validate_image(
  *
  * @throws \RuntimeException if sanitization fails
  */
+
 function sanitize_image(string $source, string $dest): void
 {
-    $src  = escapeshellarg($source);
-    $out  = escapeshellarg($dest);
+    $src = escapeshellarg($source . '[0]');
+    $out = escapeshellarg($dest);
 
-    $cmd = "convert {$src}[0] -strip +profile \"*\" {$out}";
+    $cmd = "convert {$src} -strip +profile \"*\" {$out}";
 
     exec($cmd, output: $output, result_code: $code);
 
     if ($code !== 0) {
-        throw new RuntimeException(
+        throw new \RuntimeException(
             'Image sanitization failed: ' . implode("\n", $output)
         );
     }
