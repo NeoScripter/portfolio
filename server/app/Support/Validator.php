@@ -13,19 +13,34 @@ class Validator
     private array $result = [];
     private bool $validated = false;
 
-    private function __construct(
+    protected function __construct(
         private array $values,
         private array $rules,
     ) {}
 
     public static function make(array $values, array $rules)
     {
-        return new static($values, $rules);
+        return new self($values, $rules);
+    }
+
+    private function prepare_for_validation()
+    {
+        $this->values = array_map(
+            function ($val) {
+                if (is_string($val) && trim($val) === '') {
+                    return null;
+                }
+
+                return $val;
+            },
+            $this->values
+        );
     }
 
     public function validate()
     {
         $this->validated = true;
+        $this->prepare_for_validation();
 
         foreach ($this->rules as $key => $rule_set) {
 
@@ -61,6 +76,10 @@ class Validator
             if (!isset($this->errors[$key])) {
                 $this->result[$key] = $this->values[$key];
             }
+        }
+
+        if (empty($this->result)) {
+            $this->errors[array_key_first($this->rules)] = 'The input is empty';
         }
 
         return $this;

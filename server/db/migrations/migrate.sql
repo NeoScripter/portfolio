@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS faqs (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
-    title_ru       varchar NOT NULL,
-    title_en      varchar NOT NULL UNIQUE,
-    content_ru   TEXT NOT NULL,
-    content_en   TEXT NOT NULL,
+    title_ru    varchar,
+    title_en    varchar,
+    content_ru  TEXT,
+    content_en  TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );

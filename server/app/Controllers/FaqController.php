@@ -34,7 +34,7 @@ class FaqController
             )
         ];
 
-        json($faqs);
+        send_json($faqs);
     }
 
     public function edit($f3)
@@ -51,19 +51,47 @@ class FaqController
 
         $faq = $result[0];
 
-        json(
+        send_json(
             ["data" => $this->toResource($faq)]
         );
     }
 
-    public function update($f3)
+    public function store($f3)
     {
-        $request = json_decode(
-            $f3->get('BODY'),
-            true
+        $validator = Validator::make(get_json(), [
+            'title_en' => ['required', 'string', 'min:3', 'max:255'],
+            'title_ru' => ['required', 'string', 'min:3', 'max:255'],
+            'content_en' => ['nullable', 'string', 'min:3', 'max:2255'],
+            'content_ru' => ['nullable', 'string', 'min:3', 'max:2255'],
+        ]);
+
+        if ($validator->fails()) {
+            send_json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $validator->validated();
+
+        $set = implode(
+            ', ',
+            array_map(
+                fn($col) => "`$col` = ?",
+                array_keys($data)
+            )
         );
 
-        $validator = Validator::make($request, [
+        $values = array_values($data);
+
+        $f3->get('DB')->exec(
+            "insert into faqs  $set where faqs.id = ?",
+            $values
+        );
+
+        send_json(['message' => 'Faq successfully created!']);
+    }
+
+    public function update($f3)
+    {
+        $validator = Validator::make(get_json(), [
             'title_en' => ['sometimes', 'string', 'min:3', 'max:255'],
             'title_ru' => ['sometimes', 'string', 'min:3', 'max:255'],
             'content_en' => ['sometimes', 'string', 'min:3', 'max:2255'],
@@ -71,9 +99,7 @@ class FaqController
         ]);
 
         if ($validator->fails()) {
-            http_response_code(422);
-            echo json_encode(['errors' => $validator->errors()]);
-            return;
+            send_json(['errors' => $validator->errors()], 422);
         }
 
         $data = $validator->validated();
@@ -94,6 +120,6 @@ class FaqController
             $values
         );
 
-        echo json_encode(['message' => 'Faq successfully updated!']);
+        send_json(['message' => 'Faq successfully updated!']);
     }
 }

@@ -26,6 +26,6 @@ $f3->set('CORS', [
 $f3->config(APP_DIR . '/config/config.ini');
 
 $f3->route('GET /seed [cli]', 'seeders\Seeder->run');
-$f3->route('GET /@action [cli]', 'controllers\ConsoleController->@action');
+$f3->route('GET /@action [cli]', 'Controllers\ConsoleController->@action');
 
 $f3->run();
