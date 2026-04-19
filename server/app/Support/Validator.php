@@ -6,6 +6,7 @@ namespace Support;
 
 use Base;
 use InvalidArgumentException;
+use RuntimeException;
 
 class Validator
 {
@@ -61,6 +62,7 @@ class Validator
                     'string' => $this->string($this->values[$key]),
                     'min' => $this->min_length($this->values[$key], (int) $param),
                     'max' => $this->max_length($this->values[$key], (int) $param),
+                    'image' => $this->image($this->values[$key], (int) $param),
                     'exists' => $this->exists($this->values[$key], ...explode(',', $param)),
                     'nullable' => '',
                     'sometimes' => '',
@@ -109,6 +111,26 @@ class Validator
 
         return '';
     }
+
+    private function image($value, $limit = null)
+    {
+        if (! is_array($value))
+            return 'Invalid file upload';
+
+        $error = validate_image($value, $limit);
+
+        if ($error != null) {
+            return $error;
+        }
+
+        try {
+            sanitize_image($value['tmp_name'], $value['tmp_name']);
+        } catch (RuntimeException $e) {
+            return 'Failed to sanitize the image: ' . $e->getMessage();
+        }
+        return '';
+    }
+
 
     private function required($value)
     {

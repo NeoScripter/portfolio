@@ -8,7 +8,8 @@ class ComposerStaticInit15d637f58d78ca86d31b7d86de7bb681
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
-        'cadc9c721433675b17f426e6ddd5daa4' => __DIR__ . '/../..' . '/app/functions.php',
+        '63f75f9580ee51d8dd0ac47096ca7aa7' => __DIR__ . '/../..' . '/app/Support/functions.php',
+        '63590a63e1606b1ae086fe0a59bd8708' => __DIR__ . '/../..' . '/app/Support/image_utils.php',
     );
 
     public static $prefixLengthsPsr4 = array (

@@ -35,4 +35,26 @@ class ConsoleController
         $this->drop($f3);
         $this->migrate($f3);
     }
+
+    public function link()
+    {
+        $storage = APP_DIR  . '/storage/public';
+        $link    = APP_DIR  . '/public/uploads';
+
+        if (file_exists($link)) {
+            echo "Link already exists at {$link}" . PHP_EOL;
+            return;
+        }
+
+        if (!is_dir($storage)) {
+            echo "Storage directory does not exist: {$storage}" . PHP_EOL;
+            return;
+        }
+
+        if (symlink($storage, $link)) {
+            echo "Symlink created: {$link} -> {$storage}" . PHP_EOL;
+        } else {
+            echo "Failed to create symlink" . PHP_EOL;
+        }
+    }
 }
