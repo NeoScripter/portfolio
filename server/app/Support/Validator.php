@@ -25,15 +25,15 @@ class Validator
 
     private function prepare_for_validation()
     {
-        $this->values = array_map(
+        $this->values = array_filter(
+            $this->values,
             function ($val) {
                 if (is_string($val) && trim($val) === '') {
-                    return null;
+                    return false;
                 }
 
-                return $val;
-            },
-            $this->values
+                return true;
+            }
         );
     }
 

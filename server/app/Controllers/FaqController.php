@@ -71,18 +71,23 @@ class FaqController
 
         $data = $validator->validated();
 
-        $set = implode(
+        $cols = implode(
             ', ',
             array_map(
-                fn($col) => "`$col` = ?",
+                fn($col) => "`$col`",
                 array_keys($data)
             )
+        );
+
+        $placeholders = implode(
+            ', ',
+            array_fill(0, count($data), '?')
         );
 
         $values = array_values($data);
 
         $f3->get('DB')->exec(
-            "insert into faqs  $set where faqs.id = ?",
+            "insert into faqs ($cols) values ($placeholders)",
             $values
         );
 
