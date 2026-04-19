@@ -79,6 +79,13 @@ class TechStackController
         $file     = $data['url'];
         $dest_dir = APP_DIR . '/public/storage/uploads/stacks';
 
+        if (isset($data['body_en']) && $data['body_en']) {
+            $data['html_en'] = to_markdown($data['body_en']);
+        }
+        if (isset($data['body_ru']) && $data['body_ru']) {
+            $data['html_ru'] = to_markdown($data['body_ru']);
+        }
+
         $abs_path = resize_image(
             source: $file['tmp_name'],
             dest_dir: $dest_dir,
@@ -126,6 +133,13 @@ class TechStackController
         }
 
         $data = $validator->validated();
+
+        if (isset($data['body_en'])) {
+            $data['html_en'] = to_markdown($data['body_en']);
+        }
+        if (isset($data['body_ru'])) {
+            $data['html_ru'] = to_markdown($data['body_ru']);
+        }
 
         if (isset($data['url'])) {
             $row = $f3->get('DB')->exec(

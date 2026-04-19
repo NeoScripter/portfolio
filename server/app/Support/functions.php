@@ -1,5 +1,7 @@
 <?php
 
+use League\CommonMark\CommonMarkConverter;
+
 function send_json(array $data, int $status = 200): void
 {
     header('Content-Type: application/json');
@@ -33,4 +35,17 @@ function dd(...$vars)
         echo "</pre>";
     }
     die(1);
+}
+
+function to_markdown(?string $text): string
+{
+    if (empty($text)) return '';
+
+    $converter = new CommonMarkConverter([
+        'html_input'         => 'strip',
+        'allow_unsafe_links' => false,
+        'max_nesting_level'  => 5,
+    ]);
+
+    return $converter->convert($text)->getContent();
 }
