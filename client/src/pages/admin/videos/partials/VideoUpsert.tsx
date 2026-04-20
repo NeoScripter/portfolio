@@ -4,6 +4,7 @@ import { FormImage } from '@/components/form/FormImage';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
+import { PREFIX } from '@/lib/const/api';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { VideoType } from '@/lib/types/models/videos';
@@ -40,24 +41,28 @@ const VideoUpsert: FC<{ video?: VideoType }> = ({ video }) => {
             url: video?.attr?.url ?? '',
             alt_en: video?.image?.alt?.en ?? '',
             alt_ru: video?.image?.alt?.ru ?? '',
-            image: video?.image?.srcSet?.dk ?? null,
+            image: null,
         }),
         [video],
     );
 
+    const isEdit = video != null;
+
     async function submit(values: VideoUpsertState) {
         const formData = buildFormData({
             ...values,
-            ...(video && { _method: 'PUT' }),
+            ...(isEdit && { _method: 'PUT' }),
         });
 
         await fetchData({
-            url: video != null ? `/admin/videos/${video.id}` : '/admin/videos',
+            url: isEdit ? `${PREFIX}videos/${video.id}` : `${PREFIX}videos`,
             method: 'POST',
             payload: formData,
-            onSuccess: () => {
-                route('/videos');
-                toast.success('Success!');
+            onSuccess: (data) => {
+                if (!isEdit) {
+                    route('/admin/videos');
+                }
+                toast.success(data.message ?? 'Success!');
             },
             onError: () => toast.error('Error'),
         });
@@ -73,7 +78,11 @@ const VideoUpsert: FC<{ video?: VideoType }> = ({ video }) => {
             <FormInput name="title_en" label="Title (EN)" required />
             <FormInput name="title_ru" label="Title (RU)" required />
             <FormInput name="url" label="URL" required />
-            <FormImage name="image" label="Video Image" />
+            <FormImage
+                src={video?.image?.srcSet?.mb}
+                name="image"
+                label="Video Image"
+            />
             <FormTextArea name="alt_en" label="Alt Text (EN)" required />
             <FormTextArea name="alt_ru" label="Alt Text (RU)" required />
             <FormButtons

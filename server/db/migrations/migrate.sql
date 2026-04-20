@@ -44,6 +44,29 @@ CREATE TABLE IF NOT EXISTS videos (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS categories (
+    id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    name_ru VARCHAR,
+    name_en VARCHAR,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS technologies (
+    id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE project_technology (
+    project_id BIGINT UNSIGNED NOT NULL,
+    technology_id BIGINT UNSIGNED NOT NULL,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (project_id, technology_id),
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+    FOREIGN KEY (technology_id) REFERENCES technologies(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS images (
     id  INTEGER PRIMARY KEY AUTOINCREMENT,
     imageable_id  INTEGER NOT NULL,

@@ -10,6 +10,7 @@ import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useState } from 'preact/hooks';
 import VideoCard, { VideoFallback } from './partials/VideoCard';
 import VideoDelete from './partials/VideoDelete';
+import { PREFIX } from '@/lib/const/api';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -18,7 +19,7 @@ const Index = () => {
     useEffect(() => {
         const fetchVideos = () => {
             fetchData({
-                url: '/api/videos?latest=true',
+                url: `${PREFIX}videos`,
                 onSuccess: (data) => {
                     setVideos(data.data);
                 },
@@ -35,6 +36,8 @@ const Index = () => {
     if (errors != null) {
         console.error(errors);
     }
+
+    console.log(videos)
 
     return (
         <DeleteModalProvider>

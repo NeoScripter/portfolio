@@ -2,6 +2,7 @@ import DeleteConfirmation from '@/components/form/DeleteConfirmation';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import FormLayout from '@/layouts/FormLayout';
+import { PREFIX } from '@/lib/const/api';
 import { toast } from 'sonner';
 
 const VideoDelete = () => {
@@ -13,7 +14,7 @@ const VideoDelete = () => {
         if (video.value == null) return;
 
         await fetchData({
-            url: `/admin/videos/${video.value.id}`,
+            url: `${PREFIX}videos/${video.value.id}`,
             method: 'DELETE',
             onSuccess: () => {
                 video.value = null;
