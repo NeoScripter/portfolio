@@ -124,7 +124,7 @@ class Validator
         }
 
         try {
-            sanitize_image($value['tmp_name'], $value['tmp_name']);
+            $this->sanitize_image($value['tmp_name'], $value['tmp_name']);
         } catch (RuntimeException $e) {
             return 'Failed to sanitize the image: ' . $e->getMessage();
         }
@@ -205,6 +205,22 @@ class Validator
     {
         if (! $this->validated) {
             $this->validate();
+        }
+    }
+
+    private function sanitize_image(string $source, string $dest): void
+    {
+        $src = escapeshellarg($source . '[0]');
+        $out = escapeshellarg($dest);
+
+        $cmd = "convert {$src} -strip +profile \"*\" {$out}";
+
+        exec($cmd, output: $output, result_code: $code);
+
+        if ($code !== 0) {
+            throw new \RuntimeException(
+                'Image sanitization failed: ' . implode("\n", $output)
+            );
         }
     }
 }

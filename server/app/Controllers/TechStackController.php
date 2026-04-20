@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Support\ImageHandler;
 use Support\Validator;
 
 class TechStackController
@@ -75,9 +76,10 @@ class TechStackController
             send_json(['errors' => $validator->errors()], 422);
         }
 
+
         $data = $validator->validated();
-        $file     = $data['url'];
-        $dest_dir = APP_DIR . '/public/storage/uploads/stacks';
+        $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
+        $handler->resize_all();
 
         if (isset($data['body_en']) && $data['body_en']) {
             $data['html_en'] = to_markdown($data['body_en']);
@@ -85,15 +87,6 @@ class TechStackController
         if (isset($data['body_ru']) && $data['body_ru']) {
             $data['html_ru'] = to_markdown($data['body_ru']);
         }
-
-        $abs_path = resize_image(
-            source: $file['tmp_name'],
-            dest_dir: $dest_dir,
-            name: $file['name'],
-            width: 120,
-        );
-
-        $data['url'] = str_replace(APP_DIR . '/public/', '', $abs_path);
 
         $cols = implode(
             ', ',

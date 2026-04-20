@@ -4,8 +4,8 @@ namespace Controllers;
 
 class HomeController
 {
-    function index()
+    function index($f3)
     {
-        echo 'Hello, world!';
+        echo $f3->get('app.url') . 'Hello, world!';
     }
 }

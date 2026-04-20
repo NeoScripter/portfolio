@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+namespace Support;
+
+use Base;
+use RuntimeException;
+
 class ImageHandler
 {
     private string $upload_dir;
@@ -18,6 +23,7 @@ class ImageHandler
         }
         $this->file = $this->data[$this->key];
         $this->upload_dir = APP_DIR . '/public/storage/uploads/' . $subdir;
+        unset($this->data[$this->key]);
 
         if (!is_dir($this->upload_dir) && !mkdir($this->upload_dir, 0755, recursive: true)) {
             throw new RuntimeException("Failed to create directory: $this->upload_dir");
@@ -34,8 +40,6 @@ class ImageHandler
         foreach ($this->variants as [$key, $width, $format]) {
             $this->data[$key] = $this->resize_image($width, $format);
         }
-
-        unset($this->data[$this->key]);
     }
 
     private function resize_image(
@@ -61,7 +65,7 @@ class ImageHandler
             );
         }
 
-        return str_replace(APP_DIR . '/public/', '', $dest);
+        return str_replace(APP_DIR . '/public/', Base::instance()->get('app.url'), $dest);
     }
 
     private function generate_filename(): string
