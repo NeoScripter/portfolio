@@ -1,4 +1,5 @@
 /storage/*.key
 /vendor
-/public/storage/*
+public/storage/*
 .env
+db/database.sqlite
