@@ -6,6 +6,6 @@ class HomeController
 {
     function index($f3)
     {
-        echo $f3->get('app.url') . 'Hello, world!';
+        echo implode(',' ,$f3->get('REQUEST')) . 'Hello, world!';
     }
 }

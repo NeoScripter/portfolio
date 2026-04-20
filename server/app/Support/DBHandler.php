@@ -80,23 +80,26 @@ class DBHandler
         $this->data[$to] = to_markdown($this->data[$from]);
     }
 
-    public function update_image_entry(int $id, string $imageable_type)
+    public function update_image_entry(int $imageable_id, string $imageable_type)
     {
         if (empty($this->data)) {
             return;
         }
 
-        $row = Base::instance()->get('DB')->exec(
-            "select id from images 
-            where imageable_type = '$imageable_type' 
-            and imageable_id = ?",
-            [$id]
+        $set = implode(
+            ', ',
+            array_map(
+                fn($col) => "`$col` = ?",
+                array_keys($this->data)
+            )
         );
 
-        if (empty($row)) {
-            return;
-        }
+        $values = array_values($this->data);
+        $values = array_merge($values, [$imageable_id, $imageable_type]);
 
-        $this->update_entry('images', (int) $row[0]['id']);
+        Base::instance()->get('DB')->exec(
+            "update images set $set where imageable_id = ? and imageable_type = ?",
+            $values
+        );
     }
 }

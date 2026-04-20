@@ -119,7 +119,7 @@ class Validator
         if (! is_array($value))
             return 'Invalid file upload';
 
-        $error = validate_image($value, $limit);
+        $error = $this->validate_image($value, $limit);
 
         if ($error != null) {
             return $error;
@@ -208,6 +208,47 @@ class Validator
         if (! $this->validated) {
             $this->validate();
         }
+    }
+
+    private function validate_image(
+        array $file,
+        int $max_mb = 10,
+        array $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'],
+    ): string {
+
+        if (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+            return 'No image was uploaded';
+        }
+
+        $max_bytes = $max_mb * 1024 * 1024;
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            return match ($file['error']) {
+                UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'The image is too large',
+                UPLOAD_ERR_PARTIAL                        => 'The image was only partially uploaded',
+                UPLOAD_ERR_NO_FILE                        => 'No image was uploaded',
+                default                                   => 'Upload failed with error code ' . $file['error'],
+            };
+        }
+
+        if ($file['size'] > $max_bytes) {
+            $mb = round($max_bytes / 1024 / 1024);
+            return "The image must not exceed {$mb}MB";
+        }
+
+        $mime = mime_content_type($file['tmp_name']);
+        if (!in_array($mime, $allowed, strict: true)) {
+            return "Invalid image type '{$mime}'. Allowed: " . implode(', ', $allowed);
+        }
+
+        $tmp = escapeshellarg($file['tmp_name']);
+        exec("identify {$tmp} 2>&1", output: $output, result_code: $code);
+
+        if ($code !== 0) {
+            return 'The file is not a valid image';
+        }
+
+        return '';
     }
 
     private function sanitize_image(string $source, string $dest): void
