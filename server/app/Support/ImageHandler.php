@@ -6,6 +6,8 @@ namespace Support;
 
 use Base;
 use RuntimeException;
+use Imagick;
+use ImagickException;
 
 class ImageHandler
 {
@@ -76,20 +78,24 @@ class ImageHandler
     ): string {
         $filename = $this->generate_filename();
         $source = $this->file['tmp_name'];
-
         $dest = "{$this->upload_dir}/{$filename}.{$format}";
         $quality = $format === 'webp' ? 75 : 50;
 
-        $src_arg  = escapeshellarg($source);
-        $dest_arg = escapeshellarg($dest);
+        try {
+            $img = new \Imagick($source);
 
-        $cmd = "convert {$src_arg} -resize '{$width}x>' -strip -quality {$quality} {$dest_arg}";
+            $img->resizeImage($width, 0, \Imagick::FILTER_LANCZOS, 1);
 
-        exec($cmd, output: $output, result_code: $code);
+            $img->stripImage();
 
-        if ($code !== 0) {
+            $img->setImageFormat($format);
+            $img->setImageCompressionQuality($quality);
+
+            $img->writeImage($dest);
+            $img->destroy();
+        } catch (\ImagickException $e) {
             throw new RuntimeException(
-                "convert failed for variant '{$filename}': " . implode("\n", $output)
+                "Imagick failed for variant '{$filename}': " . $e->getMessage()
             );
         }
 

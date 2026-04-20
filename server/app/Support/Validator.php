@@ -7,6 +7,8 @@ namespace Support;
 use Base;
 use InvalidArgumentException;
 use RuntimeException;
+use Imagick;
+use ImagickException;
 
 class Validator
 {
@@ -210,16 +212,15 @@ class Validator
 
     private function sanitize_image(string $source, string $dest): void
     {
-        $src = escapeshellarg($source . '[0]');
-        $out = escapeshellarg($dest);
-
-        $cmd = "convert {$src} -strip +profile \"*\" {$out}";
-
-        exec($cmd, output: $output, result_code: $code);
-
-        if ($code !== 0) {
-            throw new \RuntimeException(
-                'Image sanitization failed: ' . implode("\n", $output)
+        try {
+            $img = new \Imagick($source . '[0]');
+            $img->stripImage();
+            $img->profileImage('*', null);
+            $img->writeImage($dest);
+            $img->destroy();
+        } catch (\ImagickException $e) {
+            throw new RuntimeException(
+                'Image sanitization failed: ' . $e->getMessage()
             );
         }
     }

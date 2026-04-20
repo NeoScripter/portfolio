@@ -66,7 +66,7 @@ class TechStackController
     public function store($f3)
     {
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
-            'url' => ['required', 'image:2'],
+            'url' => ['required', 'image:5'],
             'body_en' => ['nullable', 'string', 'max:10000'],
             'body_ru' => ['nullable', 'string', 'max:10000'],
             'alt_en' => ['required', 'string', 'max:500'],
@@ -92,7 +92,7 @@ class TechStackController
     public function update($f3)
     {
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
-            'url' => ['sometimes', 'image:2'],
+            'url' => ['sometimes', 'image:5'],
             'body_en' => ['sometimes', 'string', 'max:10000'],
             'body_ru' => ['sometimes', 'string', 'max:10000'],
             'alt_en' => ['sometimes', 'string', 'max:500'],
