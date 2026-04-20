@@ -21,7 +21,7 @@ class ReviewController
     private function toResource($review)
     {
         return [
-            'id' => $review['id'],
+            'id' => $review['review_id'],
             'attr' => [
                 'author' => [
                     'ru' => $review['name_ru'],
@@ -52,10 +52,8 @@ class ReviewController
 
     public function index($f3)
     {
-        $reviews = $f3->get('DB')->exec('select * from reviews');
-
         $reviews = $f3->get('DB')->exec(
-            "SELECT r.*, i.*
+            "SELECT r.id review_id, r.*, i.id img_id, i.*
              FROM reviews r
              LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews'",
         );
@@ -71,7 +69,7 @@ class ReviewController
         );
 
         $data = [
-            'data' => $duplicated ? array_merge($reviews, $reviews) : $reviews
+            'data' => $duplicated ? duplicate_array($reviews) : $reviews
         ];
 
         send_json($data);
@@ -80,7 +78,7 @@ class ReviewController
     public function edit($f3)
     {
         $result = $f3->get('DB')->exec(
-            "SELECT r.*, i.*
+            "SELECT r.id review_id, r.*, i.id img_id, i.*
             FROM reviews r
             LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews'
             WHERE r.id = ?",
