@@ -4,6 +4,7 @@ import { FormImage } from '@/components/form/FormImage';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
+import { PREFIX } from '@/lib/const/api';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { ReviewType } from '@/lib/types/models/reviews';
@@ -19,7 +20,7 @@ type ReviewUpsertState = {
     content_ru: string;
     alt_en: string;
     alt_ru: string;
-    image: File | string | null;
+    image: File | null;
 };
 
 const validationRules: ValidationRules<ReviewUpsertState> = {
@@ -43,7 +44,7 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
             content_ru: review?.attr?.description?.ru ?? '',
             alt_en: review?.image?.alt?.en ?? '',
             alt_ru: review?.image?.alt?.ru ?? '',
-            image: review?.image?.srcSet?.dk ?? null,
+            image: null,
         }),
         [review],
     );
@@ -57,13 +58,13 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
         await fetchData({
             url:
                 review != null
-                    ? `/admin/reviews/${review.id}`
-                    : '/admin/reviews',
+                    ? `${PREFIX}reviews/${review.id}`
+                    : `${PREFIX}reviews`,
             method: 'POST',
             payload: formData,
-            onSuccess: () => {
-                route('/reviews');
-                toast.success('Success!');
+            onSuccess: (data) => {
+                // route('/admin/reviews');
+                toast.success(data.message ?? 'Success!');
             },
             onError: () => toast.error('Error'),
         });
@@ -75,12 +76,14 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
             onSubmit={submit}
             className="space-y-6"
             rules={validationRules}
+            hasFile={true}
         >
             <FormInput name="name_en" label="Author (EN)" required />
             <FormInput name="name_ru" label="Author (RU)" required />
             <FormTextArea name="content_en" label="Review (EN)" required />
             <FormTextArea name="content_ru" label="Review (RU)" required />
             <FormImage
+                src={review?.image?.srcSet?.mb}
                 label="Review Image"
                 name="image"
             />

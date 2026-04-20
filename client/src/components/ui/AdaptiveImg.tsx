@@ -1,6 +1,6 @@
 import { buildSrcSet, cn } from '@/lib/helpers/utils';
 import type { ImageSrcSet } from '@/lib/types/shared';
-import { useEffect, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 
 type AdaptiveImgProps = {
     prtClass?: string;
@@ -29,7 +29,7 @@ export default function AdaptiveImg({
                 isBg
                     ? 'pointer-events-none absolute inset-0 -z-5 overflow-clip select-none'
                     : 'relative overflow-clip',
-                prtClass
+                prtClass,
             )}
             {...(isBg
                 ? { 'aria-hidden': 'true' }
@@ -39,7 +39,7 @@ export default function AdaptiveImg({
                 className={cn(
                     'block size-full',
                     isBg && 'transition-all duration-500 ease-in-out',
-                    isBg && isLoading && 'opacity-0'
+                    isBg && isLoading && 'opacity-0',
                 )}
             >
                 {srcs.dkAvif && (
@@ -53,15 +53,17 @@ export default function AdaptiveImg({
                         media="(min-width: 56rem)"
                     />
                 )}
-                <source
-                    type="image/webp"
-                    srcSet={buildSrcSet([
-                        [srcs.dk, '1x'],
-                        [srcs.dk2x, '2x'],
-                        [srcs.dk3x, '3x'],
-                    ])}
-                    media="(min-width: 56rem)"
-                />
+                {srcs.dk && (
+                    <source
+                        type="image/webp"
+                        srcSet={buildSrcSet([
+                            [srcs.dk, '1x'],
+                            [srcs.dk2x, '2x'],
+                            [srcs.dk3x, '3x'],
+                        ])}
+                        media="(min-width: 56rem)"
+                    />
+                )}
                 {srcs.tbAvif && (
                     <source
                         type="image/avif"
@@ -73,15 +75,17 @@ export default function AdaptiveImg({
                         media="(min-width: 31rem)"
                     />
                 )}
-                <source
-                    type="image/webp"
-                    srcSet={buildSrcSet([
-                        [srcs.tb, '1x'],
-                        [srcs.tb2x, '2x'],
-                        [srcs.tb3x, '3x'],
-                    ])}
-                    media="(min-width: 31rem)"
-                />
+                {srcs.tb && (
+                    <source
+                        type="image/webp"
+                        srcSet={buildSrcSet([
+                            [srcs.tb, '1x'],
+                            [srcs.tb2x, '2x'],
+                            [srcs.tb3x, '3x'],
+                        ])}
+                        media="(min-width: 31rem)"
+                    />
+                )}
                 {srcs.mbAvif && (
                     <source
                         type="image/avif"
@@ -106,7 +110,7 @@ export default function AdaptiveImg({
                             ? 'object-bottom-right'
                             : 'object-center transition-all duration-500 ease-in-out',
                         imgClass,
-                        !isBg && isLoading && 'opacity-0'
+                        !isBg && isLoading && 'opacity-0',
                     )}
                     aria-hidden={!isBg ? isLoading : undefined}
                 />
@@ -118,14 +122,14 @@ export default function AdaptiveImg({
                     aria-label="Фото загружается"
                     className={cn(
                         'absolute inset-0 flex items-center justify-center',
-                        isBg ? '-z-5 h-full max-h-screen w-full' : 'z-10'
+                        isBg ? '-z-5 h-full max-h-screen w-full' : 'z-10',
                     )}
                 >
                     <div
                         aria-hidden="true"
                         className={cn(
                             'absolute inset-0 size-full animate-pulse bg-gray-200/50',
-                            isBg ? undefined : 'z-10'
+                            isBg ? undefined : 'z-10',
                         )}
                     />
                     <img
@@ -134,7 +138,7 @@ export default function AdaptiveImg({
                         alt=""
                         className={cn(
                             'block size-full object-cover',
-                            isBg ? 'object-bottom-right' : 'object-center'
+                            isBg ? 'object-bottom-right' : 'object-center',
                         )}
                     />
                 </div>

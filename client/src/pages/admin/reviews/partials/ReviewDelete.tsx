@@ -2,6 +2,7 @@ import DeleteConfirmation from '@/components/form/DeleteConfirmation';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import FormLayout from '@/layouts/FormLayout';
+import { PREFIX } from '@/lib/const/api';
 import { toast } from 'sonner';
 
 const ReviewDelete = () => {
@@ -13,11 +14,11 @@ const ReviewDelete = () => {
         if (review.value == null) return;
 
         await fetchData({
-            url: `/admin/reviews/${review.value.id}`,
+            url: `${PREFIX}reviews/${review.value.id}`,
             method: 'DELETE',
-            onSuccess: () => {
+            onSuccess: (data) => {
                 review.value = null;
-                toast.success('Deleted!');
+                toast.success(data.message ?? 'Deleted!');
                 document.dispatchEvent(new Event('itemDeleted'));
             },
             onError: () => toast.error('Error'),

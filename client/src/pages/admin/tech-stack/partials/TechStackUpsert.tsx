@@ -56,8 +56,8 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
                     : `${PREFIX}stacks`,
             method: 'POST',
             payload: formData,
-            onSuccess: () => {
-                toast.success('Success!');
+            onSuccess: (data) => {
+                toast.success(data.message ?? 'Success!');
             },
             onError: () => toast.error('Error'),
         });

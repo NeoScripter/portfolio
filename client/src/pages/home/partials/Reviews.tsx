@@ -7,6 +7,7 @@ import { cn, range } from '@/lib/helpers/utils';
 import ReviewCard, { ReviewFallback } from './ReviewCard';
 import CarouselControls from '@/components/ui/CarouselControls';
 import { useFetch } from '@/hooks/useFetch';
+import { PREFIX } from '@/lib/const/api';
 
 const Reviews = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -26,7 +27,7 @@ const Reviews = () => {
 
     useEffect(() => {
         fetchData({
-            url: '/api/reviews.json',
+            url: `${PREFIX}reviews?duplicated=true`,
             onSuccess: (data) => {
                 setter(data.data);
             },
@@ -34,6 +35,7 @@ const Reviews = () => {
     }, []);
 
     const listLabel = locale.value === 'ru' ? "Отзывы клиентов" : "Customer reviews";
+    const numSlides = Math.floor(carouselSlides.length / 2);
 
     if (errors != null)
         return (
@@ -78,8 +80,8 @@ const Reviews = () => {
             </div>
 
             <CarouselControls
-                current={currentSlide}
-                slides={carouselSlides.length}
+                current={currentSlide % numSlides + 1}
+                slides={numSlides}
                 handlePrev={handleDecrement}
                 handleNext={handleIncrement}
             />

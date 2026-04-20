@@ -5,7 +5,6 @@ import { useEffect, useId, useState } from 'preact/hooks';
 import InputError from './InputError';
 import Label from './Label';
 import UploadFileBtn from './UploadFileBtn';
-import { PREFIX } from '@/lib/const/api';
 
 type FormImageProps = {
     name: string;

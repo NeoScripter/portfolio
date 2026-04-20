@@ -8,8 +8,12 @@ const TechStackCard: FC<{ stack: TechStackType }> = ({ stack }) => {
     const { itemToDelete } = useDeleteModal();
     return (
         <li className="border-muted-foreground/40 max-w-140 rounded-sm border p-4 text-base">
-            <div class="border-foreground/40 mb-4 flex size-20 shrink-0 items-center justify-center rounded-xl border">
-                <img src={stack.attr.url} alt={stack.attr.alt[locale.value]} />
+            <div class="border-foreground/40 mb-4 flex size-20 shrink-0 items-center justify-center overflow-clip rounded-xl border">
+                <img
+                    src={stack.attr.url}
+                    alt={stack.attr.alt[locale.value]}
+                    class="size-full object-cover object-center"
+                />
             </div>
 
             <CardActions

@@ -10,6 +10,7 @@ import type { ReviewType } from '@/lib/types/models/reviews';
 import { useEffect, useState } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
 import ReviewDelete from './partials/ReviewDelete';
+import { PREFIX } from '@/lib/const/api';
 
 const Reviews = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -18,7 +19,7 @@ const Reviews = () => {
     useEffect(() => {
         const fetchReviews = () => {
             fetchData({
-                url: '/api/reviews.json',
+                url: `${PREFIX}reviews`,
                 onSuccess: (data) => {
                     setReviews(data.data);
                 },
@@ -35,6 +36,8 @@ const Reviews = () => {
     if (errors != null) {
         console.error(errors);
     }
+
+    console.log(`${PREFIX}reviews`)
 
     return (
         <DeleteModalProvider>

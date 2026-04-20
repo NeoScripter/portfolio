@@ -6,14 +6,14 @@ export type NodeProps<P = {}> = P & {
 };
 
 export type ImageSrcSet = {
-    dk: string;
+    dk?: string;
     dkAvif?: string;
     dk2x?: string;
     dkAvif2x?: string;
     dk3x?: string;
     dkAvif3x?: string;
     dkTiny?: string;
-    tb: string;
+    tb?: string;
     tbAvif?: string;
     tb2x?: string;
     tbAvif2x?: string;
