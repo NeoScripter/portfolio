@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Support\DBHandler;
 use Support\Validator;
 
 class FaqController
@@ -56,7 +57,7 @@ class FaqController
         );
     }
 
-    public function store($f3)
+    public function store()
     {
         $validator = Validator::make(get_json(), [
             'title_en' => ['required', 'string', 'min:3', 'max:255'],
@@ -70,26 +71,8 @@ class FaqController
         }
 
         $data = $validator->validated();
-
-        $cols = implode(
-            ', ',
-            array_map(
-                fn($col) => "`$col`",
-                array_keys($data)
-            )
-        );
-
-        $placeholders = implode(
-            ', ',
-            array_fill(0, count($data), '?')
-        );
-
-        $values = array_values($data);
-
-        $f3->get('DB')->exec(
-            "insert into faqs ($cols) values ($placeholders)",
-            $values
-        );
+        $db_handler = DBHandler::make($data);
+        $db_handler->create_entry('faqs');
 
         send_json(['message' => 'Faq successfully created!']);
     }
@@ -109,21 +92,8 @@ class FaqController
 
         $data = $validator->validated();
 
-        $set = implode(
-            ', ',
-            array_map(
-                fn($col) => "`$col` = ?",
-                array_keys($data)
-            )
-        );
-
-        $values = array_values($data);
-        $values[] = (int) $f3->get('PARAMS.id');
-
-        $f3->get('DB')->exec(
-            "update faqs set $set where faqs.id = ?",
-            $values
-        );
+        $db_handler = DBHandler::make($data);
+        $db_handler->update_entry('faqs', (int) $f3->get('PARAMS.id'));
 
         send_json(['message' => 'Faq successfully updated!']);
     }

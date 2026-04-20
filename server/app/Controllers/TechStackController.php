@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Support\DBHandler;
 use Support\ImageHandler;
 use Support\Validator;
 
@@ -80,32 +81,10 @@ class TechStackController
         $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
         $handler->resize_all();
 
-        if (isset($data['body_en']) && $data['body_en']) {
-            $data['html_en'] = to_markdown($data['body_en']);
-        }
-        if (isset($data['body_ru']) && $data['body_ru']) {
-            $data['html_ru'] = to_markdown($data['body_ru']);
-        }
-
-        $cols = implode(
-            ', ',
-            array_map(
-                fn($col) => "`$col`",
-                array_keys($data)
-            )
-        );
-
-        $placeholders = implode(
-            ', ',
-            array_fill(0, count($data), '?')
-        );
-
-        $values = array_values($data);
-
-        $f3->get('DB')->exec(
-            "insert into stacks ($cols) values ($placeholders)",
-            $values
-        );
+        $db_handler = DBHandler::make($data);
+        $db_handler->add_markdown_field('body_en', 'html_en');
+        $db_handler->add_markdown_field('body_ru', 'html_ru');
+        $db_handler->create_entry('stacks');
 
         send_json(['message' => 'Stack successfully created!']);
     }
@@ -126,34 +105,16 @@ class TechStackController
 
         $data = $validator->validated();
 
-        if (isset($data['body_en'])) {
-            $data['html_en'] = to_markdown($data['body_en']);
-        }
-        if (isset($data['body_ru'])) {
-            $data['html_ru'] = to_markdown($data['body_ru']);
-        }
-
         if (isset($data['url'])) {
-            $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
+            $img_handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
             ImageHandler::purge_files('stacks', ['url'], (int) $f3->get('PARAMS.id'));
-            $handler->resize_all();
+            $img_handler->resize_all();
         }
 
-        $set = implode(
-            ', ',
-            array_map(
-                fn($col) => "`$col` = ?",
-                array_keys($data)
-            )
-        );
-
-        $values = array_values($data);
-        $values[] = (int) $f3->get('PARAMS.id');
-
-        $f3->get('DB')->exec(
-            "update stacks set $set where stacks.id = ?",
-            $values
-        );
+        $db_handler = DBHandler::make($data);
+        $db_handler->add_markdown_field('body_en', 'html_en');
+        $db_handler->add_markdown_field('body_ru', 'html_ru');
+        $db_handler->update_entry('stacks', (int) $f3->get('PARAMS.id'));
 
         send_json(['message' => 'Stack successfully updated!']);
     }
