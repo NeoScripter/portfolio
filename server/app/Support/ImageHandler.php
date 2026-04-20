@@ -42,6 +42,34 @@ class ImageHandler
         }
     }
 
+    public static function purge_files(string $table, array $keys, int $id)
+    {
+        $values = implode(
+            ', ',
+            $keys
+        );
+
+        $row = Base::instance()->get('DB')->exec(
+            "SELECT $values FROM $table WHERE id = ? LIMIT 1",
+            [$id]
+        );
+
+        if (empty($row)) {
+            return;
+        }
+
+        foreach ($keys as $key) {
+            if (! isset($row[0][$key])) {
+                continue;
+            }
+
+            $old_path = APP_DIR . '/public/' . $row[0][$key];
+            if (file_exists($old_path)) {
+                unlink($old_path);
+            }
+        }
+    }
+
     private function resize_image(
         int $width,
         ?string $format = 'webp',

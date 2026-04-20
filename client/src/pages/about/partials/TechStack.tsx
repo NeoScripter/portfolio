@@ -8,6 +8,7 @@ import TechPill, { TechPillFallback } from './TechPill';
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import { canvasSrcSet } from '../data';
 import { useFetch } from '../../../hooks/useFetch';
+import { PREFIX } from '@/lib/const/api';
 
 const TechStack = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -50,7 +51,7 @@ const TechStack = () => {
 
     useEffect(() => {
         fetchData({
-            url: '/api/stacks.json',
+            url: `${PREFIX}stacks/`,
             onSuccess: (data) => {
                 setStacks(data.data);
             },

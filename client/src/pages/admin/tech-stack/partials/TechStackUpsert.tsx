@@ -4,10 +4,10 @@ import { FormImage } from '@/components/form/FormImage';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { FormWysiwyg } from '@/components/form/FormWysiwyg';
 import { useFetch } from '@/hooks/useFetch';
+import { PREFIX } from '@/lib/const/api';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
-import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
 import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
@@ -17,18 +17,17 @@ type TechStackUpsertState = {
     body_ru: string;
     alt_en: string;
     alt_ru: string;
-    image: File | string | null;
+    url: File | null;
 };
 
 const validationRules: ValidationRules<TechStackUpsertState> = {
-    body_en: ['required'],
-    body_ru: ['required'],
-    alt_en: ['required'],
-    alt_ru: ['required'],
+    // url: ['required'],
+    // body_ru: ['required'],
+    // alt_en: ['required'],
+    // alt_ru: ['required'],
 };
 
 const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
-    const { route } = useLocation();
     const { fetchData } = useFetch();
 
     const initialValues = useMemo<TechStackUpsertState>(
@@ -37,7 +36,7 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
             body_ru: stack?.attr?.body?.ru ?? '',
             alt_en: stack?.attr?.alt?.en ?? '',
             alt_ru: stack?.attr?.alt?.ru ?? '',
-            image: stack?.attr?.url ?? null,
+            url: null,
         }),
         [stack],
     );
@@ -48,12 +47,16 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
             ...(stack && { _method: 'PUT' }),
         });
 
+        console.log(formData);
+
         await fetchData({
-            url: stack != null ? `/admin/stacks/${stack.id}` : '/admin/stacks',
+            url:
+                stack != null
+                    ? `${PREFIX}stacks/${stack.id}`
+                    : `${PREFIX}stacks`,
             method: 'POST',
             payload: formData,
             onSuccess: () => {
-                route('/stacks');
                 toast.success('Success!');
             },
             onError: () => toast.error('Error'),
@@ -66,10 +69,11 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
             onSubmit={submit}
             className="space-y-6"
             rules={validationRules}
+            hasFile={true}
         >
-            <FormWysiwyg name="body_en" label="Stack (EN)" required />
-            <FormWysiwyg name="body_ru" label="Stack (RU)" required />
-            <FormImage name="image" label="Stack Image" />
+            <FormWysiwyg name="body_en" label="Stack (EN)" />
+            <FormWysiwyg name="body_ru" label="Stack (RU)" />
+            <FormImage name="url" src={stack?.attr?.url} label="Stack Image" />
             <FormTextArea name="alt_en" label="Alt Text (EN)" required />
             <FormTextArea name="alt_ru" label="Alt Text (RU)" required />
             <FormButtons

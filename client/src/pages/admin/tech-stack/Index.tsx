@@ -10,6 +10,7 @@ import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { useEffect, useState } from 'preact/hooks';
 import TechStackCard, { TechStackFallback } from './partials/TechStackCard';
 import TechStackDelete from './partials/TechStackDelete';
+import { PREFIX } from '@/lib/const/api';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -18,7 +19,7 @@ const Index = () => {
     useEffect(() => {
         const fetchStacks = () => {
             fetchData({
-                url: '/api/stacks.json?latest=true',
+                url: `${PREFIX}stacks`,
                 onSuccess: (data) => {
                     setStacks(data.data);
                 },

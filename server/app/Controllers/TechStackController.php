@@ -76,7 +76,6 @@ class TechStackController
             send_json(['errors' => $validator->errors()], 422);
         }
 
-
         $data = $validator->validated();
         $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
         $handler->resize_all();
@@ -135,26 +134,9 @@ class TechStackController
         }
 
         if (isset($data['url'])) {
-            $row = $f3->get('DB')->exec(
-                'SELECT url FROM stacks WHERE id = ? LIMIT 1',
-                [(int) $f3->get('PARAMS.id')]
-            );
-
-            if (!empty($row)) {
-                $old_path = APP_DIR . '/public/' . $row[0]['url'];
-                if (file_exists($old_path)) {
-                    unlink($old_path);
-                }
-            }
-
-            $file = $data['url'];
-            $abs_path = resize_image(
-                source: $file['tmp_name'],
-                dest_dir: APP_DIR . '/public/storage/uploads/stacks',
-                name: $file['name'],
-                width: 120,
-            );
-            $data['url'] = str_replace(APP_DIR . '/public/', '', $abs_path);
+            $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
+            ImageHandler::purge_files('stacks', ['url'], (int) $f3->get('PARAMS.id'));
+            $handler->resize_all();
         }
 
         $set = implode(
@@ -178,30 +160,12 @@ class TechStackController
 
     public function destroy($f3)
     {
-        $db = $f3->get('DB');
-        $db->begin();
+        ImageHandler::purge_files('stacks', ['url'], (int) $f3->get('PARAMS.id'));
 
-        $row = $db->exec(
-            'SELECT url FROM stacks WHERE id = ? LIMIT 1',
-            [(int) $f3->get('PARAMS.id')]
-        );
-
-        if (empty($row)) {
-            send_json(['message' => 'Stack not found'], 404);
-            return;
-        }
-
-        $path = APP_DIR . '/public/' . $row[0]['url'];
-        if (file_exists($path)) {
-            unlink($path);
-        }
-
-        $db->exec(
+        $f3->get('DB')->exec(
             'DELETE FROM stacks WHERE id = ?',
             [(int) $f3->get('PARAMS.id')]
         );
-
-        $db->commit();
 
         send_json(['message' => 'Stack successfully deleted!']);
     }

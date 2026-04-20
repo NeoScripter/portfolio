@@ -11,6 +11,7 @@ type FormProps<T extends FormValues> = {
     initialValues?: T;
     onSubmit: (values: T) => Promise<void> | void;
     rules?: ValidationRules<T>;
+    hasFile?: boolean;
     className?: string;
     children:
         | ComponentChildren
@@ -23,6 +24,7 @@ export const Form = <T extends FormValues>({
     className,
     rules,
     children,
+    hasFile = false
 }: FormProps<T>) => {
     const lang = locale.value === 'en' ? 'en' : 'ru';
     const formState = useForm<T>(initialValues, onSubmit, rules, lang);
@@ -32,6 +34,7 @@ export const Form = <T extends FormValues>({
                 onSubmit={formState.handleSubmit}
                 className={cn('max-w-160', className)}
                 noValidate
+                {...(hasFile && { encType: 'multipart/form-data' })}
             >
                 {typeof children === 'function'
                     ? children(formState)
