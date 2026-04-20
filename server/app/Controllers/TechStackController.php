@@ -53,6 +53,7 @@ class TechStackController
         );
 
         if (empty($result)) {
+            send_json(['message' =>  "stack not found"], 404);
             $f3->error(404, "stack not found");
         }
 
@@ -78,8 +79,8 @@ class TechStackController
         }
 
         $data = $validator->validated();
-        $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
-        $handler->resize_all();
+        $img_handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
+        $img_handler->resize_all();
 
         $db_handler = DBHandler::make($data);
         $db_handler->add_markdown_field('body_en', 'html_en');

@@ -1,0 +1,204 @@
+<?php
+
+namespace Controllers;
+
+use Support\DBHandler;
+use Support\ImageHandler;
+use Support\Validator;
+
+class ReviewController
+{
+    private $image_variants = [
+        ['mb_webp', 180, 'webp'],
+        ['mb_avif', 180, 'avif'],
+        ['mb_webp_2x', 360, 'webp'],
+        ['mb_avif_2x', 360, 'avif'],
+        ['mb_webp_3x', 540, 'webp'],
+        ['mb_avif_3x', 540, 'avif'],
+        ['tiny', 20, 'webp'],
+    ];
+
+    private function toResource($review)
+    {
+        return [
+            'id' => $review['id'],
+            'attr' => [
+                'author' => [
+                    'ru' => $review['name_ru'],
+                    'en' => $review['name_en'],
+                ],
+                'description' => [
+                    'ru' => $review['content_ru'],
+                    'en' => $review['content_en'],
+                ],
+            ],
+            'image' => [
+                'srcSet' => [
+                    'mb' => $review['mb_webp'],
+                    'mbAvif' => $review['mb_avif'],
+                    'mb2x' => $review['mb_webp_2x'],
+                    'mbAvif2x' => $review['mb_avif_2x'],
+                    'mb3x' => $review['mb_webp_3x'],
+                    'mbAvif3x' => $review['mb_avif_3x'],
+                    'mbTiny' => $review['tiny'],
+                ],
+                'alt' => [
+                    'ru' => $review['alt_ru'],
+                    'en' => $review['alt_en'],
+                ],
+            ]
+        ];
+    }
+
+    public function index($f3)
+    {
+        $reviews = $f3->get('DB')->exec('select * from reviews');
+
+        $reviews = $f3->get('DB')->exec(
+            "SELECT r.*, i.*
+             FROM reviews r
+             LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews'",
+        );
+
+        $reviews = [
+            'data' => array_map(
+                fn($review) => $this->toResource($review),
+                $reviews
+            )
+        ];
+
+        send_json($reviews);
+    }
+
+    public function edit($f3)
+    {
+        $result = $f3->get('DB')->exec(
+            "SELECT r.*, i.*
+            FROM reviews r
+            LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews'
+            WHERE r.id = ?",
+            [$f3->get('PARAMS.id')]
+        );
+
+        if (empty($result)) {
+            send_json(['message' =>  "review not found"], 404);
+            $f3->error(404, "review not found");
+        }
+
+        $review = $result[0];
+
+        send_json(
+            ["data" => $this->toResource($review)]
+        );
+    }
+
+    public function store($f3)
+    {
+        $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
+            'image' => ['required', 'image:5'],
+            'name_en' => ['required', 'string', 'max:200'],
+            'name_ru' => ['required', 'string', 'max:200'],
+            'content_en' => ['required', 'string', 'max:5000'],
+            'content_ru' => ['required', 'string', 'max:5000'],
+            'alt_en' => ['required', 'string', 'max:500'],
+            'alt_ru' => ['required', 'string', 'max:500'],
+        ]);
+
+        if ($validator->fails()) {
+            send_json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $validator->validated();
+
+        $img_handler = ImageHandler::make(
+            $data,
+            'image',
+            $this->image_variants,
+            'reviews'
+        );
+
+        $img_handler->resize_all();
+
+        [$entry_data, $img_data] = split_data($data, 'reviews');
+
+        $db_handler = DBHandler::make($entry_data);
+        $review_id = $db_handler->create_entry('reviews');
+
+        $img_data['imageable_id'] = $review_id;
+
+        $img_db_handler = DBHandler::make($img_data);
+        $img_db_handler->create_entry('images');
+
+        send_json(['message' => 'review successfully created!']);
+    }
+
+    public function update($f3)
+    {
+        $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
+            'image' => ['sometimes', 'image:5'],
+            'name_en' => ['sometimes', 'string', 'max:200'],
+            'name_ru' => ['sometimes', 'string', 'max:200'],
+            'content_en' => ['sometimes', 'string', 'max:5000'],
+            'content_ru' => ['sometimes', 'string', 'max:5000'],
+            'alt_en' => ['sometimes', 'string', 'max:500'],
+            'alt_ru' => ['sometimes', 'string', 'max:500'],
+        ]);
+
+        if ($validator->fails()) {
+            send_json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $validator->validated();
+
+        if (isset($data['image'])) {
+            $img_handler = ImageHandler::make($data, 'image', $this->image_variants, 'reviews');
+
+            $img_handler->resize_all();
+
+            ImageHandler::purge_files(
+                'images',
+                array_map(
+                    fn($var) => $var[0],
+                    $this->image_variants
+                ),
+                (int) $f3->get('PARAMS.id'),
+                'reviews'
+            );
+        }
+
+        [$entry_data, $img_data] = split_data($data);
+
+        $db_handler = DBHandler::make($entry_data);
+        $db_handler->update_entry('reviews', (int) $f3->get('PARAMS.id'));
+
+        $db_handler = DBHandler::make($img_data);
+        $db_handler->update_image_entry((int) $f3->get('PARAMS.id'), 'reviews');
+
+        send_json(['message' => 'review successfully updated!']);
+    }
+
+    public function destroy($f3)
+    {
+        ImageHandler::purge_files(
+            'images',
+            array_map(
+                fn($var) => $var[0],
+                $this->image_variants
+            ),
+            (int) $f3->get('PARAMS.id'),
+            'reviews'
+        );
+
+        $f3->get('DB')->exec(
+            'DELETE FROM reviews WHERE id = ?',
+            [(int) $f3->get('PARAMS.id')]
+        );
+
+        $f3->get('DB')->exec(
+            'DELETE FROM images WHERE imageable_id = ? AND imageable_type = ?',
+            [(int) $f3->get('PARAMS.id'), 'reviews']
+        );
+
+        send_json(['message' => 'review successfully deleted!']);
+    }
+}

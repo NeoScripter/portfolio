@@ -44,17 +44,24 @@ class ImageHandler
         }
     }
 
-    public static function purge_files(string $table, array $keys, int $id)
+    public static function purge_files(string $table, array $keys, int $id, ?string $parent_type = null)
     {
         $values = implode(
             ', ',
             $keys
         );
 
-        $row = Base::instance()->get('DB')->exec(
-            "SELECT $values FROM $table WHERE id = ? LIMIT 1",
-            [$id]
-        );
+        if ($parent_type != null) {
+            $row = Base::instance()->get('DB')->exec(
+                "SELECT $values FROM $table WHERE imageable_id = ? AND imageable_type = ?",
+                [$id, $parent_type]
+            );
+        } else {
+            $row = Base::instance()->get('DB')->exec(
+                "SELECT $values FROM $table WHERE id = ? LIMIT 1",
+                [$id]
+            );
+        }
 
         if (empty($row)) {
             return;
@@ -79,6 +86,7 @@ class ImageHandler
         $filename = $this->generate_filename();
         $source = $this->file['tmp_name'];
         $dest = "{$this->upload_dir}/{$filename}.{$format}";
+        $dest = str_replace('//', '/', $dest);
         $quality = $format === 'webp' ? 75 : 50;
 
         try {

@@ -19,6 +19,10 @@ class DBHandler
 
     public function create_entry(string $table)
     {
+        if (empty($this->data)) {
+            return;
+        }
+
         $cols = implode(
             ', ',
             array_map(
@@ -34,14 +38,22 @@ class DBHandler
 
         $values = array_values($this->data);
 
-        Base::instance()->get('DB')->exec(
+        $db = Base::instance()->get('DB');
+
+        $db->exec(
             "insert into $table ($cols) values ($placeholders)",
             $values
         );
+
+        return (int) $db->pdo()->lastInsertId();
     }
 
     public function update_entry(string $table, int $id)
     {
+        if (empty($this->data)) {
+            return;
+        }
+
         $set = implode(
             ', ',
             array_map(
@@ -66,5 +78,25 @@ class DBHandler
         }
 
         $this->data[$to] = to_markdown($this->data[$from]);
+    }
+
+    public function update_image_entry(int $id, string $imageable_type)
+    {
+        if (empty($this->data)) {
+            return;
+        }
+
+        $row = Base::instance()->get('DB')->exec(
+            "select id from images 
+            where imageable_type = '$imageable_type' 
+            and imageable_id = ?",
+            [$id]
+        );
+
+        if (empty($row)) {
+            return;
+        }
+
+        $this->update_entry('images', (int) $row[0]['id']);
     }
 }

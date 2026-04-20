@@ -47,6 +47,7 @@ class FaqController
         );
 
         if (empty($result)) {
+            send_json(['message' =>  "FAQ not found"], 404);
             $f3->error(404, "FAQ not found");
         }
 
