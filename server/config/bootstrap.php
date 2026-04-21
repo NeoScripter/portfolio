@@ -28,4 +28,19 @@ $f3->config(APP_DIR . '/config/config.ini');
 $f3->route('GET /seed [cli]', 'seeders\Seeder->run');
 $f3->route('GET /@action [cli]', 'Controllers\ConsoleController->@action');
 
+$controllers = glob(APP_DIR . '/app/Controllers/*.php');
+
+foreach ($controllers as $controller) {
+
+    $name = basename($controller, '.php');
+    $route = strtolower($name);
+    $route = str_replace('controller', 's', $route);
+
+    $f3->route("GET /$route", 'Controllers\\' . $name. '->index');
+    $f3->route("POST /$route", 'Controllers\\' . $name. '->store');
+    $f3->route("GET /$route/@id", 'Controllers\\' . $name. '->edit');
+    $f3->route("PUT /$route/@id", 'Controllers\\' . $name. '->update');
+    $f3->route("DELETE /$route/@id", 'Controllers\\' . $name. '->destroy');
+}
+
 $f3->run();
