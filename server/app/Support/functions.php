@@ -95,3 +95,25 @@ function delete_files_recursive(array $files)
         }
     }
 }
+
+function get_db_table_names()
+{
+    $files = glob(APP_DIR . '/db/migrations/*');
+    sort($files);
+
+    return array_filter(
+        array_map(
+            function ($file) {
+                $filename = basename($file);
+
+                if (preg_match('/create_([a-z_]+)_table/', $filename, $matches)) {
+                    return $matches[1];
+                }
+
+                return '';
+            },
+            $files
+        ),
+        'strlen'
+    );
+}

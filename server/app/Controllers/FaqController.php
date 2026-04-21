@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use DB\SQL\Mapper;
 use Support\DBHandler;
 use Support\Validator;
 
@@ -40,18 +41,13 @@ class FaqController
 
     public function edit($f3)
     {
-        $result = $f3->get('DB')->exec(
-            '
-            select * from faqs where faqs.id = ?',
-            [$f3->get('PARAMS.id')]
-        );
+        $faq = $f3->get('FAQS');
+        $faq->load(['id=?', $f3->get('PARAMS.id')]);
 
-        if (empty($result)) {
+        if ($faq->dry()) {
             send_json(['message' =>  "FAQ not found"], 404);
             $f3->error(404, "FAQ not found");
         }
-
-        $faq = $result[0];
 
         send_json(
             ["data" => $this->toResource($faq)]

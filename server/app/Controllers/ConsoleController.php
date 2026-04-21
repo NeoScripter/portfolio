@@ -2,36 +2,34 @@
 
 namespace Controllers;
 
+
 class ConsoleController
 {
-    private function execSql($f3, string $file): void
-    {
-        $sql = file_get_contents($f3->get('ROOT') . '/db/migrations/' . $file);
-
-        $statements = array_filter(
-            array_map('trim', explode(';', $sql)),
-            'strlen'
-        );
-
-        foreach ($statements as $statement) {
-            $f3->get('DB')->exec($statement);
-        }
-    }
-
     function migrate($f3)
     {
-        $this->execSql($f3, 'migrate.sql');
+        $files = glob(APP_DIR . '/db/migrations/*');
+        sort($files);
+
+        foreach ($files as $file) {
+            $sql = file_get_contents($file);
+            $f3->get('DB')->exec(trim($sql));
+        }
+
         echo "Migration completed.\n";
     }
 
     function drop($f3)
     {
-        $this->execSql($f3, 'drop.sql');
+        $tables = get_db_table_names();
+
+        foreach ($tables as $table) {
+            $f3->get('DB')->exec("DROP TABLE IF EXISTS $table;");
+        }
 
         delete_files_recursive(
             glob(APP_DIR . '/public/storage/uploads' . '/*')
         );
-        
+
         echo "All tables deleted.\n";
     }
 
