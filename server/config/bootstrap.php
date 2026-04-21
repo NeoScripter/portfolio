@@ -27,15 +27,24 @@ $controllers = glob(APP_DIR . '/app/Controllers/*.php');
 
 foreach ($controllers as $controller) {
 
-    $name = basename($controller, '.php');
-    $route = strtolower($name);
-    $route = str_replace('controller', 's', $route);
+    $name   = basename($controller, '.php');
+    $route  = str_replace('controller', 's', strtolower($name));
+    $base   = "Controllers\\$name";
+    $prefix = "/$route";
 
-    $f3->route("GET /$route", 'Controllers\\' . $name. '->index');
-    $f3->route("POST /$route", 'Controllers\\' . $name. '->store');
-    $f3->route("GET /$route/@id", 'Controllers\\' . $name. '->edit');
-    $f3->route("PUT /$route/@id", 'Controllers\\' . $name. '->update');
-    $f3->route("DELETE /$route/@id", 'Controllers\\' . $name. '->destroy');
+    $routes = [
+        "GET    $prefix"      => 'index',
+        "POST   $prefix"      => 'store',
+        "GET    $prefix/@id"  => 'edit',
+        "PUT    $prefix/@id"  => 'update',
+        "DELETE $prefix/@id"  => 'destroy',
+    ];
+
+    foreach ($routes as $pattern => $action) {
+        if (method_exists("Controllers\\$name", $action)) {
+            $f3->route($pattern, "$base->$action");
+        }
+    }
 }
 
 $f3->config(APP_DIR . '/config/config.ini');
