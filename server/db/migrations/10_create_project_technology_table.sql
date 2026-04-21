@@ -1,5 +1,5 @@
 
-CREATE TABLE project_technology (
+CREATE TABLE IF NOT EXISTS project_technology (
     project_id BIGINT UNSIGNED NOT NULL,
     technology_id BIGINT UNSIGNED NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

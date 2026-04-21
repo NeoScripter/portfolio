@@ -146,13 +146,15 @@ class VideoController
 
         [$entry_data, $img_data] = split_data($data, 'videos');
 
-        $db_handler = DBHandler::make($entry_data);
-        $video_id = $db_handler->create_entry('videos');
+        $video = $f3->get('_VIDEOS');
+        $video->copyFrom($entry_data);
+        $video->save();
 
-        $img_data['imageable_id'] = $video_id;
+        $img_data['imageable_id'] = $video->id;
 
-        $img_db_handler = DBHandler::make($img_data);
-        $img_db_handler->create_entry('images');
+        $img = $f3->get('_IMAGES');
+        $img->copyFrom($img_data);
+        $img->save();
 
         send_json(['message' => 'video successfully created!']);
     }
@@ -190,33 +192,46 @@ class VideoController
             );
         }
 
-        [$entry_data, $img_data] = split_data($data);
+        [$entry_data, $img_data] = split_data($data, 'videos');
 
-        $db_handler = DBHandler::make($entry_data);
-        $db_handler->update_entry('videos', (int) $f3->get('PARAMS.id'));
+        $video = $f3->get('_VIDEOS');
+        $video->load(['id=?', $f3->get('PARAMS.id')]);
+        $video->copyFrom($entry_data);
+        $video->save();
 
-        $db_handler = DBHandler::make($img_data);
-        $db_handler->update_image_entry((int) $f3->get('PARAMS.id'), 'videos');
+        $img_data['imageable_id'] = $video->id;
 
-        send_json(['message' => 'video successfully updated!']);
+        $img = $f3->get('_IMAGES');
+        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'videos']);
+        $img->copyFrom($img_data);
+        $img->save();
+
+        send_json(['message' => 'Video successfully updated!']);
     }
 
     public function destroy($f3)
     {
-        $affected = DBHandler::delete_entry(
-            'videos',
-            (int) $f3->get('PARAMS.id')
-        );
+        $video = $f3->get('_VIDEOS');
+        $video->load(['id=?', $f3->get('PARAMS.id')]);
+        $video->erase();
 
-        if (!$affected) {
-            send_json(['message' => 'Video not found'], 422);
+        if ($video->dry()) {
+            send_json(['message' =>  "Video not found"], 404);
         }
 
-        DBHandler::delete_image_entry(
-            'videos',
+        ImageHandler::purge_files(
+            'images',
+            array_map(
+                fn($var) => $var[0],
+                $this->image_variants
+            ),
             (int) $f3->get('PARAMS.id'),
-            $this->image_variants
+            'videos'
         );
+
+        $img = $f3->get('_IMAGES');
+        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'videos']);
+        $img->erase();
 
         send_json(['message' => 'Video successfully deleted!']);
     }

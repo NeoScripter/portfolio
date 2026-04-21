@@ -2,8 +2,6 @@
 
 namespace Controllers;
 
-use DB\SQL\Mapper;
-use Support\DBHandler;
 use Support\Validator;
 
 class FaqController
@@ -27,7 +25,7 @@ class FaqController
 
     public function index($f3)
     {
-        $faqs = $f3->get('DB')->exec('select * from faqs');
+        $faqs = $f3->get('_FAQS')->find();
 
         $faqs = [
             'data' => array_map(
@@ -54,7 +52,7 @@ class FaqController
         );
     }
 
-    public function store()
+    public function store($f3)
     {
         $validator = Validator::make(get_json(), [
             'title_en' => ['required', 'string', 'min:3', 'max:255'],
@@ -68,8 +66,9 @@ class FaqController
         }
 
         $data = $validator->validated();
-        $db_handler = DBHandler::make($data);
-        $db_handler->create_entry('faqs');
+        $faq = $f3->get('_FAQS');
+        $faq->copyFrom($data);
+        $faq->save();
 
         send_json(['message' => 'Faq successfully created!']);
     }
@@ -89,22 +88,19 @@ class FaqController
 
         $data = $validator->validated();
 
-        $db_handler = DBHandler::make($data);
-        $db_handler->update_entry('faqs', (int) $f3->get('PARAMS.id'));
+        $faq = $f3->get('_FAQS');
+        $faq->load(['id=?', $f3->get('PARAMS.id')]);
+        $faq->copyFrom($data);
+        $faq->save();
 
         send_json(['message' => 'Faq successfully updated!']);
     }
 
     public function destroy($f3)
     {
-        $affected = DBHandler::delete_entry(
-            'faqs',
-            (int) $f3->get('PARAMS.id')
-        );
-
-        if (!$affected) {
-            send_json(['message' => 'FAQ not found'], 422);
-        }
+        $faq = $f3->get('_FAQS');
+        $faq->load(['id=?', $f3->get('PARAMS.id')]);
+        $faq->erase();
 
         send_json(['message' => 'Faq successfully deleted!']);
     }

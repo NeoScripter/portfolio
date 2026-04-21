@@ -2,7 +2,6 @@
 
 namespace Controllers;
 
-use Support\DBHandler;
 use Support\ImageHandler;
 use Support\Validator;
 
@@ -52,11 +51,11 @@ class ReviewController
 
     public function index($f3)
     {
-        $reviews = $f3->get('DB')->exec(
-            "SELECT r.id review_id, r.*, i.id img_id, i.*
-             FROM reviews r
-             LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews'",
-        );
+        $reviews = $f3->get('_REVIEWS_VIEW')->find();
+
+        if (empty($reviews)) {
+            send_json(['message' =>  "Reviews not found"], 404);
+        }
 
         $duplicated = filter_var(
             $f3->get('GET.duplicated'),
@@ -89,6 +88,7 @@ class ReviewController
             send_json(['message' =>  "review not found"], 404);
             $f3->error(404, "review not found");
         }
+
 
         $review = $result[0];
 
@@ -126,15 +126,17 @@ class ReviewController
 
         [$entry_data, $img_data] = split_data($data, 'reviews');
 
-        $db_handler = DBHandler::make($entry_data);
-        $review_id = $db_handler->create_entry('reviews');
+        $review = $f3->get('_REVIEWS');
+        $review->copyFrom($entry_data);
+        $review->save();
 
-        $img_data['imageable_id'] = $review_id;
+        $img_data['imageable_id'] = $review->id;
 
-        $img_db_handler = DBHandler::make($img_data);
-        $img_db_handler->create_entry('images');
+        $img = $f3->get('_IMAGES');
+        $img->copyFrom($img_data);
+        $img->save();
 
-        send_json(['message' => 'review successfully created!']);
+        send_json(['message' => 'Review successfully created!']);
     }
 
     public function update($f3)
@@ -171,34 +173,47 @@ class ReviewController
             );
         }
 
-        [$entry_data, $img_data] = split_data($data);
+        [$entry_data, $img_data] = split_data($data, 'reviews');
 
-        $db_handler = DBHandler::make($entry_data);
-        $db_handler->update_entry('reviews', (int) $f3->get('PARAMS.id'));
+        $review = $f3->get('_REVIEWS');
+        $review->load(['id=?', $f3->get('PARAMS.id')]);
+        $review->copyFrom($entry_data);
+        $review->save();
 
-        $db_handler = DBHandler::make($img_data);
-        $db_handler->update_image_entry((int) $f3->get('PARAMS.id'), 'reviews');
+        $img_data['imageable_id'] = $review->id;
+
+        $img = $f3->get('_IMAGES');
+        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'reviews']);
+        $img->copyFrom($img_data);
+        $img->save();
 
         send_json(['message' => 'review successfully updated!']);
     }
 
     public function destroy($f3)
     {
-        $affected = DBHandler::delete_entry(
-            'reviews',
-            (int) $f3->get('PARAMS.id')
-        );
+        $review = $f3->get('_REVIEWS');
+        $review->load(['id=?', $f3->get('PARAMS.id')]);
+        $review->erase();
 
-        if (!$affected) {
-            send_json(['message' => 'Review not found'], 422);
+        if ($review->dry()) {
+            send_json(['message' =>  "review not found"], 422);
         }
 
-        DBHandler::delete_image_entry(
-            'reviews',
+        ImageHandler::purge_files(
+            'images',
+            array_map(
+                fn($var) => $var[0],
+                $this->image_variants
+            ),
             (int) $f3->get('PARAMS.id'),
-            $this->image_variants
+            'reviews'
         );
 
-        send_json(['message' => 'review successfully deleted!']);
+        $img = $f3->get('_IMAGES');
+        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'reviews']);
+        $img->erase();
+
+        send_json(['message' => 'Review successfully deleted!']);
     }
 }
