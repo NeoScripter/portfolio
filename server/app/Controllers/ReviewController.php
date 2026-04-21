@@ -76,21 +76,13 @@ class ReviewController
 
     public function edit($f3)
     {
-        $result = $f3->get('DB')->exec(
-            "SELECT r.id review_id, r.*, i.id img_id, i.*
-            FROM reviews r
-            LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews'
-            WHERE r.id = ?",
-            [$f3->get('PARAMS.id')]
-        );
+        $review = $f3->get('_REVIEWS_VIEW')
+            ->load(['review_id=?', $f3->get('PARAMS.id')]);
 
-        if (empty($result)) {
+        if ($review->dry()) {
             send_json(['message' =>  "review not found"], 404);
             $f3->error(404, "review not found");
         }
-
-
-        $review = $result[0];
 
         send_json(
             ["data" => $this->toResource($review)]

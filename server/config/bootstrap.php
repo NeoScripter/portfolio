@@ -35,7 +35,8 @@ $controllers = glob(APP_DIR . '/app/Controllers/*.php');
 foreach ($controllers as $controller) {
 
     $name   = basename($controller, '.php');
-    $route  = str_replace('controller', 's', strtolower($name));
+    $route  = str_replace('Controller', 's', $name);
+    $route = strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $route));
     $base   = "Controllers\\$name";
     $prefix = "/$route";
 

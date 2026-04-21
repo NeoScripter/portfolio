@@ -32,7 +32,7 @@ class TechStackController
 
     public function index($f3)
     {
-        $stacks = $f3->get('DB')->exec('select * from stacks');
+        $stacks = $f3->get('_STACKS')->find();
 
         $stacks = [
             'data' => array_map(
@@ -46,18 +46,12 @@ class TechStackController
 
     public function edit($f3)
     {
-        $result = $f3->get('DB')->exec(
-            '
-            select * from stacks where stacks.id = ?',
-            [$f3->get('PARAMS.id')]
-        );
+        $stack = $f3->get('_STACKS')
+            ->load(['id=?', $f3->get('PARAMS.id')]);
 
-        if (empty($result)) {
+        if ($stack->dry()) {
             send_json(['message' =>  "stack not found"], 404);
-            $f3->error(404, "stack not found");
         }
-
-        $stack = $result[0];
 
         send_json(
             ["data" => $this->toResource($stack)]
@@ -82,10 +76,12 @@ class TechStackController
         $img_handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
         $img_handler->resize_all();
 
-        $db_handler = DBHandler::make($data);
-        $db_handler->add_markdown_field('body_en', 'html_en');
-        $db_handler->add_markdown_field('body_ru', 'html_ru');
-        $db_handler->create_entry('stacks');
+        DBHandler::add_markdown_field($data, 'body_en', 'html_en');
+        DBHandler::add_markdown_field($data, 'body_ru', 'html_ru');
+
+        $stack = $f3->get('_STACKS');
+        $stack->copyFrom($data);
+        $stack->save();
 
         send_json(['message' => 'Stack successfully created!']);
     }

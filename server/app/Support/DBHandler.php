@@ -83,13 +83,13 @@ class DBHandler
         return $affected;
     }
 
-    public function add_markdown_field(string $from, string $to)
+    public static function add_markdown_field(array &$data, string $from, string $to)
     {
-        if (! isset($this->data[$from]) || ! is_string($this->data[$from])) {
+        if (! isset($data[$from]) || ! is_string($data[$from])) {
             return;
         }
 
-        $this->data[$to] = to_markdown($this->data[$from]);
+        $data[$to] = to_markdown($data[$from]);
     }
 
     public function update_image_entry(int $imageable_id, string $imageable_type)
