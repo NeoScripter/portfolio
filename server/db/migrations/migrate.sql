@@ -57,11 +57,37 @@ CREATE TABLE IF NOT EXISTS technologies (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS projects (
+    id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    title_ru TEXT,
+    title_en TEXT,
+    description_ru TEXT,
+    description_en TEXT,
+    display_order INT UNSIGNED DEFAULT 100,
+    slug VARCHAR NOT NULL UNIQUE,
+    link VARCHAR,
+    category_id BIGINT UNSIGNED,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS modules (
+    id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    heading_ru TEXT,
+    heading_en TEXT,
+    body_ru TEXT NOT NULL,
+    body_en TEXT NOT NULL,
+    html_ru TEXT NOT NULL,
+    html_en TEXT NOT NULL,
+    type VARCHAR NOT NULL,
+    display_order INT UNSIGNED DEFAULT 1,
+    project_id BIGINT UNSIGNED NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+);
+
 CREATE TABLE project_technology (
     project_id BIGINT UNSIGNED NOT NULL,
     technology_id BIGINT UNSIGNED NOT NULL,
-    created_at TIMESTAMP NULL DEFAULT NULL,
-    updated_at TIMESTAMP NULL DEFAULT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (project_id, technology_id),
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
     FOREIGN KEY (technology_id) REFERENCES technologies(id) ON DELETE CASCADE

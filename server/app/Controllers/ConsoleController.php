@@ -27,6 +27,11 @@ class ConsoleController
     function drop($f3)
     {
         $this->execSql($f3, 'drop.sql');
+
+        delete_files_recursive(
+            glob(APP_DIR . '/public/storage/uploads' . '/*')
+        );
+        
         echo "All tables deleted.\n";
     }
 

@@ -83,3 +83,15 @@ function split_data(array $data, ?string $imageable_type = null)
 
     return [$entry_data, $img_data];
 }
+
+function delete_files_recursive(array $files)
+{
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            unlink($file);
+        } else if (is_dir($file)) {
+            delete_files_recursive(glob($file . '/*'));
+            rmdir($file);
+        }
+    }
+}
