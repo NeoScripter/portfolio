@@ -9,12 +9,24 @@ use Support\Validator;
 class ProjectController
 {
     private $image_variants = [
-        ['mb_webp', 180, 'webp'],
-        ['mb_avif', 180, 'avif'],
-        ['mb_webp_2x', 360, 'webp'],
-        ['mb_avif_2x', 360, 'avif'],
-        ['mb_webp_3x', 540, 'webp'],
-        ['mb_avif_3x', 540, 'avif'],
+        ['dk_webp', 1700, 'webp'],
+        ['dk_avif', 1700, 'avif'],
+        ['dk_webp_2x', 3400, 'webp'],
+        ['dk_avif_2x', 3400, 'avif'],
+        ['dk_webp_3x', 5200, 'webp'],
+        ['dk_avif_3x', 5200, 'avif'],
+        ['tb_webp', 1000, 'webp'],
+        ['tb_avif', 1000, 'avif'],
+        ['tb_webp_2x', 2000, 'webp'],
+        ['tb_avif_2x', 2000, 'avif'],
+        ['tb_webp_3x', 3000, 'webp'],
+        ['tb_avif_3x', 3000, 'avif'],
+        ['mb_webp', 520, 'webp'],
+        ['mb_avif', 520, 'avif'],
+        ['mb_webp_2x', 1040, 'webp'],
+        ['mb_avif_2x', 1040, 'avif'],
+        ['mb_webp_3x', 1560, 'webp'],
+        ['mb_avif_3x', 1560, 'avif'],
         ['tiny', 20, 'webp'],
     ];
 
@@ -23,17 +35,41 @@ class ProjectController
         return [
             'id' => $project['project_id'],
             'attr' => [
-                'author' => [
-                    'ru' => $project['name_ru'],
-                    'en' => $project['name_en'],
+                'title' => [
+                    'ru' => $project['title_ru'],
+                    'en' => $project['title_en'],
                 ],
                 'description' => [
-                    'ru' => $project['content_ru'],
-                    'en' => $project['content_en'],
+                    'ru' => $project['description_ru'],
+                    'en' => $project['description_en'],
                 ],
+                'category' => [
+                    'ru' => $project['category_ru'],
+                    'en' => $project['category_en'],
+                ],
+                'stacks' => $project['stacks'],
+                'slug' => $project['slug'],
+                'link' => $project['link'],
+                'order' => $project['display_order'],
             ],
             'image' => [
                 'srcSet' => [
+                    'dk' => $project['dk_webp'],
+                    'dkAvif' => $project['dk_avif'],
+                    'dk2x' => $project['dk_webp_2x'],
+                    'dkAvif2x' => $project['dk_avif_2x'],
+                    'dk3x' => $project['dk_webp_3x'],
+                    'dkAvif3x' => $project['dk_avif_3x'],
+                    'dkTiny' => $project['tiny'],
+
+                    'tb' => $project['tb_webp'],
+                    'tbAvif' => $project['tb_avif'],
+                    'tb2x' => $project['tb_webp_2x'],
+                    'tbAvif2x' => $project['tb_avif_2x'],
+                    'tb3x' => $project['tb_webp_3x'],
+                    'tbAvif3x' => $project['tb_avif_3x'],
+                    'tbTiny' => $project['tiny'],
+
                     'mb' => $project['mb_webp'],
                     'mbAvif' => $project['mb_avif'],
                     'mb2x' => $project['mb_webp_2x'],
@@ -58,18 +94,13 @@ class ProjectController
              LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'projects'",
         );
 
-        $duplicated = filter_var(
-            $f3->get('GET.duplicated'),
-            FILTER_VALIDATE_BOOLEAN
-        );
-
         $projects = array_map(
             fn($project) => $this->toResource($project),
             $projects
         );
 
         $data = [
-            'data' => $duplicated ? duplicate_array($projects) : $projects
+            'data' => $projects
         ];
 
         send_json($data);
