@@ -124,10 +124,14 @@ class TechStackController
     {
         ImageHandler::purge_files('stacks', ['url'], (int) $f3->get('PARAMS.id'));
 
-        $f3->get('DB')->exec(
-            'DELETE FROM stacks WHERE id = ?',
-            [(int) $f3->get('PARAMS.id')]
+        $affected = DBHandler::delete_entry(
+            'stacks',
+            (int) $f3->get('PARAMS.id')
         );
+
+        if (!$affected) {
+            send_json(['message' => 'Stack not found'], 422);
+        }
 
         send_json(['message' => 'Stack successfully deleted!']);
     }

@@ -184,24 +184,19 @@ class ReviewController
 
     public function destroy($f3)
     {
-        ImageHandler::purge_files(
-            'images',
-            array_map(
-                fn($var) => $var[0],
-                $this->image_variants
-            ),
+        $affected = DBHandler::delete_entry(
+            'reviews',
+            (int) $f3->get('PARAMS.id')
+        );
+
+        if (!$affected) {
+            send_json(['message' => 'Review not found'], 422);
+        }
+
+        DBHandler::delete_image_entry(
+            'reviews',
             (int) $f3->get('PARAMS.id'),
-            'reviews'
-        );
-
-        $f3->get('DB')->exec(
-            'DELETE FROM reviews WHERE id = ?',
-            [(int) $f3->get('PARAMS.id')]
-        );
-
-        $f3->get('DB')->exec(
-            'DELETE FROM images WHERE imageable_id = ? AND imageable_type = ?',
-            [(int) $f3->get('PARAMS.id'), 'reviews']
+            $this->image_variants
         );
 
         send_json(['message' => 'review successfully deleted!']);

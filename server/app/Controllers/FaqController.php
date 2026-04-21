@@ -101,10 +101,9 @@ class FaqController
 
     public function destroy($f3)
     {
-        $affected = $f3->get('DB')->exec(
-            '
-            delete from faqs where faqs.id = ?',
-            [$f3->get('PARAMS.id')]
+        $affected = DBHandler::delete_entry(
+            'faqs',
+            (int) $f3->get('PARAMS.id')
         );
 
         if (!$affected) {

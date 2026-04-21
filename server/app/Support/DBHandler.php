@@ -71,6 +71,18 @@ class DBHandler
         );
     }
 
+    public static function delete_entry(string $table, int $id)
+    {
+        $db = Base::instance()->get('DB');
+
+        $affected = $db->exec(
+            "DELETE FROM $table WHERE id = ?",
+            [$id]
+        );
+
+        return $affected;
+    }
+
     public function add_markdown_field(string $from, string $to)
     {
         if (! isset($this->data[$from]) || ! is_string($this->data[$from])) {
@@ -101,5 +113,27 @@ class DBHandler
             "update images set $set where imageable_id = ? and imageable_type = ?",
             $values
         );
+    }
+
+    public static function delete_image_entry(string $table, int $id, array $variants)
+    {
+        $db = Base::instance()->get('DB');
+
+        ImageHandler::purge_files(
+            'images',
+            array_map(
+                fn($var) => $var[0],
+                $variants
+            ),
+            $id,
+            $table
+        );
+
+        $affected = $db->exec(
+            'DELETE FROM images WHERE imageable_id = ? AND imageable_type = ?',
+            [$id, $table]
+        );
+
+        return $affected;
     }
 }

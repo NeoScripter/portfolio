@@ -203,26 +203,21 @@ class VideoController
 
     public function destroy($f3)
     {
-        ImageHandler::purge_files(
-            'images',
-            array_map(
-                fn($var) => $var[0],
-                $this->image_variants
-            ),
+        $affected = DBHandler::delete_entry(
+            'videos',
+            (int) $f3->get('PARAMS.id')
+        );
+
+        if (!$affected) {
+            send_json(['message' => 'Video not found'], 422);
+        }
+
+        DBHandler::delete_image_entry(
+            'videos',
             (int) $f3->get('PARAMS.id'),
-            'videos'
+            $this->image_variants
         );
 
-        $f3->get('DB')->exec(
-            'DELETE FROM videos WHERE id = ?',
-            [(int) $f3->get('PARAMS.id')]
-        );
-
-        $f3->get('DB')->exec(
-            'DELETE FROM images WHERE imageable_id = ? AND imageable_type = ?',
-            [(int) $f3->get('PARAMS.id'), 'videos']
-        );
-
-        send_json(['message' => 'video successfully deleted!']);
+        send_json(['message' => 'Video successfully deleted!']);
     }
 }
