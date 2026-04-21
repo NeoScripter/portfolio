@@ -23,11 +23,6 @@ $f3->set('CORS', [
     'ttl'         => 86400
 ]);
 
-$f3->config(APP_DIR . '/config/config.ini');
-
-$f3->route('GET /seed [cli]', 'seeders\Seeder->run');
-$f3->route('GET /@action [cli]', 'Controllers\ConsoleController->@action');
-
 $controllers = glob(APP_DIR . '/app/Controllers/*.php');
 
 foreach ($controllers as $controller) {
@@ -42,5 +37,10 @@ foreach ($controllers as $controller) {
     $f3->route("PUT /$route/@id", 'Controllers\\' . $name. '->update');
     $f3->route("DELETE /$route/@id", 'Controllers\\' . $name. '->destroy');
 }
+
+$f3->config(APP_DIR . '/config/config.ini');
+
+$f3->route('GET /seed [cli]', 'seeders\Seeder->run');
+$f3->route('GET /@action [cli]', 'Controllers\ConsoleController->@action');
 
 $f3->run();
