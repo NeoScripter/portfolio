@@ -15,9 +15,11 @@ $f3->set('DEBUG', $f3->get('app.debug'));
 $f3->set('AUTOLOAD', APP_DIR . '/app/;' . APP_DIR . '/db/');
 $f3->set('DB', new SQL('sqlite:' . APP_DIR . '/db/database.sqlite'));
 
-$faq_mapper = new Mapper($f3->get('DB'), 'faqs');
-$f3->set('FAQS', $faq_mapper);
-
+foreach (get_db_table_names() as $table) {
+    $model = '_' . strtoupper($table);
+    $mapper = new Mapper($f3->get('DB'), $table);
+    $f3->set($model, $mapper);
+}
 
 $f3->set('CORS', [
     'origin'      => 'http://localhost:5173',

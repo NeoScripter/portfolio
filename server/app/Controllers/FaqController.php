@@ -41,7 +41,7 @@ class FaqController
 
     public function edit($f3)
     {
-        $faq = $f3->get('FAQS');
+        $faq = $f3->get('_FAQS');
         $faq->load(['id=?', $f3->get('PARAMS.id')]);
 
         if ($faq->dry()) {
