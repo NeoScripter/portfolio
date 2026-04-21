@@ -108,10 +108,13 @@ class TechStackController
             $img_handler->resize_all();
         }
 
-        $db_handler = DBHandler::make($data);
-        $db_handler->add_markdown_field('body_en', 'html_en');
-        $db_handler->add_markdown_field('body_ru', 'html_ru');
-        $db_handler->update_entry('stacks', (int) $f3->get('PARAMS.id'));
+        DBHandler::add_markdown_field($data, 'body_en', 'html_en');
+        DBHandler::add_markdown_field($data, 'body_ru', 'html_ru');
+
+        $stack = $f3->get('_STACKS');
+        $stack->load(['id=?', $f3->get('PARAMS.id')]);
+        $stack->copyFrom($data);
+        $stack->save();
 
         send_json(['message' => 'Stack successfully updated!']);
     }
@@ -120,13 +123,12 @@ class TechStackController
     {
         ImageHandler::purge_files('stacks', ['url'], (int) $f3->get('PARAMS.id'));
 
-        $affected = DBHandler::delete_entry(
-            'stacks',
-            (int) $f3->get('PARAMS.id')
-        );
+        $stack = $f3->get('_REVIEWS');
+        $stack->load(['id=?', $f3->get('PARAMS.id')]);
+        $stack->erase();
 
-        if (!$affected) {
-            send_json(['message' => 'Stack not found'], 422);
+        if ($stack->dry()) {
+            send_json(['message' =>  "Stack not found"], 422);
         }
 
         send_json(['message' => 'Stack successfully deleted!']);
