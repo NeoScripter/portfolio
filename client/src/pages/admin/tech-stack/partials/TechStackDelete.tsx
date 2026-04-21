@@ -14,7 +14,7 @@ const TechStackDelete = () => {
         if (stack.value == null) return;
 
         await fetchData({
-            url: `${PREFIX}stacks/${stack.value.id}`,
+            url: `${PREFIX}tech-stacks/${stack.value.id}`,
             method: 'DELETE',
             onSuccess: (data) => {
                 stack.value = null;

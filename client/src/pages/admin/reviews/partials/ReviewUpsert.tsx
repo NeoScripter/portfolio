@@ -49,6 +49,8 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
         [review],
     );
 
+    const isEdit = review != null;
+
     async function submit(values: ReviewUpsertState) {
         const formData = buildFormData({
             ...values,
@@ -57,13 +59,15 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
 
         await fetchData({
             url:
-                review != null
+                isEdit
                     ? `${PREFIX}reviews/${review.id}`
                     : `${PREFIX}reviews`,
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {
-                // route('/admin/reviews');
+                if (!isEdit) {
+                    route('/admin/reviews');
+                }
                 toast.success(data.message ?? 'Success!');
             },
             onError: () => toast.error('Error'),

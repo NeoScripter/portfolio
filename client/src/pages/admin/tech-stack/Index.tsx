@@ -19,7 +19,7 @@ const Index = () => {
     useEffect(() => {
         const fetchStacks = () => {
             fetchData({
-                url: `${PREFIX}stacks`,
+                url: `${PREFIX}tech-stacks`,
                 onSuccess: (data) => {
                     setStacks(data.data);
                 },

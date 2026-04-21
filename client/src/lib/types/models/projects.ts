@@ -72,13 +72,10 @@ export type ProjectType = {
         };
         stacks: string[];
         slug: string;
-        order: number;
+        display_order: number;
         url: string;
         link: string;
     };
     image: ImageType;
-    links: {
-        self: string;
-    }[];
     modules?: ModuleType[];
 }

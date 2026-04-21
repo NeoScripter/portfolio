@@ -6,6 +6,7 @@ import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
 import useFetchCategories from '@/hooks/useFetchCategories';
 import useFetchStacks from '@/hooks/useFetchStacks';
+import { PREFIX } from '@/lib/const/api';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import { type ValidationRules } from '@/lib/helpers/validation';
 import type { ProjectType } from '@/lib/types/models/projects';
@@ -57,7 +58,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         category_en: project?.attr?.category?.en ?? '',
         category_ru: project?.attr?.category?.ru ?? '',
         technologies: project?.attr?.stacks ?? [],
-        order: project?.attr?.order ?? 100,
+        order: project?.attr.display_order ?? 100,
         mockup: 1,
         image: null,
         alt_en: project?.image?.alt?.en ?? '',
@@ -73,8 +74,8 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         await fetchData({
             url:
                 project != null
-                    ? `/admin/projects/${project.attr.slug}`
-                    : '/admin/projects',
+                    ? `${PREFIX}projects/${project.attr.slug}`
+                    : `${PREFIX}projects`,
             method: 'POST',
             payload: formData,
             onSuccess: () => {

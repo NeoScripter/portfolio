@@ -16,9 +16,9 @@ const VideoDelete = () => {
         await fetchData({
             url: `${PREFIX}videos/${video.value.id}`,
             method: 'DELETE',
-            onSuccess: () => {
+            onSuccess: (data) => {
                 video.value = null;
-                toast.success('Deleted!');
+                toast.success(data.message ?? 'Deleted!');
                 document.dispatchEvent(new Event('itemDeleted'));
             },
             onError: () => toast.error('Error'),

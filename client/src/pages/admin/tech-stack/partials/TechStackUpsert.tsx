@@ -52,8 +52,8 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
         await fetchData({
             url:
                 stack != null
-                    ? `${PREFIX}stacks/${stack.id}`
-                    : `${PREFIX}stacks`,
+                    ? `${PREFIX}tech-stacks/${stack.id}`
+                    : `${PREFIX}tech-stacks`,
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {

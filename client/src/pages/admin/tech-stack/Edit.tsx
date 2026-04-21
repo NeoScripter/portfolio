@@ -13,7 +13,7 @@ const Edit: FC<{ id: number }> = ({ id }) => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}stacks/${id}`,
+            url: `${PREFIX}tech-stacks/${id}`,
             onSuccess: (data) => {
                 setStack(data.data);
             },

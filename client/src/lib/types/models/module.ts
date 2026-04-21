@@ -9,7 +9,7 @@ export type ModuleAttributes = {
     heading: LocalizedText;
     html: LocalizedText;
     body?: LocalizedText;
-    order: number;
+    display_order: number;
     type:
         | 'only_text'
         | 'two_image_block'
