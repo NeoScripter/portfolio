@@ -41,13 +41,8 @@ function to_markdown(?string $text): string
 {
     if (empty($text)) return '';
 
-    $converter = new CommonMarkConverter([
-        'html_input'         => 'strip',
-        'allow_unsafe_links' => false,
-        'max_nesting_level'  => 5,
-    ]);
-
-    return $converter->convert($text)->getContent();
+    $md = \Markdown::instance();
+    return $md->convert($text);
 }
 
 function duplicate_array(array $arr)
