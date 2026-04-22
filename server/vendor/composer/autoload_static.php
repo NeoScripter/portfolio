@@ -33,6 +33,7 @@ class ComposerStaticInit15d637f58d78ca86d31b7d86de7bb681
         ),
         'F' => 
         array (
+            'Falsum\\' => 7,
             'Faker\\' => 6,
         ),
         'D' => 
@@ -66,6 +67,10 @@ class ComposerStaticInit15d637f58d78ca86d31b7d86de7bb681
         'League\\CommonMark\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/commonmark/src',
+        ),
+        'Falsum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ikkez/f3-falsum/src/Falsum',
         ),
         'Faker\\' => 
         array (

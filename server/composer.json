@@ -3,7 +3,8 @@
         "bcosca/fatfree-core": "^3.9",
         "bcosca/fatfree": "^3.9",
         "fakerphp/faker": "^1.24",
-        "league/commonmark": "^2.8"
+        "league/commonmark": "^2.8",
+        "ikkez/f3-falsum": "^2.8"
     },
     "autoload": {
         "files": [

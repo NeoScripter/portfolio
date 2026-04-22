@@ -9,9 +9,13 @@ require APP_DIR . '/vendor/autoload.php';
 
 $f3 = Base::instance();
 
-$f3->set('DEBUG', $f3->get('app.debug'));
+$f3->config(APP_DIR . '/config/config.ini');
+
+$f3->set('DEBUG', $f3->get('app.debug') ? 3 : 0);
 $f3->set('AUTOLOAD', APP_DIR . '/app/;' . APP_DIR . '/db/');
 $f3->set('DB', new SQL('sqlite:' . APP_DIR . '/db/database.sqlite'));
+
+Falsum\Run::handler();
 
 foreach (get_db_table_names() as $table) {
     $model = '_' . strtoupper($table);

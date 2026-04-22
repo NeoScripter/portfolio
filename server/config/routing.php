@@ -1,6 +1,5 @@
 <?php
 
-$f3->config(APP_DIR . '/config/config.ini');
 
 $f3->route('GET /seed [cli]', 'seeders\Seeder->run');
 $f3->route('GET /@action [cli]', 'Http\Controllers\ConsoleController->@action');
