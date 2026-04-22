@@ -112,7 +112,7 @@ class ProjectController
     public function edit($f3)
     {
         $project = $f3->get('_PROJECTS_VIEW')
-            ->load(['slug=?', $f3->get('PARAMS.id')]);
+            ->load(['slug=?', $f3->get('PARAMS.slug')]);
 
         if (! $project) {
             send_json(['message' =>  "Project not found"], 404);

@@ -1,5 +1,6 @@
 import { useDebounce } from '@/hooks/useDebounce';
 import { useFetch } from '@/hooks/useFetch';
+import { PREFIX } from '@/lib/const/api';
 import type { ProjectResource } from '@/lib/types/models/projects';
 import { useLocation } from 'preact-iso';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -9,7 +10,7 @@ type FetchProjectsArgs = {
     isLatest?: boolean;
 };
 
-const useFetchProjects = ({ searchQuery, isLatest }: FetchProjectsArgs) => {
+const useFetchProjects = ({ searchQuery }: FetchProjectsArgs) => {
     const { fetchData, loading, errors } = useFetch();
     const [projectData, setProjectData] = useState<ProjectResource | null>(
         null,
@@ -42,10 +43,8 @@ const useFetchProjects = ({ searchQuery, isLatest }: FetchProjectsArgs) => {
             return;
         }
         const fetchProjects = () => {
-            let url = `/api/projects.json?page=${currentPage}&search=${debouncedQuery}`;
-            if (isLatest) {
-                url += '&latest=true';
-            }
+            // let url = `/api/projects.json?page=${currentPage}&search=${debouncedQuery}`;
+            let url = `${PREFIX}projects`;
             fetchData({
                 url: url,
                 onSuccess: (data) => {

@@ -23,10 +23,10 @@ type ProjectUpsertState = {
     description_en: string;
     description_ru: string;
     link: string;
-    category_en: string;
-    category_ru: string;
+    name_en: string;
+    name_ru: string;
     technologies: string[];
-    order: number;
+    display_order: number;
     mockup: number;
     image: File | null;
     alt_en: string;
@@ -34,8 +34,8 @@ type ProjectUpsertState = {
 };
 
 const validationRules: ValidationRules<ProjectUpsertState> = {
-    category_en: ['required'],
-    category_ru: ['required'],
+    name_en: ['required'],
+    name_ru: ['required'],
     title_en: ['required'],
     title_ru: ['required'],
     link: ['required'],
@@ -55,10 +55,10 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         description_en: project?.attr?.description?.en ?? '',
         description_ru: project?.attr?.description?.ru ?? '',
         link: project?.attr?.link ?? '',
-        category_en: project?.attr?.category?.en ?? '',
-        category_ru: project?.attr?.category?.ru ?? '',
+        name_en: project?.attr?.category?.en ?? '',
+        name_ru: project?.attr?.category?.ru ?? '',
         technologies: project?.attr?.stacks ?? [],
-        order: project?.attr.display_order ?? 100,
+        display_order: project?.attr.display_order ?? 100,
         mockup: 1,
         image: null,
         alt_en: project?.image?.alt?.en ?? '',
@@ -78,9 +78,9 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                     : `${PREFIX}projects`,
             method: 'POST',
             payload: formData,
-            onSuccess: () => {
-                route('/projects');
-                toast.success('Success!');
+            onSuccess: (data) => {
+                // route('/admin/projects');
+                toast.success(data.message ?? 'Success!');
             },
             onError: () => toast.error('Error'),
         });
@@ -92,6 +92,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
             onSubmit={submit}
             className="space-y-6"
             rules={validationRules}
+            hasFile={true}
         >
             {({ values, setFieldValue }) => {
                 const { stacks, loading: stacksLoading } = useFetchStacks();
@@ -101,8 +102,8 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                     errors: categoriesErrors,
                     invalidCategoryId,
                 } = useFetchCategories({
-                    categoryRu: values.category_ru as string,
-                    categoryEn: values.category_en as string,
+                    categoryRu: values.name_ru as string,
+                    categoryEn: values.name_en as string,
                 });
 
                 return (
@@ -135,7 +136,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                             loading={stacksLoading}
                         />
                         <FormInput
-                            name="category_en"
+                            name="name_en"
                             label="Category (EN)"
                             required
                         />
@@ -146,12 +147,12 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                             invalidId={invalidCategoryId}
                             locale="en"
                             onSelect={({ en, ru }) => {
-                                setFieldValue('category_en', en);
-                                setFieldValue('category_ru', ru);
+                                setFieldValue('name_en', en);
+                                setFieldValue('name_ru', ru);
                             }}
                         />
                         <FormInput
-                            name="category_ru"
+                            name="name_ru"
                             label="Category (RU)"
                             required
                         />
@@ -162,12 +163,12 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                             invalidId={invalidCategoryId}
                             locale="ru"
                             onSelect={({ en, ru }) => {
-                                setFieldValue('category_en', en);
-                                setFieldValue('category_ru', ru);
+                                setFieldValue('name_en', en);
+                                setFieldValue('name_ru', ru);
                             }}
                         />
                         <FormInput
-                            name="order"
+                            name="display_order"
                             label="Order"
                             inputmode="numeric"
                             pattern="\d*"
