@@ -37,12 +37,13 @@ function dd(...$vars)
     die(1);
 }
 
-function to_markdown(?string $text): string
+function add_markdown_field(array &$data, string $from, string $to)
 {
-    if (empty($text)) return '';
+    if (! isset($data[$from]) || ! is_string($data[$from])) {
+        return;
+    }
 
-    $md = \Markdown::instance();
-    return $md->convert($text);
+    $data[$to] = \Markdown::instance()->convert($data[$from]);
 }
 
 function duplicate_array(array $arr)

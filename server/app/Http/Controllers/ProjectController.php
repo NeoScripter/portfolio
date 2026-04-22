@@ -257,20 +257,27 @@ class ProjectController
 
     public function destroy($f3)
     {
-        $affected = DBHandler::delete_entry(
-            'projects',
-            (int) $f3->get('PARAMS.id')
-        );
+        $project = $f3->get('_PROJECTS');
+        $project->load(['id=?', $f3->get('PARAMS.id')]);
+        $project->erase();
 
-        if (!$affected) {
-            send_json(['message' => 'Project not found'], 422);
+        if ($project->dry()) {
+            send_json(['message' =>  "Project not found"], 422);
         }
 
-        DBHandler::delete_image_entry(
-            'projects',
+        ImageHandler::purge_files(
+            'images',
+            array_map(
+                fn($var) => $var[0],
+                $this->image_variants
+            ),
             (int) $f3->get('PARAMS.id'),
-            $this->image_variants
+            'projects'
         );
+
+        $img = $f3->get('_IMAGES');
+        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'projects']);
+        $img->erase();
 
         send_json(['message' => 'project successfully deleted!']);
     }

@@ -80,8 +80,8 @@ class TechStackController
         $img_handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
         $img_handler->resize_all();
 
-        DBHandler::add_markdown_field($data, 'body_en', 'html_en');
-        DBHandler::add_markdown_field($data, 'body_ru', 'html_ru');
+        add_markdown_field($data, 'body_en', 'html_en');
+        add_markdown_field($data, 'body_ru', 'html_ru');
 
         $stack = $f3->get('_STACKS');
         $stack->copyFrom($data);
@@ -112,8 +112,8 @@ class TechStackController
             $img_handler->resize_all();
         }
 
-        DBHandler::add_markdown_field($data, 'body_en', 'html_en');
-        DBHandler::add_markdown_field($data, 'body_ru', 'html_ru');
+        add_markdown_field($data, 'body_en', 'html_en');
+        add_markdown_field($data, 'body_ru', 'html_ru');
 
         $stack = $f3->get('_STACKS');
         $stack->load(['id=?', $f3->get('PARAMS.id')]);

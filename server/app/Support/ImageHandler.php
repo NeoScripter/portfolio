@@ -110,6 +110,57 @@ class ImageHandler
         return str_replace(APP_DIR . '/public/', Base::instance()->get('app.url'), $dest);
     }
 
+    public function insert_mockup(int $mockup_number, string $result_key = 'mockup_url'): void
+    {
+        if ($mockup_number < 1 || $mockup_number > 6) {
+            throw new \InvalidArgumentException('Mockup number must be between 1 and 6');
+        }
+
+        [$crop_w, $crop_h] = $mockup_number <= 5 ? [965, 707] : [621, 854];
+
+        $coords_map = [
+            1 => [0, 0, 272, 286,   965, 0, 1240, 288,   965, 707, 1264, 967,   0, 707, 298, 1017],
+            2 => [0, 0, 365, 136,   965, 0, 1368, 134,   965, 707, 1238, 857,   0, 707, 250, 932],
+            3 => [0, 0, 789, 61,    965, 0, 1809, 459,   965, 707, 1571, 1220,  0, 707, 602, 780],
+            4 => [0, 0, 314, 206,   965, 0, 1502, 136,   965, 707, 1472, 937,   0, 707, 320, 1076],
+            5 => [0, 0, 653, 288,   965, 0, 1806, 235,   965, 707, 1779, 1170,  0, 707, 618, 1135],
+            6 => [0, 0, 392, 435,   621, 0, 971, 166,    621, 854, 1462, 975,   0, 854, 872, 1282],
+        ];
+
+        $mockup_path = APP_DIR . "/public/storage/mockups/mockup-{$mockup_number}.webp";
+        $filename    = $this->generate_filename();
+        $dest        = "{$this->upload_dir}/{$filename}.webp";
+
+        try {
+            // step 1: crop source to mockup slot dimensions
+            $img = new \Imagick($this->file['tmp_name']);
+            $img->cropThumbnailImage($crop_w, $crop_h); // fill + center crop in one call
+            $img->stripImage();
+
+            // step 2: distort into perspective
+            $img->setImageVirtualPixelMethod(\Imagick::VIRTUALPIXELMETHOD_TRANSPARENT);
+            $img->distortImage(\Imagick::DISTORTION_PERSPECTIVE, $coords_map[$mockup_number], false);
+
+            // step 3: composite over mockup
+            $mockup = new \Imagick($mockup_path);
+            $mockup->compositeImage($img, \Imagick::COMPOSITE_OVER, 0, 0);
+            $mockup->setImageFormat('webp');
+            $mockup->setImageCompressionQuality(75);
+            $mockup->writeImage($dest);
+
+            $img->destroy();
+            $mockup->destroy();
+        } catch (\ImagickException $e) {
+            throw new \RuntimeException("Mockup compositing failed: " . $e->getMessage());
+        }
+
+        $this->data[$result_key] = str_replace(
+            APP_DIR . '/public/',
+            \Base::instance()->get('app.url'),
+            $dest
+        );
+    }
+
     private function generate_filename(): string
     {
         $name = pathinfo($this->file['name'], PATHINFO_FILENAME);
