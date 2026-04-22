@@ -2,27 +2,11 @@
 
 namespace Http\Controllers;
 
+use Http\Resources\FaqResource;
 use Support\Validator;
 
-class FaqController
+class FaqController extends FaqResource
 {
-    private function toResource($faq)
-    {
-        return [
-            'id' => $faq['id'],
-            'attr' => [
-                'title' => [
-                    'ru' => $faq['title_ru'],
-                    'en' => $faq['title_en'],
-                ],
-                'content' => [
-                    'ru' => $faq['content_ru'],
-                    'en' => $faq['content_en'],
-                ],
-            ]
-        ];
-    }
-
     public function index($f3)
     {
         $faqs = $f3->get('_FAQS')->find();
@@ -33,7 +17,7 @@ class FaqController
 
         $faqs = [
             'data' => array_map(
-                fn($faq) => $this->toResource($faq),
+                fn($faq) => $this->to_resource($faq),
                 $faqs
             )
         ];
@@ -52,7 +36,7 @@ class FaqController
         }
 
         send_json(
-            ["data" => $this->toResource($faq)]
+            ["data" => $this->to_resource($faq)]
         );
     }
 

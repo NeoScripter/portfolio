@@ -6,14 +6,14 @@ use Http\Resources\ProjectResource;
 use Support\ImageHandler;
 use Support\Validator;
 
-class ProjectController
+class ProjectController extends ProjectResource
 {
     public function index($f3)
     {
         $projects = $f3->get('_PROJECTS_VIEW')->find();
 
         $projects = array_map(
-            fn($project) => ProjectResource::resource($project),
+            fn($project) => $this->to_resource($project),
             $projects
         );
 
@@ -38,7 +38,7 @@ class ProjectController
         }
 
         send_json(
-            ["data" => ProjectResource::resource($project)]
+            ["data" => $this->to_resource($project)]
         );
     }
 

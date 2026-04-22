@@ -2,74 +2,12 @@
 
 namespace Http\Controllers;
 
+use Http\Resources\VideoResource;
 use Support\ImageHandler;
 use Support\Validator;
 
-class VideoController
+class VideoController extends VideoResource
 {
-    private $image_variants = [
-        ['dk_webp', 900, 'webp'],
-        ['dk_avif', 900, 'avif'],
-        ['dk_webp_2x', 1800, 'webp'],
-        ['dk_avif_2x', 1800, 'avif'],
-        ['dk_webp_3x', 2700, 'webp'],
-        ['dk_avif_3x', 2700, 'avif'],
-        ['tb_webp', 600, 'webp'],
-        ['tb_avif', 600, 'avif'],
-        ['tb_webp_2x', 1200, 'webp'],
-        ['tb_avif_2x', 1200, 'avif'],
-        ['tb_webp_3x', 1800, 'webp'],
-        ['tb_avif_3x', 1800, 'avif'],
-        ['mb_webp', 500, 'webp'],
-        ['mb_avif', 500, 'avif'],
-        ['mb_webp_2x', 1000, 'webp'],
-        ['mb_avif_2x', 1000, 'avif'],
-        ['mb_webp_3x', 1500, 'webp'],
-        ['mb_avif_3x', 1500, 'avif'],
-        ['tiny', 20, 'webp'],
-    ];
-
-    private function toResource($video)
-    {
-        return [
-            'id' => $video['video_id'],
-            'attr' => [
-                'url' => $video['url'],
-                'title' => [
-                    'ru' => $video['title_ru'],
-                    'en' => $video['title_en'],
-                ],
-            ],
-            'image' => [
-                'srcSet' => [
-                    'dk' => $video['dk_webp'],
-                    'dkAvif' => $video['dk_avif'],
-                    'dk2x' => $video['dk_webp_2x'],
-                    'dkAvif2x' => $video['dk_avif_2x'],
-                    'dk3x' => $video['dk_webp_3x'],
-                    'dkAvif3x' => $video['dk_avif_3x'],
-                    'tb' => $video['tb_webp'],
-                    'tbAvif' => $video['tb_avif'],
-                    'tb2x' => $video['tb_webp_2x'],
-                    'tbAvif2x' => $video['tb_avif_2x'],
-                    'tb3x' => $video['tb_webp_3x'],
-                    'tbAvif3x' => $video['tb_avif_3x'],
-                    'mb' => $video['mb_webp'],
-                    'mbAvif' => $video['mb_avif'],
-                    'mb2x' => $video['mb_webp_2x'],
-                    'mbAvif2x' => $video['mb_avif_2x'],
-                    'mb3x' => $video['mb_webp_3x'],
-                    'mbAvif3x' => $video['mb_avif_3x'],
-                    'mbTiny' => $video['tiny'],
-                ],
-                'alt' => [
-                    'ru' => $video['alt_ru'],
-                    'en' => $video['alt_en'],
-                ],
-            ]
-        ];
-    }
-
     public function index($f3)
     {
         $videos = $f3->get('DB')->exec(
@@ -84,7 +22,7 @@ class VideoController
         );
 
         $videos = array_map(
-            fn($video) => $this->toResource($video),
+            fn($video) => $this->to_resource($video),
             $videos
         );
 
@@ -113,7 +51,7 @@ class VideoController
         $video = $result[0];
 
         send_json(
-            ["data" => $this->toResource($video)]
+            ["data" => $this->to_resource($video)]
         );
     }
 

@@ -2,33 +2,12 @@
 
 namespace Http\Controllers;
 
+use Http\Resources\TechStackResource;
 use Support\ImageHandler;
 use Support\Validator;
 
-class TechStackController
+class TechStackController extends TechStackResource
 {
-    private function toResource($stack)
-    {
-        return [
-            'id' => $stack['id'],
-            'attr' => [
-                'html' => [
-                    'ru' => $stack['html_ru'],
-                    'en' => $stack['html_en'],
-                ],
-                'body' => [
-                    'ru' => $stack['body_ru'],
-                    'en' => $stack['body_en'],
-                ],
-                'alt' => [
-                    'ru' => $stack['alt_ru'],
-                    'en' => $stack['alt_en'],
-                ],
-                'url' => $stack['url']
-            ]
-        ];
-    }
-
     public function index($f3)
     {
         $stacks = $f3->get('_STACKS')->find();
@@ -39,7 +18,7 @@ class TechStackController
 
         $stacks = [
             'data' => array_map(
-                fn($stack) => $this->toResource($stack),
+                fn($stack) => $this->to_resource($stack),
                 $stacks
             )
         ];
@@ -57,7 +36,7 @@ class TechStackController
         }
 
         send_json(
-            ["data" => $this->toResource($stack)]
+            ["data" => $this->to_resource($stack)]
         );
     }
 
