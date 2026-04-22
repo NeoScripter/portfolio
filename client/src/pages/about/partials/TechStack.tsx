@@ -110,7 +110,7 @@ const TechStackCanvas: FC<{
         <div
             id="stack-canvas"
             class={cn(
-                'relative isolate -mx-5 overflow-clip px-5 sm:-mx-20 sm:px-15.5 lg:rounded-xl lg:px-23.5',
+                'relative select-none isolate -mx-5 overflow-clip px-5 sm:-mx-20 sm:px-15.5 lg:rounded-xl lg:px-23.5',
                 active != null
                     ? 'lg:py-13.4 stack-content-open mt-18 max-h-2000 py-11.5 sm:py-12.5 xl:py-17'
                     : 'stack-content-closed mt-0 max-h-0',
