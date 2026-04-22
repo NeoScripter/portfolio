@@ -64,11 +64,16 @@ class ReviewController extends ReviewResource
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $data = $validator->validated();
+        $raw = $validator->validated();
 
-        $handler = ImageHandler::make($data, 'image', [['mb', 180]], 'reviews');
-        $handler->resize_all();
+        $handler = ImageHandler::make($raw, 'image', [['mb', 180]], 'reviews')
+            ->resize_all();
 
+        if ($handler->fails()) {
+            send_json(['message' =>  $handler->error()], 404);
+        }
+
+        $data = $handler->output();
         $data['imageable_type'] = 'reviews';
 
         $review = $f3->get('_REVIEWS');
@@ -100,12 +105,17 @@ class ReviewController extends ReviewResource
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $data = $validator->validated();
+        $raw = $validator->validated();
 
         if (isset($data['image'])) {
-            $handler = ImageHandler::make($data, 'image', [['mb', 180]], 'reviews');
-            $handler->resize_all();
+            $handler = ImageHandler::make($raw, 'image', [['mb', 180]], 'reviews')
+                ->resize_all();
 
+            if ($handler->fails()) {
+                send_json(['message' =>  $handler->error()], 404);
+            }
+
+            $data = $handler->output();
             ImageHandler::delete_morph_images($f3->get('PARAMS.id'), 'reviews');
         }
 

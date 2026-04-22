@@ -64,16 +64,16 @@ class ProjectController extends ProjectResource
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $data = $validator->validated();
+        $raw = $validator->validated();
 
-        $handler = ImageHandler::make(
-            $data,
-            'image',
-            [['mb', 520], ['tb', 1000], ['dk', 1700]],
-            'projects'
-        );
+        $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
+        $handler = ImageHandler::make($raw, 'image', $sizes, 'projects')->insert_mockup((int) $raw['mockup'])->resize_all();
 
-        $handler->resize_all();
+        if ($handler->fails()) {
+            send_json(['message' =>  $handler->error()], 404);
+        }
+
+        $data = $handler->output();
 
         $data['imageable_type'] = 'projects';
 
@@ -99,14 +99,15 @@ class ProjectController extends ProjectResource
 
     public function update($f3)
     {
+        // TODO: check categories for uniqueness
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
             'image' => ['sometimes', 'image:5'],
             'title_en' => ['sometimes', 'string', 'max:300'],
             'title_ru' => ['sometimes', 'string', 'max:300'],
             'description_en' => ['sometimes', 'string', 'max:5000'],
             'description_ru' => ['sometimes', 'string', 'max:5000'],
-            'name_en' => ['sometimes', 'string', 'max:200'],
-            'name_ru' => ['sometimes', 'string', 'max:200'],
+            'name_en' => ['required', 'string', 'max:200'],
+            'name_ru' => ['required', 'string', 'max:200'],
             'link' => ['sometimes', 'string', 'max:300'],
             'display_order' => ['sometimes', 'max:300'],
             'alt_en' => ['sometimes', 'string', 'max:500'],
@@ -123,18 +124,16 @@ class ProjectController extends ProjectResource
 
         $project = $f3->get('_PROJECTS');
         $project->load(['slug=?', $f3->get('PARAMS.slug')]);
-        $project->copyFrom($data);
-        $project->save();
 
         if (isset($data['image'])) {
-            $handler = ImageHandler::make(
-                $data,
-                'image',
-                [['mb', 520], ['tb', 1000], ['dk', 1700]],
-                'projects'
-            );
+            $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
+            $handler = ImageHandler::make($data, 'image', $sizes, 'projects')->insert_mockup((int) $data['mockup'])->resize_all();
 
-            $handler->resize_all();
+            if ($handler->fails()) {
+                send_json(['message' =>  $handler->error()], 422);
+            }
+
+            $data = $handler->output();
 
             ImageHandler::delete_morph_images(
                 $project->id,
@@ -143,22 +142,16 @@ class ProjectController extends ProjectResource
         }
 
         $category = $f3->get('_CATEGORIES');
+        $category->load(['name_en=? OR name_ru=?', $data['name_en'], $data['name_ru']]);
 
-        // TODO: need to refactor
-        if (! $project->category_id()) {
+        if ($category->dry()) {
             $category->copyFrom($data);
             $category->save();
-        } else {
-            $category->load(['id=?', $project->category_id]);
-
-            if ($category->name_en !== $data['name_en']) {
-                $category->reset();
-                $category->copyFrom($data);
-                $category->save();
-                $project->category_id = $category->id;
-                $project->save();
-            }
         }
+
+        $project->category_id = $category->id;
+        $project->copyFrom($data);
+        $project->save();
 
         if ($data['title_en'] !== $project->title_en) {
             $data['slug'] = generate_slug($data['title_en']);

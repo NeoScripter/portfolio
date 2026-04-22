@@ -23,7 +23,7 @@ class ConsoleController
         $tables = get_db_table_names();
 
         foreach ($tables as $table) {
-            if (str_contains($table, 'view')) {
+            if (str_contains($table, '_view')) {
                 $f3->get('DB')->exec("DROP VIEW IF EXISTS $table;");
             } else {
                 $f3->get('DB')->exec("DROP TABLE IF EXISTS $table;");

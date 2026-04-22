@@ -13,35 +13,67 @@ class ImageHandler
 {
     private string $upload_dir;
     private array $file;
+    private string $filename = '';
+    private array $output = [];
+    private string $error = '';
 
     protected function __construct(
-        private array &$data,
+        private array $data,
         private string $key,
         private array $sizes,
         string $subdir = '',
     ) {
         if (! isset($this->data[$this->key])) {
-            throw new RuntimeException("The key does not exist in the data array: $this->key");
+            $this->error = "The key does not exist in the data array: $this->key";
+            return;
         }
+
         $this->file = $this->data[$this->key];
+        $this->filename = $this->generate_filename();
         $this->upload_dir = APP_DIR . '/public/storage/uploads/' . $subdir;
         unset($this->data[$this->key]);
 
         if (!is_dir($this->upload_dir) && !mkdir($this->upload_dir, 0755, recursive: true)) {
-            throw new RuntimeException("Failed to create directory: $this->upload_dir");
+            $this->error = "Failed to create directory: $this->upload_dir";
         }
     }
 
-    public static function make(array &$data, string $key, array $variants, string $subdir)
+    public static function make(array $data, string $key, array $variants, string $subdir = ''): static
     {
         return new self($data, $key, $variants, $subdir);
     }
 
-    public function resize_all()
+    public function fails()
     {
-        foreach (image_variants($this->sizes) as [$key, $width, $format]) {
-            $this->data[$key] = $this->resize_image($width, $format);
+        return $this->error !== '';
+    }
+
+    public function error()
+    {
+        return $this->error;
+    }
+
+    public function output(): array
+    {
+        return $this->output;
+    }
+
+    public function resize_all(): static
+    {
+        try {
+            foreach (image_variants($this->sizes) as [$key, $width, $format]) {
+                if ($this->fails()) {
+                    return $this;
+                }
+                $this->data[$key] = $this->resize_image($width, $format);
+            }
+
+            $this->output = $this->data;
+        } catch (\RuntimeException $e) {
+            $this->error = $e->getMessage();
         }
+
+        return $this;
     }
 
     public static function delete_morph_images(int|string $parent_id, string $parent_type)
@@ -61,7 +93,7 @@ class ImageHandler
 
         $keys = array_map(
             fn($arr) => $arr[0],
-            image_variants(['mb', 1], ['tb', 1], ['dk', 1])
+            image_variants([['mb'], ['tb'], ['dk']])
         );
 
         foreach ($keys as $key) {
@@ -80,16 +112,15 @@ class ImageHandler
         int $width,
         ?string $format = 'webp',
     ): string {
-        $filename = $this->generate_filename();
         $source = $this->file['tmp_name'];
-        $dest = "{$this->upload_dir}/{$filename}.{$format}";
+        $dest = "{$this->upload_dir}/{$this->filename}.{$format}";
         $dest = str_replace('//', '/', $dest);
         $quality = $format === 'webp' ? 75 : 50;
 
         try {
-            $img = new \Imagick($source);
+            $img = new Imagick($source);
 
-            $img->resizeImage($width, 0, \Imagick::FILTER_LANCZOS, 1);
+            $img->resizeImage($width, 0, Imagick::FILTER_LANCZOS, 1);
 
             $img->stripImage();
 
@@ -98,64 +129,72 @@ class ImageHandler
 
             $img->writeImage($dest);
             $img->destroy();
-        } catch (\ImagickException $e) {
+        } catch (ImagickException $e) {
             throw new RuntimeException(
-                "Imagick failed for variant '{$filename}': " . $e->getMessage()
+                "Imagick failed for variant '{$this->filename}': " . $e->getMessage()
             );
         }
 
         return str_replace(APP_DIR . '/public/', Base::instance()->get('app.url'), $dest);
     }
 
-    public function insert_mockup(int $mockup_number, string $result_key = 'mockup_url'): void
+    public function insert_mockup(int $mockup_number): static
     {
+        if ($this->fails()) return $this;
+
         if ($mockup_number < 1 || $mockup_number > 6) {
-            throw new \InvalidArgumentException('Mockup number must be between 1 and 6');
+            $this->error = 'Mockup number must be between 1 and 6';
+            return $this;
         }
 
         [$crop_w, $crop_h] = $mockup_number <= 5 ? [965, 707] : [621, 854];
 
         $coords_map = [
-            1 => [0, 0, 272, 286,   965, 0, 1240, 288,   965, 707, 1264, 967,   0, 707, 298, 1017],
-            2 => [0, 0, 365, 136,   965, 0, 1368, 134,   965, 707, 1238, 857,   0, 707, 250, 932],
-            3 => [0, 0, 789, 61,    965, 0, 1809, 459,   965, 707, 1571, 1220,  0, 707, 602, 780],
-            4 => [0, 0, 314, 206,   965, 0, 1502, 136,   965, 707, 1472, 937,   0, 707, 320, 1076],
-            5 => [0, 0, 653, 288,   965, 0, 1806, 235,   965, 707, 1779, 1170,  0, 707, 618, 1135],
-            6 => [0, 0, 392, 435,   621, 0, 971, 166,    621, 854, 1462, 975,   0, 854, 872, 1282],
+            1 => '0,0 272,286   965,0 1240,288   965,707 1264,967   0,707 298,1017',
+            2 => '0,0 365,136   965,0 1368,134   965,707 1238,857   0,707 250,932',
+            3 => '0,0 789,61    965,0 1809,459   965,707 1571,1220   0,707 602,780',
+            4 => '0,0 314,206   965,0 1502,136   965,707 1472,937   0,707 320,1076',
+            5 => '0,0 653,288   965,0 1806,235   965,707 1779,1170   0,707 618,1135',
+            6 => '0,0 392,435   621,0 971,166    621,854 1462,975    0,854 872,1282',
         ];
 
-        $mockup_path = APP_DIR . "/public/storage/mockups/mockup-{$mockup_number}.webp";
-        $filename    = $this->generate_filename();
-        $dest        = "{$this->upload_dir}/{$filename}.webp";
+        $mockup_path = APP_DIR . "/storage/private/mockups/mockup-{$mockup_number}.webp";
+        $tmp_cropped = sys_get_temp_dir() . '/cropped_' . uniqid() . '.webp';
+        $tmp_out     = sys_get_temp_dir() . '/mockup_' . uniqid() . '.webp';
 
         try {
-            // step 1: crop source to mockup slot dimensions
-            $img = new \Imagick($this->file['tmp_name']);
-            $img->cropThumbnailImage($crop_w, $crop_h); // fill + center crop in one call
+            // crop to exact slot dimensions first
+            $img = new Imagick($this->file['tmp_name']);
+            $img->cropThumbnailImage($crop_w, $crop_h);
             $img->stripImage();
-
-            // step 2: distort into perspective
-            $img->setImageVirtualPixelMethod(\Imagick::VIRTUALPIXELMETHOD_TRANSPARENT);
-            $img->distortImage(\Imagick::DISTORTION_PERSPECTIVE, $coords_map[$mockup_number], false);
-
-            // step 3: composite over mockup
-            $mockup = new \Imagick($mockup_path);
-            $mockup->compositeImage($img, \Imagick::COMPOSITE_OVER, 0, 0);
-            $mockup->setImageFormat('webp');
-            $mockup->setImageCompressionQuality(75);
-            $mockup->writeImage($dest);
-
+            $img->writeImage($tmp_cropped);
             $img->destroy();
-            $mockup->destroy();
-        } catch (\ImagickException $e) {
-            throw new \RuntimeException("Mockup compositing failed: " . $e->getMessage());
+
+            // use CLI convert to replicate the original behavior exactly
+            $cmd = sprintf(
+                'convert %s \( %s -virtual-pixel none +distort perspective %s \) -layers merge +repage %s',
+                escapeshellarg($mockup_path),
+                escapeshellarg($tmp_cropped),
+                escapeshellarg($coords_map[$mockup_number]),
+                escapeshellarg($tmp_out)
+            );
+
+            exec($cmd, output: $output, result_code: $code);
+
+            if ($code !== 0) {
+                throw new \RuntimeException('Mockup compositing failed: ' . implode("\n", $output));
+            }
+
+            $this->file['tmp_name'] = $tmp_out;
+        } catch (\RuntimeException $e) {
+            $this->error = $e->getMessage();
+        } catch (ImagickException $e) {
+            $this->error = 'Crop failed: ' . $e->getMessage();
+        } finally {
+            if (file_exists($tmp_cropped)) unlink($tmp_cropped);
         }
 
-        $this->data[$result_key] = str_replace(
-            APP_DIR . '/public/',
-            \Base::instance()->get('app.url'),
-            $dest
-        );
+        return $this;
     }
 
     private function generate_filename(): string
