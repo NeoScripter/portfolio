@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS projects (
     description_ru TEXT,
     description_en TEXT,
     display_order INT UNSIGNED DEFAULT 100,
+    mockup: INT UNSIGNED DEFAULT 1,
     slug VARCHAR NOT NULL UNIQUE,
     link VARCHAR,
     category_id BIGINT UNSIGNED,

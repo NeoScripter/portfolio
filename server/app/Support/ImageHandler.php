@@ -13,7 +13,6 @@ class ImageHandler
 {
     private string $upload_dir;
     private array $file;
-    private string $filename = '';
     private array $output = [];
     private string $error = '';
 
@@ -29,7 +28,6 @@ class ImageHandler
         }
 
         $this->file = $this->data[$this->key];
-        $this->filename = $this->generate_filename();
         $this->upload_dir = APP_DIR . '/public/storage/uploads/' . $subdir;
         unset($this->data[$this->key]);
 
@@ -101,7 +99,8 @@ class ImageHandler
                 continue;
             }
 
-            $old_path = APP_DIR . '/public/' . $row[0][$key];
+            $old_path = str_replace(Base::instance()->get('app.url'), APP_DIR . '/public/', $row[0][$key]);
+
             if (file_exists($old_path)) {
                 unlink($old_path);
             }
@@ -113,7 +112,8 @@ class ImageHandler
         ?string $format = 'webp',
     ): string {
         $source = $this->file['tmp_name'];
-        $dest = "{$this->upload_dir}/{$this->filename}.{$format}";
+        $filename = $this->generate_filename();
+        $dest = "{$this->upload_dir}/{$filename}.{$format}";
         $dest = str_replace('//', '/', $dest);
         $quality = $format === 'webp' ? 75 : 50;
 

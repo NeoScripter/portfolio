@@ -171,7 +171,6 @@ class ProjectController extends ProjectResource
     {
         $project = $f3->get('_PROJECTS');
         $project->load(['id=?', $f3->get('PARAMS.id')]);
-        $project->erase();
 
         if ($project->dry()) {
             send_json(['message' =>  "Project not found"], 422);
@@ -185,6 +184,8 @@ class ProjectController extends ProjectResource
         $img = $f3->get('_IMAGES');
         $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'projects']);
         $img->erase();
+
+        $project->erase();
 
         send_json(['message' => 'Project successfully deleted!']);
     }
