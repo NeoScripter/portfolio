@@ -11,6 +11,28 @@ use ImagickException;
 
 class ImageHandler
 {
+    private array $sizes = [
+        ['dk_webp', 1700, 'webp'],
+        ['dk_avif', 1700, 'avif'],
+        ['dk_webp_2x', 3400, 'webp'],
+        ['dk_avif_2x', 3400, 'avif'],
+        ['dk_webp_3x', 5200, 'webp'],
+        ['dk_avif_3x', 5200, 'avif'],
+        ['tb_webp', 1000, 'webp'],
+        ['tb_avif', 1000, 'avif'],
+        ['tb_webp_2x', 2000, 'webp'],
+        ['tb_avif_2x', 2000, 'avif'],
+        ['tb_webp_3x', 3000, 'webp'],
+        ['tb_avif_3x', 3000, 'avif'],
+        ['mb_webp', 520, 'webp'],
+        ['mb_avif', 520, 'avif'],
+        ['mb_webp_2x', 1040, 'webp'],
+        ['mb_avif_2x', 1040, 'avif'],
+        ['mb_webp_3x', 1560, 'webp'],
+        ['mb_avif_3x', 1560, 'avif'],
+        ['tiny', 20, 'webp'],
+    ];
+
     private string $upload_dir;
     private array $file;
 
@@ -53,7 +75,7 @@ class ImageHandler
 
         if ($parent_type != null) {
             $row = Base::instance()->get('DB')->exec(
-                "SELECT $values FROM $table WHERE imageable_id = ? AND imageable_type = ?",
+                "SELECT $values FROM $table WHERE imageable_id = ? AND imageable_type = ? LIMIT 1",
                 [$id, $parent_type]
             );
         } else {

@@ -57,6 +57,24 @@ function duplicate_array(array $arr)
     );
 }
 
+function image_variants(array $sizes): array
+{
+    $variants = [['tiny', 20, 'webp']];
+    $formats  = ['webp', 'avif'];
+    $scales   = [1, 2, 3];
+
+    foreach ($sizes as [$name, $width]) {
+        foreach ($formats as $format) {
+            foreach ($scales as $scale) {
+                $suffix     = $scale > 1 ? "_{$scale}x" : '';
+                $variants[] = ["{$name}_{$format}{$suffix}", $width * $scale, $format];
+            }
+        }
+    }
+
+    return $variants;
+}
+
 function split_data(array $data, ?string $imageable_type = null)
 {
     $img_fields = ['dk_webp', 'dk_avif', 'dk_webp_2x', 'dk_avif_2x', 'dk_webp_3x', 'dk_avif_3x', 'tb_webp', 'tb_avif', 'tb_webp_2x', 'tb_avif_2x', 'tb_webp_3x', 'tb_avif_3x', 'mb_webp', 'mb_avif', 'mb_webp_2x', 'mb_avif_2x', 'mb_webp_3x', 'mb_avif_3x', 'tiny', 'alt_ru', 'alt_en', 'imageable_type', 'variant']; // pint ignore/line
