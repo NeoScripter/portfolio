@@ -43,7 +43,7 @@ const TechStack = () => {
     }, []);
 
     const handleSetActive = (idx: number | null) => {
-        if (idx != null) {
+        if (typeof idx === 'number') {
             lastContent.current = stacks?.[idx].attr.html[lang];
         }
         setActive((prev) => (prev === idx ? null : idx));
@@ -51,7 +51,7 @@ const TechStack = () => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}stacks/`,
+            url: `${PREFIX}tech-stacks/`,
             onSuccess: (data) => {
                 setStacks(data.data);
             },
@@ -111,7 +111,7 @@ const TechStackCanvas: FC<{
             id="stack-canvas"
             class={cn(
                 'relative isolate -mx-5 overflow-clip px-5 sm:-mx-20 sm:px-15.5 lg:rounded-xl lg:px-23.5',
-                active
+                active != null
                     ? 'lg:py-13.4 stack-content-open mt-18 max-h-2000 py-11.5 sm:py-12.5 xl:py-17'
                     : 'stack-content-closed mt-0 max-h-0',
             )}
@@ -123,7 +123,7 @@ const TechStackCanvas: FC<{
             />
 
             <div
-                class="prose sm:prose-base prose-sm max-w-full text-white [&>h2]:text-white"
+                class="prose sm:prose-base prose-sm max-w-full text-white! [&>h2,h3,h4,h5,h6,p,strong,ol,*]:text-white!"
                 dangerouslySetInnerHTML={{
                     __html: content || '',
                 }}
