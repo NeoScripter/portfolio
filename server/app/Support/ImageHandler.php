@@ -11,35 +11,13 @@ use ImagickException;
 
 class ImageHandler
 {
-    private array $sizes = [
-        ['dk_webp', 1700, 'webp'],
-        ['dk_avif', 1700, 'avif'],
-        ['dk_webp_2x', 3400, 'webp'],
-        ['dk_avif_2x', 3400, 'avif'],
-        ['dk_webp_3x', 5200, 'webp'],
-        ['dk_avif_3x', 5200, 'avif'],
-        ['tb_webp', 1000, 'webp'],
-        ['tb_avif', 1000, 'avif'],
-        ['tb_webp_2x', 2000, 'webp'],
-        ['tb_avif_2x', 2000, 'avif'],
-        ['tb_webp_3x', 3000, 'webp'],
-        ['tb_avif_3x', 3000, 'avif'],
-        ['mb_webp', 520, 'webp'],
-        ['mb_avif', 520, 'avif'],
-        ['mb_webp_2x', 1040, 'webp'],
-        ['mb_avif_2x', 1040, 'avif'],
-        ['mb_webp_3x', 1560, 'webp'],
-        ['mb_avif_3x', 1560, 'avif'],
-        ['tiny', 20, 'webp'],
-    ];
-
     private string $upload_dir;
     private array $file;
 
     protected function __construct(
         private array &$data,
         private string $key,
-        private array $variants,
+        private array $sizes,
         string $subdir = '',
     ) {
         if (! isset($this->data[$this->key])) {
@@ -61,33 +39,30 @@ class ImageHandler
 
     public function resize_all()
     {
-        foreach ($this->variants as [$key, $width, $format]) {
+        foreach (image_variants($this->sizes) as [$key, $width, $format]) {
             $this->data[$key] = $this->resize_image($width, $format);
         }
     }
 
-    public static function purge_files(string $table, array $keys, int $id, ?string $parent_type = null)
+    public static function delete_morph_images(int|string $parent_id, string $parent_type)
     {
-        $values = implode(
-            ', ',
-            $keys
-        );
-
-        if ($parent_type != null) {
-            $row = Base::instance()->get('DB')->exec(
-                "SELECT $values FROM $table WHERE imageable_id = ? AND imageable_type = ? LIMIT 1",
-                [$id, $parent_type]
-            );
-        } else {
-            $row = Base::instance()->get('DB')->exec(
-                "SELECT $values FROM $table WHERE id = ? LIMIT 1",
-                [$id]
-            );
+        if (is_string($parent_id)) {
+            $parent_id = (int) $parent_id;
         }
+
+        $row = Base::instance()->get('DB')->exec(
+            "SELECT * FROM images WHERE imageable_id = ? AND imageable_type = ? LIMIT 1",
+            [$parent_id, $parent_type]
+        );
 
         if (empty($row)) {
             return;
         }
+
+        $keys = array_map(
+            fn($arr) => $arr[0],
+            image_variants(['mb', 1], ['tb', 1], ['dk', 1])
+        );
 
         foreach ($keys as $key) {
             if (! isset($row[0][$key])) {

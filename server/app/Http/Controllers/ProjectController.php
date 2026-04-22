@@ -8,28 +8,6 @@ use Support\Validator;
 
 class ProjectController
 {
-    private $image_variants = [
-        ['dk_webp', 1700, 'webp'],
-        ['dk_avif', 1700, 'avif'],
-        ['dk_webp_2x', 3400, 'webp'],
-        ['dk_avif_2x', 3400, 'avif'],
-        ['dk_webp_3x', 5200, 'webp'],
-        ['dk_avif_3x', 5200, 'avif'],
-        ['tb_webp', 1000, 'webp'],
-        ['tb_avif', 1000, 'avif'],
-        ['tb_webp_2x', 2000, 'webp'],
-        ['tb_avif_2x', 2000, 'avif'],
-        ['tb_webp_3x', 3000, 'webp'],
-        ['tb_avif_3x', 3000, 'avif'],
-        ['mb_webp', 520, 'webp'],
-        ['mb_avif', 520, 'avif'],
-        ['mb_webp_2x', 1040, 'webp'],
-        ['mb_avif_2x', 1040, 'avif'],
-        ['mb_webp_3x', 1560, 'webp'],
-        ['mb_avif_3x', 1560, 'avif'],
-        ['tiny', 20, 'webp'],
-    ];
-
     public function index($f3)
     {
         $projects = $f3->get('_PROJECTS_VIEW')->find();
@@ -88,14 +66,14 @@ class ProjectController
 
         $data = $validator->validated();
 
-        $img_handler = ImageHandler::make(
+        $handler = ImageHandler::make(
             $data,
             'image',
-            $this->image_variants,
+            [['mb', 520], ['tb', 1000], ['dk', 1700]],
             'projects'
         );
 
-        $img_handler->resize_all();
+        $handler->resize_all();
 
         $data['imageable_type'] = 'projects';
 
@@ -149,17 +127,17 @@ class ProjectController
         $project->save();
 
         if (isset($data['image'])) {
-            $img_handler = ImageHandler::make($data, 'image', $this->image_variants, 'projects');
+            $handler = ImageHandler::make(
+                $data,
+                'image',
+                [['mb', 520], ['tb', 1000], ['dk', 1700]],
+                'projects'
+            );
 
-            $img_handler->resize_all();
+            $handler->resize_all();
 
-            ImageHandler::purge_files(
-                'images',
-                array_map(
-                    fn($var) => $var[0],
-                    $this->image_variants
-                ),
-                (int) $project->id,
+            ImageHandler::delete_morph_images(
+                $project->id,
                 'projects'
             );
         }
@@ -206,13 +184,8 @@ class ProjectController
             send_json(['message' =>  "Project not found"], 422);
         }
 
-        ImageHandler::purge_files(
-            'images',
-            array_map(
-                fn($var) => $var[0],
-                $this->image_variants
-            ),
-            (int) $f3->get('PARAMS.id'),
+        ImageHandler::delete_morph_images(
+            $f3->get('PARAMS.id'),
             'projects'
         );
 
@@ -220,6 +193,6 @@ class ProjectController
         $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'projects']);
         $img->erase();
 
-        send_json(['message' => 'project successfully deleted!']);
+        send_json(['message' => 'Project successfully deleted!']);
     }
 }

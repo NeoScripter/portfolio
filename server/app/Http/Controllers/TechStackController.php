@@ -2,7 +2,6 @@
 
 namespace Http\Controllers;
 
-use Support\DBHandler;
 use Support\ImageHandler;
 use Support\Validator;
 
@@ -77,8 +76,8 @@ class TechStackController
         }
 
         $data = $validator->validated();
-        $img_handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
-        $img_handler->resize_all();
+        $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
+        $handler->resize_all();
 
         add_markdown_field($data, 'body_en', 'html_en');
         add_markdown_field($data, 'body_ru', 'html_ru');
@@ -106,17 +105,24 @@ class TechStackController
 
         $data = $validator->validated();
 
+        $stack = $f3->get('_STACKS');
+        $stack->load(['id=?', $f3->get('PARAMS.id')]);
+
         if (isset($data['url'])) {
-            $img_handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
-            ImageHandler::purge_files('stacks', ['url'], (int) $f3->get('PARAMS.id'));
-            $img_handler->resize_all();
+            $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
+
+            $file_path = APP_DIR . '/public/' . $stack->url;
+
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
+
+            $handler->resize_all();
         }
 
         add_markdown_field($data, 'body_en', 'html_en');
         add_markdown_field($data, 'body_ru', 'html_ru');
 
-        $stack = $f3->get('_STACKS');
-        $stack->load(['id=?', $f3->get('PARAMS.id')]);
         $stack->copyFrom($data);
         $stack->save();
 
@@ -125,10 +131,15 @@ class TechStackController
 
     public function destroy($f3)
     {
-        ImageHandler::purge_files('stacks', ['url'], (int) $f3->get('PARAMS.id'));
-
-        $stack = $f3->get('_REVIEWS');
+        $stack = $f3->get('_STACKS');
         $stack->load(['id=?', $f3->get('PARAMS.id')]);
+
+        $file_path = APP_DIR . '/public/' . $stack->url;
+
+        if (file_exists($file_path)) {
+            unlink($file_path);
+        }
+
         $stack->erase();
 
         if ($stack->dry()) {

@@ -7,16 +7,6 @@ use Support\Validator;
 
 class ReviewController
 {
-    private $image_variants = [
-        ['mb_webp', 180, 'webp'],
-        ['mb_avif', 180, 'avif'],
-        ['mb_webp_2x', 360, 'webp'],
-        ['mb_avif_2x', 360, 'avif'],
-        ['mb_webp_3x', 540, 'webp'],
-        ['mb_avif_3x', 540, 'avif'],
-        ['tiny', 20, 'webp'],
-    ];
-
     private function toResource($review)
     {
         return [
@@ -107,14 +97,8 @@ class ReviewController
 
         $data = $validator->validated();
 
-        $img_handler = ImageHandler::make(
-            $data,
-            'image',
-            $this->image_variants,
-            'reviews'
-        );
-
-        $img_handler->resize_all();
+        $handler = ImageHandler::make($data, 'image', [['mb', 180]], 'reviews');
+        $handler->resize_all();
 
         $data['imageable_type'] = 'reviews';
 
@@ -150,19 +134,10 @@ class ReviewController
         $data = $validator->validated();
 
         if (isset($data['image'])) {
-            $img_handler = ImageHandler::make($data, 'image', $this->image_variants, 'reviews');
+            $handler = ImageHandler::make($data, 'image', [['mb', 180]], 'reviews');
+            $handler->resize_all();
 
-            $img_handler->resize_all();
-
-            ImageHandler::purge_files(
-                'images',
-                array_map(
-                    fn($var) => $var[0],
-                    $this->image_variants
-                ),
-                (int) $f3->get('PARAMS.id'),
-                'reviews'
-            );
+            ImageHandler::delete_morph_images($f3->get('PARAMS.id'), 'reviews');
         }
 
         $review = $f3->get('_REVIEWS');
@@ -190,13 +165,8 @@ class ReviewController
             send_json(['message' =>  "review not found"], 422);
         }
 
-        ImageHandler::purge_files(
-            'images',
-            array_map(
-                fn($var) => $var[0],
-                $this->image_variants
-            ),
-            (int) $f3->get('PARAMS.id'),
+        ImageHandler::delete_morph_images(
+            $f3->get('PARAMS.id'),
             'reviews'
         );
 

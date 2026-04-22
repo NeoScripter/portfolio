@@ -2,7 +2,6 @@
 
 namespace Http\Controllers;
 
-use Support\DBHandler;
 use Support\ImageHandler;
 use Support\Validator;
 
@@ -135,14 +134,9 @@ class VideoController
 
         $data = $validator->validated();
 
-        $img_handler = ImageHandler::make(
-            $data,
-            'image',
-            $this->image_variants,
-            'videos'
-        );
+        $handler = ImageHandler::make($data, 'image', [['mb', 500], ['tb', 600], ['dk', 900]], 'videos');
 
-        $img_handler->resize_all();
+        $handler->resize_all();
 
         [$entry_data, $img_data] = split_data($data, 'videos');
 
@@ -177,17 +171,12 @@ class VideoController
         $data = $validator->validated();
 
         if (isset($data['image'])) {
-            $img_handler = ImageHandler::make($data, 'image', $this->image_variants, 'videos');
+            $handler = ImageHandler::make($data, 'image', [['mb', 500], ['tb', 600], ['dk', 900]], 'videos');
 
-            $img_handler->resize_all();
+            $handler->resize_all();
 
-            ImageHandler::purge_files(
-                'images',
-                array_map(
-                    fn($var) => $var[0],
-                    $this->image_variants
-                ),
-                (int) $f3->get('PARAMS.id'),
+            ImageHandler::delete_morph_images(
+                $f3->get('PARAMS.id'),
                 'videos'
             );
         }
@@ -219,13 +208,8 @@ class VideoController
             send_json(['message' =>  "Video not found"], 404);
         }
 
-        ImageHandler::purge_files(
-            'images',
-            array_map(
-                fn($var) => $var[0],
-                $this->image_variants
-            ),
-            (int) $f3->get('PARAMS.id'),
+        ImageHandler::delete_morph_images(
+            $f3->get('PARAMS.id'),
             'videos'
         );
 
