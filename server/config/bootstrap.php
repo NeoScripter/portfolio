@@ -5,8 +5,6 @@ declare(strict_types=1);
 use DB\SQL;
 use DB\SQL\Mapper;
 
-define('APP_DIR', dirname(__DIR__));
-
 require APP_DIR . '/vendor/autoload.php';
 
 $f3 = Base::instance();
@@ -30,34 +28,6 @@ $f3->set('CORS', [
     'ttl'         => 86400
 ]);
 
-$controllers = glob(APP_DIR . '/app/Controllers/*.php');
-
-foreach ($controllers as $controller) {
-
-    $name   = basename($controller, '.php');
-    $route  = str_replace('Controller', 's', $name);
-    $route = strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $route));
-    $base   = "Controllers\\$name";
-    $prefix = "/$route";
-
-    $routes = [
-        "GET    $prefix"      => 'index',
-        "POST   $prefix"      => 'store',
-        "GET    $prefix/@id"  => 'edit',
-        "PUT    $prefix/@id"  => 'update',
-        "DELETE $prefix/@id"  => 'destroy',
-    ];
-
-    foreach ($routes as $pattern => $action) {
-        if (method_exists("Controllers\\$name", $action)) {
-            $f3->route($pattern, "$base->$action");
-        }
-    }
-}
-
-$f3->config(APP_DIR . '/config/config.ini');
-
-$f3->route('GET /seed [cli]', 'seeders\Seeder->run');
-$f3->route('GET /@action [cli]', 'Controllers\ConsoleController->@action');
+require_once(APP_DIR . '/config/routing.php');
 
 $f3->run();

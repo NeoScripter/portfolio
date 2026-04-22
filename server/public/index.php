@@ -2,4 +2,6 @@
 
 declare(strict_types=1);
 
-require dirname(__DIR__) . '/config/bootstrap.php';
+define('APP_DIR', dirname(__DIR__));
+
+require APP_DIR . '/config/bootstrap.php';

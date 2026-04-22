@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace Http\Controllers;
 
 
 class ConsoleController
@@ -23,7 +23,11 @@ class ConsoleController
         $tables = get_db_table_names();
 
         foreach ($tables as $table) {
-            $f3->get('DB')->exec("DROP TABLE IF EXISTS $table;");
+            if (str_contains($table, 'view')) {
+                $f3->get('DB')->exec("DROP VIEW IF EXISTS $table;");
+            } else {
+                $f3->get('DB')->exec("DROP TABLE IF EXISTS $table;");
+            }
         }
 
         delete_files_recursive(

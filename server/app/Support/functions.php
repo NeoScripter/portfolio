@@ -117,3 +117,84 @@ function get_db_table_names()
         'strlen'
     );
 }
+
+function generate_slug($string, $wordLimit = 0)
+{
+    $separator = '-';
+
+    // Apply word limit if needed
+    if ($wordLimit != 0) {
+        $words      = explode(' ', $string);
+        $string     = implode(' ', array_slice($words, 0, $wordLimit));
+    }
+
+    $quoteSeparator = preg_quote($separator, '#');
+
+    // Regex transformation rules
+    $transformations = [
+        '&.+?;'                      => '',           // Strip HTML entities
+        '[^\w\d _-]'                 => '',           // Remove special chars
+        '\s+'                        => $separator,   // Spaces to separator
+        '(' . $quoteSeparator . ')+' => $separator    // Collapse multiple separators
+    ];
+
+    $string = strip_tags($string);
+
+    foreach ($transformations as $pattern => $replacement) {
+        $string = preg_replace('#' . $pattern . '#iu', $replacement, $string);
+    }
+
+    $string = strtolower($string);
+
+    return trim($string, $separator);
+}
+
+function pp($arr)
+{
+    if (!is_array($arr)) {
+        return $arr;
+    }
+    if (empty($arr)) {
+        return '[]';
+    }
+
+    // Detect 2D grid: array of arrays with consistent numeric keys
+    $is2DGrid = array_is_list($arr) && count(array_filter($arr, fn($row) => is_array($row) && array_is_list($row))) === count($arr);
+
+    if ($is2DGrid) {
+        // Find the max string length of any cell for alignment
+        $colWidths = [];
+        foreach ($arr as $row) {
+            foreach ($row as $colIdx => $val) {
+                $len = strlen((string) $val);
+                if (!isset($colWidths[$colIdx]) || $len > $colWidths[$colIdx]) {
+                    $colWidths[$colIdx] = $len;
+                }
+            }
+        }
+
+        $lines = [];
+        foreach ($arr as $row) {
+            $cells = [];
+            foreach ($row as $colIdx => $val) {
+                $cells[] = str_pad((string) $val, $colWidths[$colIdx], ' ', STR_PAD_LEFT);
+            }
+            $lines[] = '[ ' . implode(', ', $cells) . ' ]';
+        }
+
+        $width = strlen($lines[0]);
+        $separator = str_repeat('-', $width);
+
+        return $separator . "\n" . implode("\n", $lines) . "\n" . $separator;
+    }
+
+    // Original flat array logic
+    $result = '[';
+    $elements = [];
+    foreach ($arr as $val) {
+        $elements[] = is_array($val) ? pp($val) : $val;
+    }
+    $result .= implode(', ', $elements);
+    $result .= ']';
+    return $result;
+}

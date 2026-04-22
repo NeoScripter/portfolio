@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace Http\Controllers;
 
 use Support\DBHandler;
 use Support\ImageHandler;
@@ -32,6 +32,9 @@ class ProjectController
 
     private function toResource($project)
     {
+        $stacks = !empty($project['tech_stack']) ?
+            explode(',', $project['tech_stack']) : [];
+
         return [
             'id' => $project['project_id'],
             'attr' => [
@@ -47,10 +50,10 @@ class ProjectController
                     'ru' => $project['category_ru'],
                     'en' => $project['category_en'],
                 ],
-                'stacks' => $project['stacks'],
+                'stacks' => $stacks,
                 'slug' => $project['slug'],
                 'link' => $project['link'],
-                'order' => $project['display_order'],
+                'display_order' => $project['display_order'],
             ],
             'image' => [
                 'srcSet' => [
@@ -88,16 +91,16 @@ class ProjectController
 
     public function index($f3)
     {
-        $projects = $f3->get('DB')->exec(
-            "SELECT r.id project_id, r.*, i.id img_id, i.*
-             FROM projects r
-             LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'projects'",
-        );
+        $projects = $f3->get('_PROJECTS_VIEW')->find();
 
         $projects = array_map(
             fn($project) => $this->toResource($project),
             $projects
         );
+
+        if (empty($projects)) {
+            send_json(['message' =>  "Projects not found"], 404);
+        }
 
         $data = [
             'data' => $projects
@@ -108,20 +111,12 @@ class ProjectController
 
     public function edit($f3)
     {
-        $result = $f3->get('DB')->exec(
-            "SELECT r.id project_id, r.*, i.id img_id, i.*
-            FROM projects r
-            LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'projects'
-            WHERE r.id = ?",
-            [$f3->get('PARAMS.id')]
-        );
+        $project = $f3->get('_PROJECTS_VIEW')
+            ->load(['slug=?', $f3->get('PARAMS.id')]);
 
-        if (empty($result)) {
-            send_json(['message' =>  "project not found"], 404);
-            $f3->error(404, "project not found");
+        if (! $project) {
+            send_json(['message' =>  "Project not found"], 404);
         }
-
-        $project = $result[0];
 
         send_json(
             ["data" => $this->toResource($project)]
@@ -132,12 +127,18 @@ class ProjectController
     {
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
             'image' => ['required', 'image:5'],
+            'title_en' => ['required', 'string', 'max:300'],
+            'title_ru' => ['required', 'string', 'max:300'],
+            'description_en' => ['required', 'string', 'max:5000'],
+            'description_ru' => ['required', 'string', 'max:5000'],
             'name_en' => ['required', 'string', 'max:200'],
             'name_ru' => ['required', 'string', 'max:200'],
-            'content_en' => ['required', 'string', 'max:5000'],
-            'content_ru' => ['required', 'string', 'max:5000'],
+            'link' => ['nullable', 'string', 'max:300'],
+            'display_order' => ['required', 'max:300'],
             'alt_en' => ['required', 'string', 'max:500'],
             'alt_ru' => ['required', 'string', 'max:500'],
+            'technologies' => ['nullable'],
+            'mockup' => ['required', 'min:1', 'max:6'],
         ]);
 
         if ($validator->fails()) {
@@ -155,29 +156,44 @@ class ProjectController
 
         $img_handler->resize_all();
 
-        [$entry_data, $img_data] = split_data($data, 'projects');
+        $data['imageable_type'] = 'projects';
 
-        $db_handler = DBHandler::make($entry_data);
-        $project_id = $db_handler->create_entry('projects');
+        $category = $f3->get('_CATEGORIES');
+        $category->copyFrom($data);
+        $category->save();
 
-        $img_data['imageable_id'] = $project_id;
+        $data['category_id'] = $category->id;
+        $data['slug'] = generate_slug($data['title_en']);
 
-        $img_db_handler = DBHandler::make($img_data);
-        $img_db_handler->create_entry('images');
+        $project = $f3->get('_PROJECTS');
+        $project->copyFrom($data);
+        $project->save();
 
-        send_json(['message' => 'project successfully created!']);
+        $data['imageable_id'] = $project->id;
+
+        $img = $f3->get('_IMAGES');
+        $img->copyFrom($data);
+        $img->save();
+
+        send_json(['message' => 'Project successfully created!']);
     }
 
     public function update($f3)
     {
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
             'image' => ['sometimes', 'image:5'],
+            'title_en' => ['sometimes', 'string', 'max:300'],
+            'title_ru' => ['sometimes', 'string', 'max:300'],
+            'description_en' => ['sometimes', 'string', 'max:5000'],
+            'description_ru' => ['sometimes', 'string', 'max:5000'],
             'name_en' => ['sometimes', 'string', 'max:200'],
             'name_ru' => ['sometimes', 'string', 'max:200'],
-            'content_en' => ['sometimes', 'string', 'max:5000'],
-            'content_ru' => ['sometimes', 'string', 'max:5000'],
+            'link' => ['sometimes', 'string', 'max:300'],
+            'display_order' => ['sometimes', 'max:300'],
             'alt_en' => ['sometimes', 'string', 'max:500'],
             'alt_ru' => ['sometimes', 'string', 'max:500'],
+            'technologies' => ['sometimes'],
+            'mockup' => ['sometimes', 'min:1', 'max:6'],
         ]);
 
         if ($validator->fails()) {
@@ -185,6 +201,11 @@ class ProjectController
         }
 
         $data = $validator->validated();
+
+        $project = $f3->get('_PROJECTS');
+        $project->load(['slug=?', $f3->get('PARAMS.slug')]);
+        $project->copyFrom($data);
+        $project->save();
 
         if (isset($data['image'])) {
             $img_handler = ImageHandler::make($data, 'image', $this->image_variants, 'projects');
@@ -197,20 +218,41 @@ class ProjectController
                     fn($var) => $var[0],
                     $this->image_variants
                 ),
-                (int) $f3->get('PARAMS.id'),
+                (int) $project->id,
                 'projects'
             );
         }
 
-        [$entry_data, $img_data] = split_data($data);
+        $category = $f3->get('_CATEGORIES');
 
-        $db_handler = DBHandler::make($entry_data);
-        $db_handler->update_entry('projects', (int) $f3->get('PARAMS.id'));
+        // TODO: need to refactor
+        if (! $project->category_id()) {
+            $category->copyFrom($data);
+            $category->save();
+        } else {
+            $category->load(['id=?', $project->category_id]);
 
-        $db_handler = DBHandler::make($img_data);
-        $db_handler->update_image_entry((int) $f3->get('PARAMS.id'), 'projects');
+            if ($category->name_en !== $data['name_en']) {
+                $category->reset();
+                $category->copyFrom($data);
+                $category->save();
+                $project->category_id = $category->id;
+                $project->save();
+            }
+        }
 
-        send_json(['message' => 'project successfully updated!']);
+        if ($data['title_en'] !== $project->title_en) {
+            $data['slug'] = generate_slug($data['title_en']);
+        }
+
+        $data['imageable_id'] = $project->id;
+
+        $img = $f3->get('_IMAGES');
+        $img->load(['imageable_id=? AND imageable_type=?', $project->id, 'projects']);
+        $img->copyFrom($data);
+        $img->save();
+
+        send_json(['message' => 'Project successfully updated!']);
     }
 
     public function destroy($f3)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace Http\Controllers;
 
 use Support\DBHandler;
 use Support\ImageHandler;

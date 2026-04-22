@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace Http\Controllers;
 
 use Support\DBHandler;
 use Support\ImageHandler;
@@ -33,6 +33,10 @@ class TechStackController
     public function index($f3)
     {
         $stacks = $f3->get('_STACKS')->find();
+
+        if (empty($stacks)) {
+            send_json(['message' =>  "Stacks not found"], 404);
+        }
 
         $stacks = [
             'data' => array_map(

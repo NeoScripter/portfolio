@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace Http\Controllers;
 
 use Support\Validator;
 
@@ -26,6 +26,10 @@ class FaqController
     public function index($f3)
     {
         $faqs = $f3->get('_FAQS')->find();
+
+        if (empty($faqs)) {
+            send_json(['message' =>  "Faqs not found"], 404);
+        }
 
         $faqs = [
             'data' => array_map(

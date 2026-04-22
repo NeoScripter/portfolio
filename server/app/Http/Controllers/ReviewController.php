@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace Http\Controllers;
 
 use Support\ImageHandler;
 use Support\Validator;
@@ -116,16 +116,16 @@ class ReviewController
 
         $img_handler->resize_all();
 
-        [$entry_data, $img_data] = split_data($data, 'reviews');
+        $data['imageable_type'] = 'reviews';
 
         $review = $f3->get('_REVIEWS');
-        $review->copyFrom($entry_data);
+        $review->copyFrom($data);
         $review->save();
 
-        $img_data['imageable_id'] = $review->id;
+        $data['imageable_id'] = $review->id;
 
         $img = $f3->get('_IMAGES');
-        $img->copyFrom($img_data);
+        $img->copyFrom($data);
         $img->save();
 
         send_json(['message' => 'Review successfully created!']);
@@ -165,18 +165,16 @@ class ReviewController
             );
         }
 
-        [$entry_data, $img_data] = split_data($data, 'reviews');
-
         $review = $f3->get('_REVIEWS');
         $review->load(['id=?', $f3->get('PARAMS.id')]);
-        $review->copyFrom($entry_data);
+        $review->copyFrom($data);
         $review->save();
 
         $img_data['imageable_id'] = $review->id;
 
         $img = $f3->get('_IMAGES');
         $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'reviews']);
-        $img->copyFrom($img_data);
+        $img->copyFrom($data);
         $img->save();
 
         send_json(['message' => 'review successfully updated!']);

@@ -62,6 +62,7 @@ class Validator
                 $error = match ($name) {
                     'required' => $this->required($this->values[$key]),
                     'string' => $this->string($this->values[$key]),
+                    'integer' => $this->integer($this->values[$key]),
                     'min' => $this->min_length($this->values[$key], (int) $param),
                     'max' => $this->max_length($this->values[$key], (int) $param),
                     'image' => $this->image($this->values[$key], (int) $param),
@@ -114,6 +115,14 @@ class Validator
         return '';
     }
 
+    private function integer($value)
+    {
+        if (! is_int($value))
+            return 'This field must be an integer';
+
+        return '';
+    }
+
     private function image($value, $limit = null)
     {
         if (! is_array($value))
@@ -157,26 +166,26 @@ class Validator
     {
         $error_message =  "This field must be at least {$limit} characters";
 
-        if (! is_string($value))
-            return 'Invalid value format';
+        if (is_string($value))
+            return strlen($value) < $limit ? $error_message : '';
 
-        if (strlen($value) < $limit)
-            return $error_message;
+        if (is_int($value))
+            return (int) $value < $limit ? $error_message : '';
 
-        return '';
+        return 'Invalid value format';
     }
 
     private function max_length($value, $limit = 0)
     {
         $error_message =  "This field length should not exceed {$limit} characters";
 
-        if (! is_string($value))
-            return 'Invalid value format';
+        if (is_string($value))
+            return strlen($value) > $limit ? $error_message : '';
 
-        if (strlen($value) > $limit)
-            return $error_message;
+        if (is_int($value))
+            return (int) $value > $limit ? $error_message : '';
 
-        return '';
+        return 'Invalid value format';
     }
 
     public function fails()
