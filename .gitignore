@@ -19,9 +19,14 @@ server/uploads/
 *.log
 *.sqlite
 
-# Client (only if you use npm/yarn)
+# Client - Node.js and package managers
 client/node_modules/
+client/.pnpm-store/     # <-- THIS IS CRITICAL
+client/package-lock.json
+client/pnpm-lock.yaml
+client/yarn.lock
 client/dist/
+client/build/
 client/.cache/
 
 # Public uploads
