@@ -1,2 +1,2 @@
 
-export const PREFIX = 'https://folio-server.test/';
+export const PREFIX = 'api/';

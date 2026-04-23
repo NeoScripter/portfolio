@@ -3,6 +3,7 @@ import DeleteConfirmation from '@/components/form/DeleteConfirmation';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import FormLayout from '@/layouts/FormLayout';
+import { PREFIX } from '@/lib/const/api';
 import { toast } from 'sonner';
 
 const ProjectDelete = () => {
@@ -14,7 +15,7 @@ const ProjectDelete = () => {
         if (project.value == null) return;
 
         await fetchData({
-            url: `/admin/projects/${project.value.attr.slug}`,
+            url: `${PREFIX}projects/${project.value.id}`,
             method: 'DELETE',
             onSuccess: () => {
                 project.value = null;

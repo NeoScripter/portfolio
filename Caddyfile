@@ -1,0 +1,26 @@
+{
+    frankenphp
+    auto_https off
+}
+
+:80 {
+    encode zstd gzip
+
+    route /api/* {
+        root * /app/server/public
+        php_server
+    }
+
+    route /_vite_hmr* {
+        reverse_proxy client:5173 {
+            header_up Host {host}
+            transport http {
+                versions 1.1
+            }
+        }
+    }
+
+    route {
+        reverse_proxy client:5173
+    }
+}

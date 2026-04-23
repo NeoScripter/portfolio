@@ -1,0 +1,177 @@
+{
+    "data": {
+        "id": 2,
+        "attr": {
+            "title": {
+                "ru": "Аггрегатор лотов новостроек",
+                "en": "Apartment listing aggregator"
+            },
+            "description": {
+                "ru": "Данный проект представляет собой интерфейс для бэкэнда аггрегатора новостроек с системой фильтров и динамической сортировкой. Одним из требований проекта было использование Vue.js 2 с библиотекой CSS Bulma, что затруднило выполнение задачи. Несмотря на отсутствие опыта работы с options API, я смог разобраться с особенностях его работы и адаптироваться под данные требования.",
+                "en": "This project is a frontend interface for a backend-powered real estate aggregator, with a filter system and dynamic sorting. One of the requirements was to use Vue.js 2 together with the Bulma CSS library, which made the task more challenging. Even though I had no prior experience with the Options API, I was able to figure out how it works and adapt to the project's needs."
+            },
+            "category": {
+                "ru": "Фронтэнд",
+                "en": "FrontEnd"
+            },
+            "stacks": ["Vue", "CSS", "Bulma"],
+            "slug": "apartment-listing-aggregator",
+            "order": 120,
+            "link": "https://neoscripter.github.io/Lots-Vue/",
+            "url": "https://ilyaandreev.dev/portfolio/apartment-listing-aggregator"
+        },
+        "image": {
+            "srcSet": {
+                "dk": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.webp",
+                "dkAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.avif",
+                "dk2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.webp",
+                "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.avif",
+                "dk3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.webp",
+                "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.avif",
+                "dkTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tiny.webp",
+                "tb": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.webp",
+                "tbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.avif",
+                "tb2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.webp",
+                "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.avif",
+                "tb3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.webp",
+                "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.avif",
+                "tbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tiny.webp",
+                "mb": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.webp",
+                "mbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.avif",
+                "mb2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.webp",
+                "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.avif",
+                "mb3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.webp",
+                "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.avif",
+                "mbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tiny.webp"
+            },
+            "alt": {
+                "ru": "A desktop interface showing apartment listings for the \"Buninskaya Naberezhnaya\" complex in Moscow.",
+                "en": "A desktop interface showing apartment listings for the \"Buninskaya Naberezhnaya\" complex in Moscow."
+            }
+        },
+        "links": [
+            {
+                "self": "https://ilyaandreev.dev/api/projects/apartment-listing-aggregator"
+            }
+        ],
+        "modules": [
+            {
+                "id": 1,
+                "attr": {
+                    "html": {
+                        "ru": "<p>Написанный код использует нативный JavaScript для создания эффекта бесконечного скролла (Intersection Observer API), создания подключения к бэкэнду клиента (fetch API), а также vanilla CSS transitions для анимации модальных окон и других элементов интерфейса. В связи с отсутствием популярных библиотек для Vue 2 для всех вышеуказанных операций, мне пришлось прописывать и калибровать все с использованием нативного JavaScript кода, что было одновременно сложно и интересно.</p>\n",
+                        "en": "<p>Написанный код использует нативный JavaScript для создания эффекта бесконечного скролла (Intersection Observer API), создания подключения к бэкэнду клиента (fetch API), а также vanilla CSS transitions для анимации модальных окон и других элементов интерфейса. В связи с отсутствием популярных библиотек для Vue 2 для всех вышеуказанных операций, мне пришлось прописывать и калибровать все с использованием нативного JavaScript кода, что было одновременно сложно и интересно.</p>\n"
+                    },
+                    "body": {
+                        "ru": "Написанный код использует нативный JavaScript для создания эффекта бесконечного скролла (Intersection Observer API), создания подключения к бэкэнду клиента (fetch API), а также vanilla CSS transitions для анимации модальных окон и других элементов интерфейса. В связи с отсутствием популярных библиотек для Vue 2 для всех вышеуказанных операций, мне пришлось прописывать и калибровать все с использованием нативного JavaScript кода, что было одновременно сложно и интересно.",
+                        "en": "Написанный код использует нативный JavaScript для создания эффекта бесконечного скролла (Intersection Observer API), создания подключения к бэкэнду клиента (fetch API), а также vanilla CSS transitions для анимации модальных окон и других элементов интерфейса. В связи с отсутствием популярных библиотек для Vue 2 для всех вышеуказанных операций, мне пришлось прописывать и калибровать все с использованием нативного JavaScript кода, что было одновременно сложно и интересно."
+                    },
+                    "order": 1,
+                    "type": "one_image_split"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/7hmzjft57qxgzl69zachkpqblogcgrsxyzyyrujh-69671e0123c78-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Мобильный вид с открытым окном фильтров: выбор корпуса, количества комнат и статуса продажи в ЖК «Бунинская набережная».",
+                        "en": "Mobile view showing the filter popup for selecting buildings, room count, and sale status in the \"Buninskaya Naberezhnaya\" listing."
+                    }
+                }
+            },
+            {
+                "id": 2,
+                "attr": {
+                    "html": {
+                        "ru": "<p>Сам дизайн сделан просто, в то же время выглядит привлекательно и минималистично. Интерфейс включает в себя большое количество интерактивных элементов, синхронизированных между собой, что также представляло собой отдельную сложность. Для адаптации элементов к экранам разных размеров, я использовал Vue Portal API, а также CSS media queries.</p>\n<p>В целом, я доволен проектом. Несмотря на свою простоту, реализация его была непростой и потребовала нестандартных решений при синхронизации компонентов между собой.</p>\n",
+                        "en": "<p>The design is simple, yet it looks clean and minimalistic. The interface includes a lot of interactive components that are all synced with each other, which added an extra layer of complexity. To make everything responsive, I used the Vue Portal API along with CSS media queries.</p>\n<p>Overall, I'm happy with how the project turned out. Even though the idea is pretty straightforward, getting it all to work smoothly wasn't easy and required some unconventional solutions to keep the components in sync.</p>\n"
+                    },
+                    "body": {
+                        "ru": "Сам дизайн сделан просто, в то же время выглядит привлекательно и минималистично. Интерфейс включает в себя большое количество интерактивных элементов, синхронизированных между собой, что также представляло собой отдельную сложность. Для адаптации элементов к экранам разных размеров, я использовал Vue Portal API, а также CSS media queries.\r\n\r\n В целом, я доволен проектом. Несмотря на свою простоту, реализация его была непростой и потребовала нестандартных решений при синхронизации компонентов между собой.",
+                        "en": "The design is simple, yet it looks clean and minimalistic. The interface includes a lot of interactive components that are all synced with each other, which added an extra layer of complexity. To make everything responsive, I used the Vue Portal API along with CSS media queries.\r\n\r\n Overall, I'm happy with how the project turned out. Even though the idea is pretty straightforward, getting it all to work smoothly wasn't easy and required some unconventional solutions to keep the components in sync."
+                    },
+                    "order": 1,
+                    "type": "two_image_block"
+                },
+                "firstImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-48-43-vue-2-696720a8a6976-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "График на мобильном экране с динамикой цены квартиры в ЖК «Бунинская набережная». Видно падение цены с последующим ростом.",
+                        "en": "Mobile chart showing the price trend of an apartment from the \"Buninskaya Naberezhnaya\" project. Price drop followed by a rise is clearly visible."
+                    }
+                },
+                "secondImage": {
+                    "srcSet": {
+                        "dk": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-dk.webp",
+                        "dkAvif": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-dk.avif",
+                        "dk2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-dk.webp",
+                        "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-dk.avif",
+                        "dk3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-dk.webp",
+                        "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-dk.avif",
+                        "dkTiny": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tiny.webp",
+                        "tb": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tb.webp",
+                        "tbAvif": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tb.avif",
+                        "tb2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tb.webp",
+                        "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tb.avif",
+                        "tb3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tb.webp",
+                        "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tb.avif",
+                        "tbTiny": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tiny.webp",
+                        "mb": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-mb.webp",
+                        "mbAvif": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-mb.avif",
+                        "mb2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-mb.webp",
+                        "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-mb.avif",
+                        "mb3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-mb.webp",
+                        "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-mb.avif",
+                        "mbTiny": "https://ilyaandreev.dev/storage/uploads/screenshot-2026-01-14-at-12-49-46-vue-2-696720aba6979-tiny.webp"
+                    },
+                    "alt": {
+                        "ru": "Фильтры сортировки лотов на темном фоне",
+                        "en": "Filters of the lots on the black background"
+                    }
+                }
+            }
+        ]
+    }
+}

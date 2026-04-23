@@ -49,6 +49,8 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
     const { route } = useLocation();
     const { fetchData } = useFetch();
 
+    const isEdit = project != null;
+
     const initialValues: ProjectUpsertState = {
         title_en: project?.attr?.title?.en ?? '',
         title_ru: project?.attr?.title?.ru ?? '',
@@ -59,7 +61,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         name_ru: project?.attr?.category?.ru ?? '',
         technologies: project?.attr?.stacks ?? [],
         display_order: project?.attr.display_order ?? 100,
-        mockup: 1,
+        mockup: isEdit ? project.attr.mockup : 1,
         image: null,
         alt_en: project?.image?.alt?.en ?? '',
         alt_ru: project?.image?.alt?.ru ?? '',

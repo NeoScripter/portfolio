@@ -67,7 +67,7 @@ class ImageHandler
             }
 
             $this->output = $this->data;
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->error = $e->getMessage();
         }
 
@@ -163,14 +163,12 @@ class ImageHandler
         $tmp_out     = sys_get_temp_dir() . '/mockup_' . uniqid() . '.webp';
 
         try {
-            // crop to exact slot dimensions first
             $img = new Imagick($this->file['tmp_name']);
             $img->cropThumbnailImage($crop_w, $crop_h);
             $img->stripImage();
             $img->writeImage($tmp_cropped);
             $img->destroy();
 
-            // use CLI convert to replicate the original behavior exactly
             $cmd = sprintf(
                 'convert %s \( %s -virtual-pixel none +distort perspective %s \) -layers merge +repage %s',
                 escapeshellarg($mockup_path),
@@ -182,11 +180,11 @@ class ImageHandler
             exec($cmd, output: $output, result_code: $code);
 
             if ($code !== 0) {
-                throw new \RuntimeException('Mockup compositing failed: ' . implode("\n", $output));
+                throw new RuntimeException('Mockup compositing failed: ' . implode("\n", $output));
             }
 
             $this->file['tmp_name'] = $tmp_out;
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->error = $e->getMessage();
         } catch (ImagickException $e) {
             $this->error = 'Crop failed: ' . $e->getMessage();

@@ -13,7 +13,13 @@ $f3->config(APP_DIR . '/config/config.ini');
 
 $f3->set('DEBUG', $f3->get('app.debug') ? 3 : 0);
 $f3->set('AUTOLOAD', APP_DIR . '/app/;' . APP_DIR . '/db/');
-$f3->set('DB', new SQL('sqlite:' . APP_DIR . '/db/database.sqlite'));
+// $f3->set('DB', new SQL('sqlite:' . APP_DIR . '/db/database.sqlite'));
+
+$f3->set('DB', new SQL(
+    "pgsql:host={$f3->get('DB_HOST')};port={$f3->get('DB_PORT')};dbname={$f3->get('DB_NAME')}",
+    "{$f3->get('DB_USER')}",
+    "{$f3->get('DB_PASSWORD')}"
+));
 
 Falsum\Run::handler();
 

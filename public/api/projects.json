@@ -1,0 +1,195 @@
+{
+    "data": [
+        {
+            "id": 2,
+            "attr": {
+                "title": {
+                    "ru": "Аггрегатор лотов новостроек",
+                    "en": "Apartment listing aggregator"
+                },
+                "description": {
+                    "ru": "Данный проект представляет собой интерфейс для бэкэнда аггрегатора новостроек с системой фильтров и динамической сортировкой. Одним из требований проекта было использование Vue.js 2 с библиотекой CSS Bulma, что затруднило выполнение задачи. Несмотря на отсутствие опыта работы с options API, я смог разобраться с особенностях его работы и адаптироваться под данные требования.",
+                    "en": "This project is a frontend interface for a backend-powered real estate aggregator, with a filter system and dynamic sorting. One of the requirements was to use Vue.js 2 together with the Bulma CSS library, which made the task more challenging. Even though I had no prior experience with the Options API, I was able to figure out how it works and adapt to the project's needs."
+                },
+                "category": {
+                    "ru": "Фронтэнд",
+                    "en": "FrontEnd"
+                },
+                "stacks": ["Vue", "CSS", "Bulma"],
+                "slug": "apartment-listing-aggregator",
+                "order": 120,
+                "link": "https://neoscripter.github.io/Lots-Vue/",
+                "url": "http://localhost:5173/gallery/apartment-listing-aggregator"
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.avif",
+                    "dk2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.webp",
+                    "dkAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.avif",
+                    "dk3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.webp",
+                    "dkAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-dk.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tiny.webp",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.avif",
+                    "tb2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.webp",
+                    "tbAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.avif",
+                    "tb3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.webp",
+                    "tbAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tb.avif",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tiny.webp",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.avif",
+                    "mb2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.webp",
+                    "mbAvif2x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.avif",
+                    "mb3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.webp",
+                    "mbAvif3x": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-mb.avif",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696719fb5d60e-696719fca934e-tiny.webp"
+                },
+                "alt": {
+                    "ru": "A desktop interface showing apartment listings for the \"Buninskaya Naberezhnaya\" complex in Moscow.",
+                    "en": "A desktop interface showing apartment listings for the \"Buninskaya Naberezhnaya\" complex in Moscow."
+                }
+            },
+            "links": [
+                {
+                    "self": "https://ilyaandreev.dev/api/projects/apartment-listing-aggregator"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "attr": {
+                "title": {
+                    "ru": "Приложение для ведения заметок",
+                    "en": "Note-taking app"
+                },
+                "description": {
+                    "ru": "Быстрое и удобное одностраничной приложение для создания и хранения записей, написанное на Реакте с аутентификацией пользователей, поиском записей по различным критериям, а также сменой тем и переключением языков.",
+                    "en": "A fast and easy-to-use single-page app built with React. It includes user authentication, a Laravel backend, note searching with different filters, theme switching, and language selection."
+                },
+                "category": {
+                    "ru": "Приложение",
+                    "en": "App"
+                },
+                "stacks": [
+                    "Laravel",
+                    "Tailwind",
+                    "Inertia",
+                    "TypeScript",
+                    "React"
+                ],
+                "slug": "note-taking-app",
+                "order": 105,
+                "link": "https://notes.ilyaandreev.dev/",
+                "url": "http://localhost:5173/gallery/note-taking-app"
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-dk.avif",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tb.avif",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-mb.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tiny.webp",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tiny.webp",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-6-696728eca7057-696728ed6fc81-tiny.webp"
+                },
+                "alt": {
+                    "ru": "A note-taking web app with a dark theme is open on a desktop screen. The sidebar shows various note categories and tags.",
+                    "en": "A note-taking web app with a dark theme is open on a desktop screen. The sidebar shows various note categories and tags."
+                }
+            },
+            "links": [
+                {
+                    "self": "https://ilyaandreev.dev/api/projects/note-taking-app"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "attr": {
+                "title": {
+                    "ru": "Лендинг Delete.name",
+                    "en": "Delete.name Landing Page"
+                },
+                "description": {
+                    "ru": "Данный проект представляет собой лендинг для компании по удалению слитых личных данных в сети. Главная трудность проекта заключалась в очень сжатом дедлайне и необходимости соответствовать требованиям Яндекс директ для прохождения аудита.",
+                    "en": "A landing page built with React, Laravel, and Inertia.js for the company Delete.name, offering personal data removal services online."
+                },
+                "category": {
+                    "ru": "Лендинг",
+                    "en": "Landing"
+                },
+                "stacks": [
+                    "Inertia",
+                    "Tailwind",
+                    "Laravel",
+                    "TypeScript",
+                    "React"
+                ],
+                "slug": "deletename-landing-page",
+                "order": 101,
+                "link": "https://delete.name/",
+                "url": "http://localhost:5173/gallery/deletename-landing-page"
+            },
+            "image": {
+                "srcSet": {
+                    "dk": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-dk.webp",
+                    "dkAvif": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-dk.avif",
+                    "tb": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tb.webp",
+                    "tbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tb.avif",
+                    "mb": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-mb.webp",
+                    "mbAvif": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-mb.avif",
+                    "dkTiny": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tiny.webp",
+                    "tbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tiny.webp",
+                    "mbTiny": "https://ilyaandreev.dev/storage/uploads/mockup-3-6967218e8876f-6967218f64f19-tiny.webp"
+                },
+                "alt": {
+                    "ru": "Главная секция с пикселизированным лицом девушки и кнопками для защиты личных или бизнес-данных",
+                    "en": "Hero section with a pixelated woman's face and buttons to protect personal or business data"
+                }
+            },
+            "links": [
+                {
+                    "self": "https://ilyaandreev.dev/api/projects/deletename-landing-page"
+                }
+            ]
+        }
+    ],
+    "links": {
+        "first": "https://ilyaandreev.dev/api/projects?page=1",
+        "last": "https://ilyaandreev.dev/api/projects?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "page": null,
+                "active": false
+            },
+            {
+                "url": "https://ilyaandreev.dev/api/projects?page=1",
+                "label": "1",
+                "page": 1,
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "page": null,
+                "active": false
+            }
+        ],
+        "path": "https://ilyaandreev.dev/api/projects",
+        "per_page": 7,
+        "to": 3,
+        "total": 3
+    }
+}

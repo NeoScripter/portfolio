@@ -1,0 +1,59 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./server:/app/server:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  client:
+    image: node:22-alpine
+    working_dir: /app
+    command: >
+      sh -c "corepack enable &&
+             corepack prepare pnpm@latest --activate &&
+             pnpm install &&
+             if [ \"$$APP_ENV\" = 'local' ]; then
+               pnpm dev --host;
+             else
+               pnpm build && tail -f /dev/null;
+             fi"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - frontend_dist:/app/dist
+    env_file:
+      - .env
+    environment:
+      - CI=true
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:
+  pg_data:
+  redis_data:
+  frontend_dist:

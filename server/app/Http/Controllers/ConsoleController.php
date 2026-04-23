@@ -10,9 +10,11 @@ class ConsoleController
         $files = glob(APP_DIR . '/db/migrations/*');
         sort($files);
 
+        $pdo = $f3->get('DB')->pdo();
+
         foreach ($files as $file) {
             $sql = file_get_contents($file);
-            $f3->get('DB')->exec(trim($sql));
+            $pdo->exec($sql);
         }
 
         echo "Migration completed.\n";
@@ -24,9 +26,9 @@ class ConsoleController
 
         foreach ($tables as $table) {
             if (str_contains($table, '_view')) {
-                $f3->get('DB')->exec("DROP VIEW IF EXISTS $table;");
+                $f3->get('DB')->exec("DROP VIEW IF EXISTS $table CASCADE;");
             } else {
-                $f3->get('DB')->exec("DROP TABLE IF EXISTS $table;");
+                $f3->get('DB')->exec("DROP TABLE IF EXISTS $table CASCADE;");
             }
         }
 

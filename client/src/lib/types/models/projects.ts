@@ -71,6 +71,7 @@ export type ProjectType = {
             en: string;
         };
         stacks: string[];
+        mockup: number;
         slug: string;
         display_order: number;
         url: string;
