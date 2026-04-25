@@ -7,7 +7,7 @@ class ReviewResource
     protected function to_resource($review)
     {
         return [
-            'id' => $review['review_id'],
+            'id' => $review['id'],
             'attr' => [
                 'author' => [
                     'ru' => $review['name_ru'],
@@ -26,7 +26,7 @@ class ReviewResource
                     'mbAvif2x' => $review['mb_avif_2x'],
                     'mb3x' => $review['mb_webp_3x'],
                     'mbAvif3x' => $review['mb_avif_3x'],
-                    'mbTiny' => $review['tiny'],
+                    'mbTiny' => $review['mb_tiny'],
                 ],
                 'alt' => [
                     'ru' => $review['alt_ru'],

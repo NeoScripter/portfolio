@@ -67,7 +67,7 @@ function image_variants(array $sizes): array
     $formats  = ['webp', 'avif'];
     $scales   = [1, 2, 3];
 
-    foreach ($sizes as [$name, $width]) {
+    foreach ($sizes as $idx => [$name, $width]) {
         foreach ($formats as $format) {
             foreach ($scales as $scale) {
                 $suffix     = $scale > 1 ? "_{$scale}x" : '';
@@ -75,7 +75,7 @@ function image_variants(array $sizes): array
             }
         }
 
-        $variants[] = ["{$name}_tiny", 20, 'webp'];
+        $variants[] = ["{$name}_tiny", 10 * ($idx + 2), 'webp'];
     }
 
     return $variants;

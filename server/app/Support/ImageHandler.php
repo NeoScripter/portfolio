@@ -99,7 +99,7 @@ class ImageHandler
                 continue;
             }
 
-            $old_path = str_replace(Base::instance()->get('APP_URL'), APP_DIR . '/public/', $row[0][$key]);
+            $old_path = str_replace(Base::instance()->get('app_url'), APP_DIR . '/public/', $row[0][$key]);
 
             if (file_exists($old_path)) {
                 unlink($old_path);
@@ -135,7 +135,7 @@ class ImageHandler
             );
         }
 
-        return str_replace(APP_DIR . '/public/', Base::instance()->get('APP_URL'), $dest);
+        return str_replace(APP_DIR . '/public/', Base::instance()->get('app_url'), $dest);
     }
 
     public function insert_mockup(int $mockup_number): static

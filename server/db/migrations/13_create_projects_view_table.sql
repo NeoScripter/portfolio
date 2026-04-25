@@ -1,7 +1,7 @@
 
 CREATE OR REPLACE VIEW projects_view AS
 SELECT 
-    p.id AS project_id,
+    p.id,
     p.title_ru,
     p.title_en,
     p.description_ru,
@@ -20,22 +20,23 @@ SELECT
     i.dk_avif_3x,
     i.dk_avif_2x,
     i.dk_avif,
+    i.dk_tiny,
     i.tb_webp_3x,
     i.tb_webp_2x,
     i.tb_webp,
     i.tb_avif_3x,
     i.tb_avif_2x,
     i.tb_avif,
+    i.tb_tiny,
     i.mb_webp_3x,
     i.mb_webp_2x,
     i.mb_webp,
     i.mb_avif_3x,
     i.mb_avif_2x,
     i.mb_avif,
-    i.tiny,
+    i.mb_tiny,
     i.alt_ru,
     i.alt_en,
-    i.created_at AS image_created_at,
     (SELECT STRING_AGG(DISTINCT t.name, ', ') 
      FROM project_technology pt 
      JOIN technologies t ON t.id = pt.technology_id 

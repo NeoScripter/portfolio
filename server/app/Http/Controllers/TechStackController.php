@@ -31,7 +31,7 @@ class TechStackController extends TechStackResource
         $stack = $f3->get('_STACKS')
             ->load(['id=?', $f3->get('PARAMS.id')]);
 
-        if ($stack->dry()) {
+        if (! $stack) {
             send_json(['message' =>  "stack not found"], 404);
         }
 
@@ -121,7 +121,7 @@ class TechStackController extends TechStackResource
 
         $stack->erase();
 
-        if ($stack->dry()) {
+        if (! $stack) {
             send_json(['message' =>  "Stack not found"], 422);
         }
 

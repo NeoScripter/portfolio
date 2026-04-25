@@ -10,7 +10,7 @@ class ProjectResource
             explode(',', $project['tech_stack']) : [];
 
         return [
-            'id' => $project['project_id'],
+            'id' => $project['id'],
             'attr' => [
                 'title' => [
                     'ru' => $project['title_ru'],

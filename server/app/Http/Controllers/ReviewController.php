@@ -36,9 +36,9 @@ class ReviewController extends ReviewResource
     public function edit($f3)
     {
         $review = $f3->get('_REVIEWS_VIEW')
-            ->load(['review_id=?', $f3->get('PARAMS.id')]);
+            ->load(['id=?', $f3->get('PARAMS.id')]);
 
-        if ($review->dry()) {
+        if (! $review) {
             send_json(['message' =>  "review not found"], 404);
             $f3->error(404, "review not found");
         }
@@ -74,13 +74,15 @@ class ReviewController extends ReviewResource
         }
 
         $data = $handler->output();
+
         $data['imageable_type'] = 'reviews';
 
         $review = $f3->get('_REVIEWS');
         $review->copyFrom($data);
         $review->save();
+        $review_id = $f3->get('DB')->lastInsertId();
 
-        $data['imageable_id'] = $review->id;
+        $data['imageable_id'] = $review_id;
 
         $img = $f3->get('_IMAGES');
         $img->copyFrom($data);
@@ -105,10 +107,11 @@ class ReviewController extends ReviewResource
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $raw = $validator->validated();
+        $data = $validator->validated();
+        $review_id = $f3->get('PARAMS.id');
 
         if (isset($data['image'])) {
-            $handler = ImageHandler::make($raw, 'image', [['mb', 180]], 'reviews')
+            $handler = ImageHandler::make($data, 'image', [['mb', 180]], 'reviews')
                 ->resize_all();
 
             if ($handler->fails()) {
@@ -116,18 +119,16 @@ class ReviewController extends ReviewResource
             }
 
             $data = $handler->output();
-            ImageHandler::delete_morph_images($f3->get('PARAMS.id'), 'reviews');
+            ImageHandler::delete_morph_images($review_id, 'reviews');
         }
 
         $review = $f3->get('_REVIEWS');
-        $review->load(['id=?', $f3->get('PARAMS.id')]);
+        $review->load(['id=?', $review_id]);
         $review->copyFrom($data);
         $review->save();
 
-        $img_data['imageable_id'] = $review->id;
-
         $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'reviews']);
+        $img->load(['imageable_id=? AND imageable_type=?', $review_id, 'reviews']);
         $img->copyFrom($data);
         $img->save();
 
@@ -136,21 +137,23 @@ class ReviewController extends ReviewResource
 
     public function destroy($f3)
     {
+        $review_id = $f3->get('PARAMS.id');
+
         $review = $f3->get('_REVIEWS');
-        $review->load(['id=?', $f3->get('PARAMS.id')]);
+        $review->load(['id=?', $review_id]);
         $review->erase();
 
-        if ($review->dry()) {
+        if (! $review) {
             send_json(['message' =>  "review not found"], 422);
         }
 
         ImageHandler::delete_morph_images(
-            $f3->get('PARAMS.id'),
+            $review_id,
             'reviews'
         );
 
         $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'reviews']);
+        $img->load(['imageable_id=? AND imageable_type=?', $review_id, 'reviews']);
         $img->erase();
 
         send_json(['message' => 'Review successfully deleted!']);

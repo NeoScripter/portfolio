@@ -10,11 +10,11 @@ class VideoController extends VideoResource
 {
     public function index($f3)
     {
-        $videos = $f3->get('DB')->exec(
-            "SELECT v.id video_id, v.*, i.id img_id, i.*
-             FROM videos v
-             LEFT JOIN images i ON i.imageable_id = v.id AND i.imageable_type = 'videos'",
-        );
+        $videos = $f3->get('_VIDEOS_VIEW')->find();
+
+        if (empty($videos)) {
+            send_json(['message' =>  "Videos not found"], 404);
+        }
 
         $duplicated = filter_var(
             $f3->get('GET.duplicated'),
@@ -35,20 +35,12 @@ class VideoController extends VideoResource
 
     public function edit($f3)
     {
-        $result = $f3->get('DB')->exec(
-            "SELECT v.id video_id, v.*, i.id img_id, i.*
-            FROM videos v
-            LEFT JOIN images i ON i.imageable_id = v.id AND i.imageable_type = 'videos'
-            WHERE v.id = ?",
-            [$f3->get('PARAMS.id')]
-        );
+        $video = $f3->get('_VIDEOS_VIEW')
+            ->load(['id=?', $f3->get('PARAMS.id')]);
 
-        if (empty($result)) {
-            send_json(['message' =>  "video not found"], 404);
-            $f3->error(404, "video not found");
+        if (! $video) {
+            send_json(['message' =>  "Video not found"], 404);
         }
-
-        $video = $result[0];
 
         send_json(
             ["data" => $this->to_resource($video)]
@@ -70,25 +62,35 @@ class VideoController extends VideoResource
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $data = $validator->validated();
+        $raw = $validator->validated();
 
-        $handler = ImageHandler::make($data, 'image', [['mb', 500], ['tb', 600], ['dk', 900]], 'videos');
+        $handler = ImageHandler::make(
+            $raw,
+            'image',
+            [['mb', 500], ['tb', 600], ['dk', 900]],
+            'videos'
+        )->resize_all();
 
-        $handler->resize_all();
+        if ($handler->fails()) {
+            send_json(['message' =>  $handler->error()], 404);
+        }
 
-        [$entry_data, $img_data] = split_data($data, 'videos');
+        $data = $handler->output();
 
         $video = $f3->get('_VIDEOS');
-        $video->copyFrom($entry_data);
+        $video->copyFrom($data);
         $video->save();
 
-        $img_data['imageable_id'] = $video->id;
+        $video_id = $f3->get('DB')->lastInsertId();
+
+        $img_data['imageable_id'] = $video_id;
+        $img_data['imageable_type'] = 'videos';
 
         $img = $f3->get('_IMAGES');
-        $img->copyFrom($img_data);
+        $img->copyFrom($data);
         $img->save();
 
-        send_json(['message' => 'video successfully created!']);
+        send_json(['message' => 'Video successfully created!']);
     }
 
     public function update($f3)
@@ -107,30 +109,34 @@ class VideoController extends VideoResource
         }
 
         $data = $validator->validated();
+        $video_id = $f3->get('PARAMS.id');
 
         if (isset($data['image'])) {
-            $handler = ImageHandler::make($data, 'image', [['mb', 500], ['tb', 600], ['dk', 900]], 'videos');
-
-            $handler->resize_all();
-
-            ImageHandler::delete_morph_images(
-                $f3->get('PARAMS.id'),
+            $handler = ImageHandler::make(
+                $data,
+                'image',
+                [['mb', 500], ['tb', 600], ['dk', 900]],
                 'videos'
-            );
+            )->resize_all();
+
+            if ($handler->fails()) {
+                send_json(['message' =>  $handler->error()], 404);
+            }
+
+            $data = $handler->output();
+            ImageHandler::delete_morph_images($video_id, 'videos');
         }
 
-        [$entry_data, $img_data] = split_data($data, 'videos');
-
         $video = $f3->get('_VIDEOS');
-        $video->load(['id=?', $f3->get('PARAMS.id')]);
-        $video->copyFrom($entry_data);
+        $video->load(['id=?', $video_id]);
+        $video->copyFrom($data);
         $video->save();
 
-        $img_data['imageable_id'] = $video->id;
+        $data['imageable_id'] = $video_id;
 
         $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'videos']);
-        $img->copyFrom($img_data);
+        $img->load(['imageable_id=? AND imageable_type=?', $video_id, 'videos']);
+        $img->copyFrom($data);
         $img->save();
 
         send_json(['message' => 'Video successfully updated!']);
@@ -138,21 +144,23 @@ class VideoController extends VideoResource
 
     public function destroy($f3)
     {
+        $video_id = $f3->get('PARAMS.id');
+
         $video = $f3->get('_VIDEOS');
-        $video->load(['id=?', $f3->get('PARAMS.id')]);
+        $video->load(['id=?', $video_id]);
         $video->erase();
 
-        if ($video->dry()) {
+        if (! $video) {
             send_json(['message' =>  "Video not found"], 404);
         }
 
         ImageHandler::delete_morph_images(
-            $f3->get('PARAMS.id'),
+            $video_id,
             'videos'
         );
 
         $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'videos']);
+        $img->load(['imageable_id=? AND imageable_type=?', $video_id, 'videos']);
         $img->erase();
 
         send_json(['message' => 'Video successfully deleted!']);

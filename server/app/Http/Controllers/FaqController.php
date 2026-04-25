@@ -30,7 +30,7 @@ class FaqController extends FaqResource
         $faq = $f3->get('_FAQS');
         $faq->load(['id=?', $f3->get('PARAMS.id')]);
 
-        if ($faq->dry()) {
+        if (! $faq) {
             send_json(['message' =>  "FAQ not found"], 404);
             $f3->error(404, "FAQ not found");
         }

@@ -1,7 +1,0 @@
-
-CREATE TABLE IF NOT EXISTS categories (
-    id  INTEGER PRIMARY KEY AUTOINCREMENT,
-    name_ru VARCHAR,
-    name_en VARCHAR,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);

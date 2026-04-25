@@ -1,12 +1,7 @@
 
-CREATE OR REPLACE VIEW reviews_view AS
+CREATE OR REPLACE VIEW videos_view AS
 SELECT 
-    r.id,
-    r.name_ru,
-    r.name_en,
-    r.content_ru,
-    r.content_en,
-    r.created_at AS review_created_at,
+    v.*,
     i.imageable_id,
     i.imageable_type,
     i.variant,
@@ -32,7 +27,6 @@ SELECT
     i.mb_avif,
     i.mb_tiny,
     i.alt_ru,
-    i.alt_en,
-    i.created_at AS image_created_at
-FROM reviews r
-LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews';
+    i.alt_en
+FROM videos v
+LEFT JOIN images i ON i.imageable_id = v.id AND i.imageable_type = 'videos';

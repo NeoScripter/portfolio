@@ -144,7 +144,7 @@ class ProjectController extends ProjectResource
         $category = $f3->get('_CATEGORIES');
         $category->load(['name_en=? OR name_ru=?', $data['name_en'], $data['name_ru']]);
 
-        if ($category->dry()) {
+        if (! $category) {
             $category->copyFrom($data);
             $category->save();
         }
@@ -172,7 +172,7 @@ class ProjectController extends ProjectResource
         $project = $f3->get('_PROJECTS');
         $project->load(['id=?', $f3->get('PARAMS.id')]);
 
-        if ($project->dry()) {
+        if (! $project) {
             send_json(['message' =>  "Project not found"], 422);
         }
 
