@@ -74,8 +74,15 @@ export const useForm = <T extends FormValues>(
         (name: keyof T, value: unknown) => {
             setValues((prev) => {
                 const next = { ...prev, [name]: value };
-                backupSignal.value = next;
+
+                const stringOnlyValues = Object.fromEntries(
+                    Object.entries(next).filter(
+                        ([_, v]) => typeof v === 'string',
+                    ),
+                ) as T;
+                backupSignal.value = stringOnlyValues;
                 setHasBackup(true);
+
                 return next;
             });
             if (errors[name]) {
@@ -172,12 +179,6 @@ export const useForm = <T extends FormValues>(
 
     const setFormValues = useCallback((newValues: T) => {
         setValues(newValues);
-
-        const stringOnlyValues = Object.fromEntries(
-            Object.entries(newValues).filter(([_, v]) => typeof v === 'string'),
-        ) as T;
-        backupSignal.value = stringOnlyValues;
-        setHasBackup(true);
     }, []);
 
     const setFieldValue = useCallback(
