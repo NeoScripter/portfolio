@@ -12,10 +12,6 @@ class VideoController extends VideoResource
     {
         $videos = $f3->get('_VIDEOS_VIEW')->find();
 
-        if (empty($videos)) {
-            send_json(['message' =>  "Videos not found"], 404);
-        }
-
         $duplicated = filter_var(
             $f3->get('GET.duplicated'),
             FILTER_VALIDATE_BOOLEAN
@@ -83,8 +79,8 @@ class VideoController extends VideoResource
 
         $video_id = $f3->get('DB')->lastInsertId();
 
-        $img_data['imageable_id'] = $video_id;
-        $img_data['imageable_type'] = 'videos';
+        $data['imageable_id'] = $video_id;
+        $data['imageable_type'] = 'videos';
 
         $img = $f3->get('_IMAGES');
         $img->copyFrom($data);

@@ -17,10 +17,6 @@ class ProjectController extends ProjectResource
             $projects
         );
 
-        // if (empty($projects)) {
-        //     send_json(['message' =>  "Projects not found"], 404);
-        // }
-
         $data = [
             'data' => $projects
         ];
@@ -80,15 +76,17 @@ class ProjectController extends ProjectResource
         $category = $f3->get('_CATEGORIES');
         $category->copyFrom($data);
         $category->save();
+        $category_id = $f3->get('DB')->lastInsertId();
 
-        $data['category_id'] = $category->id;
+        $data['category_id'] = $category_id;
         $data['slug'] = generate_slug($data['title_en']);
 
         $project = $f3->get('_PROJECTS');
         $project->copyFrom($data);
         $project->save();
+        $project_id = $f3->get('DB')->lastInsertId();
 
-        $data['imageable_id'] = $project->id;
+        $data['imageable_id'] = $project_id;
 
         $img = $f3->get('_IMAGES');
         $img->copyFrom($data);
@@ -124,6 +122,7 @@ class ProjectController extends ProjectResource
 
         $project = $f3->get('_PROJECTS');
         $project->load(['slug=?', $f3->get('PARAMS.slug')]);
+        $project_id = $project->id;
 
         if (isset($data['image'])) {
             $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
@@ -149,18 +148,18 @@ class ProjectController extends ProjectResource
             $category->save();
         }
 
-        $project->category_id = $category->id;
-        $project->copyFrom($data);
-        $project->save();
-
         if ($data['title_en'] !== $project->title_en) {
             $data['slug'] = generate_slug($data['title_en']);
         }
 
-        $data['imageable_id'] = $project->id;
+        $project->category_id = $category->id;
+        $project->copyFrom($data);
+        $project->save();
+
+        $data['imageable_id'] = $project_id;
 
         $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $project->id, 'projects']);
+        $img->load(['imageable_id=? AND imageable_type=?', $project_id, 'projects']);
         $img->copyFrom($data);
         $img->save();
 
@@ -169,20 +168,22 @@ class ProjectController extends ProjectResource
 
     public function destroy($f3)
     {
+        $project_id = $f3->get('PARAMS.id');
+
         $project = $f3->get('_PROJECTS');
-        $project->load(['id=?', $f3->get('PARAMS.id')]);
+        $project->load(['id=?', $project_id]);
 
         if (! $project) {
             send_json(['message' =>  "Project not found"], 422);
         }
 
         ImageHandler::delete_morph_images(
-            $f3->get('PARAMS.id'),
+            $project_id,
             'projects'
         );
 
         $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $f3->get('PARAMS.id'), 'projects']);
+        $img->load(['imageable_id=? AND imageable_type=?', $project_id, 'projects']);
         $img->erase();
 
         $project->erase();
