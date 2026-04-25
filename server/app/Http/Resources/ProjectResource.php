@@ -37,7 +37,7 @@ class ProjectResource
                     'dkAvif2x' => $project['dk_avif_2x'],
                     'dk3x' => $project['dk_webp_3x'],
                     'dkAvif3x' => $project['dk_avif_3x'],
-                    'dkTiny' => $project['tiny'],
+                    'dkTiny' => $project['dk_tiny'],
 
                     'tb' => $project['tb_webp'],
                     'tbAvif' => $project['tb_avif'],
@@ -45,7 +45,7 @@ class ProjectResource
                     'tbAvif2x' => $project['tb_avif_2x'],
                     'tb3x' => $project['tb_webp_3x'],
                     'tbAvif3x' => $project['tb_avif_3x'],
-                    'tbTiny' => $project['tiny'],
+                    'tbTiny' => $project['tb_tiny'],
 
                     'mb' => $project['mb_webp'],
                     'mbAvif' => $project['mb_avif'],
@@ -53,7 +53,7 @@ class ProjectResource
                     'mbAvif2x' => $project['mb_avif_2x'],
                     'mb3x' => $project['mb_webp_3x'],
                     'mbAvif3x' => $project['mb_avif_3x'],
-                    'mbTiny' => $project['tiny'],
+                    'mbTiny' => $project['mb_tiny'],
                 ],
                 'alt' => [
                     'ru' => $project['alt_ru'],

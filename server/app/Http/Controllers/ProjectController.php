@@ -17,9 +17,9 @@ class ProjectController extends ProjectResource
             $projects
         );
 
-        if (empty($projects)) {
-            send_json(['message' =>  "Projects not found"], 404);
-        }
+        // if (empty($projects)) {
+        //     send_json(['message' =>  "Projects not found"], 404);
+        // }
 
         $data = [
             'data' => $projects

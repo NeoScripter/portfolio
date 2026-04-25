@@ -63,7 +63,7 @@ function image_variants(array $sizes): array
         fn($size) => count($size) > 1 ? $size : [$size[0], 0],
         $sizes
     );
-    $variants = [['tiny', 20, 'webp']];
+    $variants = [];
     $formats  = ['webp', 'avif'];
     $scales   = [1, 2, 3];
 
@@ -74,6 +74,8 @@ function image_variants(array $sizes): array
                 $variants[] = ["{$name}_{$format}{$suffix}", $width * $scale, $format];
             }
         }
+
+        $variants[] = ["{$name}_tiny", 20, 'webp'];
     }
 
     return $variants;
@@ -81,7 +83,7 @@ function image_variants(array $sizes): array
 
 function split_data(array $data, ?string $imageable_type = null)
 {
-    $img_fields = ['dk_webp', 'dk_avif', 'dk_webp_2x', 'dk_avif_2x', 'dk_webp_3x', 'dk_avif_3x', 'tb_webp', 'tb_avif', 'tb_webp_2x', 'tb_avif_2x', 'tb_webp_3x', 'tb_avif_3x', 'mb_webp', 'mb_avif', 'mb_webp_2x', 'mb_avif_2x', 'mb_webp_3x', 'mb_avif_3x', 'tiny', 'alt_ru', 'alt_en', 'imageable_type', 'variant']; // pint ignore/line
+    $img_fields = ['dk_webp', 'dk_avif', 'dk_webp_2x', 'dk_avif_2x', 'dk_webp_3x', 'dk_avif_3x', 'dk_tiny', 'tb_webp', 'tb_avif', 'tb_webp_2x', 'tb_avif_2x', 'tb_webp_3x', 'tb_avif_3x', 'tb_tiny', 'mb_webp', 'mb_avif', 'mb_webp_2x', 'mb_avif_2x', 'mb_webp_3x', 'mb_avif_3x', 'mb_tiny', 'alt_ru', 'alt_en', 'imageable_type', 'variant']; // pint ignore/line
 
     $img_data = [];
 
@@ -166,4 +168,3 @@ function generate_slug($string, $wordLimit = 0)
 
     return trim($string, $separator);
 }
-

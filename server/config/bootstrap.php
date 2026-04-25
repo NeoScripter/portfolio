@@ -21,12 +21,6 @@ $f3->set('DB', new SQL(
     "{$f3->get('db_password')}"
 ));
 
-// $f3->set('DB', new SQL(
-//     "pgsql:host=127.0.0.1;port=5432;dbname=portfolio",
-//     "ilya",
-//     "db_development_password"
-// ));
-
 Falsum\Run::handler();
 
 foreach (get_db_table_names() as $table) {
