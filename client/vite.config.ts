@@ -10,12 +10,7 @@ export default defineConfig({
                 enabled: true,
                 renderTarget: '#app',
                 prerenderScript: import.meta.dirname + '/src/app.tsx', // absolute path
-                additionalPrerenderRoutes: [
-                    '/',
-                    '/about',
-                    'gallery',
-                    'project',
-                ],
+                additionalPrerenderRoutes: ['/', '/about', 'gallery', 'project'],
             },
         }),
         tailwindcss(),
@@ -23,15 +18,6 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': import.meta.dirname + '/src',
-        },
-    },
-    server: {
-        host: '0.0.0.0',
-        port: 5173,
-        strictPort: true,
-        hmr: {
-            clientPort: 8080,
-            path: '/_vite_hmr',
         },
     },
 });

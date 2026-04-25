@@ -7,7 +7,6 @@ SELECT
     r.content_ru,
     r.content_en,
     r.created_at AS review_created_at,
-    i.id AS img_id,
     i.imageable_id,
     i.imageable_type,
     i.variant,

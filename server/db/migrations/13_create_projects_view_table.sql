@@ -11,7 +11,6 @@ SELECT
     p.slug,
     p.link,
     p.category_id,
-    i.id AS image_id,
     i.imageable_id,
     i.imageable_type,
     i.variant,

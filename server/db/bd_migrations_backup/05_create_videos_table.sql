@@ -1,0 +1,8 @@
+
+CREATE TABLE IF NOT EXISTS videos (
+    id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    url  VARCHAR NOT NULL,
+    title_ru TEXT,
+    title_en TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);

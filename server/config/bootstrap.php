@@ -11,15 +11,21 @@ $f3 = Base::instance();
 
 $f3->config(APP_DIR . '/config/config.ini');
 
-$f3->set('DEBUG', $f3->get('app.debug') ? 3 : 0);
+$f3->set('DEBUG', $f3->get('APP_DEBUG') ? 3 : 0);
 $f3->set('AUTOLOAD', APP_DIR . '/app/;' . APP_DIR . '/db/');
 // $f3->set('DB', new SQL('sqlite:' . APP_DIR . '/db/database.sqlite'));
-
+//
 $f3->set('DB', new SQL(
-    "pgsql:host={$f3->get('DB_HOST')};port={$f3->get('DB_PORT')};dbname={$f3->get('DB_NAME')}",
-    "{$f3->get('DB_USER')}",
-    "{$f3->get('DB_PASSWORD')}"
+    "pgsql:host={$f3->get('db_host')};port={$f3->get('db_port')};dbname={$f3->get('db_name')}",
+    "{$f3->get('db_user')}",
+    "{$f3->get('db_password')}"
 ));
+
+// $f3->set('DB', new SQL(
+//     "pgsql:host=127.0.0.1;port=5432;dbname=portfolio",
+//     "ilya",
+//     "db_development_password"
+// ));
 
 Falsum\Run::handler();
 

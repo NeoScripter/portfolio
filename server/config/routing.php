@@ -1,9 +1,8 @@
 <?php
 
-// $f3->set('BASE', '/api');
 
-$f3->route('GET /seed [cli]', 'seeders\Seeder->run');
-$f3->route('GET /@action [cli]', 'Http\Controllers\ConsoleController->@action');
+$f3->route('GET /api/seed [cli]', 'seeders\Seeder->run');
+$f3->route('GET /api/@action [cli]', 'Http\Controllers\ConsoleController->@action');
 
 $taken = [];
 
