@@ -45,14 +45,6 @@ export default function AdaptiveImg({
                 ? { 'aria-hidden': 'true' }
                 : alt == null && { 'aria-hidden': 'true' })}
         >
-            <div
-                aria-hidden="true"
-                className={cn(
-                    !isLoading && 'hidden',
-                    'animate-loading absolute inset-0 size-full bg-white/75',
-                )}
-            />
-
             <picture>
                 {srcs.dkAvif && (
                     <source
@@ -126,6 +118,14 @@ export default function AdaptiveImg({
                     aria-hidden={isLoading}
                 />
             </picture>
+
+            <div
+                aria-hidden="true"
+                className={cn(
+                    !isLoading && 'hidden',
+                    'animate-loading absolute inset-0 size-full bg-white/75',
+                )}
+            />
         </div>
     );
 }
