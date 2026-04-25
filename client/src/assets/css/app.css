@@ -188,6 +188,13 @@
             opacity: 0;
         }
     }
+
+    --animate-loading: loading 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    @keyframes loading {
+        50% {
+            opacity: 0.1;
+        }
+    }
 }
 
 /*
@@ -586,4 +593,19 @@ h5 {
 
 .full-bleed-padding > *:not(.full-bleed) {
     margin-inline: var(--padding);
+}
+
+.adaptive-img-blur {
+    --dk-src: '';
+    --tb-src: '';
+    --mb-src: '';
+    background-image: var(--mb-src);
+
+    @media screen and (min-width: 496px) {
+        background-image: var(--tb-src);
+    }
+
+    @media screen and (min-width: 896px) {
+        background-image: var(--dk-src);
+    }
 }

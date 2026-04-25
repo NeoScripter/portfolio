@@ -1,6 +1,6 @@
 import { buildSrcSet, cn } from '@/lib/helpers/utils';
 import type { ImageSrcSet } from '@/lib/types/shared';
-import { useState } from 'preact/hooks';
+import { useCallback, useState } from 'preact/hooks';
 
 type AdaptiveImgProps = {
     prtClass?: string;
@@ -19,29 +19,41 @@ export default function AdaptiveImg({
 }: AdaptiveImgProps) {
     const [isLoading, setIsLoading] = useState(true);
 
+    const imgRef = useCallback((img: HTMLImageElement | null) => {
+        if (img?.complete) setIsLoading(false);
+    }, []);
+
     if (!srcs) return null;
 
     const isBg = variant === 'bg';
 
     return (
         <div
+            style={{
+                '--dk-src': `url(${srcs.dkTiny})`,
+                '--tb-src': `url(${srcs.tbTiny})`,
+                '--mb-src': `url(${srcs.mbTiny})`,
+            }}
             className={cn(
+                'adaptive-img-blur overflow-clip bg-cover bg-center bg-no-repeat',
                 isBg
-                    ? 'pointer-events-none absolute inset-0 -z-5 overflow-clip select-none'
-                    : 'relative overflow-clip',
+                    ? 'pointer-events-none absolute inset-0 -z-5 select-none'
+                    : 'relative',
                 prtClass,
             )}
             {...(isBg
                 ? { 'aria-hidden': 'true' }
                 : alt == null && { 'aria-hidden': 'true' })}
         >
-            <picture
+            <div
+                aria-hidden="true"
                 className={cn(
-                    'block size-full',
-                    isBg && 'transition-all duration-500 ease-in-out',
-                    isBg && isLoading && 'opacity-0',
+                    !isLoading && 'hidden',
+                    'animate-loading absolute inset-0 size-full bg-white/75',
                 )}
-            >
+            />
+
+            <picture>
                 {srcs.dkAvif && (
                     <source
                         type="image/avif"
@@ -50,7 +62,7 @@ export default function AdaptiveImg({
                             [srcs.dkAvif2x, '2x'],
                             [srcs.dkAvif3x, '3x'],
                         ])}
-                        media="(min-width: 56rem)"
+                        media="(min-width: 896px)"
                     />
                 )}
                 {srcs.dk && (
@@ -61,7 +73,7 @@ export default function AdaptiveImg({
                             [srcs.dk2x, '2x'],
                             [srcs.dk3x, '3x'],
                         ])}
-                        media="(min-width: 56rem)"
+                        media="(min-width: 896px)"
                     />
                 )}
                 {srcs.tbAvif && (
@@ -72,7 +84,7 @@ export default function AdaptiveImg({
                             [srcs.tbAvif2x, '2x'],
                             [srcs.tbAvif3x, '3x'],
                         ])}
-                        media="(min-width: 31rem)"
+                        media="(min-width: 496px)"
                     />
                 )}
                 {srcs.tb && (
@@ -83,7 +95,7 @@ export default function AdaptiveImg({
                             [srcs.tb2x, '2x'],
                             [srcs.tb3x, '3x'],
                         ])}
-                        media="(min-width: 31rem)"
+                        media="(min-width: 496px)"
                     />
                 )}
                 {srcs.mbAvif && (
@@ -97,52 +109,23 @@ export default function AdaptiveImg({
                     />
                 )}
                 <img
+                    ref={imgRef}
                     onLoad={() => setIsLoading(false)}
                     srcSet={buildSrcSet([
                         [srcs.mb, '1x'],
                         [srcs.mb2x, '2x'],
                         [srcs.mb3x, '3x'],
                     ])}
+                    loading="lazy"
                     alt={isBg ? '' : (alt ?? '')}
                     className={cn(
-                        'block size-full object-cover',
-                        isBg
-                            ? 'object-bottom-right'
-                            : 'object-center transition-all duration-500 ease-in-out',
+                        'block size-full object-cover object-center transition-all duration-500 ease-in-out',
                         imgClass,
-                        !isBg && isLoading && 'opacity-0',
+                        isLoading && 'opacity-0',
                     )}
-                    aria-hidden={!isBg ? isLoading : undefined}
+                    aria-hidden={isLoading}
                 />
             </picture>
-
-            {isLoading && (
-                <div
-                    role="status"
-                    aria-label="Фото загружается"
-                    className={cn(
-                        'absolute inset-0 flex items-center justify-center',
-                        isBg ? '-z-5 h-full max-h-screen w-full' : 'z-10',
-                    )}
-                >
-                    <div
-                        aria-hidden="true"
-                        className={cn(
-                            'absolute inset-0 size-full animate-pulse bg-gray-200/50',
-                            isBg ? undefined : 'z-10',
-                        )}
-                    />
-                    <img
-                        aria-hidden="true"
-                        src={srcs.mbTiny}
-                        alt=""
-                        className={cn(
-                            'block size-full object-cover',
-                            isBg ? 'object-bottom-right' : 'object-center',
-                        )}
-                    />
-                </div>
-            )}
         </div>
     );
 }
