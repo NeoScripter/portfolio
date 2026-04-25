@@ -4,7 +4,7 @@ import { useFetch } from '@/hooks/useFetch';
 import type { ServerError } from '@/hooks/useForm';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useState, type FC } from 'preact/compat';
 import VideoUpsert from './partials/VideoUpsert';
@@ -15,7 +15,7 @@ const Edit: FC<{ id: number }> = ({ id }) => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}videos/${id}`,
+            url: `${API_BASE_URL}videos/${id}`,
             onSuccess: (data) => {
                 setVideo(data.data);
             },

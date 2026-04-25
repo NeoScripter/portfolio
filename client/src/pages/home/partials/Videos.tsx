@@ -1,13 +1,13 @@
 import ApiError from '@/components/ui/ApiError';
+import CarouselControls from '@/components/ui/CarouselControls';
 import { useCarousel } from '@/hooks/useCarousel';
 import { useFetch } from '@/hooks/useFetch';
 import AppSection from '@/layouts/SectionLayout';
+import { API_BASE_URL } from '@/lib/const/api';
 import { cn, range } from '@/lib/helpers/utils';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useRef } from 'preact/hooks';
 import VideoTile, { VideoFallback } from './VideoTile';
-import CarouselControls from '@/components/ui/CarouselControls';
-import { PREFIX } from '@/lib/const/api';
 
 const Videos = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -27,7 +27,7 @@ const Videos = () => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}videos?duplicated=true`,
+            url: `${API_BASE_URL}videos?duplicated=true`,
             onSuccess: (data) => {
                 setter(data.data);
             },
@@ -40,6 +40,10 @@ const Videos = () => {
         );
 
     const numSlides = Math.floor(carouselSlides.length / 2);
+
+    if (numSlides === 0) {
+        return null;
+    }
 
     return (
         <AppSection>
@@ -76,7 +80,7 @@ const Videos = () => {
             </div>
 
             <CarouselControls
-                current={currentSlide % numSlides + 1}
+                current={(currentSlide % numSlides) + 1}
                 slides={numSlides}
                 handlePrev={handleDecrement}
                 handleNext={handleIncrement}

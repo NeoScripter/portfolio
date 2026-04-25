@@ -4,7 +4,7 @@ import { FormImage } from '@/components/form/FormImage';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { VideoType } from '@/lib/types/models/videos';
@@ -55,7 +55,7 @@ const VideoUpsert: FC<{ video?: VideoType }> = ({ video }) => {
         });
 
         await fetchData({
-            url: isEdit ? `${PREFIX}videos/${video.id}` : `${PREFIX}videos`,
+            url: isEdit ? `${API_BASE_URL}videos/${video.id}` : `${API_BASE_URL}videos`,
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {

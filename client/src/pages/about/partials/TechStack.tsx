@@ -1,14 +1,14 @@
+import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import ApiError from '@/components/ui/ApiError';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
+import { API_BASE_URL } from '@/lib/const/api';
 import { cn, range } from '@/lib/helpers/utils';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { locale } from '@/signals/locale';
 import { useEffect, useRef, useState, type FC } from 'preact/compat';
-import TechPill, { TechPillFallback } from './TechPill';
-import AdaptiveImg from '@/components/ui/AdaptiveImg';
-import { canvasSrcSet } from '../data';
 import { useFetch } from '../../../hooks/useFetch';
-import { PREFIX } from '@/lib/const/api';
+import { canvasSrcSet } from '../data';
+import TechPill, { TechPillFallback } from './TechPill';
 
 const TechStack = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -51,7 +51,7 @@ const TechStack = () => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}tech-stacks/`,
+            url: `${API_BASE_URL}tech-stacks/`,
             onSuccess: (data) => {
                 setStacks(data.data);
             },
@@ -63,6 +63,7 @@ const TechStack = () => {
             <ApiError
                 resourceRu="языков программирования"
                 resourceEn="programming languages"
+                mt={true}
             />
         );
 
@@ -110,7 +111,7 @@ const TechStackCanvas: FC<{
         <div
             id="stack-canvas"
             class={cn(
-                'relative select-none isolate -mx-5 overflow-clip px-5 sm:-mx-20 sm:px-15.5 lg:rounded-xl lg:px-23.5',
+                'relative isolate -mx-5 overflow-clip px-5 select-none sm:-mx-20 sm:px-15.5 lg:rounded-xl lg:px-23.5',
                 active != null
                     ? 'lg:py-13.4 stack-content-open mt-18 max-h-2000 py-11.5 sm:py-12.5 xl:py-17'
                     : 'stack-content-closed mt-0 max-h-0',

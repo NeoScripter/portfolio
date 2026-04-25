@@ -13,11 +13,11 @@ const EmptySearch: FC<{
     return (
         <div
             class={cn(
-                'border-muted-foreground mx-auto mt-16 mb-13 rounded-md border px-[0.75em] py-[1.5em] sm:my-19 sm:max-w-3/4 lg:mb-23',
+                'border-muted-foreground mx-auto mt-16 mb-13 w-fit rounded-md border px-[2.75em] py-[1.5em] sm:my-19 sm:max-w-3/4 lg:mb-23',
                 className,
             )}
         >
-            <div aria-hidden="true" class="mb-6">
+            <div aria-hidden="true" class="text-foreground/60 mb-6">
                 <CuteSearch className="mx-auto size-14 md:size-20" />
             </div>
             <div

@@ -5,7 +5,7 @@ import AccordionLayout from '@/layouts/AccordionLayout';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { Clapperboard, PanelsTopLeft } from 'lucide-preact';
 import { useRoute } from 'preact-iso';
@@ -33,7 +33,7 @@ const EditProject = () => {
     useEffect(() => {
         const fetchProject = () => {
             fetchData({
-                url: `${PREFIX}projects/${slug}`,
+                url: `${API_BASE_URL}projects/${slug}`,
                 onSuccess: (data) => {
                     setProject(data.data);
                 },

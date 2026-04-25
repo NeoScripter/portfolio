@@ -4,7 +4,7 @@ import { FormImage } from '@/components/form/FormImage';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { ReviewType } from '@/lib/types/models/reviews';
@@ -60,8 +60,8 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
         await fetchData({
             url:
                 isEdit
-                    ? `${PREFIX}reviews/${review.id}`
-                    : `${PREFIX}reviews`,
+                    ? `${API_BASE_URL}reviews/${review.id}`
+                    : `${API_BASE_URL}reviews`,
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {

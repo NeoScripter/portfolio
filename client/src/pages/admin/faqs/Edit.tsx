@@ -4,7 +4,7 @@ import { useFetch } from '@/hooks/useFetch';
 import type { ServerError } from '@/hooks/useForm';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import type { FaqType } from '@/lib/types/models/faqs';
 import type { FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
@@ -16,7 +16,7 @@ const EditFaq: FC<{ id: number }> = ({ id }) => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}faqs/${id}`,
+            url: `${API_BASE_URL}faqs/${id}`,
             onSuccess: (data) => {
                 setFaq(data.data);
             },

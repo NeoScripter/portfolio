@@ -2,7 +2,7 @@ import ApiError from '@/components/ui/ApiError';
 import { cn, range } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { locale } from '@/signals/locale';
-import type{ FC } from 'preact/compat';
+import type { FC } from 'preact/compat';
 import ProjectCard, { ProjectFallback } from './ProjectCard';
 
 const Projects: FC<{
@@ -14,7 +14,9 @@ const Projects: FC<{
     const listLabel = locale.value === 'ru' ? 'проекты' : 'projects';
 
     if (errors != null)
-        return <ApiError resourceRu="проектов" resourceEn="projects" />;
+        return (
+            <ApiError resourceRu="проектов" resourceEn="projects" mt={true} />
+        );
     return (
         <div className="relative z-10">
             <div className="relative mt-16 sm:mt-26 lg:mt-28">

@@ -6,7 +6,7 @@ import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
 import useFetchCategories from '@/hooks/useFetchCategories';
 import useFetchStacks from '@/hooks/useFetchStacks';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import { type ValidationRules } from '@/lib/helpers/validation';
 import type { ProjectType } from '@/lib/types/models/projects';
@@ -76,8 +76,8 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         await fetchData({
             url:
                 project != null
-                    ? `${PREFIX}projects/${project.attr.slug}`
-                    : `${PREFIX}projects`,
+                    ? `${API_BASE_URL}projects/${project.attr.slug}`
+                    : `${API_BASE_URL}projects`,
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {

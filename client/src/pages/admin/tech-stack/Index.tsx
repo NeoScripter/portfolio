@@ -10,7 +10,7 @@ import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { useEffect, useState } from 'preact/hooks';
 import TechStackCard, { TechStackFallback } from './partials/TechStackCard';
 import TechStackDelete from './partials/TechStackDelete';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -19,7 +19,7 @@ const Index = () => {
     useEffect(() => {
         const fetchStacks = () => {
             fetchData({
-                url: `${PREFIX}tech-stacks`,
+                url: `${API_BASE_URL}tech-stacks`,
                 onSuccess: (data) => {
                     setStacks(data.data);
                 },

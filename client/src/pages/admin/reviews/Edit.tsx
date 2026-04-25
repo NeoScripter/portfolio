@@ -2,7 +2,7 @@ import AppTitle from '@/components/layout/AppTitle';
 import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import type { FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
@@ -14,7 +14,7 @@ const Edit: FC<{ id: number }> = ({ id }) => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}reviews/${id}`,
+            url: `${API_BASE_URL}reviews/${id}`,
             onSuccess: (data) => {
                 setReview(data.data);
             },

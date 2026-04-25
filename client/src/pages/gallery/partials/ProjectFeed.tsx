@@ -1,14 +1,14 @@
 import ApiError from '@/components/ui/ApiError';
+import EmptySearch from '@/components/ui/EmptySearch';
+import Pagination from '@/components/ui/Pagination';
 import SearchBar from '@/components/ui/SearchBar';
 import useFetchProjects from '@/hooks/useFetchProjects';
 import { cn, range } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
-import type{ FC, JSX } from 'preact/compat';
+import type { FC, JSX } from 'preact/compat';
 import { useState } from 'preact/hooks';
 import ProjectTile from './ProjectTile';
-import EmptySearch from '@/components/ui/EmptySearch';
 import ProjectTileFallback from './ProjectTileFallback';
-import Pagination from '@/components/ui/Pagination';
 
 const ProjectFeed: FC<NodeProps> = ({ className }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -30,10 +30,16 @@ const ProjectFeed: FC<NodeProps> = ({ className }) => {
     };
 
     if (errors != null)
-        return <ApiError resourceRu="проектов" resourceEn="projectData" />;
+        return (
+            <ApiError
+                resourceRu="проектов"
+                resourceEn="projectData"
+                mb={true}
+            />
+        );
 
     return (
-        <div className={cn('full-bleed',className)}>
+        <div className={cn('full-bleed', className)}>
             <SearchBar
                 handleSubmit={handleSeachSubmit}
                 value={searchQuery}

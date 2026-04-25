@@ -11,7 +11,7 @@ const Journey: FC<{ className?: string }> = ({ className }) => {
         <AppSection
             className={cn('full-bleed px-0 sm:px-0 lg:px-0', className)}
         >
-            <SecondaryHeading className="xs:text-center xs:text-balance">
+            <SecondaryHeading className="xs:text-center px-5 xs:text-balance">
                 Как я стал программистом
             </SecondaryHeading>
 

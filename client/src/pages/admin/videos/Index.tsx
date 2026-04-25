@@ -10,7 +10,7 @@ import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useState } from 'preact/hooks';
 import VideoCard, { VideoFallback } from './partials/VideoCard';
 import VideoDelete from './partials/VideoDelete';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -19,7 +19,7 @@ const Index = () => {
     useEffect(() => {
         const fetchVideos = () => {
             fetchData({
-                url: `${PREFIX}videos`,
+                url: `${API_BASE_URL}videos`,
                 onSuccess: (data) => {
                     setVideos(data.data);
                 },

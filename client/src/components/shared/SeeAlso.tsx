@@ -1,5 +1,6 @@
 import { useFetch } from '@/hooks/useFetch';
 import AppSection from '@/layouts/SectionLayout';
+import { API_BASE_URL } from '@/lib/const/api';
 import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import type { FC } from 'preact/compat';
@@ -17,7 +18,7 @@ const SeeAlso: FC<{
     const [projects, setProjects] = useState<ProjectType[] | null>(null);
 
     useEffect(() => {
-        let req = '/api/projects.json';
+        let req = `${API_BASE_URL}projects`;
 
         if (excludedId != null) {
             req += `${req}&exclude=${excludedId}`;
@@ -29,6 +30,10 @@ const SeeAlso: FC<{
             },
         });
     }, []);
+
+    if (projects && projects.length === 0) {
+        return null;
+    }
 
     return (
         <AppSection className={cn('xl:px-0', className)}>

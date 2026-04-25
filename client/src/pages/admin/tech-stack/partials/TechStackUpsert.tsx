@@ -4,7 +4,7 @@ import { FormImage } from '@/components/form/FormImage';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { FormWysiwyg } from '@/components/form/FormWysiwyg';
 import { useFetch } from '@/hooks/useFetch';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
@@ -52,8 +52,8 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
         await fetchData({
             url:
                 stack != null
-                    ? `${PREFIX}tech-stacks/${stack.id}`
-                    : `${PREFIX}tech-stacks`,
+                    ? `${API_BASE_URL}tech-stacks/${stack.id}`
+                    : `${API_BASE_URL}tech-stacks`,
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {

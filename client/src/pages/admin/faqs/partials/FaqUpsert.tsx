@@ -3,7 +3,7 @@ import { FormButtons } from '@/components/form/FormButtons';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { FaqType } from '@/lib/types/models/faqs';
 import type { FC } from 'preact/compat';
@@ -35,7 +35,7 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
         [faq],
     );
 
-    const url = faq != null ? `${PREFIX}faqs/${faq.id}` : `${PREFIX}faqs`;
+    const url = faq != null ? `${API_BASE_URL}faqs/${faq.id}` : `${API_BASE_URL}faqs`;
     const method = faq != null ? 'PUT' : 'POST';
 
     async function submit(values: FaqUpsertState) {

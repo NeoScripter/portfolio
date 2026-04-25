@@ -5,7 +5,7 @@ import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { useEffect, useState, type FC } from 'preact/compat';
 import TechStackUpsert from './partials/TechStackUpsert';
 import AppTitle from '@/components/layout/AppTitle';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -13,7 +13,7 @@ const Edit: FC<{ id: number }> = ({ id }) => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}tech-stacks/${id}`,
+            url: `${API_BASE_URL}tech-stacks/${id}`,
             onSuccess: (data) => {
                 setStack(data.data);
             },

@@ -3,7 +3,7 @@ import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import { useFetch } from '@/hooks/useFetch';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import AppSection from '@/layouts/SectionLayout';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import { cn, range } from '@/lib/helpers/utils';
 import type { FaqResource } from '@/lib/types/models/faqs';
 import { locale } from '@/signals/locale';
@@ -22,7 +22,7 @@ const Faqs = () => {
 
     useEffect(() => {
         fetchData({
-            url: PREFIX + 'faqs',
+            url: API_BASE_URL + 'faqs',
             onSuccess: (data) => {
                 setData(data);
             },

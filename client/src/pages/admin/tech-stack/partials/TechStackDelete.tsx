@@ -2,7 +2,7 @@ import DeleteConfirmation from '@/components/form/DeleteConfirmation';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import FormLayout from '@/layouts/FormLayout';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import { toast } from 'sonner';
 
 const TechStackDelete = () => {
@@ -14,7 +14,7 @@ const TechStackDelete = () => {
         if (stack.value == null) return;
 
         await fetchData({
-            url: `${PREFIX}tech-stacks/${stack.value.id}`,
+            url: `${API_BASE_URL}tech-stacks/${stack.value.id}`,
             method: 'DELETE',
             onSuccess: (data) => {
                 stack.value = null;

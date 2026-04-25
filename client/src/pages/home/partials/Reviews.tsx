@@ -7,7 +7,7 @@ import { cn, range } from '@/lib/helpers/utils';
 import ReviewCard, { ReviewFallback } from './ReviewCard';
 import CarouselControls from '@/components/ui/CarouselControls';
 import { useFetch } from '@/hooks/useFetch';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 
 const Reviews = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -27,7 +27,7 @@ const Reviews = () => {
 
     useEffect(() => {
         fetchData({
-            url: `${PREFIX}reviews?duplicated=true`,
+            url: `${API_BASE_URL}reviews?duplicated=true`,
             onSuccess: (data) => {
                 setter(data.data);
             },
@@ -42,6 +42,7 @@ const Reviews = () => {
             <ApiError
                 resourceRu="отзывов клиентов"
                 resourceEn="client reviews"
+                mt={true}
             />
         );
 

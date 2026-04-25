@@ -4,6 +4,7 @@ import PrimaryLink from '@/components/ui/PrimaryLink';
 import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import { useFetch } from '@/hooks/useFetch';
 import AppSection from '@/layouts/SectionLayout';
+import { API_BASE_URL } from '@/lib/const/api';
 import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { locale } from '@/signals/locale';
@@ -19,7 +20,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
 
     useEffect(() => {
         fetchData({
-            url: '/api/projects.json',
+            url: `${API_BASE_URL}api/projects`,
             onSuccess: (data) => {
                 setProjects(data.data);
             },
@@ -38,14 +39,16 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
                 class="absolute inset-0 isolate -z-5 h-fit overflow-clip md:rounded-xl"
             >
                 <AdaptiveImg
-                    srcs={getTheme() === 'light' ? featuredBgSrcSet : featuredBgDarkSrcSet}
+                    srcs={
+                        getTheme() === 'light'
+                            ? featuredBgSrcSet
+                            : featuredBgDarkSrcSet
+                    }
                     imgClass="w-full object-contain"
                 />
-                  <div class="absolute inset-0 z-5 bg-[linear-gradient(180deg,rgba(242,246,250,0.3)0%,#fff_50%)] dark:bg-[linear-gradient(180deg,rgba(30,32,33,0.5)0%,#1E2021_50%)]" />
+                <div class="absolute inset-0 z-5 bg-[linear-gradient(180deg,rgba(242,246,250,0.3)0%,#fff_50%)] dark:bg-[linear-gradient(180deg,rgba(30,32,33,0.5)0%,#1E2021_50%)]" />
             </div>
-            <SecondaryHeading
-                className="motion-safe:animate-fade-in max-w-258 text-balance"
-            >
+            <SecondaryHeading className="motion-safe:animate-fade-in max-w-258 text-balance">
                 Адаптивный дизайн, высокая производительность и удобство
                 интерфейсов.
             </SecondaryHeading>
@@ -61,7 +64,12 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
                 мое портфолио!
             </p>
 
-            <Projects className='-mx-5 xl:-mx-15' errors={errors} projects={projects} loading={loading} />
+            <Projects
+                className="-mx-5 xl:-mx-15"
+                errors={errors}
+                projects={projects}
+                loading={loading}
+            />
 
             <PrimaryLink
                 key={`${lang}-gallery-btn`}

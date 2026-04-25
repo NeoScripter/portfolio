@@ -27,7 +27,7 @@ const ApiError: FC<{
                 <Error className="mx-auto size-14 md:size-20" />
             </div>
             <div
-                class="text-center leading-[1.6em] text-balance"
+                class="text-center leading-[1.6em] text-balance md:text-base lg:text-lg"
                 dangerouslySetInnerHTML={{ __html: message }}
             />
         </div>

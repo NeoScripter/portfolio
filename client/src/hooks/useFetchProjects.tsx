@@ -1,6 +1,6 @@
 import { useDebounce } from '@/hooks/useDebounce';
 import { useFetch } from '@/hooks/useFetch';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 import type { ProjectResource } from '@/lib/types/models/projects';
 import { useLocation } from 'preact-iso';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -44,7 +44,7 @@ const useFetchProjects = ({ searchQuery }: FetchProjectsArgs) => {
         }
         const fetchProjects = () => {
             // let url = `/api/projects.json?page=${currentPage}&search=${debouncedQuery}`;
-            let url = `${PREFIX}projects`;
+            let url = `${API_BASE_URL}projects`;
             fetchData({
                 url: url,
                 onSuccess: (data) => {

@@ -10,7 +10,7 @@ import type { ReviewType } from '@/lib/types/models/reviews';
 import { useEffect, useState } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
 import ReviewDelete from './partials/ReviewDelete';
-import { PREFIX } from '@/lib/const/api';
+import { API_BASE_URL } from '@/lib/const/api';
 
 const Reviews = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -19,7 +19,7 @@ const Reviews = () => {
     useEffect(() => {
         const fetchReviews = () => {
             fetchData({
-                url: `${PREFIX}reviews`,
+                url: `${API_BASE_URL}reviews`,
                 onSuccess: (data) => {
                     setReviews(data.data);
                 },
