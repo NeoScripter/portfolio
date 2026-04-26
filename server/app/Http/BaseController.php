@@ -19,14 +19,14 @@ abstract class BaseController
         return $class::to_resource($data);
     }
 
-    protected function request(): ?object
-    {
-        if ($this->request) return $this->request;
+    // protected function request(): ?object
+    // {
+    //     if ($this->request) return $this->request;
 
-        $class = $this->resolve_companion('Requests', 'Request');
+    //     $class = $this->resolve_companion('Requests', 'Request');
 
-        return $this->request = $class ? new $class : null;
-    }
+    //     return $this->request = $class ? new $class : null;
+    // }
 
     private function resolve_companion(string $folder, string $suffix): ?string
     {

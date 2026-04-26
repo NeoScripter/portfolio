@@ -81,29 +81,6 @@ function image_variants(array $sizes): array
     return $variants;
 }
 
-function split_data(array $data, ?string $imageable_type = null)
-{
-    $img_fields = ['dk_webp', 'dk_avif', 'dk_webp_2x', 'dk_avif_2x', 'dk_webp_3x', 'dk_avif_3x', 'dk_tiny', 'tb_webp', 'tb_avif', 'tb_webp_2x', 'tb_avif_2x', 'tb_webp_3x', 'tb_avif_3x', 'tb_tiny', 'mb_webp', 'mb_avif', 'mb_webp_2x', 'mb_avif_2x', 'mb_webp_3x', 'mb_avif_3x', 'mb_tiny', 'alt_ru', 'alt_en', 'imageable_type', 'variant']; // pint ignore/line
-
-    $img_data = [];
-
-    if ($imageable_type != null) {
-        $img_data['imageable_type'] = $imageable_type;
-    }
-
-    $entry_data = [];
-
-    foreach ($data as $key => $val) {
-        if (in_array($key, $img_fields)) {
-            $img_data[$key] = $val;
-        } else {
-            $entry_data[$key] = $val;
-        }
-    }
-
-    return [$entry_data, $img_data];
-}
-
 function delete_files_recursive(array $files)
 {
     foreach ($files as $file) {
@@ -167,4 +144,27 @@ function generate_slug($string, $wordLimit = 0)
     $string = strtolower($string);
 
     return trim($string, $separator);
+}
+
+function convert_to_plural($word)
+{
+    $word = strtolower($word);
+
+    // Already plural
+    if (str_ends_with($word, 's')) {
+        return $word;
+    }
+
+    // Consonant + Y → change to IES
+    if (preg_match('/[^aeiou]y$/', $word)) {
+        return substr($word, 0, -1) . 'ies';
+    }
+
+    // Vowel + Y or anything else → just add S
+    return $word . 's';
+}
+
+function convert_to_snake_case($word)
+{
+    return strtolower(preg_replace('/(?<!^)(?=[A-Z])/', '_', $word));
 }

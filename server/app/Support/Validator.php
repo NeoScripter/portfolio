@@ -67,6 +67,7 @@ class Validator
                     'max' => $this->max_length($this->values[$key], (int) $param),
                     'image' => $this->image($this->values[$key], (int) $param),
                     'exists' => $this->exists($this->values[$key], ...explode(',', $param)),
+                    'unique' => $this->unique($this->values[$key], ...explode(',', $param)),
                     'nullable' => '',
                     'sometimes' => '',
                     default => throw new InvalidArgumentException("Unknown validation rule: '$name'"),
@@ -102,6 +103,23 @@ class Validator
 
         if (empty($res) || !$res[0]['exists']) {
             return 'We could not find the existing record';
+        }
+
+        return '';
+    }
+
+    private function unique(mixed $value, string $table, string $field): string
+    {
+        $db = Base::instance()->get('DB');
+
+        $res = $db->exec("
+            SELECT EXISTS (
+                SELECT 1 FROM `$table` WHERE `$field` = ?
+            ) AS `exists`
+        ", [$value]);
+
+        if ($res[0]['exists']) {
+            return "The field {$field} already exists";
         }
 
         return '';

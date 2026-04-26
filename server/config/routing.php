@@ -20,8 +20,9 @@ $controllers = glob(APP_DIR . '/app/Http/Controllers/*.php');
 foreach ($controllers as $controller) {
 
     $name   = basename($controller, '.php');
-    $route  = str_replace('Controller', 's', $name);
-    $route = strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $route));
+    $route  = str_replace('Controller', '', $name);
+    $route = convert_to_snake_case($route);
+    $route = convert_to_plural($route);
     $base   = "Http\\Controllers\\$name";
     $prefix = "/api/$route";
 
