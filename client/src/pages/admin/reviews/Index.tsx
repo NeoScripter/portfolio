@@ -37,6 +37,8 @@ const Reviews = () => {
         console.error(errors);
     }
 
+    console.log(reviews)
+
     return (
         <DeleteModalProvider>
             <AdminLayout title={{ en: 'Reviews', ru: 'Отзывы' }}>

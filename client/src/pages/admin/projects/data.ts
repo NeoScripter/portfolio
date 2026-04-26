@@ -1,0 +1,92 @@
+export const categories = [
+    {
+        id: 1,
+        name_ru: 'Электроника',
+        name_en: 'Electronics',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 2,
+        name_ru: 'Одежда',
+        name_en: 'Clothing',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 3,
+        name_ru: 'Книги',
+        name_en: 'Books',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 4,
+        name_ru: 'Дом и сад',
+        name_en: 'Home & Garden',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 5,
+        name_ru: 'Спорт',
+        name_en: 'Sports',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 6,
+        name_ru: 'Игрушки',
+        name_en: 'Toys',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 7,
+        name_ru: 'Продукты',
+        name_en: 'Groceries',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 8,
+        name_ru: 'Красота',
+        name_en: 'Beauty',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 9,
+        name_ru: 'Автотовары',
+        name_en: 'Auto Parts',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 10,
+        name_ru: 'Мебель',
+        name_en: 'Furniture',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 11,
+        name_ru: 'Здоровье',
+        name_en: 'Health',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 12,
+        name_ru: 'Обувь',
+        name_en: 'Shoes',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 13,
+        name_ru: 'Аксессуары',
+        name_en: 'Accessories',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 14,
+        name_ru: 'Детские товары',
+        name_en: 'Baby Products',
+        created_at: '2026-04-26 12:30:45',
+    },
+    {
+        id: 15,
+        name_ru: 'Зоотовары',
+        name_en: 'Pet Supplies',
+        created_at: '2026-04-26 12:30:45',
+    },
+];

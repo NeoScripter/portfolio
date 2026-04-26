@@ -36,7 +36,7 @@ const AccordionLayout: FC<
                 class={cn(
                     'mt-4 grid transition-[grid-template-rows,padding] duration-500 ease-in-out',
                     show
-                        ? 'border-input grid-rows-[1fr] rounded-md border p-4'
+                        ? 'border-input mb-2 grid-rows-[1fr] rounded-md border p-4'
                         : 'grid-rows-[0fr]',
                 )}
             >

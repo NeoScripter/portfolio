@@ -2,16 +2,21 @@ import AdminShellNav from '@/components/layout/AdminShellNav';
 import AppTitle from '@/components/layout/AppTitle';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
 import useFetchProjects from '@/hooks/useFetchProjects';
+import AccordionLayout from '@/layouts/AccordionLayout';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { range } from '@/lib/helpers/utils';
+import { useSignal } from '@preact/signals';
+import { Split } from 'lucide-preact';
 import { useState } from 'preact/hooks';
+import CategoryList from './partials/CategoryList';
 import ProjectCard, { ProjectFallback } from './partials/ProjectCard';
 import ProjectDelete from './partials/ProjectDelete';
 
 const Index = () => {
     const [searchQuery, setSearchQuery] = useState('');
+    const showCategoryPanel = useSignal(false);
 
     const handleInputChange = (val: string) => {
         handlePageClick(1);
@@ -31,8 +36,18 @@ const Index = () => {
                 <AppTitle titleEn="Projects" titleRu="Проекты" />
 
                 <AdminShellLayout>
-                    <AdminShellNav href={'projects/create'} />
+                    <AccordionLayout
+                        showIcon={Split}
+                        label="Categories"
+                        handleClick={() =>
+                            (showCategoryPanel.value = !showCategoryPanel.value)
+                        }
+                        show={showCategoryPanel.value}
+                    >
+                        <CategoryList />
+                    </AccordionLayout>
 
+                    <AdminShellNav href={'projects/create'} />
                     {/* {projectData?.meta && ( */}
                     {/*     <div className="bg-background sticky top-0 z-10"> */}
                     {/*         <Pagination */}
@@ -45,7 +60,6 @@ const Index = () => {
                     {/*         /> */}
                     {/*     </div> */}
                     {/* )} */}
-
                     {loading ? (
                         <ul ref={projectsRef} className="space-y-8">
                             {range(0, 8).map((idx) => (
