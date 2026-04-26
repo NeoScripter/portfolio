@@ -1,24 +1,46 @@
+import { useFetch } from '@/hooks/useFetch';
+import useFetchCategories from '@/hooks/useFetchCategories';
+import { API_BASE_URL } from '@/lib/const/api';
 import { X } from 'lucide-preact';
-import { categories } from '../data';
+import { toast } from 'sonner';
 import CategoryCreate from './CategoryUpsert';
 
 const CategoryList = () => {
+    const { errors, categories } = useFetchCategories();
+
+    const { fetchData } = useFetch();
+
+    async function handleDelete(id: number) {
+        await fetchData({
+            url: `${API_BASE_URL}categories/${id}`,
+            method: 'DELETE',
+            onSuccess: (data) => {
+                toast.success(data.message ?? 'Success!');
+            },
+            onError: () => toast.error('Error'),
+        });
+    }
+
+    if (errors != null) {
+        return <div className='text-red-500'>Error fetching categories :(</div>;
+    }
+
     return (
         <div>
-            <ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2 mb-6">
+            <ul className="mb-6 grid grid-cols-[repeat(auto-fill,minmax(175px,1fr))] gap-2">
                 {categories.map((category) => (
                     <li
                         key={category.id}
-                        className="flex items-center justify-between gap-1 rounded border px-2"
+                        className="flex items-center justify-between gap-1 rounded border p-2"
                     >
                         <span className="grid">
-                            <span>{category.name_en}</span>
+                            <span>{category.name?.en}</span>
                             <span className="text-sm text-gray-500">
-                                {category.name_ru}
+                                {category.name?.ru}
                             </span>
                         </span>
                         <button
-                            // onClick={() => handleDelete(cat.id)}
+                            onClick={() => handleDelete(category.id)}
                             className="rounded bg-red-500 p-1 text-white transition-colors hover:bg-red-600"
                         >
                             <X size={16} />
@@ -26,7 +48,7 @@ const CategoryList = () => {
                     </li>
                 ))}
                 {categories.length === 0 && (
-                    <p className="text-sm text-gray-400">No items left.</p>
+                    <p className="text-sm">There are no categories</p>
                 )}
             </ul>
 

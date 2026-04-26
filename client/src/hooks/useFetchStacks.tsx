@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/lib/const/api';
 import type { TechnologyType } from '@/lib/types/models/projects';
 import { useEffect, useState } from 'preact/hooks';
 import { useFetch } from './useFetch';
@@ -8,7 +9,7 @@ const useFetchStacks = () => {
 
     useEffect(() => {
         fetchData({
-            url: '/api/technologies',
+            url: `${API_BASE_URL}technologies`,
             onSuccess: (data) => setStacks(data.data),
         });
     }, []);

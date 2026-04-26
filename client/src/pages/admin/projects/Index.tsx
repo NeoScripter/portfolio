@@ -8,7 +8,7 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { range } from '@/lib/helpers/utils';
 import { useSignal } from '@preact/signals';
-import { Split } from 'lucide-preact';
+import { ListTodo, Split } from 'lucide-preact';
 import { useState } from 'preact/hooks';
 import CategoryList from './partials/CategoryList';
 import ProjectCard, { ProjectFallback } from './partials/ProjectCard';
@@ -37,7 +37,7 @@ const Index = () => {
 
                 <AdminShellLayout>
                     <AccordionLayout
-                        showIcon={Split}
+                        showIcon={ListTodo}
                         label="Categories"
                         handleClick={() =>
                             (showCategoryPanel.value = !showCategoryPanel.value)
