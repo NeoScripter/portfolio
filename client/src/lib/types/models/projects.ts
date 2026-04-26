@@ -1,5 +1,5 @@
-import type { ImageType } from "../shared";
-import type { ModuleType } from "./module";
+import type { ImageType } from '../shared';
+import type { ModuleType } from './module';
 
 export type ProjectResource = {
     data: ProjectType[];
@@ -19,13 +19,13 @@ export type ProjectResource = {
         to: number | null;
         total: number;
     };
-}
+};
 
 export type PaginationLink = {
     url: string | null;
     label: string;
     active: boolean;
-}
+};
 
 export type PaginationMeta<T> = {
     current_page: number;
@@ -41,7 +41,7 @@ export type PaginationMeta<T> = {
     prev_page_url: string | null;
     to: number;
     total: number;
-}
+};
 
 export type CategoryType = {
     id: number;
@@ -49,11 +49,11 @@ export type CategoryType = {
         ru: string;
         en: string;
     };
-}
+};
 
 export type TechnologyType = {
     name: string;
-}
+};
 
 export type ProjectType = {
     id: number;
@@ -66,10 +66,6 @@ export type ProjectType = {
             ru: string;
             en: string;
         };
-        category: {
-            ru: string;
-            en: string;
-        };
         stacks: string[];
         mockup: number;
         slug: string;
@@ -77,6 +73,7 @@ export type ProjectType = {
         url: string;
         link: string;
     };
+    category_id: number;
     image: ImageType;
     modules?: ModuleType[];
-}
+};

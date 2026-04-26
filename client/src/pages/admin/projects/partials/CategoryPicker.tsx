@@ -1,3 +1,6 @@
+import InputError from '@/components/form/InputError';
+import Label from '@/components/form/Label';
+import { useFormContext } from '@/context/FormContext';
 import type { ServerError } from '@/hooks/useForm';
 import { cn, range } from '@/lib/helpers/utils';
 import type { CategoryType } from '@/lib/types/models/projects';
@@ -6,22 +9,31 @@ import type { FC } from 'preact/compat';
 
 type Props = NodeProps & {
     locale: 'en' | 'ru';
+    name: string;
+    label: string;
     loading: boolean;
     errors: ServerError | null;
     categories: CategoryType[] | null;
-    onSelect: (category: { en: string; ru: string }) => void;
-    invalidId: number | null;
 };
 
 const CategoryPicker: FC<Props> = ({
     className,
     locale,
-    onSelect,
+    name,
+    label,
     loading,
     errors,
     categories,
-    invalidId,
 }) => {
+    const {
+        values,
+        errors: formErrors,
+        touched,
+        handleChange,
+    } = useFormContext();
+
+    const hasError = touched[name] && formErrors[name];
+
     if (loading) {
         return <PickerFallback />;
     }
@@ -34,26 +46,29 @@ const CategoryPicker: FC<Props> = ({
     if (!categories || categories.length === 0) return null;
 
     return (
-        <div class={cn('flex flex-wrap gap-2', className)}>
-            {categories.map((category) => (
-                <button
-                    type="button"
-                    key={category.id}
-                    class={cn(
-                        'hover:border-ring hover:ring-ring/50 border-foreground/20 rounded border px-3 py-1 transition-[color,box-shadow,border] hover:shadow-sm hover:ring-[3px]',
-                        invalidId === category.id &&
-                            'border-red-600 text-red-600 hover:border-red-600',
-                    )}
-                    onClick={() =>
-                        onSelect({
-                            en: category.name.en,
-                            ru: category.name.ru,
-                        })
-                    }
-                >
-                    {locale === 'en' ? category.name.en : category.name.ru}
-                </button>
-            ))}
+        <div className="grid gap-3">
+            {label && <Label htmlFor={name}>{label}</Label>}
+            <ul class={cn('flex flex-wrap gap-2', className)}>
+                {categories.map((category) => (
+                    <li>
+                        <button
+                            type="button"
+                            key={category.id}
+                            class={cn(
+                                'hover:border-ring hover:ring-ring/50 border-foreground/20 rounded border px-3 py-1 transition-[color,box-shadow,border] hover:shadow-sm hover:ring-[3px]',
+                                values[name] === category.id &&
+                                    'border-indigo-700 text-indigo-700 hover:border-indigo-700',
+                            )}
+                            onClick={() => handleChange(name, category.id)}
+                        >
+                            {locale === 'en'
+                                ? category.name.en
+                                : category.name.ru}
+                        </button>
+                    </li>
+                ))}
+            </ul>
+            {hasError && <InputError message={formErrors[name]} />}
         </div>
     );
 };

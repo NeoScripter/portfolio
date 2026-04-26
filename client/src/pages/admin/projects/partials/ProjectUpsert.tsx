@@ -24,8 +24,7 @@ type ProjectUpsertState = {
     description_en: string;
     description_ru: string;
     link: string;
-    name_en: string;
-    name_ru: string;
+    category_id: number | null;
     technologies: string[];
     display_order: number;
     mockup: number;
@@ -35,8 +34,7 @@ type ProjectUpsertState = {
 };
 
 const validationRules: ValidationRules<ProjectUpsertState> = {
-    name_en: ['required'],
-    name_ru: ['required'],
+    category_id: ['required'],
     title_en: ['required'],
     title_ru: ['required'],
     link: ['required'],
@@ -48,6 +46,13 @@ const validationRules: ValidationRules<ProjectUpsertState> = {
 
 const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
     const { route } = useLocation();
+    const {
+        categories,
+        loading: categoriesLoading,
+        errors: categoriesErrors,
+    } = useFetchCategories();
+    const { stacks, loading: stacksLoading } = useFetchStacks();
+
     const { fetchData } = useFetch();
 
     const isEdit = project != null;
@@ -58,8 +63,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         description_en: project?.attr?.description?.en ?? '',
         description_ru: project?.attr?.description?.ru ?? '',
         link: project?.attr?.link ?? '',
-        name_en: project?.attr?.category?.en ?? '',
-        name_ru: project?.attr?.category?.ru ?? '',
+        category_id: project?.category_id ?? null,
         technologies: project?.attr?.stacks ?? [],
         display_order: project?.attr.display_order ?? 100,
         mockup: isEdit ? project.attr.mockup : 1,
@@ -75,14 +79,15 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         });
 
         await fetchData({
-            url:
-                project != null
-                    ? `${API_BASE_URL}projects/${project.attr.slug}`
-                    : `${API_BASE_URL}projects`,
+            url: isEdit
+                ? `${API_BASE_URL}projects/${project.attr.slug}`
+                : `${API_BASE_URL}projects`,
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {
-                // route('/admin/projects');
+                if (!isEdit) {
+                    route('/admin/projects');
+                }
                 toast.success(data.message ?? 'Success!');
                 window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
@@ -98,110 +103,61 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
             rules={validationRules}
             hasFile={true}
         >
-            {({ values, setFieldValue }) => {
-                const { stacks, loading: stacksLoading } = useFetchStacks();
-                const {
-                    categories,
-                    loading: categoriesLoading,
-                    errors: categoriesErrors,
-                    invalidCategoryId,
-                } = useFetchCategories({
-                    categoryRu: values.name_ru as string,
-                    categoryEn: values.name_en as string,
-                });
-
-                return (
-                    <>
-                        <FormInput
-                            name="title_en"
-                            label="Title (EN)"
-                            required
-                        />
-                        <FormInput
-                            name="title_ru"
-                            label="Title (RU)"
-                            required
-                        />
-                        <FormTextArea
-                            name="description_en"
-                            label="Description (EN)"
-                            required
-                        />
-                        <FormTextArea
-                            name="description_ru"
-                            label="Description (RU)"
-                            required
-                        />
-                        <FormInput name="link" label="Link" required />
-                        <FormStackPicker
-                            name="technologies"
-                            label="Stacks"
-                            availableStacks={stacks.map((s) => s.name)}
-                            loading={stacksLoading}
-                        />
-                        <FormInput
-                            name="name_en"
-                            label="Category (EN)"
-                            required
-                        />
-                        <CategoryPicker
-                            categories={categories}
-                            loading={categoriesLoading}
-                            errors={categoriesErrors}
-                            invalidId={invalidCategoryId}
-                            locale="en"
-                            onSelect={({ en, ru }) => {
-                                setFieldValue('name_en', en);
-                                setFieldValue('name_ru', ru);
-                            }}
-                        />
-                        <FormInput
-                            name="name_ru"
-                            label="Category (RU)"
-                            required
-                        />
-                        <CategoryPicker
-                            categories={categories}
-                            loading={categoriesLoading}
-                            errors={categoriesErrors}
-                            invalidId={invalidCategoryId}
-                            locale="ru"
-                            onSelect={({ en, ru }) => {
-                                setFieldValue('name_en', en);
-                                setFieldValue('name_ru', ru);
-                            }}
-                        />
-                        <FormInput
-                            name="display_order"
-                            label="Order"
-                            inputmode="numeric"
-                            pattern="\d*"
-                            className="h-auto max-w-40 px-0 text-center text-3xl! tracking-[0.5em]"
-                        />
-                        <FormMockupPicker name="mockup" label="Mockup" />
-                        <FormImage
-                            name="image"
-                            src={project?.image?.srcSet?.dk}
-                            label="Project Image"
-                        />
-                        <FormTextArea
-                            name="alt_en"
-                            label="Alt Text (EN)"
-                            required
-                        />
-                        <FormTextArea
-                            name="alt_ru"
-                            label="Alt Text (RU)"
-                            required
-                        />
-                        <FormButtons
-                            submitText={project ? 'Update' : 'Create'}
-                            cancelLink="/admin/projects"
-                            shouldBackup={true}
-                        />
-                    </>
-                );
-            }}
+            <FormInput name="title_en" label="Title (EN)" required />
+            <FormInput name="title_ru" label="Title (RU)" required />
+            <FormTextArea
+                name="description_en"
+                label="Description (EN)"
+                required
+            />
+            <FormTextArea
+                name="description_ru"
+                label="Description (RU)"
+                required
+            />
+            <FormInput name="link" label="Link" required />
+            <FormStackPicker
+                name="technologies"
+                label="Stacks"
+                availableStacks={stacks.map((s) => s.name)}
+                loading={stacksLoading}
+            />
+            <CategoryPicker
+                label='Category (EN)'
+                name="category_id"
+                categories={categories}
+                loading={categoriesLoading}
+                errors={categoriesErrors}
+                locale="en"
+            />
+            <CategoryPicker
+                label='Category (RU)'
+                name="category_id"
+                categories={categories}
+                loading={categoriesLoading}
+                errors={categoriesErrors}
+                locale="ru"
+            />
+            <FormInput
+                name="display_order"
+                label="Order"
+                inputmode="numeric"
+                pattern="\d*"
+                className="h-auto max-w-40 px-0 text-center text-3xl! tracking-[0.5em]"
+            />
+            <FormMockupPicker name="mockup" label="Mockup" />
+            <FormImage
+                name="image"
+                src={project?.image?.srcSet?.dk}
+                label="Project Image"
+            />
+            <FormTextArea name="alt_en" label="Alt Text (EN)" required />
+            <FormTextArea name="alt_ru" label="Alt Text (RU)" required />
+            <FormButtons
+                submitText={project ? 'Update' : 'Create'}
+                cancelLink="/admin/projects"
+                shouldBackup={true}
+            />
         </Form>
     );
 };
