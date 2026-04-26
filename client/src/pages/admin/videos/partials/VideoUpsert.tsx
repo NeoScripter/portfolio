@@ -5,6 +5,7 @@ import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { VideoType } from '@/lib/types/models/videos';
@@ -63,6 +64,7 @@ const VideoUpsert: FC<{ video?: VideoType }> = ({ video }) => {
                     route('/admin/videos');
                 }
                 toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });

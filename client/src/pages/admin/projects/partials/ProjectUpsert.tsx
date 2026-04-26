@@ -7,6 +7,7 @@ import { useFetch } from '@/hooks/useFetch';
 import useFetchCategories from '@/hooks/useFetchCategories';
 import useFetchStacks from '@/hooks/useFetchStacks';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import { type ValidationRules } from '@/lib/helpers/validation';
 import type { ProjectType } from '@/lib/types/models/projects';
@@ -83,6 +84,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
             onSuccess: (data) => {
                 // route('/admin/projects');
                 toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });

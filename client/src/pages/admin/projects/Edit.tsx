@@ -13,6 +13,7 @@ import { useEffect, useState } from 'preact/hooks';
 import ModuleDelete from './partials/ModuleDelete';
 import ModuleUpsert from './partials/ModuleUpsert';
 import ProjectUpsert from './partials/ProjectUpsert';
+import { events } from '@/lib/const/events';
 
 const EditProject = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -42,9 +43,14 @@ const EditProject = () => {
 
         fetchProject();
 
-        document.addEventListener('itemDeleted', fetchProject);
+        if (typeof window === 'undefined') {
+            return;
+        }
 
-        return () => document.removeEventListener('itemDeleted', fetchProject);
+        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchProject);
+
+        return () =>
+            window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchProject);
     }, []);
 
     if (errors != null) {

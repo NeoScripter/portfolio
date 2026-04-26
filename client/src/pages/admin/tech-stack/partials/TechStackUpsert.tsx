@@ -5,6 +5,7 @@ import { FormTextArea } from '@/components/form/FormTextArea';
 import { FormWysiwyg } from '@/components/form/FormWysiwyg';
 import { useFetch } from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
@@ -47,8 +48,6 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
             ...(stack && { _method: 'PUT' }),
         });
 
-        console.log(formData);
-
         await fetchData({
             url:
                 stack != null
@@ -58,6 +57,7 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
             payload: formData,
             onSuccess: (data) => {
                 toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });

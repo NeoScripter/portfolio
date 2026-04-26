@@ -5,12 +5,13 @@ import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
+import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { range } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import { useEffect, useState } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
 import ReviewDelete from './partials/ReviewDelete';
-import { API_BASE_URL } from '@/lib/const/api';
 
 const Reviews = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -28,16 +29,20 @@ const Reviews = () => {
 
         fetchReviews();
 
-        document.addEventListener('itemDeleted', fetchReviews);
+        if (typeof window === 'undefined') {
+            return;
+        }
+        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchReviews);
 
-        return () => document.removeEventListener('itemDeleted', fetchReviews);
+        return () =>
+            window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchReviews);
     }, []);
 
     if (errors != null) {
         console.error(errors);
     }
 
-    console.log(reviews)
+    console.log(reviews);
 
     return (
         <DeleteModalProvider>

@@ -11,6 +11,7 @@ import { useEffect, useState } from 'preact/hooks';
 import VideoCard, { VideoFallback } from './partials/VideoCard';
 import VideoDelete from './partials/VideoDelete';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -28,9 +29,13 @@ const Index = () => {
 
         fetchVideos();
 
-        document.addEventListener('itemDeleted', fetchVideos);
+        if (typeof window === 'undefined') {
+            return;
+        }
 
-        return () => document.removeEventListener('itemDeleted', fetchVideos);
+        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchVideos);
+
+        return () => window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchVideos);
     }, []);
 
     if (errors != null) {

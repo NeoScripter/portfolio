@@ -13,6 +13,7 @@ import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
 import { FormLayoutPicker } from './FormLayoutPicker';
 import type { ValidationRules } from '@/lib/helpers/validation';
+import { events } from '@/lib/const/events';
 
 export type ModuleTypeOptions =
     | 'only_text'
@@ -118,7 +119,7 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
             payload: formData,
             onSuccess: () => {
                 toast.success('Success!');
-                document.dispatchEvent(new Event('itemDeleted'));
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });

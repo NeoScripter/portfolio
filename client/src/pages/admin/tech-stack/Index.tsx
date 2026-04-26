@@ -11,6 +11,7 @@ import { useEffect, useState } from 'preact/hooks';
 import TechStackCard, { TechStackFallback } from './partials/TechStackCard';
 import TechStackDelete from './partials/TechStackDelete';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -28,9 +29,9 @@ const Index = () => {
 
         fetchStacks();
 
-        document.addEventListener('itemDeleted', fetchStacks);
+        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchStacks);
 
-        return () => document.removeEventListener('itemDeleted', fetchStacks);
+        return () => window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchStacks);
     }, []);
 
     if (errors != null) {

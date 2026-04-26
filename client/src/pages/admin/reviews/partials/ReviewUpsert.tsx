@@ -5,6 +5,7 @@ import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { buildFormData } from '@/lib/helpers/buildFormData';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { ReviewType } from '@/lib/types/models/reviews';
@@ -58,10 +59,9 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
         });
 
         await fetchData({
-            url:
-                isEdit
-                    ? `${API_BASE_URL}reviews/${review.id}`
-                    : `${API_BASE_URL}reviews`,
+            url: isEdit
+                ? `${API_BASE_URL}reviews/${review.id}`
+                : `${API_BASE_URL}reviews`,
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {
@@ -69,6 +69,7 @@ const ReviewUpsert: FC<{ review?: ReviewType }> = ({ review }) => {
                     route('/admin/reviews');
                 }
                 toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });

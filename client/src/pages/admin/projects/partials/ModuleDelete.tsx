@@ -2,6 +2,7 @@ import DeleteConfirmation from '@/components/form/DeleteConfirmation';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import FormLayout from '@/layouts/FormLayout';
+import { events } from '@/lib/const/events';
 import { toast } from 'sonner';
 
 const ModuleDelete = () => {
@@ -18,7 +19,7 @@ const ModuleDelete = () => {
             onSuccess: () => {
                 module.value = null;
                 toast.success('Deleted!');
-                document.dispatchEvent(new Event('itemDeleted'));
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });
