@@ -46,8 +46,7 @@ class ProjectController extends BaseController
             'title_ru' => ['required', 'string', 'max:300'],
             'description_en' => ['required', 'string', 'max:5000'],
             'description_ru' => ['required', 'string', 'max:5000'],
-            'name_en' => ['required', 'string', 'max:200'],
-            'name_ru' => ['required', 'string', 'max:200'],
+            'category_id' => ['required', 'exists:categories,id'],
             'link' => ['nullable', 'string', 'max:300'],
             'display_order' => ['required', 'max:300'],
             'alt_en' => ['required', 'string', 'max:500'],
@@ -72,13 +71,6 @@ class ProjectController extends BaseController
         $data = $handler->output();
 
         $data['imageable_type'] = 'projects';
-
-        $category = $f3->get('_CATEGORIES');
-        $category->copyFrom($data);
-        $category->save();
-        $category_id = $f3->get('DB')->lastInsertId();
-
-        $data['category_id'] = $category_id;
         $data['slug'] = generate_slug($data['title_en']);
 
         $project = $f3->get('_PROJECTS');
@@ -97,15 +89,13 @@ class ProjectController extends BaseController
 
     public function update($f3)
     {
-        // TODO: check categories for uniqueness
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
             'image' => ['sometimes', 'image:5'],
             'title_en' => ['sometimes', 'string', 'max:300'],
             'title_ru' => ['sometimes', 'string', 'max:300'],
             'description_en' => ['sometimes', 'string', 'max:5000'],
             'description_ru' => ['sometimes', 'string', 'max:5000'],
-            'name_en' => ['required', 'string', 'max:200'],
-            'name_ru' => ['required', 'string', 'max:200'],
+            'category_id' => ['required', 'exists:categories,id'],
             'link' => ['sometimes', 'string', 'max:300'],
             'display_order' => ['sometimes', 'max:300'],
             'alt_en' => ['sometimes', 'string', 'max:500'],
@@ -140,19 +130,11 @@ class ProjectController extends BaseController
             );
         }
 
-        $category = $f3->get('_CATEGORIES');
-        $category->load(['name_en=? OR name_ru=?', $data['name_en'], $data['name_ru']]);
-
-        if (! $category) {
-            $category->copyFrom($data);
-            $category->save();
-        }
-
         if ($data['title_en'] !== $project->title_en) {
             $data['slug'] = generate_slug($data['title_en']);
         }
 
-        $project->category_id = $category->id;
+        $project->category_id = $data['category_id'];
         $project->copyFrom($data);
         $project->save();
 

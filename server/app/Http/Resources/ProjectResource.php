@@ -20,15 +20,12 @@ class ProjectResource
                     'ru' => $project['description_ru'],
                     'en' => $project['description_en'],
                 ],
-                'category' => [
-                    'ru' => $project['category_ru'],
-                    'en' => $project['category_en'],
-                ],
                 'stacks' => $stacks,
                 'slug' => $project['slug'],
                 'link' => $project['link'],
                 'display_order' => $project['display_order'],
             ],
+            'category_id' => $project['category_id'],
             'image' => [
                 'srcSet' => [
                     'dk' => $project['dk_webp'],
