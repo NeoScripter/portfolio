@@ -30,9 +30,9 @@ const Faqs = () => {
 
         fetchFaqs();
 
-        document.addEventListener(events.FORM_SUCCESS_EVENT, fetchFaqs);
+        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchFaqs);
 
-        return () => document.removeEventListener(events.FORM_SUCCESS_EVENT, fetchFaqs);
+        return () => window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchFaqs);
     }, []);
 
     return (
