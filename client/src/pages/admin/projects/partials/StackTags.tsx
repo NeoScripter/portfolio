@@ -1,7 +1,7 @@
-
 import type { ServerError } from '@/hooks/useForm';
 import { cn, range } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
+import { Trash2 } from 'lucide-preact';
 import type { FC } from 'preact/compat';
 
 type Props = NodeProps & {
@@ -9,6 +9,7 @@ type Props = NodeProps & {
     errors?: ServerError | null;
     stacks: string[] | null;
     onClick: (stack: string) => void;
+    isDestructive: boolean;
 };
 
 const StackTags: FC<Props> = ({
@@ -17,6 +18,7 @@ const StackTags: FC<Props> = ({
     loading,
     errors,
     stacks,
+    isDestructive,
 }) => {
     if (loading) {
         return (
@@ -45,11 +47,19 @@ const StackTags: FC<Props> = ({
                     type="button"
                     key={stack}
                     class={cn(
-                        'hover:border-ring hover:ring-ring/50 border-foreground/20 rounded border px-3 py-1 transition-[color,box-shadow,border] hover:shadow-sm hover:ring-[3px]',
+                        isDestructive
+                            ? 'group relative'
+                            : 'hover:border-ring hover:ring-ring/50 hover:shadow-sm hover:ring-[3px]',
+                        'border-foreground/20 rounded border px-3 py-1 transition-[color,box-shadow,border]',
                     )}
                     onClick={() => onClick(stack)}
                 >
                     {stack}
+                    {isDestructive && (
+                        <span className="absolute inset-0 flex items-center justify-center bg-red-500/50 text-white opacity-0 transition-opacity group-hover:opacity-100">
+                            <Trash2 className="size-4" />
+                        </span>
+                    )}
                 </button>
             ))}
         </div>

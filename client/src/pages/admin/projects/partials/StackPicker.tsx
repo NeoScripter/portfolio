@@ -71,6 +71,7 @@ const StackPicker: FC<StackPickerProps> = ({
                     key="selected"
                     onClick={onRemove}
                     stacks={selectedStacks}
+                    isDestructive={true}
                 />
                 <div class="flex items-center gap-2">
                     <FormInput
@@ -100,6 +101,7 @@ const StackPicker: FC<StackPickerProps> = ({
                     }}
                     stacks={availableStacks}
                     loading={loading}
+                    isDestructive={false}
                 />
             </div>
         </div>

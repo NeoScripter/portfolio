@@ -51,6 +51,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         loading: categoriesLoading,
         errors: categoriesErrors,
     } = useFetchCategories();
+
     const { stacks, loading: stacksLoading } = useFetchStacks();
 
     const { fetchData } = useFetch();
