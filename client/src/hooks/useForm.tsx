@@ -1,3 +1,4 @@
+import { events } from '@/lib/const/events';
 import { validate, type ValidationRules } from '@/lib/helpers/validation';
 import type { LocaleType } from '@/signals/locale';
 import {
@@ -5,7 +6,7 @@ import {
     createSessionSignal,
 } from '@/signals/session-store';
 import type { FormEvent } from 'preact/compat';
-import { useCallback, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
 
 export type FormValues = Record<string, unknown>;
 type FormErrors<T extends FormValues> = Partial<Record<keyof T, string>>;
@@ -175,6 +176,17 @@ export const useForm = <T extends FormValues>(
         }
 
         errorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, []);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
+        window.addEventListener(events.FORM_SUCCESS_EVENT, resetForm);
+
+        return () =>
+            window.removeEventListener(events.FORM_SUCCESS_EVENT, resetForm);
     }, []);
 
     const setFormValues = useCallback((newValues: T) => {

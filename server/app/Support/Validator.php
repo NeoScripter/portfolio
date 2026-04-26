@@ -58,6 +58,7 @@ class Validator
 
             foreach ($rule_set as $rule) {
                 [$name, $param] = explode(':', $rule . ':', 2);
+                $param = rtrim($param, ':');
 
                 $error = match ($name) {
                     'required' => $this->required($this->values[$key]),
@@ -97,8 +98,8 @@ class Validator
 
         $res = $db->exec("
             SELECT EXISTS (
-                SELECT 1 FROM `$table` WHERE `$field` = ?
-            ) AS `exists`
+                SELECT 1 FROM $table WHERE $field = ?
+            ) AS exists
         ", [$value]);
 
         if (empty($res) || !$res[0]['exists']) {
@@ -114,8 +115,8 @@ class Validator
 
         $res = $db->exec("
             SELECT EXISTS (
-                SELECT 1 FROM `$table` WHERE `$field` = ?
-            ) AS `exists`
+                SELECT 1 FROM $table WHERE $field = ?
+            ) AS exists
         ", [$value]);
 
         if ($res[0]['exists']) {

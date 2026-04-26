@@ -25,10 +25,11 @@ class CategoryController extends BaseController
 
     public function store($f3)
     {
-        $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
+        $validator = Validator::make(get_json(), [
             'name_en' => ['required', 'string', 'max:200', 'unique:categories,name_en'],
             'name_ru' => ['required', 'string', 'max:200', 'unique:categories,name_ru'],
         ]);
+
 
         if ($validator->fails()) {
             send_json(['errors' => $validator->errors()], 422);

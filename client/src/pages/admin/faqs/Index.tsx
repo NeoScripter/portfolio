@@ -11,6 +11,7 @@ import { useEffect, useState } from 'preact/hooks';
 import FaqCard, { FaqCardSkeleton } from './partials/FaqCard';
 import FaqDelete from './partials/FaqDelete';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 
 const Faqs = () => {
     const { fetchData, loading } = useFetch();
@@ -29,9 +30,9 @@ const Faqs = () => {
 
         fetchFaqs();
 
-        document.addEventListener('itemDeleted', fetchFaqs);
+        document.addEventListener(events.FORM_SUCCESS_EVENT, fetchFaqs);
 
-        return () => document.removeEventListener('itemDeleted', fetchFaqs);
+        return () => document.removeEventListener(events.FORM_SUCCESS_EVENT, fetchFaqs);
     }, []);
 
     return (

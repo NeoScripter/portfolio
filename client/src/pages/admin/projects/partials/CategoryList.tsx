@@ -1,6 +1,7 @@
 import { useFetch } from '@/hooks/useFetch';
 import useFetchCategories from '@/hooks/useFetchCategories';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { X } from 'lucide-preact';
 import { toast } from 'sonner';
 import CategoryCreate from './CategoryUpsert';
@@ -16,13 +17,14 @@ const CategoryList = () => {
             method: 'DELETE',
             onSuccess: (data) => {
                 toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });
     }
 
     if (errors != null) {
-        return <div className='text-red-500'>Error fetching categories :(</div>;
+        return <div className="text-red-500">Error fetching categories :(</div>;
     }
 
     return (

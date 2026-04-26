@@ -4,6 +4,7 @@ import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 import { useFetch } from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { FaqType } from '@/lib/types/models/faqs';
 import type { FC } from 'preact/compat';
@@ -35,7 +36,8 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
         [faq],
     );
 
-    const url = faq != null ? `${API_BASE_URL}faqs/${faq.id}` : `${API_BASE_URL}faqs`;
+    const url =
+        faq != null ? `${API_BASE_URL}faqs/${faq.id}` : `${API_BASE_URL}faqs`;
     const method = faq != null ? 'PUT' : 'POST';
 
     async function submit(values: FaqUpsertState) {
@@ -45,6 +47,7 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
             payload: values,
             onSuccess: (data) => {
                 toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });

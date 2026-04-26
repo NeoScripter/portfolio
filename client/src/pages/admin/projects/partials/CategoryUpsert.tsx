@@ -33,6 +33,7 @@ const CategoryCreate: FC<{ project?: CategoryType }> = ({ project }) => {
             payload: values,
             onSuccess: (data) => {
                 toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event('invalidateTrigger'));
             },
             onError: () => toast.error('Error'),
         });
@@ -47,9 +48,7 @@ const CategoryCreate: FC<{ project?: CategoryType }> = ({ project }) => {
         >
             <FormInput name="name_en" label="Name (EN)" required />
             <FormInput name="name_ru" label="Name (RU)" required />
-            <FormButtons
-                submitText={'Create'}
-            />
+            <FormButtons submitText={'Create'} />
         </Form>
     );
 };

@@ -1,6 +1,7 @@
 import { useDebounce } from '@/hooks/useDebounce';
 import { useFetch } from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import type { ProjectResource } from '@/lib/types/models/projects';
 import { useLocation } from 'preact-iso';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -39,9 +40,6 @@ const useFetchProjects = ({ searchQuery }: FetchProjectsArgs) => {
     };
 
     useEffect(() => {
-        if (!isBrowser) {
-            return;
-        }
         const fetchProjects = () => {
             // let url = `/api/projects.json?page=${currentPage}&search=${debouncedQuery}`;
             let url = `${API_BASE_URL}projects`;
@@ -55,9 +53,16 @@ const useFetchProjects = ({ searchQuery }: FetchProjectsArgs) => {
 
         fetchProjects();
 
-        document.addEventListener('itemDeleted', fetchProjects);
+        if (!isBrowser) {
+            return;
+        }
+        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchProjects);
 
-        return () => document.removeEventListener('itemDeleted', fetchProjects);
+        return () =>
+            window.removeEventListener(
+                events.FORM_SUCCESS_EVENT,
+                fetchProjects,
+            );
     }, [currentPage, debouncedQuery]);
 
     return { projectData, errors, loading, projectsRef, handlePageClick };
