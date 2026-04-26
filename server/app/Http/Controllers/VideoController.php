@@ -2,11 +2,11 @@
 
 namespace Http\Controllers;
 
-use Http\Resources\VideoResource;
+use Http\BaseController;
 use Support\ImageHandler;
 use Support\Validator;
 
-class VideoController extends VideoResource
+class VideoController extends BaseController
 {
     public function index($f3)
     {

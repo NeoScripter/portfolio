@@ -4,7 +4,7 @@ namespace Http\Resources;
 
 class FaqResource
 {
-    protected function to_resource($faq)
+    public static function to_resource($faq)
     {
         return [
             'id' => $faq['id'],

@@ -2,11 +2,11 @@
 
 namespace Http\Controllers;
 
-use Http\Resources\ReviewResource;
+use Http\BaseController;
 use Support\ImageHandler;
 use Support\Validator;
 
-class ReviewController extends ReviewResource
+class ReviewController extends BaseController
 {
     public function index($f3)
     {

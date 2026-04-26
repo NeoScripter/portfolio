@@ -2,10 +2,10 @@
 
 namespace Http\Controllers;
 
-use Http\Resources\FaqResource;
+use Http\BaseController;
 use Support\Validator;
 
-class FaqController extends FaqResource
+class FaqController extends BaseController
 {
     public function index($f3)
     {

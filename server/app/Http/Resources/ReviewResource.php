@@ -4,7 +4,7 @@ namespace Http\Resources;
 
 class ReviewResource
 {
-    protected function to_resource($review)
+    public static function to_resource($review)
     {
         return [
             'id' => $review['id'],

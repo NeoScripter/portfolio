@@ -4,7 +4,7 @@ namespace Http\Resources;
 
 class ProjectResource
 {
-    protected function to_resource($project)
+    public static function to_resource($project)
     {
         $stacks = !empty($project['tech_stack']) ?
             explode(',', $project['tech_stack']) : [];

@@ -2,11 +2,11 @@
 
 namespace Http\Controllers;
 
-use Http\Resources\ProjectResource;
+use Http\BaseController;
 use Support\ImageHandler;
 use Support\Validator;
 
-class ProjectController extends ProjectResource
+class ProjectController extends BaseController
 {
     public function index($f3)
     {

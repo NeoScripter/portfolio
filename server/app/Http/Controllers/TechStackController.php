@@ -2,11 +2,11 @@
 
 namespace Http\Controllers;
 
-use Http\Resources\TechStackResource;
+use Http\BaseController;
 use Support\ImageHandler;
 use Support\Validator;
 
-class TechStackController extends TechStackResource
+class TechStackController extends BaseController
 {
     public function index($f3)
     {
@@ -54,9 +54,15 @@ class TechStackController extends TechStackResource
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $data = $validator->validated();
-        $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
-        $handler->resize_all();
+        $raw = $validator->validated();
+        $handler = ImageHandler::make(
+            $raw,
+            'url',
+            [['url', 160, 'webp']],
+            'stacks'
+        )->resize_one();
+
+        $data = $handler->output();
 
         add_markdown_field($data, 'body_en', 'html_en');
         add_markdown_field($data, 'body_ru', 'html_ru');
@@ -88,15 +94,19 @@ class TechStackController extends TechStackResource
         $stack->load(['id=?', $f3->get('PARAMS.id')]);
 
         if (isset($data['url'])) {
-            $handler = ImageHandler::make($data, 'url', [['url', 160, 'webp']], 'stacks');
-
             $file_path = APP_DIR . '/public/' . $stack->url;
 
             if (file_exists($file_path)) {
                 unlink($file_path);
             }
 
-            $handler->resize_all();
+            $handler = ImageHandler::make(
+                $data,
+                'url',
+                [['url', 160, 'webp']],
+                'stacks'
+            )->resize_one();
+            $data = $handler->output();
         }
 
         add_markdown_field($data, 'body_en', 'html_en');

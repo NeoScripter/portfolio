@@ -74,6 +74,24 @@ class ImageHandler
         return $this;
     }
 
+    public function resize_one(): static
+    {
+        if (empty($this->sizes)) {
+            $this->error = 'No sizes are given';
+            return $this;
+        }
+        try {
+            [$key, $width, $format] = array_pop($this->sizes);
+            $this->data[$key] = $this->resize_image($width, $format);
+
+            $this->output = $this->data;
+        } catch (RuntimeException $e) {
+            $this->error = $e->getMessage();
+        }
+
+        return $this;
+    }
+
     public static function delete_morph_images(int|string $parent_id, string $parent_type)
     {
         if (is_string($parent_id)) {

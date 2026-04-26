@@ -4,7 +4,7 @@ namespace Http\Resources;
 
 class TechStackResource
 {
-    protected function to_resource($stack)
+    public static function to_resource($stack)
     {
         return [
             'id' => $stack['id'],

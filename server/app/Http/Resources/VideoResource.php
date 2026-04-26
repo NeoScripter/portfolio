@@ -4,7 +4,7 @@ namespace Http\Resources;
 
 class VideoResource
 {
-    protected function to_resource($video)
+    public static function to_resource($video)
     {
         return [
             'id' => $video['id'],
