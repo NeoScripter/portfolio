@@ -36,7 +36,6 @@ const FormInput: FC<FormInputProps> = ({
             <Input
                 id={id}
                 required={required}
-                class="text-base!"
                 value={value}
                 onInput={(e) => {
                     onInput((e.target as HTMLTextAreaElement).value);

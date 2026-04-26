@@ -1,15 +1,17 @@
+import { AuthButton } from '@/components/ui/AuthButton';
+import { cn } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
 import type { FC } from 'preact/compat';
 import { useState } from 'preact/hooks';
-import StackTags from './StackTags';
-import { AuthButton } from '@/components/ui/AuthButton';
 import FormInput from './FormInput';
-import { cn } from '@/lib/helpers/utils';
+import StackTags from './StackTags';
 
 type StackPickerProps = NodeProps & {
     selectedStacks: string[];
     availableStacks: string[];
     onAdd: (stack: string) => void;
+    onError: (stack: string) => void;
+    isError: boolean;
     onRemove: (stack: string) => void;
     loading?: boolean;
     errors?: string;
@@ -22,12 +24,13 @@ const StackPicker: FC<StackPickerProps> = ({
     availableStacks,
     onAdd,
     onRemove,
+    onError,
     loading = false,
     label,
+    isError,
     errors,
 }) => {
     const [searchValue, setSearchValue] = useState('');
-    const [isError, setIsError] = useState(false);
 
     const handleAdd = () => {
         if (searchValue.trim() === '') {
@@ -41,8 +44,8 @@ const StackPicker: FC<StackPickerProps> = ({
                 .map((t) => t.toLowerCase())
                 .includes(searchValue.trim().toLowerCase())
         ) {
-            setIsError((o) => !o);
-            setTimeout(() => setIsError(false), 2000);
+            onError('This tag is already on the list');
+            setTimeout(() => onError(''), 4000);
             return;
         }
         onAdd(searchValue.trim());
@@ -77,11 +80,15 @@ const StackPicker: FC<StackPickerProps> = ({
                         onKeyDown={handleKeyDown}
                         className={cn(
                             isError &&
-                                '[&_input]:border-red-500 [&_input]:text-red-500 [&_input]:focus-visible:border-red-500',
+                                '[&_input]:border-red-500 [&_input]:text-red-500 [&_input]:focus-visible:border-red-500 [$_input]:text-sm',
                         )}
                         error={errors}
                     />
-                    <AuthButton type="button" onClick={handleAdd} variant="default">
+                    <AuthButton
+                        type="button"
+                        onClick={handleAdd}
+                        variant="default"
+                    >
                         Add
                     </AuthButton>
                 </div>

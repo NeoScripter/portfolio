@@ -1,7 +1,7 @@
+import InputError from '@/components/form/InputError';
+import Label from '@/components/form/Label';
 import { useFormContext } from '@/context/FormContext';
 import StackPicker from './StackPicker';
-import Label from '@/components/form/Label';
-import InputError from '@/components/form/InputError';
 
 type FormStackPickerProps = {
     name: string;
@@ -18,7 +18,7 @@ export const FormStackPicker = ({
     loading = false,
     required = false,
 }: FormStackPickerProps) => {
-    const { values, errors, touched, handleChange, handleBlur } =
+    const { values, errors, setFieldError, touched, handleChange, handleBlur } =
         useFormContext();
 
     const selected = (values[name] as string[]) ?? [];
@@ -30,8 +30,15 @@ export const FormStackPicker = ({
     };
 
     const handleRemove = (stack: string) => {
-        handleChange(name, selected.filter((s) => s !== stack));
+        handleChange(
+            name,
+            selected.filter((s) => s !== stack),
+        );
         handleBlur(name);
+    };
+
+    const handleError = (error: string) => {
+        setFieldError(name, error);
     };
 
     return (
@@ -48,6 +55,8 @@ export const FormStackPicker = ({
                 onAdd={handleAdd}
                 onRemove={handleRemove}
                 loading={loading}
+                onError={handleError}
+                isError={!!hasError}
             />
             {hasError && <InputError message={errors[name]} />}
         </div>
