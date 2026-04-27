@@ -21,7 +21,6 @@ class FaqSeeder
             );
         }
 
-
         echo "Faqs seeded.\n";
     }
 }
