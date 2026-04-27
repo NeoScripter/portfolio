@@ -6,15 +6,14 @@ import { FormTextArea } from '@/components/form/FormTextArea';
 import { FormWysiwyg } from '@/components/form/FormWysiwyg';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
+import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { buildFormData } from '@/lib/helpers/buildFormData';
+import type { ValidationRules } from '@/lib/helpers/validation';
 import type { ModuleType } from '@/lib/types/models/module';
 import type { FC } from 'preact/compat';
-import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
 import { FormLayoutPicker } from './FormLayoutPicker';
-import type { ValidationRules } from '@/lib/helpers/validation';
-import { events } from '@/lib/const/events';
-import { API_BASE_URL } from '@/lib/const/api';
 
 export type ModuleTypeOptions =
     | 'only_text'
@@ -55,24 +54,21 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
 
     const isEdit = module != null;
 
-    const initialValues = useMemo<ModuleUpsertState>(
-        () => ({
-            project_id: projectId,
-            heading_en: module?.attr?.heading?.en ?? '',
-            heading_ru: module?.attr?.heading?.ru ?? '',
-            body_en: module?.attr?.body?.en ?? '',
-            body_ru: module?.attr?.body?.ru ?? '',
-            priority: module?.attr?.priority ?? 1,
-            type: module?.attr?.type ?? 'only_text',
-            first_image: null,
-            second_image: null,
-            first_alt_en: module?.firstImage?.alt?.en ?? '',
-            first_alt_ru: module?.firstImage?.alt?.ru ?? '',
-            second_alt_en: module?.secondImage?.alt?.en ?? '',
-            second_alt_ru: module?.secondImage?.alt?.ru ?? '',
-        }),
-        [module, projectId],
-    );
+    const initialValues = {
+        project_id: projectId,
+        heading_en: module?.attr?.heading?.en ?? '',
+        heading_ru: module?.attr?.heading?.ru ?? '',
+        body_en: module?.attr?.body?.en ?? '',
+        body_ru: module?.attr?.body?.ru ?? '',
+        priority: module?.attr?.priority ?? 1,
+        type: module?.attr?.type ?? 'only_text',
+        first_image: null,
+        second_image: null,
+        first_alt_en: module?.firstImage?.alt?.en ?? '',
+        first_alt_ru: module?.firstImage?.alt?.ru ?? '',
+        second_alt_en: module?.secondImage?.alt?.en ?? '',
+        second_alt_ru: module?.secondImage?.alt?.ru ?? '',
+    };
 
     async function submit(values: ModuleUpsertState) {
         const formData = buildFormData({
@@ -81,15 +77,14 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
         });
 
         await fetchData({
-            url:
-                isEdit
-                    ? `${API_BASE_URL}modules/${module.id}`
-                    : `${API_BASE_URL}modules`,
+            url: isEdit
+                ? `${API_BASE_URL}modules/${module.id}`
+                : `${API_BASE_URL}modules`,
             method: 'POST',
             payload: formData,
-            onSuccess: () => {
-                toast.success('Success!');
-                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
+            onSuccess: (data) => {
+                toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event(events.UPDATE_MODULE_EVENT));
             },
             onError: () => toast.error('Error'),
         });
@@ -164,7 +159,7 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
                         shouldBackup={true}
                         onDelete={() => {
                             itemToDelete.value = module;
-                        }}  
+                        }}
                     />
                 </>
             )}

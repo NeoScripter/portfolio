@@ -6,21 +6,23 @@ import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
+import type { ModuleType } from '@/lib/types/models/module';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { Clapperboard, PanelsTopLeft } from 'lucide-preact';
-import { useRoute } from 'preact-iso';
+import { useLocation, useRoute } from 'preact-iso';
 import { useEffect, useState } from 'preact/hooks';
 import ModuleDelete from './partials/ModuleDelete';
 import ModuleUpsert from './partials/ModuleUpsert';
 import ProjectUpsert from './partials/ProjectUpsert';
-import { events } from '@/lib/const/events';
-import type { ModuleType } from '@/lib/types/models/module';
 
-const EditProject = () => {
+const Edit = () => {
     const { fetchData, loading, errors } = useFetch();
     const [project, setProject] = useState<ProjectType | null>(null);
     const [modules, setModules] = useState<ModuleType[] | null>(null);
     const [visibleItem, setVisibleItem] = useState<number | null>(0);
+
+    const { route } = useLocation();
     const {
         params: { slug },
     } = useRoute();
@@ -35,12 +37,22 @@ const EditProject = () => {
 
     useEffect(() => {
         const fetchProject = () => {
+            console.log('refetching project');
             fetchData({
                 url: `${API_BASE_URL}projects/${slug}`,
                 onSuccess: (data) => {
                     setProject(data.data);
                 },
+                onError: (err) => {
+                    if (err.message == 'Project not found') {
+                        route('/admin/projects');
+                    }
+                },
             });
+        };
+
+        const fetchModules = () => {
+            console.log('refetching mdules');
             fetchData({
                 url: `${API_BASE_URL}modules/${slug}`,
                 onSuccess: (data) => {
@@ -50,16 +62,23 @@ const EditProject = () => {
         };
 
         fetchProject();
+        fetchModules();
 
         if (typeof window === 'undefined') {
             return;
         }
 
         window.addEventListener(events.FORM_SUCCESS_EVENT, fetchProject);
+        window.addEventListener(events.UPDATE_MODULE_EVENT, fetchModules);
 
-        return () =>
+        return () => {
             window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchProject);
-    }, []);
+            window.removeEventListener(
+                events.UPDATE_MODULE_EVENT,
+                fetchModules,
+            );
+        };
+    }, [slug]);
 
     if (errors != null) {
         console.error(errors);
@@ -100,7 +119,8 @@ const EditProject = () => {
                             <ModuleUpsert projectId={project.id} />
                         </AccordionLayout>
                     )}
-                    {project && modules &&
+                    {project &&
+                        modules &&
                         modules.map((module, idx) => (
                             <AccordionLayout
                                 showIcon={PanelsTopLeft}
@@ -126,4 +146,4 @@ const EditProject = () => {
     );
 };
 
-export default EditProject;
+export default Edit;
