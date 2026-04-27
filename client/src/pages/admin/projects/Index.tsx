@@ -8,11 +8,12 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import { useSignal } from '@preact/signals';
-import { ListTodo, Split } from 'lucide-preact';
+import { ListTodo } from 'lucide-preact';
 import { useState } from 'preact/hooks';
 import CategoryList from './partials/CategoryList';
 import ProjectCard, { ProjectFallback } from './partials/ProjectCard';
 import ProjectDelete from './partials/ProjectDelete';
+import SearchBox from './partials/SearchBox';
 
 const Index = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -48,18 +49,13 @@ const Index = () => {
                     </AccordionLayout>
 
                     <AdminShellNav href={'projects/create'} />
-                    {/* {projectData?.meta && ( */}
-                    {/*     <div className="bg-background sticky top-0 z-10"> */}
-                    {/*         <Pagination */}
-                    {/*             onClick={handlePageClick} */}
-                    {/*             meta={projectData.meta} */}
-                    {/*         /> */}
-                    {/*         <SearchBox */}
-                    {/*             value={searchQuery} */}
-                    {/*             handleChange={handleInputChange} */}
-                    {/*         /> */}
-                    {/*     </div> */}
-                    {/* )} */}
+                    <div className="bg-background sticky top-0 z-10">
+                        <SearchBox
+                            value={searchQuery}
+                            handleChange={handleInputChange}
+                            className="mb-2"
+                        />
+                    </div>
                     {loading ? (
                         <ul ref={projectsRef} className="space-y-8">
                             {range(0, 8).map((idx) => (

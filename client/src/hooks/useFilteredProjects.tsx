@@ -42,7 +42,7 @@ const useFilteredProjects = ({ searchQuery }: FetchProjectsArgs) => {
     useEffect(() => {
         const fetchProjects = () => {
             // let url = `/api/projects.json?page=${currentPage}&search=${debouncedQuery}`;
-            let url = `${API_BASE_URL}projects`;
+            let url = `${API_BASE_URL}projects?search=${debouncedQuery}`;
             fetchData({
                 url: url,
                 onSuccess: (data) => {
