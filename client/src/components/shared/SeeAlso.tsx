@@ -18,10 +18,10 @@ const SeeAlso: FC<{
     const [projects, setProjects] = useState<ProjectType[] | null>(null);
 
     useEffect(() => {
-        let req = `${API_BASE_URL}projects`;
+        let req = `${API_BASE_URL}projects?limit=3`;
 
         if (excludedId != null) {
-            req += `${req}&exclude=${excludedId}`;
+            req = `${req}&exclude=${excludedId}`;
         }
         fetchData({
             url: req,
@@ -29,7 +29,7 @@ const SeeAlso: FC<{
                 setProjects(data.data);
             },
         });
-    }, []);
+    }, [excludedId]);
 
     if (projects && projects.length === 0) {
         return null;

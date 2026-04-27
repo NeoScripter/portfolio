@@ -48,7 +48,9 @@ const ProjectTile: FC<NodeProps<{ project: ProjectType }>> = ({
                         href={`/gallery/${project.attr.slug}`}
                         variant="primary"
                     >
-                        Перейти к проекту
+                        {lang === 'ru'
+                            ? 'Перейти к проекту'
+                            : 'View project'}
                     </Button>
                 </div>
             </div>
