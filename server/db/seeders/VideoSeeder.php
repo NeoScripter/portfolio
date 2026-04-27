@@ -9,7 +9,7 @@ class VideoSeeder
 {
     public function run($f3)
     {
-        for ($i = 0; $i < 8; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $this->seed_one($f3);
         }
     }
@@ -17,7 +17,7 @@ class VideoSeeder
     private function seed_one($f3)
     {
         $db = $f3->get('DB');
-        $videos = (new VideoFactory())->makeMany(5);
+        $videos = (new VideoFactory())->makeMany(1);
 
         foreach ($videos as $video) {
             $db->exec(

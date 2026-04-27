@@ -12,10 +12,6 @@ class TechStackController extends BaseController
     {
         $stacks = $f3->get('_STACKS')->find();
 
-        if (empty($stacks)) {
-            send_json(['message' =>  "Stacks not found"], 404);
-        }
-
         $stacks = [
             'data' => array_map(
                 fn($stack) => $this->to_resource($stack),

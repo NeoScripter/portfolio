@@ -11,7 +11,45 @@ class ProjectController extends BaseController
 {
     public function index($f3)
     {
-        $projects = $f3->get('_PROJECTS_VIEW')->find();
+        $filter = null;
+        $options = [];
+
+        $check = function ($param, $is_num = true) use ($f3) {
+            return isset($f3->GET[$param]) && !empty($f3->GET[$param]) && ($is_num ? is_numeric($f3->GET[$param]) : true);
+        };
+
+        if ($check('limit')) {
+            $options['limit'] = (int)$f3->GET['limit'];
+        }
+
+        if ($check('exlude')) {
+            $filter = ['id NOT IN (?)', (int)$f3->GET['exclude']];
+        }
+
+        if ($check('search', false)) {
+            $searchTerm = '%' . $f3->GET['search'] . '%';
+
+            $searchCondition = '(
+                title_ru ILIKE ? OR 
+                title_en ILIKE ? OR 
+                description_ru ILIKE ? OR 
+                description_en ILIKE ? OR 
+                tech_stack ILIKE ? OR 
+                category_ru ILIKE ? OR 
+                category_en ILIKE ?
+            )';
+
+            $bindings = array_fill(0, 7, $searchTerm);
+
+            if ($filter === null) {
+                $filter = array_merge([$searchCondition], $bindings);
+            } else {
+                $filter[0] .= ' AND ' . $searchCondition;
+                $filter = array_merge($filter, $bindings);
+            }
+        }
+
+        $projects = $f3->get('_PROJECTS_VIEW')->find($filter, $options);
 
         $projects = array_map(
             fn($project) => $this->to_resource($project),
