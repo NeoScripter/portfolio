@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS projects (
     title_en TEXT,
     description_ru TEXT,
     description_en TEXT,
-    display_order INTEGER DEFAULT 100,
+    priority INTEGER DEFAULT 100,
     mockup INTEGER DEFAULT 1,
     slug VARCHAR NOT NULL UNIQUE,
     link VARCHAR,

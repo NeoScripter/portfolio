@@ -34,5 +34,6 @@ SELECT
     i.alt_ru,
     i.alt_en,
     i.created_at AS image_created_at
+
 FROM reviews r
 LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews';

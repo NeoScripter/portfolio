@@ -23,7 +23,8 @@ class ProjectResource
                 'stacks' => $stacks,
                 'slug' => $project['slug'],
                 'link' => $project['link'],
-                'display_order' => $project['display_order'],
+                'mockup' => $project['mockup'],
+                'priority' => $project['priority'],
             ],
             'category_id' => $project['category_id'],
             'image' => [

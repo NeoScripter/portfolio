@@ -32,4 +32,3 @@ CREATE TABLE IF NOT EXISTS images (
 
 CREATE INDEX IF NOT EXISTS idx_images_imageable 
 ON images (imageable_id, imageable_type);
-

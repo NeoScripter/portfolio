@@ -7,36 +7,22 @@ use Support\ImageHandler;
 use Support\Validator;
 use Web;
 
-class ProjectController extends BaseController
+class ModuleController extends BaseController
 {
     public function index($f3)
     {
-        $projects = $f3->get('_PROJECTS_VIEW')->find();
+        $modules = $f3->get('_MODULES_VIEW')->find();
 
-        $projects = array_map(
-            fn($project) => $this->to_resource($project),
-            $projects
+        $modules = array_map(
+            fn($module) => $this->to_resource($module),
+            $modules
         );
 
         $data = [
-            'data' => $projects
+            'data' => $modules
         ];
 
         send_json($data);
-    }
-
-    public function edit($f3)
-    {
-        $project = $f3->get('_PROJECTS_VIEW')
-            ->load(['slug=?', $f3->get('PARAMS.slug')]);
-
-        if (! $project) {
-            send_json(['message' =>  "Project not found"], 404);
-        }
-
-        send_json(
-            ["data" => $this->to_resource($project)]
-        );
     }
 
     public function store($f3)
@@ -63,7 +49,7 @@ class ProjectController extends BaseController
         $raw = $validator->validated();
 
         $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
-        $handler = ImageHandler::make($raw, 'image', $sizes, 'projects')
+        $handler = ImageHandler::make($raw, 'image', $sizes, 'modules')
             ->insert_mockup((int) $raw['mockup'])
             ->resize_all();
 
@@ -73,21 +59,21 @@ class ProjectController extends BaseController
 
         $data = $handler->output();
 
-        $data['imageable_type'] = 'projects';
+        $data['imageable_type'] = 'modules';
 
         $data['slug'] = Web::instance()->slug(
-            $data['title_en'] . '-' . get_latest_id('projects') + 1
+            $data['title_en'] . '-' . get_latest_id('modules')
         );
 
-        $project = $f3->get('_PROJECTS');
-        $project->copyFrom($data);
-        $project->save();
-        $project_id = $f3->get('DB')->lastInsertId();
+        $module = $f3->get('_MODULES');
+        $module->copyFrom($data);
+        $module->save();
+        $module_id = $f3->get('DB')->lastInsertId();
 
         $db = $f3->get('DB');
         $tools = $data['technologies'] ?? [];
 
-        // Create all the missing technologies and attach them to the project
+        // Create all the missing technologies and attach them to the module
         if (! empty($tools)) {
 
             $db->exec(
@@ -98,21 +84,21 @@ class ProjectController extends BaseController
             );
 
             $db->exec(
-                "INSERT INTO project_technology (project_id, technology_id)
+                "INSERT INTO module_technology (module_id, technology_id)
                 SELECT ?, id FROM technologies
                 WHERE name IN (" . to_wildcards($tools) . ")
                 ON CONFLICT DO NOTHING",
-                array_merge([$project_id], $tools)
+                array_merge([$module_id], $tools)
             );
         }
 
-        $data['imageable_id'] = $project_id;
+        $data['imageable_id'] = $module_id;
 
         $img = $f3->get('_IMAGES');
         $img->copyFrom($data);
         $img->save();
 
-        send_json(['message' => 'Project successfully created!']);
+        send_json(['message' => 'Module successfully created!']);
     }
 
     public function update($f3)
@@ -138,25 +124,25 @@ class ProjectController extends BaseController
 
         $data = $validator->validated();
 
-        $project = $f3->get('_PROJECTS');
-        $project->load(['slug=?', $f3->get('PARAMS.slug')]);
-        $project_id = $project->id;
+        $module = $f3->get('_MODULES');
+        $module->load(['slug=?', $f3->get('PARAMS.slug')]);
+        $module_id = $module->id;
 
         $db = $f3->get('DB');
 
         $current_tools = array_column(
             $db->exec(
                 'SELECT t.name FROM technologies t
-                JOIN project_technology rel ON rel.technology_id = t.id
-                WHERE rel.project_id = ?',
-                [$project_id]
+                JOIN module_technology rel ON rel.technology_id = t.id
+                WHERE rel.module_id = ?',
+                [$module_id]
             ),
             'name'
         );
 
         if (isset($data['image'])) {
             $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
-            $handler = ImageHandler::make($data, 'image', $sizes, 'projects')
+            $handler = ImageHandler::make($data, 'image', $sizes, 'modules')
                 ->insert_mockup((int) $data['mockup'])
                 ->resize_all();
 
@@ -167,18 +153,18 @@ class ProjectController extends BaseController
             $data = $handler->output();
 
             ImageHandler::delete_morph_images(
-                $project->id,
-                'projects'
+                $module->id,
+                'modules'
             );
         }
 
-        if ($data['title_en'] !== $project->title_en) {
-            $data['slug'] = Web::instance()->slug($data['title_en'] . "-{$project_id}");
+        if ($data['title_en'] !== $module->title_en) {
+            $data['slug'] = Web::instance()->slug($data['title_en'] . "-{$module_id}");
         }
 
-        $project->category_id = $data['category_id'];
-        $project->copyFrom($data);
-        $project->save();
+        $module->category_id = $data['category_id'];
+        $module->copyFrom($data);
+        $module->save();
 
         $tools = $data['technologies'] ?? [];
 
@@ -193,11 +179,11 @@ class ProjectController extends BaseController
             );
 
             $db->exec(
-                "INSERT INTO project_technology (project_id, technology_id)
+                "INSERT INTO module_technology (module_id, technology_id)
                 SELECT ?, id FROM technologies
                 WHERE name IN (" . to_wildcards($tools) . ")
                 ON CONFLICT DO NOTHING",
-                array_merge([$project_id], $tools)
+                array_merge([$module_id], $tools)
             );
         }
 
@@ -207,55 +193,55 @@ class ProjectController extends BaseController
         if (! empty($discarded)) {
 
             $db->exec(
-                "DELETE FROM project_technology
-                WHERE project_id = ?
+                "DELETE FROM module_technology
+                WHERE module_id = ?
                 AND technology_id IN (
                     SELECT id FROM technologies
                     WHERE name IN (" . to_wildcards($discarded) . ")
                 )",
-                array_merge([$project_id], $discarded)
+                array_merge([$module_id], $discarded)
             );
 
             // Delete all the orphans
             $db->exec("
                 DELETE FROM technologies
                 WHERE id NOT IN (
-                    SELECT technology_id FROM project_technology
+                    SELECT technology_id FROM module_technology
                 );");
         }
 
-        $data['imageable_id'] = $project_id;
+        $data['imageable_id'] = $module_id;
 
         $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $project_id, 'projects']);
+        $img->load(['imageable_id=? AND imageable_type=?', $module_id, 'modules']);
         $img->copyFrom($data);
         $img->save();
 
-        send_json(['message' => 'Project successfully updated!']);
+        send_json(['message' => 'Module successfully updated!']);
     }
 
     public function destroy($f3)
     {
-        $project_id = $f3->get('PARAMS.id');
+        $module_id = $f3->get('PARAMS.id');
 
-        $project = $f3->get('_PROJECTS');
-        $project->load(['id=?', $project_id]);
+        $module = $f3->get('_MODULES');
+        $module->load(['id=?', $module_id]);
 
-        if (! $project) {
-            send_json(['message' =>  "Project not found"], 422);
+        if (! $module) {
+            send_json(['message' =>  "Module not found"], 422);
         }
 
         ImageHandler::delete_morph_images(
-            $project_id,
-            'projects'
+            $module_id,
+            'modules'
         );
 
         $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $project_id, 'projects']);
+        $img->load(['imageable_id=? AND imageable_type=?', $module_id, 'modules']);
         $img->erase();
 
-        $project->erase();
+        $module->erase();
 
-        send_json(['message' => 'Project successfully deleted!']);
+        send_json(['message' => 'Module successfully deleted!']);
     }
 }
