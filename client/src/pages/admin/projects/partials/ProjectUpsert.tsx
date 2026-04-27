@@ -26,7 +26,7 @@ type ProjectUpsertState = {
     link: string;
     category_id: number | null;
     technologies: string[];
-    display_order: number;
+    priority: number;
     mockup: number;
     image: File | null;
     alt_en: string;
@@ -66,7 +66,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         link: project?.attr?.link ?? '',
         category_id: project?.category_id ?? null,
         technologies: project?.attr?.stacks ?? [],
-        display_order: project?.attr?.display_order ?? 100,
+        priority: project?.attr?.priority ?? 100,
         mockup: isEdit ? project?.attr?.mockup : 1,
         image: null,
         alt_en: project?.image?.alt?.en ?? '',
@@ -138,8 +138,8 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                 locale="ru"
             />
             <FormInput
-                name="display_order"
-                label="Order"
+                name="priority"
+                label="Priority"
                 inputmode="numeric"
                 pattern="\d*"
                 className="h-auto max-w-40 px-0 text-center text-3xl! tracking-[0.5em]"

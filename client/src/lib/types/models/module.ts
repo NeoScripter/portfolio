@@ -9,12 +9,8 @@ export type ModuleAttributes = {
     heading: LocalizedText;
     html: LocalizedText;
     body?: LocalizedText;
-    display_order: number;
-    type:
-        | 'only_text'
-        | 'two_image_block'
-        | 'two_image_split'
-        | 'one_image_split';
+    priority: number;
+    type: ModuleOptionType;
 };
 
 export type ModuleType = {

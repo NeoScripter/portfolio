@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { FormLayoutPicker } from './FormLayoutPicker';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import { events } from '@/lib/const/events';
+import { API_BASE_URL } from '@/lib/const/api';
 
 export type ModuleTypeOptions =
     | 'only_text'
@@ -27,7 +28,7 @@ type ModuleUpsertState = {
     heading_ru: string;
     body_en: string;
     body_ru: string;
-    order: number;
+    priority: number;
     type: ModuleTypeOptions;
     first_image: File | string | null;
     second_image: File | string | null;
@@ -35,39 +36,6 @@ type ModuleUpsertState = {
     first_alt_ru: string;
     second_alt_en: string;
     second_alt_ru: string;
-};
-
-const validateModule = (
-    values: ModuleUpsertState,
-): Partial<Record<keyof ModuleUpsertState, string>> => {
-    const errors: Partial<Record<keyof ModuleUpsertState, string>> = {};
-
-    if (!values.heading_en.trim())
-        errors.heading_en = 'English title is required';
-    if (!values.heading_ru.trim())
-        errors.heading_ru = 'Russian title is required';
-    if (!values.body_en.trim()) errors.body_en = 'English content is required';
-    if (!values.body_ru.trim()) errors.body_ru = 'Russian content is required';
-    if (!values.type) errors.type = 'Layout type is required';
-
-    if (values.type !== 'only_text') {
-        if (!values.first_alt_en.trim())
-            errors.first_alt_en = 'English alt text is required';
-        if (!values.first_alt_ru.trim())
-            errors.first_alt_ru = 'Russian alt text is required';
-    }
-
-    if (
-        values.type === 'two_image_split' ||
-        values.type === 'two_image_block'
-    ) {
-        if (!values.second_alt_en.trim())
-            errors.second_alt_en = 'English alt text is required';
-        if (!values.second_alt_ru.trim())
-            errors.second_alt_ru = 'Russian alt text is required';
-    }
-
-    return errors;
 };
 
 const validationRules: ValidationRules<ModuleUpsertState> = {
@@ -85,6 +53,8 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
     const { fetchData } = useFetch();
     const { itemToDelete } = useDeleteModal();
 
+    const isEdit = module != null;
+
     const initialValues = useMemo<ModuleUpsertState>(
         () => ({
             project_id: projectId,
@@ -92,7 +62,7 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
             heading_ru: module?.attr?.heading?.ru ?? '',
             body_en: module?.attr?.body?.en ?? '',
             body_ru: module?.attr?.body?.ru ?? '',
-            order: module?.attr?.order ?? 1,
+            priority: module?.attr?.priority ?? 1,
             type: module?.attr?.type ?? 'only_text',
             first_image: null,
             second_image: null,
@@ -112,9 +82,9 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
 
         await fetchData({
             url:
-                module != null
-                    ? `/admin/project-modules/${module.id}`
-                    : '/admin/project-modules',
+                isEdit
+                    ? `${API_BASE_URL}modules/${module.id}`
+                    : `${API_BASE_URL}modules`,
             method: 'POST',
             payload: formData,
             onSuccess: () => {
@@ -140,8 +110,8 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
                     <FormWysiwyg name="body_ru" label="Content (RU)" required />
                     <FormLayoutPicker name="type" label="Layout" required />
                     <FormInput
-                        name="order"
-                        label="Order"
+                        name="priority"
+                        label="Priority"
                         required
                         inputmode="numeric"
                         pattern="\d*"

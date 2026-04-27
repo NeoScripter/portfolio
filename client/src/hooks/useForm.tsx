@@ -67,7 +67,14 @@ export const useForm = <T extends FormValues>(
 
     const handleRestoreBackup = useCallback(() => {
         if (backupSignal.value != null) {
-            setValues(backupSignal.value as T);
+            setValues((prev) => ({
+                ...prev,
+                ...(Object.fromEntries(
+                    Object.entries(backupSignal.value!).filter(
+                        ([_, v]) => v != null,
+                    ),
+                ) as T),
+            }));
         }
     }, []);
 

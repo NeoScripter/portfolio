@@ -14,10 +14,12 @@ import ModuleDelete from './partials/ModuleDelete';
 import ModuleUpsert from './partials/ModuleUpsert';
 import ProjectUpsert from './partials/ProjectUpsert';
 import { events } from '@/lib/const/events';
+import type { ModuleType } from '@/lib/types/models/module';
 
 const EditProject = () => {
     const { fetchData, loading, errors } = useFetch();
     const [project, setProject] = useState<ProjectType | null>(null);
+    const [modules, setModules] = useState<ModuleType[] | null>(null);
     const [visibleItem, setVisibleItem] = useState<number | null>(0);
     const {
         params: { slug },
@@ -37,6 +39,12 @@ const EditProject = () => {
                 url: `${API_BASE_URL}projects/${slug}`,
                 onSuccess: (data) => {
                     setProject(data.data);
+                },
+            });
+            fetchData({
+                url: `${API_BASE_URL}modules/${slug}`,
+                onSuccess: (data) => {
+                    setModules(data.data);
                 },
             });
         };
@@ -92,8 +100,8 @@ const EditProject = () => {
                             <ModuleUpsert projectId={project.id} />
                         </AccordionLayout>
                     )}
-                    {project?.modules &&
-                        project.modules.map((module, idx) => (
+                    {project && modules &&
+                        modules.map((module, idx) => (
                             <AccordionLayout
                                 showIcon={PanelsTopLeft}
                                 key={module.id}

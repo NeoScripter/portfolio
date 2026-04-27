@@ -69,7 +69,7 @@ export type ProjectType = {
         stacks: string[];
         mockup: number;
         slug: string;
-        display_order: number;
+        priority: number;
         url: string;
         link: string;
     };
