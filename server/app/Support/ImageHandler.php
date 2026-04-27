@@ -92,18 +92,25 @@ class ImageHandler
         return $this;
     }
 
-    public static function delete_morph_images(int|string $parent_id, string $parent_type)
-    {
+    public static function delete_morph_images(
+        int|string $parent_id,
+        string $parent_type,
+        int $limit = 1,
+        bool $cascade = false,
+        string $where = ''
+    ) {
         if (is_string($parent_id)) {
             $parent_id = (int) $parent_id;
         }
 
-        $row = Base::instance()->get('DB')->exec(
-            "SELECT * FROM images WHERE imageable_id = ? AND imageable_type = ? LIMIT 1",
+        $where = $where ? "AND $where " : '';
+
+        $rows = Base::instance()->get('DB')->exec(
+            "SELECT * FROM images WHERE imageable_id = ? AND imageable_type = ? {$where}LIMIT {$limit}",
             [$parent_id, $parent_type]
         );
 
-        if (empty($row)) {
+        if (empty($rows)) {
             return;
         }
 
@@ -112,16 +119,25 @@ class ImageHandler
             image_variants([['mb'], ['tb'], ['dk']])
         );
 
-        foreach ($keys as $key) {
-            if (! isset($row[0][$key])) {
-                continue;
-            }
+        foreach ($rows as $row) {
+            foreach ($keys as $key) {
+                if (! isset($row[$key])) {
+                    continue;
+                }
 
-            $old_path = str_replace(Base::instance()->get('app_url'), APP_DIR . '/public/', $row[0][$key]);
+                $old_path = str_replace(Base::instance()->get('app_url'), APP_DIR . '/public/', $row[$key]);
 
-            if (file_exists($old_path)) {
-                unlink($old_path);
+                if (file_exists($old_path)) {
+                    unlink($old_path);
+                }
             }
+        }
+
+        if ($cascade) {
+            Base::instance()->get('DB')->exec(
+                "DELETE FROM images WHERE id IN (" . to_wildcards($rows) . ")",
+                array_column($rows, 'id')
+            );
         }
     }
 

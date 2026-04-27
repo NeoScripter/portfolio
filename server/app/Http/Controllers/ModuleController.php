@@ -5,13 +5,17 @@ namespace Http\Controllers;
 use Http\BaseController;
 use Support\ImageHandler;
 use Support\Validator;
-use Web;
 
 class ModuleController extends BaseController
 {
     public function index($f3)
     {
-        $modules = $f3->get('_MODULES_VIEW')->find();
+        $modules = $f3->get('DB')->exec(
+            "SELECT * FROM modules_view WHERE project_id = (
+                SELECT id FROM projects WHERE slug = ?
+            )",
+            [$f3->get('PARAMS.project_id')]
+        );
 
         $modules = array_map(
             fn($module) => $this->to_resource($module),
@@ -128,99 +132,84 @@ class ModuleController extends BaseController
         }
 
         $data = $validator->validated();
+        $module_id = $f3->get('PARAMS.id');
 
         $module = $f3->get('_MODULES');
-        $module->load(['slug=?', $f3->get('PARAMS.slug')]);
-        $module_id = $module->id;
+        $module->load(['id=?', $module_id]);
+        $module_type = $module->type;
 
-        $db = $f3->get('DB');
+        if ($data['body_en'] !== $module->body_en) {
+            add_markdown_field($data, 'body_en', 'html_en');
+        }
+        if ($data['body_ru'] !== $module->body_ru) {
+            add_markdown_field($data, 'body_ru', 'html_ru');
+        }
 
-        $current_tools = array_column(
-            $db->exec(
-                'SELECT t.name FROM technologies t
-                JOIN module_technology rel ON rel.technology_id = t.id
-                WHERE rel.module_id = ?',
-                [$module_id]
-            ),
-            'name'
-        );
+        $module->copyFrom($data);
+        $module->save();
 
-        if (isset($data['image'])) {
-            $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
-            $handler = ImageHandler::make($data, 'image', $sizes, 'modules')
-                ->insert_mockup((int) $data['mockup'])
+        // Delete the old images if the type of the module has changed
+        $new_type = $data['type'] ?? $module_type;
+
+        if ($module_type !== $new_type) {
+            if ($new_type === 'only_text') {
+                ImageHandler::delete_morph_images($module->id, 'modules', 2, true);
+            }
+            if ($new_type === 'one_image_split') {
+                ImageHandler::delete_morph_images($module->id, 'modules', 1, true, "variant = 'second_image'");
+            }
+        }
+
+        $data['imageable_type'] = 'modules';
+        $data['imageable_id'] = $module_id;
+
+        if (isset($data['first_image'])) {
+
+            $data['variant'] = 'first_image';
+            $data['alt_ru'] = $data['first_alt_ru'];
+            $data['alt_en'] = $data['first_alt_en'];
+
+            $sizes = [['mb', 520], ['tb', 750]];
+            $handler = ImageHandler::make($data, 'first_image', $sizes, 'modules')
                 ->resize_all();
 
             if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 422);
+                send_json(['message' =>  $handler->error()], 404);
             }
 
             $data = $handler->output();
 
-            ImageHandler::delete_morph_images(
-                $module->id,
-                'modules'
-            );
+            ImageHandler::delete_morph_images($module->id, 'modules', 1, false, "variant = 'first_image'");
+
+            $img = $f3->get('_IMAGES');
+            $img->load(['imageable_id=? AND imageable_type=? AND variant=?', $module_id, 'modules', 'first_image']);
+            $img->copyFrom($data);
+            $img->save();
         }
 
-        if ($data['title_en'] !== $module->title_en) {
-            $data['slug'] = Web::instance()->slug($data['title_en'] . "-{$module_id}");
+        if (isset($data['second_image'])) {
+
+            $data['variant'] = 'second_image';
+            $data['alt_ru'] = $data['second_alt_ru'];
+            $data['alt_en'] = $data['second_alt_en'];
+
+            $sizes = [['mb', 520], ['tb', 750]];
+            $handler = ImageHandler::make($data, 'second_image', $sizes, 'modules')
+                ->resize_all();
+
+            if ($handler->fails()) {
+                send_json(['message' =>  $handler->error()], 404);
+            }
+
+            $data = $handler->output();
+
+            ImageHandler::delete_morph_images($module->id, 'modules', 1, false, "variant = 'second_image'");
+
+            $img = $f3->get('_IMAGES');
+            $img->load(['imageable_id=? AND imageable_type=? AND variant=?', $module_id, 'modules', 'second_image']);
+            $img->copyFrom($data);
+            $img->save();
         }
-
-        $module->category_id = $data['category_id'];
-        $module->copyFrom($data);
-        $module->save();
-
-        $tools = $data['technologies'] ?? [];
-
-        // Attach all the technologies that are not attached yet
-        if (! empty($tools)) {
-
-            $db->exec(
-                "INSERT INTO technologies (name)
-                VALUES " . to_wildcards($tools, '(?)') . "
-                ON CONFLICT (name) DO NOTHING",
-                $tools
-            );
-
-            $db->exec(
-                "INSERT INTO module_technology (module_id, technology_id)
-                SELECT ?, id FROM technologies
-                WHERE name IN (" . to_wildcards($tools) . ")
-                ON CONFLICT DO NOTHING",
-                array_merge([$module_id], $tools)
-            );
-        }
-
-        // Detach all the discarded technologies if any
-        $discarded = array_diff($current_tools, $tools);
-
-        if (! empty($discarded)) {
-
-            $db->exec(
-                "DELETE FROM module_technology
-                WHERE module_id = ?
-                AND technology_id IN (
-                    SELECT id FROM technologies
-                    WHERE name IN (" . to_wildcards($discarded) . ")
-                )",
-                array_merge([$module_id], $discarded)
-            );
-
-            // Delete all the orphans
-            $db->exec("
-                DELETE FROM technologies
-                WHERE id NOT IN (
-                    SELECT technology_id FROM module_technology
-                );");
-        }
-
-        $data['imageable_id'] = $module_id;
-
-        $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $module_id, 'modules']);
-        $img->copyFrom($data);
-        $img->save();
 
         send_json(['message' => 'Module successfully updated!']);
     }
@@ -236,14 +225,7 @@ class ModuleController extends BaseController
             send_json(['message' =>  "Module not found"], 422);
         }
 
-        ImageHandler::delete_morph_images(
-            $module_id,
-            'modules'
-        );
-
-        $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $module_id, 'modules']);
-        $img->erase();
+        ImageHandler::delete_morph_images($module->id, 'modules', 2, true);
 
         $module->erase();
 
