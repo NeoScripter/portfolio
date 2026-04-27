@@ -182,3 +182,10 @@ function get_latest_id(string $table): int
     $res = Base::instance()->get('DB')->exec("SELECT MAX(id) AS max_id FROM {$table}");
     return $res[0]['max_id'] ?? 1;
 }
+
+function validate_required(array &$data, string $field, array &$errors)
+{
+    if (! isset($data[$field]) || empty($data[$field])) {
+        $errors[$field] = 'This field is required';
+    }
+}

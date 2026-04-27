@@ -2,6 +2,7 @@
 
 namespace Http\Controllers;
 
+use Enums\ModuleType;
 use Http\BaseController;
 use Support\ImageHandler;
 use Support\Validator;
@@ -52,6 +53,23 @@ class ModuleController extends BaseController
         }
 
         $data = $validator->validated();
+        $errors = [];
+
+        if (in_array($data['type'], [ModuleType::TWO_IMAGE_BLOCK->value, ModuleType::TWO_IMAGE_SPLIT->value, ModuleType::ONE_IMAGE_SPLIT->value])) {
+            validate_required($data, 'first_image', $errors);
+            validate_required($data, 'first_alt_ru', $errors);
+            validate_required($data, 'first_alt_en', $errors);
+        }
+
+        if (in_array($data['type'], [ModuleType::TWO_IMAGE_BLOCK->value, ModuleType::TWO_IMAGE_SPLIT->value])) {
+            validate_required($data, 'second_image', $errors);
+            validate_required($data, 'second_alt_ru', $errors);
+            validate_required($data, 'second_alt_en', $errors);
+        }
+
+        if (! empty($errors)) {
+            send_json(['errors' => $errors], 422);
+        }
 
         add_markdown_field($data, 'body_en', 'html_en');
         add_markdown_field($data, 'body_ru', 'html_ru');
@@ -137,6 +155,26 @@ class ModuleController extends BaseController
         $module = $f3->get('_MODULES');
         $module->load(['id=?', $module_id]);
         $module_type = $module->type;
+        $new_type = $data['type'] ?? $module_type;
+
+        $errors = [];
+
+        if (in_array($new_type, [ModuleType::TWO_IMAGE_BLOCK->value, ModuleType::TWO_IMAGE_SPLIT->value, ModuleType::ONE_IMAGE_SPLIT->value])) {
+            validate_required($data, 'first_image', $errors);
+            validate_required($data, 'first_alt_ru', $errors);
+            validate_required($data, 'first_alt_en', $errors);
+        }
+
+        if (in_array($new_type, [ModuleType::TWO_IMAGE_BLOCK->value, ModuleType::TWO_IMAGE_SPLIT->value])) {
+            validate_required($data, 'second_image', $errors);
+            validate_required($data, 'second_alt_ru', $errors);
+            validate_required($data, 'second_alt_en', $errors);
+        }
+
+        if (! empty($errors)) {
+            send_json(['errors' => $errors], 422);
+        }
+
 
         if ($data['body_en'] !== $module->body_en) {
             add_markdown_field($data, 'body_en', 'html_en');
@@ -149,7 +187,6 @@ class ModuleController extends BaseController
         $module->save();
 
         // Delete the old images if the type of the module has changed
-        $new_type = $data['type'] ?? $module_type;
 
         if ($module_type !== $new_type) {
             if ($new_type === 'only_text') {
