@@ -48,13 +48,19 @@ class Validator
         foreach ($this->rules as $key => $rule_set) {
 
             if (! isset($this->values[$key])) {
-                if ($rule_set[0] === 'sometimes') {
+                if (str_starts_with($rule_set[0], 'required_with')) {
+                    [$name, $param] = explode(':', $rule_set[0] . ':', 2);
+                    $param = rtrim($param, ':');
+                    $error = $this->required_with(null, $param);
+                    if ($error !== '') {
+                        $this->errors[$key] = $error;
+                    }
                     continue;
-                } else if ($rule_set[0] === 'nullable') {
+                } else if (in_array('sometimes', $rule_set)) {
+                    continue;
+                } else if (in_array('nullable', $rule_set)) {
                     $this->result[$key] = null;
                     continue;
-                } else if (str_starts_with($rule_set[0], 'required_with')) {
-                    $this->values[$key] = null;
                 } else {
                     $this->errors[$key] = 'This field is required';
                     continue;
