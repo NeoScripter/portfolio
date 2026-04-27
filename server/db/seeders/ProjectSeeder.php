@@ -13,6 +13,13 @@ class ProjectSeeder
 {
     public function run($f3)
     {
+        for ($i = 0; $i < 8; $i++) {
+            $this->seed_one($f3);
+        }
+    }
+
+    private function seed_one($f3)
+    {
         $db = $f3->get('DB');
 
         // Category

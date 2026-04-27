@@ -10,5 +10,7 @@ class Seeder
     {
         (new FaqSeeder())->run($f3);
         (new ProjectSeeder())->run($f3);
+        (new ReviewSeeder())->run($f3);
+        (new VideoSeeder())->run($f3);
     }
 }
