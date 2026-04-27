@@ -40,6 +40,6 @@ SELECT
     (SELECT STRING_AGG(DISTINCT t.name, ', ') 
      FROM project_technology pt 
      JOIN technologies t ON t.id = pt.technology_id 
-     WHERE pt.project_id = p.id) AS tech_stack
+     WHERE pt.project_id = p.id) AS tech_stack,
 FROM projects p
 LEFT JOIN images i ON i.imageable_id = p.id AND i.imageable_type = 'projects';

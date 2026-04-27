@@ -168,3 +168,11 @@ function convert_to_snake_case($word)
 {
     return strtolower(preg_replace('/(?<!^)(?=[A-Z])/', '_', $word));
 }
+
+function to_wildcards(array $arr, ?string $placeholder = '?')
+{
+    return implode(
+        ',',
+        array_fill(0, count($arr), $placeholder)
+    );
+}
