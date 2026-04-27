@@ -121,10 +121,10 @@ class ModuleController extends BaseController
             'body_ru' => ['sometimes', 'string', 'max:5000'],
             'priority' => ['sometimes', 'max:300'],
             'type' => ['sometimes', 'string'],
-            'first_alt_en' => ['sometimes', 'string', 'max:500'],
-            'first_alt_ru' => ['sometimes', 'string', 'max:500'],
-            'second_alt_en' => ['sometimes', 'string', 'max:500'],
-            'second_alt_ru' => ['sometimes', 'string', 'max:500'],
+            'first_alt_en' => ['required_with:first_image', 'sometimes', 'string', 'max:500'],
+            'first_alt_ru' => ['required_with:first_image', 'sometimes', 'string', 'max:500'],
+            'second_alt_en' => ['required_with:second_image', 'sometimes', 'string', 'max:500'],
+            'second_alt_ru' => ['required_with:second_image', 'sometimes', 'string', 'max:500'],
         ]);
 
         if ($validator->fails()) {

@@ -48,12 +48,17 @@ class Validator
         foreach ($this->rules as $key => $rule_set) {
 
             if (! isset($this->values[$key])) {
-                if (! in_array('sometimes', $rule_set) && ! in_array('nullable', $rule_set)) {
-                    $this->errors[$key] = 'This field is required';
-                } else if (in_array('nullable', $rule_set)) {
+                if ($rule_set[0] === 'sometimes') {
+                    continue;
+                } else if ($rule_set[0] === 'nullable') {
                     $this->result[$key] = null;
+                    continue;
+                } else if (str_starts_with($rule_set[0], 'required_with')) {
+                    $this->values[$key] = null;
+                } else {
+                    $this->errors[$key] = 'This field is required';
+                    continue;
                 }
-                continue;
             }
 
             foreach ($rule_set as $rule) {
@@ -62,6 +67,7 @@ class Validator
 
                 $error = match ($name) {
                     'required' => $this->required($this->values[$key]),
+                    'required_with' => $this->required_with($this->values[$key], $param),
                     'string' => $this->string($this->values[$key]),
                     'integer' => $this->integer($this->values[$key]),
                     'min' => $this->min_length($this->values[$key], (int) $param),
@@ -177,6 +183,15 @@ class Validator
 
         if ($value === null)
             return $error_message;
+
+        return '';
+    }
+
+    private function required_with($value, string $field): string
+    {
+        if (isset($this->values[$field]) && empty($value)) {
+            return 'This field is required';
+        }
 
         return '';
     }
