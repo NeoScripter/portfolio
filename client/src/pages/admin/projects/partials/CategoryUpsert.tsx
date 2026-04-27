@@ -3,6 +3,7 @@ import { FormButtons } from '@/components/form/FormButtons';
 import { FormInput } from '@/components/form/FormInput';
 import { useFetch } from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { type ValidationRules } from '@/lib/helpers/validation';
 import type { CategoryType } from '@/lib/types/models/projects';
 import type { FC } from 'preact/compat';
@@ -33,7 +34,7 @@ const CategoryCreate: FC<{ project?: CategoryType }> = ({ project }) => {
             payload: values,
             onSuccess: (data) => {
                 toast.success(data.message ?? 'Success!');
-                window.dispatchEvent(new Event('invalidateTrigger'));
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });

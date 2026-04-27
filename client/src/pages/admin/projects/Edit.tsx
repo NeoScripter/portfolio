@@ -18,7 +18,7 @@ import { events } from '@/lib/const/events';
 const EditProject = () => {
     const { fetchData, loading, errors } = useFetch();
     const [project, setProject] = useState<ProjectType | null>(null);
-    const [visibleItem, setVisibleItem] = useState<number | null>(null);
+    const [visibleItem, setVisibleItem] = useState<number | null>(0);
     const {
         params: { slug },
     } = useRoute();

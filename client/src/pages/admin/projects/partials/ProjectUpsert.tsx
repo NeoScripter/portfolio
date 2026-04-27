@@ -66,8 +66,8 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         link: project?.attr?.link ?? '',
         category_id: project?.category_id ?? null,
         technologies: project?.attr?.stacks ?? [],
-        display_order: project?.attr.display_order ?? 100,
-        mockup: isEdit ? project.attr.mockup : 1,
+        display_order: project?.attr?.display_order ?? 100,
+        mockup: isEdit ? project?.attr?.mockup : 1,
         image: null,
         alt_en: project?.image?.alt?.en ?? '',
         alt_ru: project?.image?.alt?.ru ?? '',
@@ -86,9 +86,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
             method: 'POST',
             payload: formData,
             onSuccess: (data) => {
-                if (!isEdit) {
-                    route('/admin/projects');
-                }
+                route('/admin/projects');
                 toast.success(data.message ?? 'Success!');
                 window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
@@ -124,7 +122,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                 loading={stacksLoading}
             />
             <CategoryPicker
-                label='Category (EN)'
+                label="Category (EN)"
                 name="category_id"
                 categories={categories}
                 loading={categoriesLoading}
@@ -132,7 +130,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                 locale="en"
             />
             <CategoryPicker
-                label='Category (RU)'
+                label="Category (RU)"
                 name="category_id"
                 categories={categories}
                 loading={categoriesLoading}
