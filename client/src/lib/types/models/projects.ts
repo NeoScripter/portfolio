@@ -66,6 +66,10 @@ export type ProjectType = {
             ru: string;
             en: string;
         };
+        category: {
+            ru: string;
+            en: string;
+        };
         stacks: string[];
         mockup: number;
         slug: string;

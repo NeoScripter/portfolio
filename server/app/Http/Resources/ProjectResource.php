@@ -20,6 +20,10 @@ class ProjectResource
                     'ru' => $project['description_ru'],
                     'en' => $project['description_en'],
                 ],
+                'category' => [
+                    'en' => $project['category_en'],
+                    'ru' => $project['category_ru'],
+                ],
                 'stacks' => $stacks,
                 'slug' => $project['slug'],
                 'link' => $project['link'],

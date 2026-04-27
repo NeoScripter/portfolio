@@ -45,7 +45,7 @@ const ProjectTile: FC<NodeProps<{ project: ProjectType }>> = ({
 
                     <Button
                         class="ml-auto md:mr-auto lg:ml-0"
-                        href={project.attr.url}
+                        href={`/gallery/${project.attr.slug}`}
                         variant="primary"
                     >
                         Перейти к проекту

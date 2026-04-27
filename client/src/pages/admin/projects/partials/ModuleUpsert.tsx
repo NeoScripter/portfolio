@@ -122,7 +122,7 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
                         <>
                             <FormImage
                                 name="first_image"
-                                src={module?.firstImage?.srcSet.dk}
+                                src={module?.firstImage?.srcSet.tb}
                                 label="First Image"
                             />
                             <FormTextArea
@@ -144,7 +144,7 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
                             <FormImage
                                 name="second_image"
                                 label="Second Image"
-                                src={module?.secondImage?.srcSet.dk}
+                                src={module?.secondImage?.srcSet.tb}
                             />
                             <FormTextArea
                                 name="second_alt_en"

@@ -1,14 +1,16 @@
 import AppTitle from '@/components/layout/AppTitle';
+import SeeAlso from '@/components/shared/SeeAlso';
 import ApiError from '@/components/ui/ApiError';
 import { useFetch } from '@/hooks/useFetch';
 import AppLayout from '@/layouts/AppLayout';
+import { API_BASE_URL } from '@/lib/const/api';
+import { cn } from '@/lib/helpers/utils';
+import type { ModuleType } from '@/lib/types/models/module';
 import type { ProjectType } from '@/lib/types/models/projects';
 import type { FunctionalComponent } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import Hero from './partials/Hero';
-import SeeAlso from '@/components/shared/SeeAlso';
 import Module from './partials/Module';
-import { cn } from '@/lib/helpers/utils';
 import ModuleFallback from './partials/ModuleFallback';
 
 interface ProjectProps {
@@ -25,12 +27,19 @@ const skeletonTypes = [
 const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
     const { fetchData, loading, errors } = useFetch();
     const [project, setProject] = useState<ProjectType | null>(null);
+    const [modules, setModules] = useState<ModuleType[] | null>(null);
 
     useEffect(() => {
         fetchData({
-            url: `/api/projects/${slug}.json`,
+            url: `${API_BASE_URL}projects/${slug}`,
             onSuccess: (data) => {
                 setProject(data.data);
+            },
+        });
+        fetchData({
+            url: `${API_BASE_URL}modules/${slug}`,
+            onSuccess: (data) => {
+                setModules(data.data);
             },
         });
     }, [slug]);
@@ -39,7 +48,12 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
         return (
             <AppLayout className="mt-40 px-5">
                 <AppTitle titleEn="Error" titleRu="Ошибка" />
-                <ApiError resourceRu="проекта" resourceEn="project" />
+                <ApiError
+                    resourceRu="проекта"
+                    resourceEn="project"
+                    mb={true}
+                    mt={true}
+                />
             </AppLayout>
         );
 
@@ -53,7 +67,7 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
             )}
             <Hero loading={loading} project={project} />
             {!loading
-                ? project?.modules?.map((module, idx) => (
+                ? project && modules?.map((module, idx) => (
                       <Module
                           key={module.id}
                           className={cn(

@@ -28,75 +28,79 @@ class ModuleController extends BaseController
     public function store($f3)
     {
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
-            'image' => ['required', 'image:5'],
-            'title_en' => ['required', 'string', 'max:300'],
-            'title_ru' => ['required', 'string', 'max:300'],
-            'description_en' => ['required', 'string', 'max:5000'],
-            'description_ru' => ['required', 'string', 'max:5000'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'link' => ['nullable', 'string', 'max:300'],
+            'project_id' => ['required', 'exists:projects,id'],
+            'first_image' => ['nullable', 'image:5'],
+            'second_image' => ['nullable', 'image:5'],
+            'heading_en' => ['required', 'string', 'max:300'],
+            'heading_ru' => ['required', 'string', 'max:300'],
+            'body_en' => ['required', 'string', 'max:5000'],
+            'body_ru' => ['required', 'string', 'max:5000'],
             'priority' => ['required', 'max:300'],
-            'alt_en' => ['required', 'string', 'max:500'],
-            'alt_ru' => ['required', 'string', 'max:500'],
-            'technologies' => ['nullable'],
-            'mockup' => ['required', 'min:1', 'max:6'],
+            'type' => ['required', 'string'],
+            'first_alt_en' => ['sometimes', 'string', 'max:500'],
+            'first_alt_ru' => ['sometimes', 'string', 'max:500'],
+            'second_alt_en' => ['sometimes', 'string', 'max:500'],
+            'second_alt_ru' => ['sometimes', 'string', 'max:500'],
         ]);
 
         if ($validator->fails()) {
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $raw = $validator->validated();
+        $data = $validator->validated();
 
-        $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
-        $handler = ImageHandler::make($raw, 'image', $sizes, 'modules')
-            ->insert_mockup((int) $raw['mockup'])
-            ->resize_all();
-
-        if ($handler->fails()) {
-            send_json(['message' =>  $handler->error()], 404);
-        }
-
-        $data = $handler->output();
-
-        $data['imageable_type'] = 'modules';
-
-        $data['slug'] = Web::instance()->slug(
-            $data['title_en'] . '-' . get_latest_id('modules')
-        );
+        add_markdown_field($data, 'body_en', 'html_en');
+        add_markdown_field($data, 'body_ru', 'html_ru');
 
         $module = $f3->get('_MODULES');
         $module->copyFrom($data);
         $module->save();
         $module_id = $f3->get('DB')->lastInsertId();
 
-        $db = $f3->get('DB');
-        $tools = $data['technologies'] ?? [];
-
-        // Create all the missing technologies and attach them to the module
-        if (! empty($tools)) {
-
-            $db->exec(
-                "INSERT INTO technologies (name)
-                VALUES " . to_wildcards($tools, '(?)') . "
-                ON CONFLICT (name) DO NOTHING",
-                $tools
-            );
-
-            $db->exec(
-                "INSERT INTO module_technology (module_id, technology_id)
-                SELECT ?, id FROM technologies
-                WHERE name IN (" . to_wildcards($tools) . ")
-                ON CONFLICT DO NOTHING",
-                array_merge([$module_id], $tools)
-            );
-        }
-
+        $data['imageable_type'] = 'modules';
         $data['imageable_id'] = $module_id;
 
-        $img = $f3->get('_IMAGES');
-        $img->copyFrom($data);
-        $img->save();
+        if (isset($data['first_image'])) {
+
+            $data['variant'] = 'first_image';
+            $data['alt_ru'] = $data['first_alt_ru'];
+            $data['alt_en'] = $data['first_alt_en'];
+
+            $sizes = [['mb', 520], ['tb', 750]];
+            $handler = ImageHandler::make($data, 'first_image', $sizes, 'modules')
+                ->resize_all();
+
+            if ($handler->fails()) {
+                send_json(['message' =>  $handler->error()], 404);
+            }
+
+            $data = $handler->output();
+
+            $img = $f3->get('_IMAGES');
+            $img->copyFrom($data);
+            $img->save();
+        }
+
+        if (isset($data['second_image'])) {
+
+            $data['variant'] = 'second_image';
+            $data['alt_ru'] = $data['second_alt_ru'];
+            $data['alt_en'] = $data['second_alt_en'];
+
+            $sizes = [['mb', 520], ['tb', 750]];
+            $handler = ImageHandler::make($data, 'second_image', $sizes, 'modules')
+                ->resize_all();
+
+            if ($handler->fails()) {
+                send_json(['message' =>  $handler->error()], 404);
+            }
+
+            $data = $handler->output();
+
+            $img = $f3->get('_IMAGES');
+            $img->copyFrom($data);
+            $img->save();
+        }
 
         send_json(['message' => 'Module successfully created!']);
     }
@@ -104,18 +108,19 @@ class ModuleController extends BaseController
     public function update($f3)
     {
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
-            'image' => ['sometimes', 'image:5'],
-            'title_en' => ['sometimes', 'string', 'max:300'],
-            'title_ru' => ['sometimes', 'string', 'max:300'],
-            'description_en' => ['sometimes', 'string', 'max:5000'],
-            'description_ru' => ['sometimes', 'string', 'max:5000'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'link' => ['sometimes', 'string', 'max:300'],
+            'project_id' => ['required', 'exists:projects,id'],
+            'first_image' => ['sometimes', 'image:5'],
+            'second_image' => ['sometimes', 'image:5'],
+            'heading_en' => ['sometimes', 'string', 'max:300'],
+            'heading_ru' => ['sometimes', 'string', 'max:300'],
+            'body_en' => ['sometimes', 'string', 'max:5000'],
+            'body_ru' => ['sometimes', 'string', 'max:5000'],
             'priority' => ['sometimes', 'max:300'],
-            'alt_en' => ['sometimes', 'string', 'max:500'],
-            'alt_ru' => ['sometimes', 'string', 'max:500'],
-            'technologies' => ['sometimes'],
-            'mockup' => ['sometimes', 'min:1', 'max:6'],
+            'type' => ['sometimes', 'string'],
+            'first_alt_en' => ['sometimes', 'string', 'max:500'],
+            'first_alt_ru' => ['sometimes', 'string', 'max:500'],
+            'second_alt_en' => ['sometimes', 'string', 'max:500'],
+            'second_alt_ru' => ['sometimes', 'string', 'max:500'],
         ]);
 
         if ($validator->fails()) {

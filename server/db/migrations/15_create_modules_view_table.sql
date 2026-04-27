@@ -65,4 +65,4 @@ SELECT
 FROM modules m
 LEFT JOIN images i1 ON i1.imageable_id = m.id AND i1.imageable_type = 'modules' AND i1.variant = 'first_image'
 LEFT JOIN images i2 ON i2.imageable_id = m.id AND i2.imageable_type = 'modules' AND i2.variant = 'second_image'
-ORDER BY p.priority DESC;
+ORDER BY m.priority DESC;
