@@ -85,6 +85,7 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
             onSuccess: (data) => {
                 toast.success(data.message ?? 'Success!');
                 window.dispatchEvent(new Event(events.UPDATE_MODULE_EVENT));
+                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
         });

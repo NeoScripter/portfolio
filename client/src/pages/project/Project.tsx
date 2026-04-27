@@ -34,12 +34,12 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
             url: `${API_BASE_URL}projects/${slug}`,
             onSuccess: (data) => {
                 setProject(data.data);
-                fetchData({
-                    url: `${API_BASE_URL}modules/${data.data?.id}`,
-                    onSuccess: (data) => {
-                        setModules(data.data);
-                    },
-                });
+            },
+        });
+        fetchData({
+            url: `${API_BASE_URL}modules/${slug}`,
+            onSuccess: (data) => {
+                setModules(data.data);
             },
         });
     }, [slug]);
@@ -67,7 +67,8 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
             )}
             <Hero loading={loading} project={project} />
             {!loading
-                ? project && modules?.map((module, idx) => (
+                ? project &&
+                  modules?.map((module, idx) => (
                       <Module
                           key={module.id}
                           className={cn(

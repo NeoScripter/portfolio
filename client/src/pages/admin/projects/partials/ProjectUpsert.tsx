@@ -88,6 +88,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
             onSuccess: (data) => {
                 route('/admin/projects');
                 toast.success(data.message ?? 'Success!');
+                window.dispatchEvent(new Event(events.UPDATE_PROJECT_EVENT));
                 window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),

@@ -2,6 +2,7 @@ import DeleteConfirmation from '@/components/form/DeleteConfirmation';
 import { useDeleteModal } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import FormLayout from '@/layouts/FormLayout';
+import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
 import { toast } from 'sonner';
 
@@ -14,12 +15,12 @@ const ModuleDelete = () => {
         if (module.value == null) return;
 
         await fetchData({
-            url: `/admin/project-modules/${module.value.id}`,
+            url: `${API_BASE_URL}modules/${module.value.id}`,
             method: 'DELETE',
-            onSuccess: () => {
+            onSuccess: (data) => {
                 module.value = null;
-                toast.success('Deleted!');
-                window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
+                toast.success(data.message ?? 'Deleted!');
+                window.dispatchEvent(new Event(events.UPDATE_MODULE_EVENT));
             },
             onError: () => toast.error('Error'),
         });

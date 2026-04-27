@@ -37,7 +37,6 @@ const Edit = () => {
 
     useEffect(() => {
         const fetchProject = () => {
-            console.log('refetching project');
             fetchData({
                 url: `${API_BASE_URL}projects/${slug}`,
                 onSuccess: (data) => {
@@ -52,7 +51,6 @@ const Edit = () => {
         };
 
         const fetchModules = () => {
-            console.log('refetching mdules');
             fetchData({
                 url: `${API_BASE_URL}modules/${slug}`,
                 onSuccess: (data) => {
@@ -68,11 +66,11 @@ const Edit = () => {
             return;
         }
 
-        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchProject);
+        window.addEventListener(events.UPDATE_PROJECT_EVENT, fetchProject);
         window.addEventListener(events.UPDATE_MODULE_EVENT, fetchModules);
 
         return () => {
-            window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchProject);
+            window.removeEventListener(events.UPDATE_PROJECT_EVENT, fetchProject);
             window.removeEventListener(
                 events.UPDATE_MODULE_EVENT,
                 fetchModules,
