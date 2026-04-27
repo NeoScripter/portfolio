@@ -5,6 +5,7 @@ namespace Http\Controllers;
 use Http\BaseController;
 use Support\ImageHandler;
 use Support\Validator;
+use Web;
 
 class ProjectController extends BaseController
 {
@@ -73,7 +74,10 @@ class ProjectController extends BaseController
         $data = $handler->output();
 
         $data['imageable_type'] = 'projects';
-        $data['slug'] = generate_slug($data['title_en']);
+
+        $data['slug'] = Web::instance()->slug(
+            $data['title_en'] . '-' . get_latest_id('projects')
+        );
 
         $project = $f3->get('_PROJECTS');
         $project->copyFrom($data);
@@ -169,7 +173,7 @@ class ProjectController extends BaseController
         }
 
         if ($data['title_en'] !== $project->title_en) {
-            $data['slug'] = generate_slug($data['title_en']);
+            $data['slug'] = Web::instance()->slug($data['title_en'] . "-{$project_id}");
         }
 
         $project->category_id = $data['category_id'];
