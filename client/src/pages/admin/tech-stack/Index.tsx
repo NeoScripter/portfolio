@@ -5,13 +5,13 @@ import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
+import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { range } from '@/lib/helpers/utils';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { useEffect, useState } from 'preact/hooks';
 import TechStackCard, { TechStackFallback } from './partials/TechStackCard';
 import TechStackDelete from './partials/TechStackDelete';
-import { API_BASE_URL } from '@/lib/const/api';
-import { events } from '@/lib/const/events';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -31,7 +31,8 @@ const Index = () => {
 
         window.addEventListener(events.FORM_SUCCESS_EVENT, fetchStacks);
 
-        return () => window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchStacks);
+        return () =>
+            window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchStacks);
     }, []);
 
     if (errors != null) {
@@ -52,13 +53,18 @@ const Index = () => {
                         </ul>
                     ) : (
                         <ul className="flex flex-wrap gap-6">
-                            {stacks &&
+                            {stacks && stacks.length > 0 ? (
                                 stacks.map((stack) => (
                                     <TechStackCard
                                         key={stack.id}
                                         stack={stack}
                                     />
-                                ))}
+                                ))
+                            ) : (
+                                <p>
+                                    You haven't added any tech stacks yet
+                                </p>
+                            )}
                         </ul>
                     )}
                     <DeleteModalLayout>

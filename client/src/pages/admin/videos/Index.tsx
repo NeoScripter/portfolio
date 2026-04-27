@@ -5,13 +5,13 @@ import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
+import { API_BASE_URL } from '@/lib/const/api';
+import { events } from '@/lib/const/events';
 import { range } from '@/lib/helpers/utils';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useState } from 'preact/hooks';
 import VideoCard, { VideoFallback } from './partials/VideoCard';
 import VideoDelete from './partials/VideoDelete';
-import { API_BASE_URL } from '@/lib/const/api';
-import { events } from '@/lib/const/events';
 
 const Index = () => {
     const { fetchData, loading, errors } = useFetch();
@@ -35,14 +35,13 @@ const Index = () => {
 
         window.addEventListener(events.FORM_SUCCESS_EVENT, fetchVideos);
 
-        return () => window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchVideos);
+        return () =>
+            window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchVideos);
     }, []);
 
     if (errors != null) {
         console.error(errors);
     }
-
-    console.log(videos)
 
     return (
         <DeleteModalProvider>
@@ -58,10 +57,13 @@ const Index = () => {
                         </ul>
                     ) : (
                         <ul className="space-y-8">
-                            {videos &&
+                            {videos && videos.length > 0 ? (
                                 videos.map((video) => (
                                     <VideoCard key={video.id} video={video} />
-                                ))}
+                                ))
+                            ) : (
+                                <p>You haven't added any videos yet</p>
+                            )}
                         </ul>
                     )}
                     <DeleteModalLayout>

@@ -58,13 +58,16 @@ const Reviews = () => {
                         </ul>
                     ) : (
                         <ul className="space-y-12">
-                            {reviews &&
+                            {reviews && reviews.length > 0 ? (
                                 reviews.map((review) => (
                                     <ReviewCard
                                         key={review.id}
                                         review={review}
                                     />
-                                ))}
+                                ))
+                            ) : (
+                                <p>You haven't added any reviews yet</p>
+                            )}
                         </ul>
                     )}
                     <DeleteModalLayout>
