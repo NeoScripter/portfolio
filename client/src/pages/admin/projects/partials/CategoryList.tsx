@@ -5,6 +5,7 @@ import { events } from '@/lib/const/events';
 import { X } from 'lucide-preact';
 import { toast } from 'sonner';
 import CategoryCreate from './CategoryUpsert';
+import { hasErrorDetails } from '@/lib/helpers/utils';
 
 const CategoryList = () => {
     const { errors, categories } = useFetchCategories();
@@ -23,7 +24,7 @@ const CategoryList = () => {
         });
     }
 
-    if (errors != null) {
+    if (hasErrorDetails(errors)) {
         return <div className="text-red-500">Error fetching categories :(</div>;
     }
 

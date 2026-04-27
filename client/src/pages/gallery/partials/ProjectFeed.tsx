@@ -2,8 +2,8 @@ import ApiError from '@/components/ui/ApiError';
 import EmptySearch from '@/components/ui/EmptySearch';
 import Pagination from '@/components/ui/Pagination';
 import SearchBar from '@/components/ui/SearchBar';
-import useFetchProjects from '@/hooks/useFetchProjects';
-import { cn, range } from '@/lib/helpers/utils';
+import useFilteredProjects from '@/hooks/useFilteredProjects';
+import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
 import type { FC, JSX } from 'preact/compat';
 import { useState } from 'preact/hooks';
@@ -15,7 +15,7 @@ const ProjectFeed: FC<NodeProps> = ({ className }) => {
     const [debounceQuery, setDebounceQuery] = useState('');
 
     const { projectData, errors, loading, projectsRef, handlePageClick } =
-        useFetchProjects({ searchQuery: debounceQuery });
+        useFilteredProjects({ searchQuery: debounceQuery });
 
     const handleInputChange = (val: string) => {
         setSearchQuery(val);
@@ -29,7 +29,7 @@ const ProjectFeed: FC<NodeProps> = ({ className }) => {
         setDebounceQuery(searchQuery);
     };
 
-    if (errors != null)
+    if (hasErrorDetails(errors))
         return (
             <ApiError
                 resourceRu="проектов"

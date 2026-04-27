@@ -4,7 +4,7 @@ import ApiError from '@/components/ui/ApiError';
 import { useFetch } from '@/hooks/useFetch';
 import AppLayout from '@/layouts/AppLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { cn } from '@/lib/helpers/utils';
+import { cn, hasErrorDetails } from '@/lib/helpers/utils';
 import type { ModuleType } from '@/lib/types/models/module';
 import type { ProjectType } from '@/lib/types/models/projects';
 import type { FunctionalComponent } from 'preact';
@@ -44,7 +44,7 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
         });
     }, [slug]);
 
-    if (errors != null)
+    if (hasErrorDetails(errors))
         return (
             <AppLayout className="mt-40 px-5">
                 <AppTitle titleEn="Error" titleRu="Ошибка" />

@@ -7,7 +7,7 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
-import { range } from '@/lib/helpers/utils';
+import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import { useEffect, useState } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
@@ -38,11 +38,9 @@ const Reviews = () => {
             window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchReviews);
     }, []);
 
-    if (errors != null) {
+    if (hasErrorDetails(errors)) {
         console.error(errors);
     }
-
-    console.log(reviews);
 
     return (
         <DeleteModalProvider>

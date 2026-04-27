@@ -5,10 +5,12 @@ import type { ServerError } from '@/hooks/useForm';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import { API_BASE_URL } from '@/lib/const/api';
+import { hasErrorDetails } from '@/lib/helpers/utils';
 import type { FaqType } from '@/lib/types/models/faqs';
 import type { FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 import FaqUpsert from './partials/FaqUpsert';
+import StateResolver from '@/components/shared/StateResolver';
 
 const EditFaq: FC<{ id: number }> = ({ id }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -23,34 +25,16 @@ const EditFaq: FC<{ id: number }> = ({ id }) => {
         });
     }, []);
 
-    if (errors != null) {
-        console.error(errors);
-    }
-
     return (
         <AdminLayout title={{ en: 'Edit Faq', ru: 'Редактировать FAQ' }}>
             <AppTitle titleEn="Edit Faq" titleRu="Редактировать FAQ" />
             <AdminShellLayout>
-                <Content faq={faq} errors={errors} loading={loading} />
+                <StateResolver errors={errors} loading={loading}>
+                    {faq && <FaqUpsert faq={faq} />}
+                </StateResolver>
             </AdminShellLayout>
         </AdminLayout>
     );
 };
 
 export default EditFaq;
-
-const Content: FC<{
-    faq: FaqType | null;
-    errors: ServerError | null;
-    loading: boolean;
-}> = ({ faq, errors, loading }) => {
-
-    if (loading) {
-        return 'Loading...';
-    }
-
-    if (errors != null)
-        return <ApiError resourceRu="FAQs" mb={true} resourceEn="FAQs" />;
-
-    return faq && <FaqUpsert faq={faq} />;
-};

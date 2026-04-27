@@ -1,3 +1,4 @@
+import { isServerError, type ServerError } from '@/hooks/useForm';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -46,4 +47,13 @@ export function shortenDescription(desc: string, limit = 15) {
         desc.split(' ').slice(0, limit).join(' ') +
         (desc.split(' ').length > limit ? '...' : '')
     );
+}
+
+export function hasErrorDetails(error: unknown): boolean {
+    if (!isServerError(error)) return false;
+    
+    const hasValidMessage = error.message?.trim() !== '';
+    const hasErrorsObject = error.errors !== null;
+    
+    return hasValidMessage && hasErrorsObject;
 }

@@ -1,4 +1,5 @@
 import AppTitle from '@/components/layout/AppTitle';
+import StateResolver from '@/components/shared/StateResolver';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
 import { useFetch } from '@/hooks/useFetch';
 import AccordionLayout from '@/layouts/AccordionLayout';
@@ -7,6 +8,7 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
+import { hasErrorDetails } from '@/lib/helpers/utils';
 import type { ModuleType } from '@/lib/types/models/module';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { Clapperboard, PanelsTopLeft } from 'lucide-preact';
@@ -70,17 +72,16 @@ const Edit = () => {
         window.addEventListener(events.UPDATE_MODULE_EVENT, fetchModules);
 
         return () => {
-            window.removeEventListener(events.UPDATE_PROJECT_EVENT, fetchProject);
+            window.removeEventListener(
+                events.UPDATE_PROJECT_EVENT,
+                fetchProject,
+            );
             window.removeEventListener(
                 events.UPDATE_MODULE_EVENT,
                 fetchModules,
             );
         };
     }, [slug]);
-
-    if (errors != null) {
-        console.error(errors);
-    }
 
     return (
         <DeleteModalProvider>
@@ -98,13 +99,9 @@ const Edit = () => {
                         handleClick={() => handleAccordionClick(0)}
                         show={visibleItem === 0}
                     >
-                        {errors != null ? (
-                            <p>{errors.errors?.message}</p>
-                        ) : loading || project == null ? (
-                            'Loading...'
-                        ) : (
-                            <ProjectUpsert project={project} />
-                        )}
+                        <StateResolver errors={errors} loading={loading}>
+                            {project && <ProjectUpsert project={project} />}
+                        </StateResolver>
                     </AccordionLayout>
                     {project && (
                         <AccordionLayout

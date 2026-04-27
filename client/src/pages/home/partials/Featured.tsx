@@ -20,7 +20,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
 
     useEffect(() => {
         fetchData({
-            url: `${API_BASE_URL}api/projects`,
+            url: `${API_BASE_URL}projects`,
             onSuccess: (data) => {
                 setProjects(data.data);
             },

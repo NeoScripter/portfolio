@@ -1,12 +1,12 @@
 import AdminShellNav from '@/components/layout/AdminShellNav';
 import AppTitle from '@/components/layout/AppTitle';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
-import useFetchProjects from '@/hooks/useFetchProjects';
+import useFilteredProjects from '@/hooks/useFilteredProjects';
 import AccordionLayout from '@/layouts/AccordionLayout';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
-import { range } from '@/lib/helpers/utils';
+import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import { useSignal } from '@preact/signals';
 import { ListTodo, Split } from 'lucide-preact';
 import { useState } from 'preact/hooks';
@@ -24,9 +24,9 @@ const Index = () => {
     };
 
     const { projectData, errors, loading, projectsRef, handlePageClick } =
-        useFetchProjects({ searchQuery, isLatest: true });
+        useFilteredProjects({ searchQuery, isLatest: true });
 
-    if (errors != null) {
+    if (hasErrorDetails(errors)) {
         console.error(errors);
     }
 

@@ -7,7 +7,7 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
-import { range } from '@/lib/helpers/utils';
+import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useState } from 'preact/hooks';
 import VideoCard, { VideoFallback } from './partials/VideoCard';
@@ -39,7 +39,7 @@ const Index = () => {
             window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchVideos);
     }, []);
 
-    if (errors != null) {
+    if (hasErrorDetails(errors)) {
         console.error(errors);
     }
 

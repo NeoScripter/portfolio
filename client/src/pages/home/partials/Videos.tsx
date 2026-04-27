@@ -4,7 +4,7 @@ import { useCarousel } from '@/hooks/useCarousel';
 import { useFetch } from '@/hooks/useFetch';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { cn, range } from '@/lib/helpers/utils';
+import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useRef } from 'preact/hooks';
 import VideoTile, { VideoFallback } from './VideoTile';
@@ -27,19 +27,21 @@ const Videos = () => {
 
     useEffect(() => {
         fetchData({
-            url: `${API_BASE_URL}videos?duplicated=true`,
+            url: `${API_BASE_URL}videos?duplicated=false`,
             onSuccess: (data) => {
                 setter(data.data);
             },
         });
     }, []);
 
-    if (errors != null)
+    if (hasErrorDetails(errors))
         return (
             <ApiError resourceRu="видео проектов" resourceEn="video projects" />
         );
 
     const numSlides = Math.floor(carouselSlides.length / 2);
+
+    console.log(carouselSlides)
 
     if (numSlides === 0) {
         return null;

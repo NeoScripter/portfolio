@@ -1,2 +1,3 @@
-
-export const API_BASE_URL = 'https://portfolio.test/api/';
+export const API_BASE_URL = import.meta.env.PROD
+    ? import.meta.env.BASE_URL + 'api/'
+    : 'https://portfolio.test/api/';

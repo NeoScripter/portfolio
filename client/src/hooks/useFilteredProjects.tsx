@@ -11,7 +11,7 @@ type FetchProjectsArgs = {
     isLatest?: boolean;
 };
 
-const useFetchProjects = ({ searchQuery }: FetchProjectsArgs) => {
+const useFilteredProjects = ({ searchQuery }: FetchProjectsArgs) => {
     const { fetchData, loading, errors } = useFetch();
     const [projectData, setProjectData] = useState<ProjectResource | null>(
         null,
@@ -68,4 +68,4 @@ const useFetchProjects = ({ searchQuery }: FetchProjectsArgs) => {
     return { projectData, errors, loading, projectsRef, handlePageClick };
 };
 
-export default useFetchProjects;
+export default useFilteredProjects;

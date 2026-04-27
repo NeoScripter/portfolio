@@ -2,7 +2,7 @@ import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import ApiError from '@/components/ui/ApiError';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import { API_BASE_URL } from '@/lib/const/api';
-import { cn, range } from '@/lib/helpers/utils';
+import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { locale } from '@/signals/locale';
 import { useEffect, useRef, useState, type FC } from 'preact/compat';
@@ -58,7 +58,7 @@ const TechStack = () => {
         });
     }, []);
 
-    if (errors != null)
+    if (hasErrorDetails(errors))
         return (
             <ApiError
                 resourceRu="языков программирования"
@@ -67,6 +67,9 @@ const TechStack = () => {
             />
         );
 
+    if (stacks && stacks.length === 0) {
+        return null;
+    }
     return (
         <div>
             <div className="relative mt-16 sm:mt-19">

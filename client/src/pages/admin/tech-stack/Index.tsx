@@ -7,7 +7,7 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
-import { range } from '@/lib/helpers/utils';
+import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { useEffect, useState } from 'preact/hooks';
 import TechStackCard, { TechStackFallback } from './partials/TechStackCard';
@@ -35,7 +35,7 @@ const Index = () => {
             window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchStacks);
     }, []);
 
-    if (errors != null) {
+    if (hasErrorDetails(errors)) {
         console.error(errors);
     }
 

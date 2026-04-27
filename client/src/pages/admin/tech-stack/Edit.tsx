@@ -6,6 +6,8 @@ import { useEffect, useState, type FC } from 'preact/compat';
 import TechStackUpsert from './partials/TechStackUpsert';
 import AppTitle from '@/components/layout/AppTitle';
 import { API_BASE_URL } from '@/lib/const/api';
+import { hasErrorDetails } from '@/lib/helpers/utils';
+import StateResolver from '@/components/shared/StateResolver';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -20,21 +22,13 @@ const Edit: FC<{ id: number }> = ({ id }) => {
         });
     }, []);
 
-    if (errors != null) {
-        console.error(errors);
-    }
-
     return (
         <AdminLayout title={{ en: 'Edit Stack', ru: 'Редактировать навык' }}>
             <AppTitle titleEn="Edit Stack" titleRu="Редактировать навык" />
             <AdminShellLayout>
-                {errors != null ? (
-                    <p>{errors.errors?.message}</p>
-                ) : loading || stack == null ? (
-                    'Loading...'
-                ) : (
-                    <TechStackUpsert stack={stack} />
-                )}
+                <StateResolver errors={errors} loading={loading}>
+                    {stack && <TechStackUpsert stack={stack} />}
+                </StateResolver>
             </AdminShellLayout>
         </AdminLayout>
     );

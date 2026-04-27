@@ -4,7 +4,7 @@ import { useFetch } from '@/hooks/useFetch';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { cn, range } from '@/lib/helpers/utils';
+import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { FaqResource } from '@/lib/types/models/faqs';
 import { locale } from '@/signals/locale';
 import { useEffect, useState } from 'preact/hooks';
@@ -31,7 +31,7 @@ const Faqs = () => {
 
     const faqs = data?.data;
 
-    if (errors != null)
+    if (hasErrorDetails(errors))
         return <ApiError resourceRu="FAQs" mb={true} resourceEn="FAQs" />;
 
     return (

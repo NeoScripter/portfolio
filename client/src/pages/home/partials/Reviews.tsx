@@ -3,7 +3,7 @@ import { useCarousel } from '@/hooks/useCarousel';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import { useEffect, useRef } from 'preact/hooks';
 import { locale } from '@/signals/locale';
-import { cn, range } from '@/lib/helpers/utils';
+import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import ReviewCard, { ReviewFallback } from './ReviewCard';
 import CarouselControls from '@/components/ui/CarouselControls';
 import { useFetch } from '@/hooks/useFetch';
@@ -37,7 +37,7 @@ const Reviews = () => {
     const listLabel = locale.value === 'ru' ? "Отзывы клиентов" : "Customer reviews";
     const numSlides = Math.floor(carouselSlides.length / 2);
 
-    if (errors != null)
+    if (hasErrorDetails(errors))
         return (
             <ApiError
                 resourceRu="отзывов клиентов"

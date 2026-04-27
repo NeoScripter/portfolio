@@ -1,10 +1,12 @@
 import AppTitle from '@/components/layout/AppTitle';
+import StateResolver from '@/components/shared/StateResolver';
 import ApiError from '@/components/ui/ApiError';
 import { useFetch } from '@/hooks/useFetch';
 import type { ServerError } from '@/hooks/useForm';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import { API_BASE_URL } from '@/lib/const/api';
+import { hasErrorDetails } from '@/lib/helpers/utils';
 import type { VideoType } from '@/lib/types/models/videos';
 import { useEffect, useState, type FC } from 'preact/compat';
 import VideoUpsert from './partials/VideoUpsert';
@@ -22,40 +24,16 @@ const Edit: FC<{ id: number }> = ({ id }) => {
         });
     }, []);
 
-    if (errors != null) {
-        console.error(errors);
-    }
-
     return (
         <AdminLayout title={{ en: 'Edit Video', ru: 'Редактировать видео' }}>
             <AppTitle titleEn="Edit Video" titleRu="Редактировать видео" />
             <AdminShellLayout>
-                <Content video={video} errors={errors} loading={loading} />
+                <StateResolver errors={errors} loading={loading}>
+                    {video && <VideoUpsert video={video} />}
+                </StateResolver>
             </AdminShellLayout>
         </AdminLayout>
     );
 };
 
 export default Edit;
-
-const Content: FC<{
-    video: VideoType | null;
-    errors: ServerError | null;
-    loading: boolean;
-}> = ({ video, errors, loading }) => {
-    if (loading) {
-        return 'Loading...';
-    }
-
-    if (errors != null)
-        return (
-            <ApiError
-                resourceRu="Videos"
-                mb={true}
-                resourceEn="Videos"
-                className="ml-0"
-            />
-        );
-
-    return video && <VideoUpsert video={video} />;
-};

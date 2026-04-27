@@ -48,11 +48,21 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                                     'max-w-140': [
                                         'two_image_split',
                                     ].includes(type),
-                                    'max-w-200': [
+                                    'max-w-200 aspect-video': [
                                         'two_image_block',
                                     ].includes(type),
                                 })}
-                                imgClass="size-full object-contain"
+                                imgClass={cn('size-full object-contain', {
+                                    // '': [
+                                    //     'one_image_split',
+                                    // ].includes(type),
+                                    // '': [
+                                    //     'two_image_split',
+                                    // ].includes(type),
+                                    'object-cover': [
+                                        'two_image_block',
+                                    ].includes(type),
+                                })}
                                 alt={module.firstImage?.alt?.[locale.value]}
                                 srcs={module.firstImage.srcSet}
                             />
@@ -66,11 +76,21 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                                     'max-w-140': [
                                         'two_image_split',
                                     ].includes(type),
-                                    'max-w-200': [
+                                    'max-w-200 aspect-video': [
                                         'two_image_block',
                                     ].includes(type),
                                 })}
-                                imgClass="size-full object-contain"
+                                imgClass={cn('size-full object-contain', {
+                                    // '': [
+                                    //     'one_image_split',
+                                    // ].includes(type),
+                                    // '': [
+                                    //     'two_image_split',
+                                    // ].includes(type),
+                                    'object-cover': [
+                                        'two_image_block',
+                                    ].includes(type),
+                                })}
                                 alt={module.secondImage?.alt?.[locale.value]}
                                 srcs={module.secondImage.srcSet}
                             />

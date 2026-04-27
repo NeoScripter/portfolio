@@ -3,10 +3,12 @@ import { useFetch } from '@/hooks/useFetch';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import { API_BASE_URL } from '@/lib/const/api';
+import { hasErrorDetails } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import type { FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 import ReviewUpsert from './partials/ReviewUpsert';
+import StateResolver from '@/components/shared/StateResolver';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -21,21 +23,13 @@ const Edit: FC<{ id: number }> = ({ id }) => {
         });
     }, []);
 
-    if (errors != null) {
-        console.error(errors);
-    }
-
     return (
         <AdminLayout title={{ en: 'Edit Review', ru: 'Редактировать отзыв' }}>
             <AppTitle titleEn="Edit Review" titleRu="Редактировать отзыв" />
             <AdminShellLayout>
-                {errors != null ? (
-                    <p>{errors.errors?.message}</p>
-                ) : loading || review == null ? (
-                    'Loading...'
-                ) : (
-                    <ReviewUpsert review={review} />
-                )}
+                <StateResolver errors={errors} loading={loading}>
+                    {review && <ReviewUpsert review={review} />}
+                </StateResolver>
             </AdminShellLayout>
         </AdminLayout>
     );

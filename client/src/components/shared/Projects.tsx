@@ -1,5 +1,5 @@
 import ApiError from '@/components/ui/ApiError';
-import { cn, range } from '@/lib/helpers/utils';
+import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { locale } from '@/signals/locale';
 import type { FC } from 'preact/compat';
@@ -13,7 +13,7 @@ const Projects: FC<{
 }> = ({ className, projects, loading, errors }) => {
     const listLabel = locale.value === 'ru' ? 'проекты' : 'projects';
 
-    if (errors != null)
+    if (hasErrorDetails(errors))
         return (
             <ApiError resourceRu="проектов" resourceEn="projects" mt={true} />
         );
