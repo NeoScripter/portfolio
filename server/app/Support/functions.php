@@ -115,37 +115,6 @@ function get_db_table_names()
     );
 }
 
-function generate_slug($string, $wordLimit = 0)
-{
-    $separator = '-';
-
-    // Apply word limit if needed
-    if ($wordLimit != 0) {
-        $words      = explode(' ', $string);
-        $string     = implode(' ', array_slice($words, 0, $wordLimit));
-    }
-
-    $quoteSeparator = preg_quote($separator, '#');
-
-    // Regex transformation rules
-    $transformations = [
-        '&.+?;'                      => '',           // Strip HTML entities
-        '[^\w\d _-]'                 => '',           // Remove special chars
-        '\s+'                        => $separator,   // Spaces to separator
-        '(' . $quoteSeparator . ')+' => $separator    // Collapse multiple separators
-    ];
-
-    $string = strip_tags($string);
-
-    foreach ($transformations as $pattern => $replacement) {
-        $string = preg_replace('#' . $pattern . '#iu', $replacement, $string);
-    }
-
-    $string = strtolower($string);
-
-    return trim($string, $separator);
-}
-
 function convert_to_plural($word)
 {
     $word = strtolower($word);

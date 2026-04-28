@@ -11,41 +11,34 @@ class ProjectController extends BaseController
 {
     public function index($f3)
     {
-        $filter = null;
+        $filter = [];
         $options = [];
 
-        $check = function ($param, $is_num = true) use ($f3) {
-            return isset($f3->GET[$param]) && !empty($f3->GET[$param]) && ($is_num ? is_numeric($f3->GET[$param]) : true);
+        $check = function ($param) use ($f3) {
+            return isset($f3->GET[$param]) && !empty($f3->GET[$param]);
         };
 
         if ($check('limit')) {
             $options['limit'] = (int)$f3->GET['limit'];
         }
 
-        if ($check('exlude')) {
+        if ($check('exclude')) {
             $filter = ['id NOT IN (?)', (int)$f3->GET['exclude']];
         }
 
-        if ($check('search', false)) {
-            $searchTerm = '%' . $f3->GET['search'] . '%';
+        if ($check('search')) {
+            $term   = '%' . $f3->GET['search'] . '%';
 
-            $searchCondition = '(
-                title_ru ILIKE ? OR 
-                title_en ILIKE ? OR 
-                description_ru ILIKE ? OR 
-                description_en ILIKE ? OR 
-                tech_stack ILIKE ? OR 
-                category_ru ILIKE ? OR 
-                category_en ILIKE ?
-            )';
+            $where = '(title_ru ILIKE ? OR title_en ILIKE ? OR description_ru ILIKE ? OR
+                    description_en ILIKE ? OR tech_stack ILIKE ? OR category_ru ILIKE ? OR category_en ILIKE ?)';
 
-            $bindings = array_fill(0, 7, $searchTerm);
+            $bindings = array_fill(0, 7, $term);
 
-            if ($filter === null) {
-                $filter = array_merge([$searchCondition], $bindings);
-            } else {
-                $filter[0] .= ' AND ' . $searchCondition;
+            if (! empty($filter)) {
+                $filter[0] .= ' AND ' . $where;
                 $filter = array_merge($filter, $bindings);
+            } else {
+                $filter = array_merge([$where], $bindings);
             }
         }
 
