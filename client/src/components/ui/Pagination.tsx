@@ -1,6 +1,5 @@
 import { cn, range } from '@/lib/helpers/utils';
 import { ChevronLeftIcon } from 'lucide-preact';
-import type { FunctionalComponent } from 'preact';
 import type { FC } from 'preact/compat';
 
 type PaginationLink = {
@@ -90,12 +89,7 @@ type PageLinkProps = {
     className?: string;
 };
 
-const PageLink: FC<PageLinkProps> = ({
-    className,
-    currentPage,
-    to,
-    total,
-}) => {
+const PageLink: FC<PageLinkProps> = ({ className, currentPage, to, total }) => {
     const isActive = currentPage === to;
     const isLeftmost = to === 0;
     const isRightmost = to === total + 1;
@@ -121,8 +115,9 @@ const PageLink: FC<PageLinkProps> = ({
                     'text-background ring-muted-foreground bg-foreground':
                         isActive,
                     'text-foreground ring-inherit hover:scale-110': isRegular,
-                    'pointer-forbidden pointer-events-none inline-flex opacity-50':
+                    'pointer-forbidden pointer-events-none opacity-50':
                         isDisabled,
+                    'inline-flex': isEdge,
                 },
                 className,
             )}
