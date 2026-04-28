@@ -12,9 +12,14 @@ class ComposerStaticInit15d637f58d78ca86d31b7d86de7bb681
     );
 
     public static $prefixLengthsPsr4 = array (
+        'n' => 
+        array (
+            'n0nag0n\\' => 8,
+        ),
         'P' => 
         array (
             'Psr\\Container\\' => 14,
+            'Pheanstalk\\' => 11,
         ),
         'F' => 
         array (
@@ -24,9 +29,17 @@ class ComposerStaticInit15d637f58d78ca86d31b7d86de7bb681
     );
 
     public static $prefixDirsPsr4 = array (
+        'n0nag0n\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/n0nag0n/simple-job-queue/src',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Pheanstalk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pda/pheanstalk/src',
         ),
         'Falsum\\' => 
         array (

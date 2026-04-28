@@ -6,7 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'n0nag0n\\' => array($vendorDir . '/n0nag0n/simple-job-queue/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'Pheanstalk\\' => array($vendorDir . '/pda/pheanstalk/src'),
     'Falsum\\' => array($vendorDir . '/ikkez/f3-falsum/src/Falsum'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
 );

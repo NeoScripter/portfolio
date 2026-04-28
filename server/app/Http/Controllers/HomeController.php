@@ -20,6 +20,10 @@ class HomeController
         );
         // print_r(image_variants([['mb', 100], ['tb', 200], ['dk', 400]]));
         echo '</pre>';
+
+        $f3->get('JOB_QUEUE')
+            ->selectPipeline('send_email')
+            ->addJob(json_encode(['to' => 'user@example.com', 'subject' => 'Hello']));
         // foreach($f3->get('ROUTES') as $route) {
 
         // }

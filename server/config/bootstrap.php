@@ -22,6 +22,10 @@ $f3->set('DB', new SQL(
 
 Falsum\Run::handler();
 
+$Job_Queue = new n0nag0n\Job_Queue('pgsql');
+$Job_Queue->addQueueConnection($f3->get('DB')->pdo());
+$f3->set('JOB_QUEUE', $Job_Queue);
+
 foreach (get_db_table_names() as $table) {
     $model = '_' . strtoupper($table);
     $mapper = new Mapper($f3->get('DB'), $table);
