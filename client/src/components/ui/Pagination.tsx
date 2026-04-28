@@ -1,27 +1,10 @@
 import { cn, range } from '@/lib/helpers/utils';
+import type { PaginationMeta } from '@/lib/types/models/projects';
 import { ChevronLeftIcon } from 'lucide-preact';
 import type { FC } from 'preact/compat';
 
-type PaginationLink = {
-    url: string | null;
-    label: string;
-    active: boolean;
-};
-
-type PaginationMeta = {
-    current_page: number;
-    from: number | null;
-    last_page: number;
-    links: PaginationLink[];
-    path: string;
-    per_page: number;
-    to: number | null;
-    total: number;
-};
-
 type PaginationProps = {
-    // meta: PaginationMeta;
-    total: number;
+    meta: PaginationMeta;
     className?: string;
 };
 
@@ -51,12 +34,10 @@ const getPageUrl = (newPage: number): string => {
 };
 
 const Pagination: FC<PaginationProps> = ({
-    // meta,
-    total,
+    meta,
     className,
 }) => {
-    // const { total } = meta;
-    const currentPage = getPageNumber();
+    const { lastPage, currentPage } = meta;
 
     return (
         <div
@@ -69,12 +50,12 @@ const Pagination: FC<PaginationProps> = ({
                 aria-label="Pagination"
                 className="isolate flex w-full max-w-3/5 items-center justify-between gap-3 sm:max-w-4/5 sm:justify-center"
             >
-                {range(0, total + 1).map((to) => (
+                {range(0, lastPage + 1).map((to) => (
                     <PageLink
                         key={`pagination-${to}`}
                         to={to}
                         currentPage={currentPage}
-                        total={total}
+                        total={lastPage}
                     />
                 ))}
             </nav>

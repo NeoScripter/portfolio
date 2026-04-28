@@ -9,16 +9,7 @@ export type ProjectResource = {
         prev: string | null;
         next: string | null;
     };
-    meta?: {
-        current_page: number;
-        from: number | null;
-        last_page: number;
-        links: PaginationLink[];
-        path: string;
-        per_page: number;
-        to: number | null;
-        total: number;
-    };
+    meta?: PaginationMeta;
 };
 
 export type PaginationLink = {
@@ -27,19 +18,14 @@ export type PaginationLink = {
     active: boolean;
 };
 
-export type PaginationMeta<T> = {
-    current_page: number;
-    data: T[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url: string;
+export type PaginationMeta = {
+    currentPage: number;
+    from: number | null;
+    lastPage: number;
     links: PaginationLink[];
-    next_page_url: string | null;
     path: string;
-    per_page: number;
-    prev_page_url: string | null;
-    to: number;
+    perPage: number;
+    to: number | null;
     total: number;
 };
 

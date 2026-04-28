@@ -12,28 +12,13 @@ class ProjectController extends BaseController
 {
     public function index($f3)
     {
-        $filter = [];
-        $options = [];
-        $per_page = 2;
-
         $handler = Paginator::make($f3->GET);
-        $handler->process();
+        $handler->handle_limit_param();
+        $handler->handle_exclude_param();
+        $handler->handle_search_param();
+        $handler->handle_page_param(5, '_PROJECTS_VIEW', 'projects');
+        $meta = $handler->build_pagination_meta(5, '_PROJECTS_VIEW', 'projects');
 
-        // $total        = $f3->get('_PROJECTS_VIEW')->count($filter);
-        // $last_page    = (int) ceil($total / $per_page);
-        // $current_page = $check('page') ? max(1, min((int) $f3->GET['page'], $last_page)) : 1;
-        // $offset       = ($current_page - 1) * $per_page;
-        // $from         = $total > 0 ? $offset + 1 : null;
-        // $to           = $total > 0 ? min($offset + $per_page, $total) : null;
-        // $base_url     = $f3->get('SCHEME') . '://' . $f3->get('HOST') . $f3->get('BASE') . '/api/projects';
-
-        // $options['limit']  = $per_page;
-        // $options['offset'] = $offset;
-
-        // echo '<pre>';
-        // print_r($handler->output()[0]);
-        // echo '</pre>';
-        // die();
         $projects = $f3->get('_PROJECTS_VIEW')
             ->find(...$handler->output());
 
@@ -42,16 +27,9 @@ class ProjectController extends BaseController
             $projects
         );
 
-        // $links = build_pagination_links($base_url, $current_page, $last_page, $f3->GET);
-
         $data = [
             'data' => $projects,
-            // 'meta' => [
-            //     'total' => $total,
-            //     'from'  => $from,
-            //     'to'    => $to,
-            //     'links' => $links,
-            // ],
+            'meta' => $meta,
         ];
 
         send_json($data);

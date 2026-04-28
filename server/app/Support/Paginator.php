@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Support;
 
+use Base;
+
 final class Paginator
 {
     private string $error = '';
@@ -20,14 +22,7 @@ final class Paginator
         return new self($request);
     }
 
-    public function process()
-    {
-        $this->handle_limit_param();
-        $this->handle_exclude_param();
-        $this->handle_search_param();
-    }
-
-    private function handle_limit_param()
+    public function handle_limit_param()
     {
         $request = $this->request;
 
@@ -36,7 +31,7 @@ final class Paginator
         }
     }
 
-    private function handle_exclude_param()
+    public function handle_exclude_param()
     {
         $request = $this->request;
 
@@ -46,7 +41,7 @@ final class Paginator
         }
     }
 
-    private function handle_search_param()
+    public function handle_search_param()
     {
         $request = $this->request;
 
@@ -58,6 +53,57 @@ final class Paginator
             $this->filters[] = '(title_ru ILIKE ? OR title_en ILIKE ? OR description_ru ILIKE ? OR description_en ILIKE ? OR tech_stack ILIKE ? OR category_ru ILIKE ? OR category_en ILIKE ?)';
             $this->args = array_merge($this->args, $bindings);
         }
+    }
+
+    public function handle_page_param(int $per_page, string $table)
+    {
+        $request = $this->request;
+
+        if (empty($table)) {
+            return;
+        }
+
+        $in_request = array_key_exists('page', $request) && is_numeric($request['page']) && (int) $request['page'] >= 1;
+
+        $total = Base::instance()->get($table)->count($this->merge_filters());
+        $last_page    = (int) ceil($total / $per_page);
+        $current_page = $in_request ? min($last_page, (int) $request['page']) : 1;
+        $offset       = max(0, ($current_page - 1) * $per_page);
+
+        $this->options['limit'] = $per_page;
+        $this->options['offset'] = $offset;
+    }
+
+    public function build_pagination_meta(int $per_page, string $table, string $url_suffix)
+    {
+        $request = $this->request;
+
+        if (empty($table)) {
+            return;
+        }
+
+        $in_request = array_key_exists('page', $request) && is_numeric($request['page']) && (int) $request['page'] >= 1;
+
+        $total = Base::instance()->get($table)->count($this->merge_filters());
+        $last_page    = (int) ceil($total / $per_page);
+        $current_page = $in_request ? min($last_page, (int) $request['page']) : 1;
+        $offset       = max(0, ($current_page - 1) * $per_page);
+        $from = $total > 0 ? $offset + 1 : null;
+        $to   = $total > 0 ? min($offset + $per_page, $total) : null;
+        $base_url     = Base::instance()->get('app_url') . $url_suffix;
+
+        $links = $this->build_pagination_links($base_url, $current_page, $last_page, $request);
+
+        return [
+            'total' => $total,
+            'from'  => $from,
+            'to'    => $to,
+            'links' => $links,
+            'lastPage' => $last_page,
+            'perPage' => $per_page,
+            'currentPage' => $current_page,
+            'path' => $base_url,
+        ];
     }
 
     public function fails()
@@ -72,7 +118,48 @@ final class Paginator
 
     public function output(): array
     {
-        $filters = [implode(' AND ', $this->filters), ...$this->args];
-        return [$filters, $this->options];
+        return [$this->merge_filters(), $this->options];
+    }
+
+    private function merge_filters(): array
+    {
+        if (empty($this->filters)) return [];
+        return [implode(' AND ', $this->filters), ...$this->args];
+    }
+
+    private function build_pagination_links(string $base_url, int $current, int $last, array $query): array
+    {
+        $links = [];
+
+        $make_url = function (?int $page) use ($base_url, $query): ?string {
+            if ($page === null) return null;
+            $params = array_merge($query, ['page' => $page]);
+            return $base_url . '?' . http_build_query($params);
+        };
+
+        // Previous
+        $links[] = [
+            'url'    => $current > 1 ? $make_url($current - 1) : null,
+            'label'  => 'previous',
+            'active' => false,
+        ];
+
+        // Numbered pages
+        for ($i = 1; $i <= $last; $i++) {
+            $links[] = [
+                'url'    => $make_url($i),
+                'label'  => (string) $i,
+                'active' => $i === $current,
+            ];
+        }
+
+        // Next
+        $links[] = [
+            'url'    => $current < $last ? $make_url($current + 1) : null,
+            'label'  => 'next',
+            'active' => false,
+        ];
+
+        return $links;
     }
 }

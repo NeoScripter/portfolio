@@ -1,7 +1,7 @@
 import { useReducer } from 'preact/hooks';
 import { isServerError, type ServerError } from './useForm';
 
-interface FetchOptions {
+type FetchOptions = {
     url: string;
     method?: string;
     payload?: unknown;
@@ -9,7 +9,7 @@ interface FetchOptions {
     onError?: (error: ServerError) => void;
 }
 
-interface State {
+type State = {
     data: any;
     loading: boolean;
     resentlySuccessful: boolean;

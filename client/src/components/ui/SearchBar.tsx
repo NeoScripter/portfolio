@@ -7,9 +7,8 @@ import { useState, type ChangeEvent, type FC } from 'preact/compat';
 import Input from '../form/Input';
 
 const SearchBar: FC<NodeProps> = ({ className }) => {
-    const [searchQuery, setSearchQuery] = useState('');
-
-    const { route } = useLocation();
+    const { route, query } = useLocation();
+    const [searchQuery, setSearchQuery] = useState(query?.search ? query?.search : '');
 
     const lang = locale.value === 'en' ? 'en' : 'ru';
     const placeholder =
