@@ -5,29 +5,12 @@ import SearchBar from '@/components/ui/SearchBar';
 import useFilteredProjects from '@/hooks/useFilteredProjects';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
-import type { FC, JSX } from 'preact/compat';
-import { useState } from 'preact/hooks';
+import type { FC } from 'preact/compat';
 import ProjectTile from './ProjectTile';
 import ProjectTileFallback from './ProjectTileFallback';
 
 const ProjectFeed: FC<NodeProps> = ({ className }) => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [debounceQuery, setDebounceQuery] = useState('');
-
-    const { projectData, errors, loading, projectsRef, handlePageClick } =
-        useFilteredProjects({ searchQuery: debounceQuery });
-
-    const handleInputChange = (val: string) => {
-        setSearchQuery(val);
-    };
-
-    const handleSeachSubmit = (
-        e: JSX.TargetedEvent<HTMLFormElement, Event>,
-    ) => {
-        e.preventDefault();
-        handlePageClick(1);
-        setDebounceQuery(searchQuery);
-    };
+    const { projectData, errors, loading, projectsRef } = useFilteredProjects();
 
     if (hasErrorDetails(errors))
         return (
@@ -40,11 +23,7 @@ const ProjectFeed: FC<NodeProps> = ({ className }) => {
 
     return (
         <div className={cn('full-bleed', className)}>
-            <SearchBar
-                handleSubmit={handleSeachSubmit}
-                value={searchQuery}
-                handleChange={handleInputChange}
-            />
+            <SearchBar />
             <section ref={projectsRef} className="scroll-m-80">
                 {projectData?.data != null && !loading ? (
                     projectData.data.length > 0 ? (

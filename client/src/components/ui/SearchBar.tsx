@@ -1,23 +1,31 @@
-import { cn } from '@/lib/helpers/utils';
+import { cn, getUpdatedUrl } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
 import { locale } from '@/signals/locale';
 import { Search } from 'lucide-preact';
-import type { TargetedEvent } from 'preact';
-import type { ChangeEvent, FC } from 'preact/compat';
+import { useLocation } from 'preact-iso';
+import { useState, type ChangeEvent, type FC } from 'preact/compat';
 import Input from '../form/Input';
 
-const SearchBar: FC<
-    NodeProps<{
-        value: string;
-        handleSubmit: (e: TargetedEvent<HTMLFormElement, Event>) => void;
-        handleChange: (val: string) => void;
-    }>
-> = ({ className, value, handleSubmit, handleChange }) => {
+const SearchBar: FC<NodeProps> = ({ className }) => {
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const { route } = useLocation();
+
     const lang = locale.value === 'en' ? 'en' : 'ru';
     const placeholder =
         lang === 'en'
             ? 'Search by project name or stack'
             : 'Поиск по названию или стэку проекта';
+
+    const handleSubmit = (e: SubmitEvent) => {
+        e.preventDefault();
+
+        const url = getUpdatedUrl([
+            { name: 'search', val: searchQuery },
+            { name: 'page', val: "1" },
+        ]);
+        route(url);
+    };
 
     return (
         <form
@@ -30,9 +38,9 @@ const SearchBar: FC<
             <Input
                 class="border-primary/50 h-10"
                 placeholder={placeholder}
-                value={value}
+                value={searchQuery}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    handleChange(e.currentTarget.value)
+                    setSearchQuery(e.currentTarget.value)
                 }
             />
 

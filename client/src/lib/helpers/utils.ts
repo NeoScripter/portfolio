@@ -1,4 +1,4 @@
-import { isServerError, type ServerError } from '@/hooks/useForm';
+import { isServerError } from '@/hooks/useForm';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -51,9 +51,27 @@ export function shortenDescription(desc: string, limit = 15) {
 
 export function hasErrorDetails(error: unknown): boolean {
     if (!isServerError(error)) return false;
-    
+
     const hasValidMessage = error.message?.trim() !== '';
     const hasErrorsObject = error.errors !== null;
-    
+
     return hasValidMessage && hasErrorsObject;
+}
+
+export function getUpdatedUrl(newParams: Record<string, string>[]): string {
+    if (typeof window === 'undefined') return '';
+
+    try {
+        const url = new URL(window.location.href);
+        for (const record of newParams) {
+            url.searchParams.set(
+                record.name,
+                record.val.toString(),
+            );
+        }
+        return url.toString();
+    } catch (err) {
+        console.error(err);
+        return '';
+    }
 }

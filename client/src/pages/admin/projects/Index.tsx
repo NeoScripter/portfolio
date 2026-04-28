@@ -9,23 +9,15 @@ import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import { useSignal } from '@preact/signals';
 import { ListTodo } from 'lucide-preact';
-import { useState } from 'preact/hooks';
 import CategoryList from './partials/CategoryList';
 import ProjectCard, { ProjectFallback } from './partials/ProjectCard';
 import ProjectDelete from './partials/ProjectDelete';
 import SearchBox from './partials/SearchBox';
 
 const Index = () => {
-    const [searchQuery, setSearchQuery] = useState('');
     const showCategoryPanel = useSignal(false);
 
-    const handleInputChange = (val: string) => {
-        handlePageClick(1);
-        setSearchQuery(val);
-    };
-
-    const { projectData, errors, loading, projectsRef, handlePageClick } =
-        useFilteredProjects({ searchQuery, isLatest: true });
+    const { projectData, errors, loading, projectsRef } = useFilteredProjects();
 
     if (hasErrorDetails(errors)) {
         console.error(errors);
@@ -50,11 +42,7 @@ const Index = () => {
 
                     <AdminShellNav href={'projects/create'} />
                     <div className="bg-background sticky top-0 z-10">
-                        <SearchBox
-                            value={searchQuery}
-                            handleChange={handleInputChange}
-                            className="mb-2"
-                        />
+                        <SearchBox />
                     </div>
                     {loading ? (
                         <ul ref={projectsRef} className="space-y-8">

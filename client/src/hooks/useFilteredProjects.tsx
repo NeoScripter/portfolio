@@ -6,56 +6,51 @@ import type { ProjectResource } from '@/lib/types/models/projects';
 import { useLocation } from 'preact-iso';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-type FetchProjectsArgs = {
-    searchQuery: string;
-    isLatest?: boolean;
-};
-
-const useFilteredProjects = ({ searchQuery }: FetchProjectsArgs) => {
+const useFilteredProjects = () => {
     const { fetchData, loading, errors } = useFetch();
     const [projectData, setProjectData] = useState<ProjectResource | null>(
         null,
     );
     const { query } = useLocation();
-    const debouncedQuery = useDebounce(searchQuery, 400);
-    const [currentPage, setCurrentPage] = useState(() =>
-        query?.page == null ? 1 : query.page,
-    );
+    const search = query?.search == null ? '' : query.search;
+    const debouncedQuery = useDebounce(search, 400);
+
+    const currentPage = query?.page == null ? 1 : query.page;
     const projectsRef = useRef<HTMLUListElement | null>(null);
 
     const isBrowser = typeof window !== 'undefined';
 
-    const handlePageClick = (newPage: number) => {
-        if (projectData?.meta == null) return;
-        const lastPage = projectData.meta.last_page;
-
-        if (newPage > lastPage || newPage < 1) return;
-        setCurrentPage(newPage);
-
-        if (!projectsRef.current) return;
-
-        projectsRef.current.scrollIntoView({
-            block: 'start',
-        });
-    };
-
     useEffect(() => {
         const fetchProjects = () => {
-            // let url = `/api/projects.json?page=${currentPage}&search=${debouncedQuery}`;
-            let url = `${API_BASE_URL}projects?search=${debouncedQuery}`;
+            const params = new URLSearchParams();
+            params.set('page', currentPage.toString());
+
+            if (debouncedQuery !== '') {
+                params.set('search', debouncedQuery);
+            }
+
+            let url = `${API_BASE_URL}projects?${params.toString()}`;
+
             fetchData({
                 url: url,
                 onSuccess: (data) => {
                     setProjectData(data);
                 },
             });
-        };
 
-        fetchProjects();
+            if (!projectsRef.current) return;
+
+            projectsRef.current.scrollIntoView({
+                block: 'start',
+            });
+        };
 
         if (!isBrowser) {
             return;
         }
+
+        fetchProjects();
+
         window.addEventListener(events.FORM_SUCCESS_EVENT, fetchProjects);
 
         return () =>
@@ -65,7 +60,7 @@ const useFilteredProjects = ({ searchQuery }: FetchProjectsArgs) => {
             );
     }, [currentPage, debouncedQuery]);
 
-    return { projectData, errors, loading, projectsRef, handlePageClick };
+    return { projectData, errors, loading, projectsRef };
 };
 
 export default useFilteredProjects;
