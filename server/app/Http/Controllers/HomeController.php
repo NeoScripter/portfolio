@@ -16,14 +16,14 @@ class HomeController
         //     ARRAY_FILTER_USE_KEY
         // ));
         print_r(
-            $f3->GET
+            $f3->SCHEME
         );
         // print_r(image_variants([['mb', 100], ['tb', 200], ['dk', 400]]));
         echo '</pre>';
 
-        $f3->get('JOB_QUEUE')
-            ->selectPipeline('send_email')
-            ->addJob(json_encode(['to' => 'user@example.com', 'subject' => 'Hello']));
+        // $f3->get('JOB_QUEUE')
+        //     ->selectPipeline('send_email')
+        //     ->addJob(json_encode(['to' => 'user@example.com', 'subject' => 'Hello']));
         // foreach($f3->get('ROUTES') as $route) {
 
         // }

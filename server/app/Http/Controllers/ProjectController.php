@@ -4,6 +4,7 @@ namespace Http\Controllers;
 
 use Http\BaseController;
 use Support\ImageHandler;
+use Support\Paginator;
 use Support\Validator;
 use Web;
 
@@ -13,44 +14,44 @@ class ProjectController extends BaseController
     {
         $filter = [];
         $options = [];
+        $per_page = 2;
 
-        $check = function ($param) use ($f3) {
-            return isset($f3->GET[$param]) && !empty($f3->GET[$param]);
-        };
+        $handler = Paginator::make($f3->GET);
+        $handler->process();
 
-        if ($check('limit')) {
-            $options['limit'] = (int)$f3->GET['limit'];
-        }
+        // $total        = $f3->get('_PROJECTS_VIEW')->count($filter);
+        // $last_page    = (int) ceil($total / $per_page);
+        // $current_page = $check('page') ? max(1, min((int) $f3->GET['page'], $last_page)) : 1;
+        // $offset       = ($current_page - 1) * $per_page;
+        // $from         = $total > 0 ? $offset + 1 : null;
+        // $to           = $total > 0 ? min($offset + $per_page, $total) : null;
+        // $base_url     = $f3->get('SCHEME') . '://' . $f3->get('HOST') . $f3->get('BASE') . '/api/projects';
 
-        if ($check('exclude')) {
-            $filter = ['id NOT IN (?)', (int)$f3->GET['exclude']];
-        }
+        // $options['limit']  = $per_page;
+        // $options['offset'] = $offset;
 
-        if ($check('search')) {
-            $term   = '%' . $f3->GET['search'] . '%';
-
-            $where = '(title_ru ILIKE ? OR title_en ILIKE ? OR description_ru ILIKE ? OR
-                    description_en ILIKE ? OR tech_stack ILIKE ? OR category_ru ILIKE ? OR category_en ILIKE ?)';
-
-            $bindings = array_fill(0, 7, $term);
-
-            if (! empty($filter)) {
-                $filter[0] .= ' AND ' . $where;
-                $filter = array_merge($filter, $bindings);
-            } else {
-                $filter = array_merge([$where], $bindings);
-            }
-        }
-
-        $projects = $f3->get('_PROJECTS_VIEW')->find($filter, $options);
+        // echo '<pre>';
+        // print_r($handler->output()[0]);
+        // echo '</pre>';
+        // die();
+        $projects = $f3->get('_PROJECTS_VIEW')
+            ->find(...$handler->output());
 
         $projects = array_map(
             fn($project) => $this->to_resource($project),
             $projects
         );
 
+        // $links = build_pagination_links($base_url, $current_page, $last_page, $f3->GET);
+
         $data = [
-            'data' => $projects
+            'data' => $projects,
+            // 'meta' => [
+            //     'total' => $total,
+            //     'from'  => $from,
+            //     'to'    => $to,
+            //     'links' => $links,
+            // ],
         ];
 
         send_json($data);

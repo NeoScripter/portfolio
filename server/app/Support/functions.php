@@ -158,3 +158,39 @@ function validate_required(array &$data, string $field, array &$errors)
         $errors[$field] = 'This field is required';
     }
 }
+
+function build_pagination_links(string $base_url, int $current, int $last, array $query): array
+{
+    $links = [];
+
+    $make_url = function (?int $page) use ($base_url, $query): ?string {
+        if ($page === null) return null;
+        $params = array_merge($query, ['page' => $page]);
+        return $base_url . '?' . http_build_query($params);
+    };
+
+    // Previous
+    $links[] = [
+        'url'    => $current > 1 ? $make_url($current - 1) : null,
+        'label'  => 'previous',
+        'active' => false,
+    ];
+
+    // Numbered pages
+    for ($i = 1; $i <= $last; $i++) {
+        $links[] = [
+            'url'    => $make_url($i),
+            'label'  => (string) $i,
+            'active' => $i === $current,
+        ];
+    }
+
+    // Next
+    $links[] = [
+        'url'    => $current < $last ? $make_url($current + 1) : null,
+        'label'  => 'next',
+        'active' => false,
+    ];
+
+    return $links;
+}
