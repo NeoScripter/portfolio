@@ -7,14 +7,14 @@ type FetchOptions = {
     payload?: unknown;
     onSuccess?: (data: any) => void;
     onError?: (error: ServerError) => void;
-}
+};
 
 type State = {
     data: any;
     loading: boolean;
     resentlySuccessful: boolean;
     errors: ServerError | null;
-}
+};
 
 type Action =
     | { type: 'FETCH_START' }
@@ -78,6 +78,7 @@ export function useFetch() {
             const res = await fetch(url, {
                 method,
                 headers,
+                credentials: 'include',
                 body: payload
                     ? payload instanceof FormData
                         ? payload

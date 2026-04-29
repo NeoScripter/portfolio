@@ -10,7 +10,12 @@ export default defineConfig({
                 enabled: true,
                 renderTarget: '#app',
                 prerenderScript: import.meta.dirname + '/src/app.tsx', // absolute path
-                additionalPrerenderRoutes: ['/', '/about', 'gallery', 'project'],
+                additionalPrerenderRoutes: [
+                    '/',
+                    '/about',
+                    'gallery',
+                    'project',
+                ],
             },
         }),
         tailwindcss(),
@@ -18,6 +23,15 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': import.meta.dirname + '/src',
+        },
+    },
+    server: {
+        proxy: {
+            '/api': {
+                target: 'https://portfolio.test',
+                changeOrigin: true,
+                secure: false
+            },
         },
     },
 });

@@ -1,9 +1,12 @@
 import Monogram from '@/components/ui/Monogram';
+import { useFetch } from '@/hooks/useFetch';
+import { API_BASE_URL } from '@/lib/const/api';
 import { cn } from '@/lib/helpers/utils';
 import { currentUser } from '@/signals/auth';
 import { hide } from '@/signals/sidebar-state';
 import { LogOut, Settings } from 'lucide-preact';
 import type { FC } from 'preact/compat';
+import { toast } from 'sonner';
 import SidebarLink from './SidebarLink';
 
 const AccountMenu: FC<{ id: string; name: string; show: boolean }> = ({
@@ -11,6 +14,21 @@ const AccountMenu: FC<{ id: string; name: string; show: boolean }> = ({
     name,
     show,
 }) => {
+    const { fetchData } = useFetch();
+
+    async function handleLogout() {
+        await fetchData({
+            url: `${API_BASE_URL}logout`,
+            method: 'DELETE',
+            onSuccess: () => {
+                toast.success('See you later!');
+            },
+            onError: (err) => {
+                console.error(err);
+            },
+        });
+    }
+
     return (
         <div
             id={id}
@@ -41,7 +59,8 @@ const AccountMenu: FC<{ id: string; name: string; show: boolean }> = ({
                     collapses={false}
                 />
                 <SidebarLink
-                    url="/logout"
+                    onClick={handleLogout}
+                    url="/login"
                     icon={LogOut}
                     label="Log out"
                     collapses={false}

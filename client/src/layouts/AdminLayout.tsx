@@ -33,9 +33,11 @@ const AdminLayout: FC<{
     return (
         <ModalProvider>
             <main
+                key="admin-layout"
                 class={cn(
                     'text-sidebar-foreground bg-sidebar h-full min-h-svh text-sm md:flex md:items-start md:p-2',
                 )}
+                id="admin"
             >
                 <Sidebar />
 

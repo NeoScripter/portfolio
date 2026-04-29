@@ -6,6 +6,7 @@ import { FormPasswordInput } from '@/components/form/FormPasswordInput';
 import AppTitle from '@/components/layout/AppTitle';
 import { useFetch } from '@/hooks/useFetch';
 import AuthLayout from '@/layouts/AuthLayout';
+import { API_BASE_URL } from '@/lib/const/api';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import { useLocation } from 'preact-iso';
 import { toast } from 'sonner';
@@ -28,13 +29,13 @@ const Login = () => {
 
     async function submit(values: State) {
         await fetchData({
-            url: '/login',
+            url: `${API_BASE_URL}login`,
             method: 'POST',
             payload: values,
-            onSuccess: () => route('/dashboard'),
+            onSuccess: () => route('/admin/'),
             onError: (err) => {
                 toast.error('Login failed');
-                throw err;
+                console.error(err);
             },
         });
     }
@@ -48,7 +49,7 @@ const Login = () => {
 
             <Form
                 initialValues={{
-                    email: 'test@gmail.com',
+                    email: 'ask@ilyaandreev.dev',
                     password: 'password',
                     remember: false,
                 }}

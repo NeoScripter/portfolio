@@ -15,6 +15,7 @@ const AppLayout: FC<{
     return (
         <ModalProvider>
             <main
+                key="app-layout"
                 class={cn(
                     'full-bleed-wrapper mx-auto max-w-480 overflow-x-clip md:pt-4',
                     className,
