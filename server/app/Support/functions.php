@@ -194,3 +194,16 @@ function build_pagination_links(string $base_url, int $current, int $last, array
 
     return $links;
 }
+
+function cli_echo(string $message, string $type = 'success'): void 
+{
+    $color = match($type) {
+        'success' => '32',
+        'error'   => '31',
+        'warning' => '33',
+        'info'    => '36',
+        default   => '0'
+    };
+    
+    echo "\033[{$color}m{$message}\033[0m\n";
+}

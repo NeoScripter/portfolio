@@ -73,15 +73,31 @@ class ConsoleController
         $email = $f3->get('GET.email');
         $password = $f3->get('GET.password');
 
+        if (empty($name) || empty($email) || strlen($password) < 8) {
+            cli_echo("❌ Usage: php index.php create_user --name=John --email=john@example.com --password=mypassword123", 'error');
+            cli_echo("   Password must be at least 8 characters", 'error');
+            exit(1);
+        }
+
         $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        if ($hash === false) {
+            cli_echo("❌ Failed to hash password", 'error');
+            exit(1);
+        }
 
         try {
             $user = $f3->get('_USERS');
             $user->copyFrom(['name' => $name, 'email' => $email, 'password' => $hash]);
             $user->save();
-            echo 'User successfully created';
+
+            cli_echo("User created successfully!");
+            cli_echo("   ID: {$user->id}");
+            cli_echo("   Name: $name");
+            cli_echo("   Email: $email");
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            cli_echo("❌ Failed: {$e->getMessage()}", 'error');
+            exit(1);
         }
     }
 }
