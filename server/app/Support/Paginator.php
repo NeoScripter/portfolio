@@ -22,7 +22,7 @@ final class Paginator
         return new self($request);
     }
 
-    public function handle_limit_param()
+    public function apply_limit_filter()
     {
         $request = $this->request;
 
@@ -31,7 +31,7 @@ final class Paginator
         }
     }
 
-    public function handle_exclude_param()
+    public function apply_exclude_filter()
     {
         $request = $this->request;
 
@@ -41,7 +41,7 @@ final class Paginator
         }
     }
 
-    public function handle_search_param()
+    public function apply_search_filter()
     {
         $request = $this->request;
 
@@ -55,26 +55,7 @@ final class Paginator
         }
     }
 
-    public function handle_page_param(int $per_page, string $table)
-    {
-        $request = $this->request;
-
-        if (empty($table)) {
-            return;
-        }
-
-        $in_request = array_key_exists('page', $request) && is_numeric($request['page']) && (int) $request['page'] >= 1;
-
-        $total = Base::instance()->get($table)->count($this->merge_filters());
-        $last_page    = (int) ceil($total / $per_page);
-        $current_page = $in_request ? min($last_page, (int) $request['page']) : 1;
-        $offset       = max(0, ($current_page - 1) * $per_page);
-
-        $this->options['limit'] = $per_page;
-        $this->options['offset'] = $offset;
-    }
-
-    public function build_pagination_meta(int $per_page, string $table, string $url_suffix)
+    public function apply_pagination(int $per_page, string $table, string $url_suffix)
     {
         $request = $this->request;
 
@@ -91,6 +72,9 @@ final class Paginator
         $from = $total > 0 ? $offset + 1 : null;
         $to   = $total > 0 ? min($offset + $per_page, $total) : null;
         $base_url     = Base::instance()->get('app_url') . $url_suffix;
+
+        $this->options['limit'] = $per_page;
+        $this->options['offset'] = $offset;
 
         $links = $this->build_pagination_links($base_url, $current_page, $last_page, $request);
 

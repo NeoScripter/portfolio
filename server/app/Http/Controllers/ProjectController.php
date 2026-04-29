@@ -13,11 +13,10 @@ class ProjectController extends BaseController
     public function index($f3)
     {
         $handler = Paginator::make($f3->GET);
-        $handler->handle_limit_param();
-        $handler->handle_exclude_param();
-        $handler->handle_search_param();
-        $handler->handle_page_param(5, '_PROJECTS_VIEW', 'projects');
-        $meta = $handler->build_pagination_meta(5, '_PROJECTS_VIEW', 'projects');
+        $handler->apply_limit_filter();
+        $handler->apply_exclude_filter();
+        $handler->apply_search_filter();
+        $meta = $handler->apply_pagination(5, '_PROJECTS_VIEW', 'projects');
 
         $projects = $f3->get('_PROJECTS_VIEW')
             ->find(...$handler->output());
