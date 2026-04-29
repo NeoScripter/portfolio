@@ -100,4 +100,38 @@ class ConsoleController
             exit(1);
         }
     }
+
+    function update_password($f3)
+    {
+        $email = $f3->get('GET.email');
+        $new_password = $f3->get('GET.password');
+
+        if (empty($email) || strlen($new_password) < 8) {
+            cli_echo("❌ Usage: php index.php reset_password --email=john@example.com --password=mypassword123", 'error');
+            cli_echo("   Password must be at least 8 characters", 'error');
+            exit(1);
+        }
+
+        $hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+        if ($hash === false) {
+            cli_echo("❌ Failed to hash password", 'error');
+            exit(1);
+        }
+
+        try {
+            $user = $f3->get('_USERS');
+            $user->load(['email=?', $email]);
+            $user->copyFrom(['password' => $hash]);
+            $user->save();
+
+            cli_echo("Password updated successfully!");
+            cli_echo("   ID: {$user->id}");
+            cli_echo("   Name: $user->name");
+            cli_echo("   Email: $email");
+        } catch (\Exception $e) {
+            cli_echo("❌ Failed: {$e->getMessage()}", 'error');
+            exit(1);
+        }
+    }
 }
