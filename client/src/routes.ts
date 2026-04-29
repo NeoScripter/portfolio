@@ -32,39 +32,50 @@ const ProjectIndex = lazy(() => import('./pages/admin/projects/Index'));
 const ProjectEdit = lazy(() => import('./pages/admin/projects/Edit'));
 const ProjectCreate = lazy(() => import('./pages/admin/projects/Create'));
 
-
 export const routes = [
-    { component: Home, path: '/' },
-    { component: About, path: '/about' },
-    { component: Login, path: '/login' },
-    { component: Gallery, path: '/gallery' },
-    { component: Project, path: '/gallery/:slug' },
+    { component: Home, path: '/', protected: false },
+    { component: About, path: '/about', protected: false },
+    { component: Login, path: '/login', protected: false },
+    { component: Gallery, path: '/gallery', protected: false },
+    { component: Project, path: '/gallery/:slug', protected: false },
 
     // Admin Panel
-    { component: Dashboard, path: '/admin' },
-    { component: Profile, path: '/admin/settings/profile' },
-    { component: Password, path: '/admin/settings/password' },
-    { component: Appearance, path: '/admin/settings/appearance' },
+    { component: Dashboard, path: '/admin', protected: true },
+    { component: Profile, path: '/admin/settings/profile', protected: true },
+    { component: Password, path: '/admin/settings/password', protected: true },
+    {
+        component: Appearance,
+        path: '/admin/settings/appearance',
+        protected: true,
+    },
 
-    { component: FaqIndex, path: '/admin/faqs' },
-    { component: FaqCreate, path: '/admin/faqs/create' },
-    { component: FaqEdit, path: '/admin/faqs/:id' },
+    { component: FaqIndex, path: '/admin/faqs', protected: true },
+    { component: FaqCreate, path: '/admin/faqs/create', protected: true },
+    { component: FaqEdit, path: '/admin/faqs/:id', protected: true },
 
-    { component: ReviewIndex, path: '/admin/reviews' },
-    { component: ReviewCreate, path: '/admin/reviews/create' },
-    { component: ReviewEdit, path: '/admin/reviews/:id' },
+    { component: ReviewIndex, path: '/admin/reviews', protected: true },
+    { component: ReviewCreate, path: '/admin/reviews/create', protected: true },
+    { component: ReviewEdit, path: '/admin/reviews/:id', protected: true },
 
-    { component: VideoIndex, path: '/admin/videos' },
-    { component: VideoCreate, path: '/admin/videos/create' },
-    { component: VideoEdit, path: '/admin/videos/:id' },
+    { component: VideoIndex, path: '/admin/videos', protected: true },
+    { component: VideoCreate, path: '/admin/videos/create', protected: true },
+    { component: VideoEdit, path: '/admin/videos/:id', protected: true },
 
-    { component: TechStackIndex, path: '/admin/stacks' },
-    { component: TechStackCreate, path: '/admin/stacks/create' },
-    { component: TechStackEdit, path: '/admin/stacks/:id' },
+    { component: TechStackIndex, path: '/admin/stacks', protected: true },
+    {
+        component: TechStackCreate,
+        path: '/admin/stacks/create',
+        protected: true,
+    },
+    { component: TechStackEdit, path: '/admin/stacks/:id', protected: true },
 
-    { component: ProjectIndex, path: '/admin/projects' },
-    { component: ProjectCreate, path: '/admin/projects/create' },
-    { component: ProjectEdit, path: '/admin/projects/:slug' },
+    { component: ProjectIndex, path: '/admin/projects', protected: true },
+    {
+        component: ProjectCreate,
+        path: '/admin/projects/create',
+        protected: true,
+    },
+    { component: ProjectEdit, path: '/admin/projects/:slug', protected: true },
 
     { component: NotFound, path: '*' },
 ];

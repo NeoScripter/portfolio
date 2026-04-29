@@ -8,6 +8,7 @@ import {
     prerender as ssr,
 } from 'preact-iso';
 import './assets/css/app.css';
+import withAuth from './components/auth/ProtectedRoute';
 import { routes } from './routes';
 import { theme } from './signals/theme';
 
@@ -29,7 +30,14 @@ export function App() {
             <ErrorBoundary>
                 <Router>
                     {routes.map((route) => (
-                        <Route path={route.path} component={route.component} />
+                        <Route
+                            path={route.path}
+                            component={
+                                route.protected
+                                    ? withAuth(route.component)
+                                    : route.component
+                            }
+                        />
                     ))}
                 </Router>
             </ErrorBoundary>

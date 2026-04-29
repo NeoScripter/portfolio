@@ -53,6 +53,11 @@ const useFilteredProjects = ({ delay = 400 }: Props) => {
             return;
         }
 
+        // window.scrollTo({
+        //     top: 0,
+        //     left: 0,
+        //     behavior: 'smooth', // animated scrolling
+        // });
         fetchProjects();
 
         window.addEventListener(events.FORM_SUCCESS_EVENT, fetchProjects);

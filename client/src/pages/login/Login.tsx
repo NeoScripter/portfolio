@@ -8,6 +8,7 @@ import { useFetch } from '@/hooks/useFetch';
 import AuthLayout from '@/layouts/AuthLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import type { ValidationRules } from '@/lib/helpers/validation';
+import { currentUser } from '@/signals/auth';
 import { useLocation } from 'preact-iso';
 import { toast } from 'sonner';
 
@@ -15,7 +16,7 @@ type State = {
     email: string;
     password: string;
     remember: boolean;
-}
+};
 
 const validationRules: ValidationRules<State> = {
     email: ['required', 'email'],
@@ -32,7 +33,13 @@ const Login = () => {
             url: `${API_BASE_URL}login`,
             method: 'POST',
             payload: values,
-            onSuccess: () => route('/admin/'),
+            onSuccess: (data) => {
+                toast.success(data.message ?? 'Welcome back!');
+                console.log(currentUser.value);
+
+                currentUser.value = data.user;
+                route('/admin/');
+            },
             onError: (err) => {
                 toast.error('Login failed');
                 console.error(err);

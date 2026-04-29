@@ -20,8 +20,9 @@ const AccountMenu: FC<{ id: string; name: string; show: boolean }> = ({
         await fetchData({
             url: `${API_BASE_URL}logout`,
             method: 'DELETE',
-            onSuccess: () => {
-                toast.success('See you later!');
+            onSuccess: (data) => {
+                toast.success(data.message ?? 'See you later!');
+                currentUser.value = null;
             },
             onError: (err) => {
                 console.error(err);

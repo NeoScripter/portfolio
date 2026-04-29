@@ -53,7 +53,7 @@ class SessionController
             send_json(['message' => 'User not found'], 404);
         }
 
-        send_json(['user' => $user]);
+        send_json(['user' => $user->cast()]);
     }
 
     public function destroy($f3)

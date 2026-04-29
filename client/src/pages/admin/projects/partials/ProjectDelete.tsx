@@ -18,9 +18,9 @@ const ProjectDelete = () => {
         await fetchData({
             url: `${API_BASE_URL}projects/${project.value.id}`,
             method: 'DELETE',
-            onSuccess: () => {
+            onSuccess: (data) => {
                 project.value = null;
-                toast.success('Deleted!');
+                toast.success(data.message ?? 'Deleted!');
                 window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },
             onError: () => toast.error('Error'),
