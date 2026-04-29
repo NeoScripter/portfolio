@@ -8,17 +8,10 @@ use Base;
 
 final class JwtHandler
 {
-    private $base = Base::instance();
-
-    protected function __construct(
-        private array $request,
-    ) {}
-
-    public static function make(array $request)
+    public static function make()
     {
-        return new self($request);
+        return new self();
     }
-
 
     private function base64url_encode($data)
     {

@@ -45,7 +45,7 @@ class ConsoleController
         $this->migrate($f3);
     }
 
-    public function link()
+    function link()
     {
         $storage = APP_DIR  . '/storage/public';
         $link    = APP_DIR  . '/public/storage';
@@ -66,5 +66,22 @@ class ConsoleController
             echo "Failed to create symlink" . PHP_EOL;
         }
     }
-}
 
+    function create_user($f3)
+    {
+        $name = $f3->get('GET.name');
+        $email = $f3->get('GET.email');
+        $password = $f3->get('GET.password');
+
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        try {
+            $user = $f3->get('_USERS');
+            $user->copyFrom(['name' => $name, 'email' => $email, 'password' => $hash]);
+            $user->save();
+            echo 'User successfully created';
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+}
