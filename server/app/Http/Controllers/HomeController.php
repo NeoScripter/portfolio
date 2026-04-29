@@ -2,6 +2,8 @@
 
 namespace Http\Controllers;
 
+use Support\JwtHandler;
+
 class HomeController
 {
     function index($f3)

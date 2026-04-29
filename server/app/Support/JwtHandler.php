@@ -81,4 +81,49 @@ final class JwtHandler
         ];
         return ['token' => $this->jwt_encode($payload), 'payload' => $payload];
     }
+
+
+    private function get_authorization_header()
+    {
+        $base = Base::instance();
+        if (!empty($base->_SERVER['HTTP_AUTHORIZATION'])) {
+            return trim($base->_SERVER['HTTP_AUTHORIZATION']);
+        }
+        if (!empty($base->_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+            return trim($base->_SERVER['REDIRECT_HTTP_AUTHORIZATION']);
+        }
+        if (function_exists('apache_request_headers')) {
+            $headers = apache_request_headers();
+            if (!empty($headers['Authorization'])) return trim($headers['Authorization']);
+            if (!empty($headers['authorization'])) return trim($headers['authorization']);
+        }
+        return null;
+    }
+
+    private function get_bearer_token(): ?string
+    {
+        $auth = $this->get_authorization_header();
+        if ($auth && preg_match('/Bearer\s+(.*)$/i', $auth, $matches)) {
+            return $matches[1];
+        }
+
+        if (! empty($_COOKIE['token'])) {
+            return $_COOKIE['token'];
+        }
+
+        return null;
+    }
+
+    public function require_auth()
+    {
+        $token = $this->get_bearer_token();
+        if (!$token) {
+            send_json(['error' => 'Authorization header missing'], 401);
+        }
+        $payload = $this->jwt_decode($token);
+        if (!$payload) {
+            send_json(['error' => 'Invalid or expired token'], 401);
+        }
+        return $payload;
+    }
 }

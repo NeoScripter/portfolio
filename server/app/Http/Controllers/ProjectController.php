@@ -4,6 +4,7 @@ namespace Http\Controllers;
 
 use Http\BaseController;
 use Support\ImageHandler;
+use Support\JwtHandler;
 use Support\Paginator;
 use Support\Validator;
 use Web;
@@ -12,6 +13,7 @@ class ProjectController extends BaseController
 {
     public function index($f3)
     {
+        $payload = JwtHandler::make()->require_auth();
         $handler = Paginator::make($f3->GET);
         $handler->apply_limit_filter();
         $handler->apply_exclude_filter();
