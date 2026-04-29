@@ -6,14 +6,18 @@ import type { ProjectResource } from '@/lib/types/models/projects';
 import { useLocation } from 'preact-iso';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-const useFilteredProjects = () => {
+type Props = {
+    delay?: number;
+};
+
+const useFilteredProjects = ({ delay = 400 }: Props) => {
     const { fetchData, loading, errors } = useFetch();
     const [projectData, setProjectData] = useState<ProjectResource | null>(
         null,
     );
     const { query } = useLocation();
     const search = query?.search == null ? '' : query.search;
-    const debouncedQuery = useDebounce(search, 400);
+    const debouncedQuery = useDebounce(search, delay);
 
     const currentPage = query?.page == null ? 1 : query.page;
     const projectsRef = useRef<HTMLUListElement | null>(null);

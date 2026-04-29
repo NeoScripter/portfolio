@@ -12,7 +12,9 @@ import ProjectTile from './ProjectTile';
 import ProjectTileFallback from './ProjectTileFallback';
 
 const ProjectFeed: FC<NodeProps> = ({ className }) => {
-    const { projectData, errors, loading, projectsRef } = useFilteredProjects();
+    const { projectData, errors, loading, projectsRef } = useFilteredProjects({
+        delay: 0,
+    });
 
     const hasProjects =
         projectData?.data !== undefined && projectData?.data?.length > 0;
