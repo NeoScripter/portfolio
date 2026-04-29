@@ -59,15 +59,13 @@ final class Paginator
     {
         $request = $this->request;
 
-        if (empty($table)) {
+        if (empty($table) || ! array_key_exists('page', $request) || ! is_numeric($request['page'])) {
             return;
         }
 
-        $in_request = array_key_exists('page', $request) && is_numeric($request['page']) && (int) $request['page'] >= 1;
-
         $total = Base::instance()->get($table)->count($this->merge_filters());
         $last_page    = (int) ceil($total / $per_page);
-        $current_page = $in_request ? min($last_page, (int) $request['page']) : 1;
+        $current_page = max(1, min($last_page, (int) $request['page']));
         $offset       = max(0, ($current_page - 1) * $per_page);
         $from = $total > 0 ? $offset + 1 : null;
         $to   = $total > 0 ? min($offset + $per_page, $total) : null;
