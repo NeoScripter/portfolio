@@ -172,6 +172,42 @@ class ImageHandler
         return str_replace(APP_DIR . '/public/', Base::instance()->get('app_url'), $dest);
     }
 
+    public function compress(): static
+    {
+        if ($this->fails()) return $this;
+
+        $tmp_png = sys_get_temp_dir() . '/compressed_' . uniqid() . '.png';
+
+        try {
+            $img = new Imagick($this->file['tmp_name']);
+            $img->stripImage();
+            $img->setImageFormat('png');
+            $img->writeImage($tmp_png);
+            $img->destroy();
+
+            $cmd = sprintf(
+                'optipng -o7 -strip all %s',
+                escapeshellarg($tmp_png)
+            );
+
+            exec($cmd, output: $output, result_code: $code);
+
+            if ($code !== 0) {
+                throw new RuntimeException('PNG compression failed: ' . implode("\n", $output));
+            }
+
+            $this->file['tmp_name'] = $tmp_png;
+        } catch (RuntimeException $e) {
+            $this->error = $e->getMessage();
+            if (file_exists($tmp_png)) unlink($tmp_png);
+        } catch (ImagickException $e) {
+            $this->error = 'PNG conversion failed: ' . $e->getMessage();
+            if (file_exists($tmp_png)) unlink($tmp_png);
+        }
+
+        return $this;
+    }
+
     public function insert_mockup(int $mockup_number): static
     {
         if ($this->fails()) return $this;
