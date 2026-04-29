@@ -19,7 +19,11 @@ const ProjectMeta: FC<{ project: ProjectType; className?: string }> = ({
             </h2>
             <ul class="flex flex-wrap gap-3 xl:gap-4">
                 {project.attr.stacks.map((stack) => (
-                    <Badge className="xl:text-lg" label={stack} />
+                    <Badge
+                        className="xl:text-lg"
+                        label={stack}
+                        isClickable={false}
+                    />
                 ))}
             </ul>
         </div>

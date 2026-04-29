@@ -82,7 +82,7 @@ const StateResolver: FC<{
         return (
             <ApiError
                 resourceRu="проектов"
-                resourceEn="projectData"
+                resourceEn="projects"
                 mb={true}
             />
         );

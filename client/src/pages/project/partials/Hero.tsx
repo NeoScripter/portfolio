@@ -28,15 +28,15 @@ const Project: FC<{ project: ProjectType }> = ({ project }) => {
 
     return (
         <>
-            <div class="mb-13 sm:mb-14 px-5 sm:px-15 xl:px-0 2xl:pl-8 2xl:pr-0 xl:mb-19.5 xl:flex xl:*:flex-[1_1_0] 2xl:mb-22">
+            <div class="mb-13 px-5 sm:mb-14 sm:px-15 xl:mb-19.5 xl:flex xl:px-0 xl:*:flex-[1_1_0] 2xl:mb-22 2xl:pr-0 2xl:pl-8">
                 <ProjectMeta project={project} />
                 <ProjectBrief className="hidden xl:block" project={project} />
             </div>
 
             {project.image && (
                 <AdaptiveImg
-                    prtClass="full-bleed px-4 sm:px-4.5 2xl:px-24"
-                    imgClass="rounded-3xl sm:aspect-2/1 xl:aspect-10/4"
+                    prtClass="full-bleed [--offset:16px] sm:[--offset:18px] xl:[--offset:96px] max-w-[calc(100%-var(--offset))] mx-auto rounded-3xl"
+                    imgClass="sm:aspect-2/1 xl:aspect-10/4"
                     alt={project.image?.alt?.[lang]}
                     srcs={project.image.srcSet}
                 />
@@ -49,12 +49,12 @@ const Project: FC<{ project: ProjectType }> = ({ project }) => {
 const Skeleton = () => {
     return (
         <>
-            <div class="mb-13 sm:mb-14 px-5 sm:px-15 xl:px-0 2xl:pl-8 2xl:pr-0 xl:mb-19.5 xl:flex xl:*:flex-[1_1_0] 2xl:mb-22">
+            <div class="mb-13 px-5 sm:mb-14 sm:px-15 xl:mb-19.5 xl:flex xl:px-0 xl:*:flex-[1_1_0] 2xl:mb-22 2xl:pr-0 2xl:pl-8">
                 <ProjectMetaFallback />
                 <ProjectBriefFallback className="hidden xl:block" />
             </div>
 
-            <div className="skeleton full-bleed size-full rounded-3xl sm:aspect-2/1 xl:aspect-10/4" />
+            <div className="skeleton full-bleed full-bleed mx-auto size-full max-w-[calc(100%-var(--offset))] rounded-3xl [--offset:16px] sm:aspect-2/1 sm:[--offset:18px] xl:aspect-10/4 xl:[--offset:96px]" />
             <ProjectBriefFallback className="xl:hidden" />
         </>
     );
