@@ -42,5 +42,4 @@ $f3->set('CORS', [
 ]);
 
 require_once(APP_DIR . '/config/routing.php');
-
 $f3->run();

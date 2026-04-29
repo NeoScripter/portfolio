@@ -39,7 +39,7 @@ class SessionController
             'samesite' => $is_prod ? 'Strict' : 'Lax',
         ]);
 
-        send_json(['message' => 'Logged in successfully']);
+        send_json(['message' => "Welcome, $user->name", 'user' => $user->cast()]);
     }
 
     public function show($f3)
@@ -68,6 +68,6 @@ class SessionController
             'samesite' => $is_prod ? 'Strict' : 'Lax',
         ]);
 
-        send_json(['message' => 'Logged out successfully']);
+        send_json(['message' => 'See you later!']);
     }
 }

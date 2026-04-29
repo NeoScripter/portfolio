@@ -1,5 +1,6 @@
 <?php
 
+use Support\JwtHandler;
 
 $f3->route('GET /api/seed [cli]', 'seeders\Seeder->run');
 $f3->route('GET /api/@action [cli]', 'Http\Controllers\ConsoleController->@action');
@@ -16,6 +17,12 @@ array_walk_recursive(
 );
 
 $controllers = glob(APP_DIR . '/app/Http/Controllers/*.php');
+
+$auth = function () {
+    JwtHandler::make()->require_auth();
+};
+
+$mw = \Middleware::instance();
 
 foreach ($controllers as $controller) {
 
@@ -34,11 +41,23 @@ foreach ($controllers as $controller) {
         "DELETE $prefix/@id"  => 'destroy',
     ];
 
+    $path = "Http\\Controllers\\$name";
+
     foreach ($routes as $pattern => $action) {
-        $path = "Http\\Controllers\\$name";
         if (in_array($path . "->$action", $taken) || ! method_exists($path, $action)) {
             continue;
         }
+
+        // Automatically assign middleware to crud routes
+        [$method, $url] = preg_split('/\s+/', $pattern);
+
+        if ($method !== 'GET') {
+            $mw->before("$method $url", $auth);
+        }
+
+        // Automatically assign crud routes
         $f3->route($pattern, "$base->$action");
     }
 }
+
+$mw->run();

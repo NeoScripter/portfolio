@@ -4,7 +4,8 @@
         "bcosca/fatfree": "^3.9",
         "fakerphp/faker": "^1.24",
         "ikkez/f3-falsum": "^2.8",
-        "n0nag0n/simple-job-queue": "^1.2"
+        "n0nag0n/simple-job-queue": "^1.2",
+        "ikkez/f3-middleware": "^1.1"
     },
     "autoload": {
         "files": [
