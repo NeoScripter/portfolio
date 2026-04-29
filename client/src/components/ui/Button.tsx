@@ -1,10 +1,9 @@
 import useFollowCursor from '@/hooks/useFollowCursor';
 import { cn } from '@/lib/helpers/utils';
-import { locale } from '@/signals/locale';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ArrowDownRight } from 'lucide-preact';
 import type { JSX } from 'preact';
-import { useId, useRef } from 'preact/hooks';
+import { useRef } from 'preact/hooks';
 
 const buttonVariants = cva(
     'inline-flex w-fit items-center justify-center gap-[0.5em] whitespace-nowrap rounded-xl group transition-[color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*="size-"])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
@@ -58,9 +57,7 @@ const Button = ({
             class={cn(buttonVariants({ variant, className }))}
             {...props}
         >
-            <span>
-                {children}
-            </span>
+            <span>{children}</span>
 
             <div
                 ref={arrowRef}

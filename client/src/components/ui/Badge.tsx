@@ -16,7 +16,9 @@ const Badge: FC<NodeProps<{ label: string; isClickable?: boolean }>> = ({
         <li
             class={cn(
                 'border-foreground flex h-[2.25em] items-center justify-center rounded-3xl border px-[1em] leading-0',
-                isActive && 'bg-foreground text-background',
+                isActive && 'bg-foreground text-background font-semibold',
+                isClickable &&
+                    'hover:ring-footer-text focus-visible:border-ring focus-visible:ring-muted-foreground/50 shadow-xs transition-[color,box-shadow,opacity] outline-none hover:ring-2 focus-visible:ring-2',
                 className,
             )}
             key={label}
