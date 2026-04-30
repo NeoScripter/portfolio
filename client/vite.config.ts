@@ -13,8 +13,9 @@ export default defineConfig({
                 additionalPrerenderRoutes: [
                     '/',
                     '/about',
-                    'gallery',
-                    'project',
+                    '/gallery',
+                    '/project',
+                    '/login',
                 ],
             },
         }),
