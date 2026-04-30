@@ -12,7 +12,7 @@ const TechStackCard: FC<{ stack: TechStackType }> = ({ stack }) => {
                 <img
                     src={stack.attr.url}
                     alt={stack.attr.alt[locale.value]}
-                    class="size-full object-cover object-center"
+                    class="size-full object-contain object-center"
                 />
             </div>
 
