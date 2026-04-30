@@ -23,6 +23,7 @@ jobs:
           script: |
             cd www/portfolio && \
             git pull origin main && \
+            cd client && \
             /home/ilya/.local/share/pnpm/pnpm install && \
             /home/ilya/.local/share/pnpm/pnpm run build && \
             sudo service php8.5-fpm reload
