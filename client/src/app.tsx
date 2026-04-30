@@ -1,16 +1,16 @@
 import { effect } from '@preact/signals';
-import { render } from 'preact';
 import {
     ErrorBoundary,
+    hydrate,
     LocationProvider,
     Route,
     Router,
     prerender as ssr,
 } from 'preact-iso';
 import './assets/css/app.css';
-import WithAuth from './components/auth/WithAuth';
 import { routes } from './routes';
 import { theme } from './signals/theme';
+import WithAuth from './components/auth/WithAuth';
 
 export function App() {
     if (typeof window !== 'undefined') {
@@ -45,7 +45,7 @@ export function App() {
     );
 }
 if (typeof window !== 'undefined') {
-    render(<App />, document.getElementById('app')!);
+    hydrate(<App />, document.getElementById('app')!);
 }
 
 export async function prerender(data) {

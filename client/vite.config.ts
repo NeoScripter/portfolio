@@ -16,6 +16,7 @@ export default defineConfig({
                     '/gallery',
                     '/project',
                     '/login',
+                    '/admin/',
                 ],
             },
         }),
