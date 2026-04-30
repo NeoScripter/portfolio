@@ -60,6 +60,7 @@ export default function Password() {
                             en: 'Ensure your account is using a long, random password to stay secure',
                             ru: 'Используйте длинный случайный пароль для безопасности аккаунта',
                         }}
+                        className="[&>h3,&>p]:animate-none"
                     />
                     <AppTitle
                         titleRu="Настройки пароля"

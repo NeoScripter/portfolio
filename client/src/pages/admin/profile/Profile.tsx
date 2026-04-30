@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 type State = {
     name: string;
     email: string;
-}
+};
 
 const validationRules: ValidationRules<State> = {
     email: ['required', 'email'],
@@ -50,9 +50,13 @@ export default function Profile() {
                             en: 'Update your name and email address',
                             ru: 'Редактировать емаил или имя пользователя',
                         }}
+                        className="[&>h3,&>p]:animate-none"
                     />
 
-                    <AppTitle titleRu="Настройки профиля" titleEn="Profile Settings" />
+                    <AppTitle
+                        titleRu="Настройки профиля"
+                        titleEn="Profile Settings"
+                    />
 
                     <Form
                         initialValues={{

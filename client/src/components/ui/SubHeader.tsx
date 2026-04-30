@@ -4,14 +4,16 @@ import { locale } from '@/signals/locale';
 export default function SubHeader({
     title,
     description,
+    className,
 }: {
     title: PageTitleType;
     description?: PageTitleType;
+    className?: string;
 }) {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     return (
-        <header>
+        <header className={className}>
             <h3
                 key={`${lang}-subheader`}
                 className="motion-safe:animate-fade-in mb-0.5 text-base font-medium hyphens-auto"

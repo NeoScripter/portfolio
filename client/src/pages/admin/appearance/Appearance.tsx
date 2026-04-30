@@ -21,6 +21,7 @@ export default function Appearance() {
                             en: "Update your account's theme",
                             ru: 'Изменить тему',
                         }}
+                        className="[&>h3,&>p]:animate-none"
                     />
                     <AppearanceTabs />
                 </div>
