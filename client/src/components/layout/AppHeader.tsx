@@ -8,6 +8,7 @@ import type { VariantType } from '@/lib/helpers/getHeaderVariant';
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
 import getHeroOffset from '@/lib/helpers/getHeroOffset';
 import { cn } from '@/lib/helpers/utils';
+import { locale } from '@/signals/locale';
 import { useRoute } from 'preact-iso';
 import { type FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
@@ -19,7 +20,6 @@ import NavDrawer from './partials/NavDrawer';
 import { NavMenu } from './partials/NavMenu';
 import Overlay from './partials/Overlay';
 import Separator from './partials/Separator';
-import { locale } from '@/signals/locale';
 
 const AppHeader: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
@@ -43,13 +43,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
 
     useEscapeKey(() => setShowMenu(false));
 
-    const mq = isBrowser
-        ? window.matchMedia(`(max-width: ${LG}px)`)
-        : null;
-
-    const [showDrawer, setShowDrawer] = useState(
-        isBrowser ? mq?.matches : false,
-    );
+    const [showDrawer, setShowDrawer] = useState(false);
 
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
@@ -58,22 +52,22 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
     };
 
     useEffect(() => {
-        if (!mq) {
+        if (typeof window === 'undefined') {
             return;
         }
-        const updateDrawerStatus = (e: MediaQueryListEvent) =>
-            setShowDrawer(e.matches);
+        const mq = window.matchMedia(`(max-width: ${LG}px)`);
+        setShowDrawer(mq.matches);
 
-        mq.addEventListener('change', updateDrawerStatus);
-
-        return () => mq.removeEventListener('change', updateDrawerStatus);
-    }, [mq]);
+        const update = (e: MediaQueryListEvent) => setShowDrawer(e.matches);
+        mq.addEventListener('change', update);
+        return () => mq.removeEventListener('change', update);
+    }, []);
 
     return (
         <header
             inert={showModal.value}
             class={cn(
-                'sticky inset-x-0 top-0 h-fit -mt-[100%] isolate z-10 transition-all',
+                'sticky inset-x-0 top-0 isolate z-10 -mt-[100%] h-fit transition-all',
                 isBelowPadding ? 'md:top-0' : 'md:top-4',
                 isBelowHero && 'full-bleed',
                 {
@@ -94,7 +88,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     },
                 )}
             >
-                <div key={lang} class="w-40 motion-safe:animate-fade-in">
+                <div key={lang} class="motion-safe:animate-fade-in w-40">
                     <Logo />
                 </div>
 
