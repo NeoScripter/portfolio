@@ -2,5 +2,5 @@
 /vendor
 public/storage/*
 .env
-config/.config.ini
+config/config.ini
 db/database.sqlite
