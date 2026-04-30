@@ -30,16 +30,17 @@ class SessionController
         $jwt     = JwtHandler::make()->create_jwt_for_user($user->id);
         $ttl     = $f3->get('jwt_ttl');
         $is_prod = $f3->get('app_env') === 'production';
+        $expires_at = time() + $ttl;
 
         setcookie('token', $jwt['token'], [
-            'expires'  => time() + $ttl,
+            'expires'  => $expires_at,
             'path'     => '/',
             'httponly' => true,
             'secure'   => $is_prod,
             'samesite' => $is_prod ? 'Strict' : 'Lax',
         ]);
 
-        send_json(['message' => "Welcome, $user->name", 'user' => $user->cast()]);
+        send_json(['message' => "Welcome, $user->name", 'user' => $user->cast(), 'expires_at' => $expires_at]);
     }
 
     public function show($f3)
@@ -53,7 +54,7 @@ class SessionController
             send_json(['message' => 'User not found'], 404);
         }
 
-        send_json(['user' => $user->cast()]);
+        send_json(['user' => $user->cast(), 'expires_at' => $payload['exp']]);
     }
 
     public function destroy($f3)
