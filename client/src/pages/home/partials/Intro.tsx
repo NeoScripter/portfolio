@@ -4,7 +4,7 @@ import Reviews from './Reviews';
 
 const Intro = () => {
     return (
-        <AppSection>
+        <AppSection className='full-bleed full-bleed-wrapper'>
             <SecondaryHeading>
                 Уникальные и профессиональные сайты, которые невозможно не
                 заметить

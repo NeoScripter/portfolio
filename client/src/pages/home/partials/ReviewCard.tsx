@@ -1,5 +1,5 @@
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
-import { cn, shortenDescription } from '@/lib/helpers/utils';
+import { cn } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import { locale } from '@/signals/locale';
 import type { FC } from 'preact/compat';
@@ -10,14 +10,10 @@ const ReviewCard: FC<{ review: ReviewType; active: boolean }> = ({
 }) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
-    const description = active
-        ? attr.description[lang]
-        : shortenDescription(attr.description[lang]);
-
     return (
         <li
             class={cn(
-                'bg-muted review-slide border-accent-foreground/15 ease flex flex-col items-start gap-8 rounded-xl border py-7.5 pr-7 pl-6 transition-opacity duration-500 ease-in select-none sm:flex-row sm:gap-10.5 sm:py-12 sm:pr-18 sm:pl-8 sm:text-base md:items-center lg:gap-12 lg:pt-12 lg:pr-17 lg:pb-18 lg:pl-10.5 lg:text-xl xl:pb-13',
+                'bg-muted review-slide border-accent-foreground/15 ease flex flex-col items-start gap-8 rounded-xl border py-7.5 pr-7 pl-6 transition-opacity duration-500 ease-in select-none sm:flex-row sm:gap-10.5 sm:py-12 sm:pr-18 sm:pl-8 sm:text-base md:items-start lg:gap-12 lg:pt-12 lg:pr-17 lg:pb-18 lg:pl-10.5 lg:text-xl xl:pb-13',
                 !active && 'opacity-30',
             )}
             role="tabpanel"
@@ -33,10 +29,15 @@ const ReviewCard: FC<{ review: ReviewType; active: boolean }> = ({
                 />
             )}
             <div>
-                <blockquote>
-                    <p class="mb-6">{description}</p>
+                <blockquote
+                    className={cn(
+                        'overflow-clip transition-[max-height] duration-500 ease-in-out',
+                        active ? 'max-h-500' : 'max-h-80',
+                    )}
+                >
+                    <p class="mb-6">{attr.description[lang]}</p>
                 </blockquote>
-                <p class="font-bold md:text-xl xl:text-[1.325rem]">
+                <p class={cn('font-bold md:text-xl xl:text-[1.325rem]')}>
                     <cite class="not-italic">{attr.author[lang]}</cite>
                 </p>
             </div>

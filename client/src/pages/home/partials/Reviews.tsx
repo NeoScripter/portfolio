@@ -1,17 +1,17 @@
 import ApiError from '@/components/ui/ApiError';
-import { useCarousel } from '@/hooks/useCarousel';
-import type { ReviewType } from '@/lib/types/models/reviews';
-import { useEffect, useRef } from 'preact/hooks';
-import { locale } from '@/signals/locale';
-import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
-import ReviewCard, { ReviewFallback } from './ReviewCard';
 import CarouselControls from '@/components/ui/CarouselControls';
+import { useCarousel } from '@/hooks/useCarousel';
 import { useFetch } from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/lib/const/api';
+import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
+import type { ReviewType } from '@/lib/types/models/reviews';
+import { locale } from '@/signals/locale';
+import { useEffect, useRef } from 'preact/hooks';
+import ReviewCard, { ReviewFallback } from './ReviewCard';
 
 const Reviews = () => {
     const { fetchData, loading, errors } = useFetch();
-    const carouselRef = useRef(null);
+    const carouselRef = useRef<HTMLUListElement | null>(null);
     const {
         slides: carouselSlides,
         handleTouchStart,
@@ -34,7 +34,18 @@ const Reviews = () => {
         });
     }, []);
 
-    const listLabel = locale.value === 'ru' ? "Отзывы клиентов" : "Customer reviews";
+    const handleClick = (cb: () => void) => {
+        cb();
+
+        if (!carouselRef.current) return;
+
+        carouselRef.current.scrollIntoView({
+            block: 'start',
+        });
+    };
+
+    const listLabel =
+        locale.value === 'ru' ? 'Отзывы клиентов' : 'Customer reviews';
     const numSlides = Math.floor(carouselSlides.length / 2);
 
     if (hasErrorDetails(errors))
@@ -47,7 +58,7 @@ const Reviews = () => {
         );
 
     return (
-        <div>
+        <div className="full-bleed">
             <div
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
@@ -56,9 +67,7 @@ const Reviews = () => {
                 <ul
                     ref={carouselRef}
                     className={cn(
-                        // '-ml-5 flex w-max items-start gap-6 sm:-ml-15 sm:gap-10 md:-ml-19 lg:-ml-27 lg:gap-13 xl:-ml-47',
-                        // TODO adjsut carousel left offset
-                        'flex w-max items-start gap-6 sm:gap-10 lg:gap-13',
+                        '-ml-5 flex w-max scroll-m-30 items-start gap-6 sm:-ml-15 sm:scroll-m-40 sm:gap-10 lg:-ml-22 lg:scroll-m-50 lg:gap-13',
                     )}
                     role="tablist"
                     aria-label={listLabel}
@@ -81,14 +90,13 @@ const Reviews = () => {
             </div>
 
             <CarouselControls
-                current={currentSlide % numSlides + 1}
+                current={(currentSlide % numSlides) + 1}
                 slides={numSlides}
-                handlePrev={handleDecrement}
-                handleNext={handleIncrement}
+                handlePrev={() => handleClick(handleDecrement)}
+                handleNext={() => handleClick(handleIncrement)}
             />
         </div>
     );
 };
 
 export default Reviews;
-

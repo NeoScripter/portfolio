@@ -60,7 +60,7 @@ const Header = () => {
 
     return (
         <header
-            class={cn('flex items-center relative', {
+            class={cn('flex items-center relative select-none', {
                 'm-2 gap-4': !isMini.value,
                 'mx-auto my-2': isMini.value,
             })}
