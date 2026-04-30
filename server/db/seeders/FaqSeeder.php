@@ -9,7 +9,7 @@ class FaqSeeder
     public function run($f3)
     {
 
-        $values = new FaqFactory()->makeMany(10);
+        $values = new FaqFactory()->makeMany(8);
 
         $db = $f3->get('DB');
 

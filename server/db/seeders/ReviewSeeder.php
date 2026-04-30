@@ -9,7 +9,7 @@ class ReviewSeeder
 {
     public function run($f3)
     {
-        for ($i = 0; $i < 8; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $this->seed_one($f3);
         }
     }
