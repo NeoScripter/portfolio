@@ -60,11 +60,12 @@ const Header = () => {
 
     return (
         <header
-            class={cn('flex items-center', {
+            class={cn('flex items-center relative', {
                 'm-2 gap-4': !isMini.value,
                 'mx-auto my-2': isMini.value,
             })}
         >
+            <a href="/" className='absolute inset-0'/>
             <div
                 class={cn(
                     'bg-sidebar-primary text-sidebar-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-[2px] p-1',
