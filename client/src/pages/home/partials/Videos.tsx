@@ -11,7 +11,8 @@ import VideoTile, { VideoFallback } from './VideoTile';
 
 const Videos = () => {
     const { fetchData, loading, errors } = useFetch();
-    const carouselRef = useRef(null);
+    const carouselRef = useRef<HTMLUListElement | null>(null);
+
     const {
         slides: carouselSlides,
         animatingSlide,
@@ -24,6 +25,16 @@ const Videos = () => {
     } = useCarousel<VideoType>({
         containerRef: carouselRef,
     });
+
+    const handleClick = (cb: () => void) => {
+        cb();
+
+        if (!carouselRef.current) return;
+
+        carouselRef.current.scrollIntoView({
+            block: 'start',
+        });
+    };
 
     useEffect(() => {
         fetchData({
@@ -55,7 +66,7 @@ const Videos = () => {
                 <ul
                     ref={carouselRef}
                     className={cn(
-                        'flex w-max items-start md:-ml-5 lg:-ml-27 xl:-ml-47',
+                        'flex w-max scroll-m-30 items-start sm:scroll-m-40 md:-ml-5 lg:-ml-27 lg:scroll-m-50 xl:-ml-47',
                         {
                             'gap-2 sm:gap-5 md:gap-8 xl:gap-10': loading,
                         },
@@ -82,8 +93,8 @@ const Videos = () => {
             <CarouselControls
                 current={(currentSlide % numSlides) + 1}
                 slides={numSlides}
-                handlePrev={handleDecrement}
-                handleNext={handleIncrement}
+                handlePrev={() => handleClick(handleDecrement)}
+                handleNext={() => handleClick(handleIncrement)}
             />
         </AppSection>
     );

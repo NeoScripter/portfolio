@@ -6,7 +6,8 @@ import { services, type ServiceType } from '../data';
 import ServiceCard from './ServiceCard';
 
 const ServiceCarousel = () => {
-    const carouselRef = useRef(null);
+    const carouselRef = useRef<HTMLUListElement | null>(null);
+
     const {
         slides: carouselSlides,
         animatingSlide,
@@ -19,6 +20,16 @@ const ServiceCarousel = () => {
     } = useCarousel<ServiceType>({
         containerRef: carouselRef,
     });
+
+    const handleClick = (cb: () => void) => {
+        cb();
+
+        if (!carouselRef.current) return;
+
+        carouselRef.current.scrollIntoView({
+            block: 'start',
+        });
+    };
 
     useEffect(() => {
         setter(services);
@@ -34,7 +45,7 @@ const ServiceCarousel = () => {
                 <ul
                     ref={carouselRef}
                     className={cn(
-                        '-ml-5 flex w-max items-start gap-6 sm:-ml-15 sm:gap-10 md:-ml-19 lg:-ml-27 lg:gap-13 xl:-ml-47',
+                        '-ml-5 flex w-max scroll-m-30 items-start gap-6 sm:-ml-15 sm:scroll-m-40 sm:gap-10 md:-ml-19 lg:-ml-27 lg:scroll-m-50 lg:gap-13 xl:-ml-47',
                     )}
                 >
                     {carouselSlides?.map((service, idx) => (
@@ -50,8 +61,8 @@ const ServiceCarousel = () => {
             <CarouselControls
                 current={currentSlide}
                 slides={carouselSlides.length}
-                handlePrev={handleDecrement}
-                handleNext={handleIncrement}
+                handlePrev={() => handleClick(handleDecrement)}
+                handleNext={() => handleClick(handleIncrement)}
             />
         </div>
     );
