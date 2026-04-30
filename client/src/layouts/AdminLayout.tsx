@@ -15,6 +15,7 @@ import {
 } from '@/signals/sidebar-state';
 import { PanelLeftIcon } from 'lucide-preact';
 import type { ComponentChildren } from 'preact';
+import { ErrorBoundary } from 'preact-iso';
 import type { FC } from 'preact/compat';
 
 const AdminLayout: FC<{
@@ -31,35 +32,37 @@ const AdminLayout: FC<{
         }
     };
     return (
-        <ModalProvider>
-            <main
-                key="admin-layout"
-                class={cn(
-                    'text-sidebar-foreground bg-sidebar h-full min-h-svh text-sm md:flex md:items-start md:p-2',
-                )}
-                id="admin"
-            >
-                <Sidebar />
+        <ErrorBoundary>
+            <ModalProvider>
+                <main
+                    key="admin-layout"
+                    class={cn(
+                        'text-sidebar-foreground bg-sidebar h-full min-h-svh text-sm md:flex md:items-start md:p-2',
+                    )}
+                    id="admin"
+                >
+                    <Sidebar />
 
-                <div class="bg-background border-muted w-full border shadow-sm md:rounded-lg">
-                    <header
-                        class={
-                            'border-muted flex items-center gap-3 border-b px-4 py-4'
-                        }
-                    >
-                        <button
-                            onClick={handleHeaderClick}
-                            class="hover:bg-accent rounded-sm p-1.5 transition-colors duration-200"
+                    <div class="bg-background border-muted w-full border shadow-sm md:rounded-lg">
+                        <header
+                            class={
+                                'border-muted flex items-center gap-3 border-b px-4 py-4'
+                            }
                         >
-                            <PanelLeftIcon class="size-4" />
-                        </button>
-                        <span>{title[lang]}</span>
-                    </header>
-                    {children}
-                </div>
-                <Toaster position="top-center" />
-            </main>
-        </ModalProvider>
+                            <button
+                                onClick={handleHeaderClick}
+                                class="hover:bg-accent rounded-sm p-1.5 transition-colors duration-200"
+                            >
+                                <PanelLeftIcon class="size-4" />
+                            </button>
+                            <span>{title[lang]}</span>
+                        </header>
+                        {children}
+                    </div>
+                    <Toaster position="top-center" />
+                </main>
+            </ModalProvider>
+        </ErrorBoundary>
     );
 };
 
