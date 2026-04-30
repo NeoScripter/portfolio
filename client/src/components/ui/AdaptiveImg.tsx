@@ -8,6 +8,7 @@ type AdaptiveImgProps = {
     variant?: 'bg' | 'fg';
     srcs: ImageSrcSet | undefined;
     alt?: string;
+    as?: string;
 };
 
 export default function AdaptiveImg({

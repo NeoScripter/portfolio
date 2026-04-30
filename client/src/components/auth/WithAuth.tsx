@@ -9,7 +9,10 @@ import PageLoader from '../ui/PageLoader';
 function ProtectedRoute({ children }: { children: preact.ComponentChildren }) {
     const { route } = useLocation();
     const { fetchData, loading } = useFetch();
-    const [ready, setReady] = useState(false);
+    const [ready, setReady] = useState(() => {
+        if (currentUser.value == null) return false;
+        return currentUser.value.expires_at * 1000 > Date.now();
+    });
 
     useLayoutEffect(() => {
         if (currentUser.value != null) {
