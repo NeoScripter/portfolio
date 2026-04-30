@@ -15,6 +15,10 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
                 getTheme() === 'dark' && 'bg-muted',
             )}
         >
+            <a
+                href={`/gallery/${project.attr?.slug}`}
+                class="absolute inset-0 z-1 block size-full focus:outline-none"
+            />
             {project.image && (
                 <div class="group relative">
                     <AdaptiveImg
@@ -22,10 +26,6 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
                         alt={project.image.alt?.[lang]}
                         srcs={project.image.srcSet}
                     />
-                    <a
-                        href={`/gallery/${project.attr?.slug}`}
-                        class="absolute inset-0 z-1 block size-full focus:outline-none"
-                    ></a>
                     <span
                         aria-hidden="true"
                         class="shine-element block group-hover:motion-safe:animate-[shine_750ms]"
