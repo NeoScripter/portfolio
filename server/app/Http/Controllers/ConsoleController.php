@@ -47,6 +47,7 @@ class ConsoleController
 
     function link()
     {
+        echo APP_DIR . PHP_EOL;
         $storage = APP_DIR  . '/storage/public';
         $link    = APP_DIR  . '/public/storage';
 
@@ -55,9 +56,12 @@ class ConsoleController
             return;
         }
 
+        echo "Storage: {$storage}" . PHP_EOL;
+        echo "Link: {$link}" . PHP_EOL;
+
         if (!is_dir($storage)) {
-            echo "Storage directory does not exist: {$storage}" . PHP_EOL;
-            return;
+            mkdir($storage, 0755, true);
+            echo "Created storage directory: {$storage}" . PHP_EOL;
         }
 
         if (symlink($storage, $link)) {
