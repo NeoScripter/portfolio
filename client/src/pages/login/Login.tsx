@@ -35,9 +35,10 @@ const Login = () => {
             payload: values,
             onSuccess: (data) => {
                 toast.success(data.message ?? 'Welcome back!');
-                console.log(currentUser.value);
+                const user = data.user;
+                user.expires_at = data.expires_at;
 
-                currentUser.value = data.user;
+                currentUser.value = user;
                 route('/admin/');
             },
             onError: (err) => {

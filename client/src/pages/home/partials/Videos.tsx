@@ -41,8 +41,6 @@ const Videos = () => {
 
     const numSlides = Math.floor(carouselSlides.length / 2);
 
-    console.log(carouselSlides)
-
     if (numSlides === 0) {
         return null;
     }

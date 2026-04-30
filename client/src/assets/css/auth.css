@@ -1,11 +1,14 @@
 @font-face {
-  font-family: 'Instrument Sans';
-  font-style: normal;
-  font-weight: 400 700;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url('./fonts/InstrumentSans.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    font-family: 'Instrument Sans';
+    font-style: normal;
+    font-weight: 400 700;
+    font-stretch: 100%;
+    font-display: swap;
+    src: url('./fonts/InstrumentSans.woff2') format('woff2');
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+        U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+        U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 main {
@@ -13,4 +16,24 @@ main {
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+}
+
+.page-loader {
+    width: 50px;
+    padding: 8px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #fff;
+    --_m:
+        conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+    -webkit-mask: var(--_m);
+    mask: var(--_m);
+    -webkit-mask-composite: source-out;
+    mask-composite: subtract;
+    animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+    to {
+        transform: rotate(1turn);
+    }
 }

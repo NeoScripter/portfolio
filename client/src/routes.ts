@@ -32,6 +32,7 @@ const ProjectIndex = lazy(() => import('./pages/admin/projects/Index'));
 const ProjectEdit = lazy(() => import('./pages/admin/projects/Edit'));
 const ProjectCreate = lazy(() => import('./pages/admin/projects/Create'));
 
+
 export const routes = [
     { component: Home, path: '/', protected: false },
     { component: About, path: '/about', protected: false },
@@ -43,39 +44,27 @@ export const routes = [
     { component: Dashboard, path: '/admin', protected: true },
     { component: Profile, path: '/admin/settings/profile', protected: true },
     { component: Password, path: '/admin/settings/password', protected: true },
-    {
-        component: Appearance,
-        path: '/admin/settings/appearance',
-        protected: true,
-    },
+    { component: Appearance, path: '/admin/settings/appearance', protected: true },
 
     { component: FaqIndex, path: '/admin/faqs', protected: true },
     { component: FaqCreate, path: '/admin/faqs/create', protected: true },
     { component: FaqEdit, path: '/admin/faqs/:id', protected: true },
 
     { component: ReviewIndex, path: '/admin/reviews', protected: true },
-    { component: ReviewCreate, path: '/admin/reviews/create', protected: true },
-    { component: ReviewEdit, path: '/admin/reviews/:id', protected: true },
+    { component: ReviewCreate, path: '/admin/reviews/create' , protected: true},
+    { component: ReviewEdit, path: '/admin/reviews/:id' , protected: true},
 
-    { component: VideoIndex, path: '/admin/videos', protected: true },
-    { component: VideoCreate, path: '/admin/videos/create', protected: true },
-    { component: VideoEdit, path: '/admin/videos/:id', protected: true },
+    { component: VideoIndex, path: '/admin/videos' , protected: true},
+    { component: VideoCreate, path: '/admin/videos/create' , protected: true},
+    { component: VideoEdit, path: '/admin/videos/:id' , protected: true},
 
     { component: TechStackIndex, path: '/admin/stacks', protected: true },
-    {
-        component: TechStackCreate,
-        path: '/admin/stacks/create',
-        protected: true,
-    },
+    { component: TechStackCreate, path: '/admin/stacks/create', protected: true },
     { component: TechStackEdit, path: '/admin/stacks/:id', protected: true },
 
-    { component: ProjectIndex, path: '/admin/projects', protected: true },
-    {
-        component: ProjectCreate,
-        path: '/admin/projects/create',
-        protected: true,
-    },
-    { component: ProjectEdit, path: '/admin/projects/:slug', protected: true },
+    { component: ProjectIndex, path: '/admin/projects' , protected: true},
+    { component: ProjectCreate, path: '/admin/projects/create' , protected: true},
+    { component: ProjectEdit, path: '/admin/projects/:slug' , protected: true},
 
     { component: NotFound, path: '*' },
 ];
