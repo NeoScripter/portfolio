@@ -28,7 +28,7 @@ foreach ($controllers as $controller) {
 
     $name   = basename($controller, '.php');
     $route  = str_replace('Controller', '', $name);
-    $route = convert_to_snake_case($route);
+    $route = convert_to_kebab_case($route);
     $route = convert_to_plural($route);
     $base   = "Http\\Controllers\\$name";
     $prefix = "/api/$route";
