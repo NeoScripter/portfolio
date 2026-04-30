@@ -33,7 +33,7 @@ foreach (get_db_table_names() as $table) {
 }
 
 $f3->set('CORS', [
-    'origin'      => 'http://localhost:5173',
+    'origin'      => $f3->app_cors_origin,
     'headers'     => 'Content-Type, Authorization',
     'methods'     => 'GET, POST, PUT, DELETE',
     'expose'      => '',
