@@ -57,8 +57,8 @@ const Login = () => {
 
             <Form
                 initialValues={{
-                    email: 'ask@ilyaandreev.dev',
-                    password: 'password',
+                    email: '',
+                    password: '',
                     remember: false,
                 }}
                 onSubmit={submit}
