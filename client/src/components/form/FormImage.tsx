@@ -1,5 +1,6 @@
 import Placeholder from '@/assets/imgs/shared/placeholder.webp';
 import { useFormContext } from '@/context/FormContext';
+import { events } from '@/lib/const/events';
 import { cn } from '@/lib/helpers/utils';
 import { useEffect, useId, useState } from 'preact/hooks';
 import InputError from './InputError';
@@ -28,9 +29,17 @@ export const FormImage = ({
     const [preview, setPreview] = useState(src);
 
     useEffect(() => {
+        if (typeof window === 'undefined') {
+            return;
+        }
         const resetImage = () => setPreview(src);
         document.addEventListener('media:clear', resetImage);
-        return () => document.removeEventListener('media:clear', resetImage);
+        window.addEventListener(events.FORM_SUCCESS_EVENT, resetImage);
+
+        return () => {
+            document.removeEventListener('media:clear', resetImage);
+            window.removeEventListener(events.FORM_SUCCESS_EVENT, resetImage);
+        };
     }, [src]);
 
     const handleFile = (e: Event) => {
