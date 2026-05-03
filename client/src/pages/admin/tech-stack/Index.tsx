@@ -18,6 +18,7 @@ const Index = () => {
         errors,
     } = useFetchRecords<TechStackType[]>({
         url: `${API_BASE_URL}tech-stacks`,
+        shouldCache: true
     });
 
     if (hasErrorDetails(errors)) {
