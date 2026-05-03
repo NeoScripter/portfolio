@@ -309,6 +309,13 @@ h5 {
     -webkit-hyphens: auto;
 }
 
+.break-text {
+    overflow-wrap: break-word;
+    hyphens: auto;
+
+    -webkit-hyphens: auto;
+}
+
 .burger {
     transform-origin: center;
 }
