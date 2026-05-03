@@ -64,14 +64,17 @@ export function getUpdatedUrl(newParams: Record<string, string>[]): string {
     try {
         const url = new URL(window.location.href);
         for (const record of newParams) {
-            url.searchParams.set(
-                record.name,
-                record.val.toString(),
-            );
+            url.searchParams.set(record.name, record.val.toString());
         }
         return url.toString();
     } catch (err) {
         console.error(err);
         return '';
     }
+}
+
+export function playAudio(audioSrc: string, volume = 0.2) {
+    const audio = new Audio(audioSrc);
+    audio.volume = volume;
+    audio.play();
 }

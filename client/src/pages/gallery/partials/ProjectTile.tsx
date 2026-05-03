@@ -1,11 +1,12 @@
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import Badge from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import { cn } from '@/lib/helpers/utils';
+import { cn, playAudio } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import type { NodeProps } from '@/lib/types/shared';
 import { locale } from '@/signals/locale';
 import type { FC } from 'preact/compat';
+import clickSound from '@/assets/audio/click.mp3';
 
 const ProjectTile: FC<NodeProps<{ project: ProjectType }>> = ({
     className,
@@ -44,9 +45,10 @@ const ProjectTile: FC<NodeProps<{ project: ProjectType }>> = ({
                     </p>
 
                     <Button
-                        class="ml-auto md:mr-auto lg:ml-0"
+                        class="ml-auto md:mr-auto lg:ml-0 clickable-btn"
                         href={`/gallery/${project.attr.slug}`}
                         variant="primary"
+                        onClick={() => playAudio(clickSound)}
                     >
                         {lang === 'ru'
                             ? 'Перейти к проекту'

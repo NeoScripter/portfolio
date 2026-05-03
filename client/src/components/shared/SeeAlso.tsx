@@ -1,7 +1,8 @@
+import clickSound from '@/assets/audio/click.mp3';
 import { useFetch } from '@/hooks/useFetch';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { cn } from '@/lib/helpers/utils';
+import { cn, playAudio } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import type { FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
@@ -43,7 +44,7 @@ const SeeAlso: FC<{
                 </SecondaryHeading>
                 <PrimaryLink
                     href="/gallery"
-                    className="mx-auto mt-22 mr-0 hidden w-fit xl:flex"
+                    className="clickable-btn mx-auto mt-22 mr-0 hidden w-fit xl:flex"
                 >
                     На страницу проектов
                 </PrimaryLink>
@@ -59,6 +60,7 @@ const SeeAlso: FC<{
             <PrimaryLink
                 href="/gallery"
                 className="mx-auto mt-22 w-fit xl:hidden"
+                onClick={() => playAudio(clickSound)}
             >
                 На страницу проектов
             </PrimaryLink>

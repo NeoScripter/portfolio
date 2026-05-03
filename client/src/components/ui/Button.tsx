@@ -6,7 +6,7 @@ import type { JSX } from 'preact';
 import { useRef } from 'preact/hooks';
 
 const buttonVariants = cva(
-    'inline-flex w-fit items-center justify-center gap-[0.5em] whitespace-nowrap rounded-xl group transition-[color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*="size-"])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+    'inline-flex w-fit items-center justify-center gap-[0.5em] whitespace-nowrap rounded-xl group transition-[color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*="size-"])]:size-4 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] clickable-btn',
     {
         variants: {
             variant: {

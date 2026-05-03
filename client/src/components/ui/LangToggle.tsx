@@ -1,9 +1,10 @@
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
-import { cn } from '@/lib/helpers/utils';
+import { cn, playAudio } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import type { TargetedEvent } from 'preact';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
+import toggleSound from '@/assets/audio/toggle.mp3';
 
 const LangToggle: FC<{ className?: string }> = ({ className }) => {
     const { path } = useRoute();
@@ -15,6 +16,7 @@ const LangToggle: FC<{ className?: string }> = ({ className }) => {
         } else {
             locale.value = 'ru';
         }
+        playAudio(toggleSound);
     };
 
     return (

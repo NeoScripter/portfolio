@@ -1,17 +1,27 @@
+import clickSound from '@/assets/audio/click.mp3';
 import AppFooter from '@/components/layout/AppFooter';
 import AppHeader from '@/components/layout/AppHeader';
+import Webform from '@/components/shared/Webform';
 import { ModalProvider } from '@/context/ModalContext';
-import { cn } from '@/lib/helpers/utils';
+import { cn, playAudio } from '@/lib/helpers/utils';
 import type { ComponentChildren } from 'preact';
-import type { FC } from 'preact/compat';
+import { useEffect, type FC } from 'preact/compat';
 import { Toaster } from 'sonner';
 import ModalLayout from './ModalLayout';
-import Webform from '@/components/shared/Webform';
 
 const AppLayout: FC<{
     children: ComponentChildren;
     className?: string;
 }> = ({ children, className }) => {
+
+    useEffect(() => {
+        document
+            .querySelectorAll('.clickable-btn')
+            .forEach((button) =>
+                button.addEventListener('click', () => playAudio(clickSound)),
+            );
+    }, []);
+
     return (
         <ModalProvider>
             <main

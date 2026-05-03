@@ -17,7 +17,7 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
         >
             <a
                 href={`/gallery/${project.attr?.slug}`}
-                class="absolute inset-0 z-1 block size-full focus:outline-none"
+                class="absolute clickable-btn inset-0 z-1 block size-full focus:outline-none"
             />
             {project.image && (
                 <div class="group relative">

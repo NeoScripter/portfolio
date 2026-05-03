@@ -1,9 +1,10 @@
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
-import { cn } from '@/lib/helpers/utils';
+import { cn, playAudio } from '@/lib/helpers/utils';
 import { getTheme, theme } from '@/signals/theme';
 import type { TargetedEvent } from 'preact';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
+import toggleSound from '@/assets/audio/toggle.mp3';
 
 const ThemeToggle: FC<{ className?: string }> = ({ className }) => {
     const { path } = useRoute();
@@ -15,6 +16,7 @@ const ThemeToggle: FC<{ className?: string }> = ({ className }) => {
         } else {
             theme.value = 'light';
         }
+        playAudio(toggleSound);
     };
 
     const isDark = getTheme() === 'dark';

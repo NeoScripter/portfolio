@@ -74,9 +74,9 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
             <PrimaryLink
                 key={`${lang}-gallery-btn`}
                 href="/gallery"
-                className="motion-safe:animate-fade-in mx-auto mt-22 w-fit"
+                className="motion-safe:animate-fade-in mx-auto mt-22 w-fit clickable-btn"
             >
-                {lang === 'en' ? 'Project Gallery' : 'На страницу проектов'}
+                {lang === 'en' ? 'All projects' : 'На страницу проектов'}
             </PrimaryLink>
         </AppSection>
     );
