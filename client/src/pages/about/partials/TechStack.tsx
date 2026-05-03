@@ -123,7 +123,6 @@ const TechStackCanvas: FC<{
             <AdaptiveImg
                 prtClass="absolute -inset-4 -z-4"
                 srcs={canvasSrcSet}
-                alt=""
             />
 
             <div

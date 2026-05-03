@@ -1,3 +1,5 @@
+import type { ImageType } from "../shared";
+
 export interface TechStackResource {
     data: TechStackType[];
 }
@@ -13,10 +15,6 @@ export interface TechStackType {
             ru: string;
             en: string;
         };
-        alt: {
-            ru: string;
-            en: string;
-        };
-        url: string;
-    };
+    },
+    image: ImageType;
 };

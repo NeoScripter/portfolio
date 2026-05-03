@@ -40,6 +40,7 @@ const VideoTile: FC<{
                         prtClass="size-full"
                         imgClass="object-top-left"
                         srcs={video.image.srcSet}
+                        alt={video.image?.alt?.[locale.value]}
                     />
                 )}
                 {active && (

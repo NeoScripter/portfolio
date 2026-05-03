@@ -1,9 +1,6 @@
 
 CREATE TABLE IF NOT EXISTS stacks (
     id  INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    url VARCHAR NOT NULL,
-    alt_ru  VARCHAR NOT NULL,
-    alt_en  VARCHAR NOT NULL,
     body_ru TEXT,
     body_en TEXT,
     html_ru TEXT,

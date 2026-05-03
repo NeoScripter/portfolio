@@ -10,7 +10,7 @@ class TechStackController extends BaseController
 {
     public function index($f3)
     {
-        $stacks = $f3->get('_STACKS')->find();
+        $stacks = $f3->get('_STACKS_VIEW')->find();
 
         $stacks = [
             'data' => array_map(
@@ -24,7 +24,7 @@ class TechStackController extends BaseController
 
     public function edit($f3)
     {
-        $stack = $f3->get('_STACKS')
+        $stack = $f3->get('_STACKS_VIEW')
             ->load(['id=?', $f3->get('PARAMS.id')]);
 
         if (! $stack) {
@@ -39,7 +39,7 @@ class TechStackController extends BaseController
     public function store($f3)
     {
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
-            'url' => ['required', 'image:5'],
+            'image' => ['required', 'image:5'],
             'body_en' => ['nullable', 'string', 'max:10000'],
             'body_ru' => ['nullable', 'string', 'max:10000'],
             'alt_en' => ['required', 'string', 'max:500'],
@@ -51,14 +51,17 @@ class TechStackController extends BaseController
         }
 
         $raw = $validator->validated();
-        $handler = ImageHandler::make(
-            $raw,
-            'url',
-            [['url', 160, 'webp']],
-            'stacks'
-        )->resize_one();
+
+        $handler = ImageHandler::make($raw, 'image', [['mb', 50]], 'stacks')
+            ->resize_all();
+
+        if ($handler->fails()) {
+            send_json(['message' =>  $handler->error()], 404);
+        }
 
         $data = $handler->output();
+
+        $data['imageable_type'] = 'stacks';
 
         add_markdown_field($data, 'body_en', 'html_en');
         add_markdown_field($data, 'body_ru', 'html_ru');
@@ -66,6 +69,13 @@ class TechStackController extends BaseController
         $stack = $f3->get('_STACKS');
         $stack->copyFrom($data);
         $stack->save();
+        $stack_id = $f3->get('DB')->lastInsertId();
+
+        $data['imageable_id'] = $stack_id;
+
+        $img = $f3->get('_IMAGES');
+        $img->copyFrom($data);
+        $img->save();
 
         send_json(['message' => 'Stack successfully created!']);
     }
@@ -73,7 +83,7 @@ class TechStackController extends BaseController
     public function update($f3)
     {
         $validator = Validator::make(array_merge($f3->get('POST'), $_FILES), [
-            'url' => ['sometimes', 'image:5'],
+            'image' => ['sometimes', 'image:5'],
             'body_en' => ['sometimes', 'string', 'max:10000'],
             'body_ru' => ['sometimes', 'string', 'max:10000'],
             'alt_en' => ['sometimes', 'string', 'max:500'],
@@ -86,23 +96,20 @@ class TechStackController extends BaseController
 
         $data = $validator->validated();
 
+        $stack_id = $f3->get('PARAMS.id');
         $stack = $f3->get('_STACKS');
-        $stack->load(['id=?', $f3->get('PARAMS.id')]);
+        $stack->load(['id=?', $stack_id]);
 
-        if (isset($data['url'])) {
-            $file_path = APP_DIR . '/public/' . $stack->url;
+        if (isset($data['image'])) {
+            $handler = ImageHandler::make($data, 'image', [['mb', 50]], 'stacks')
+                ->resize_all();
 
-            if (file_exists($file_path)) {
-                unlink($file_path);
+            if ($handler->fails()) {
+                send_json(['message' =>  $handler->error()], 404);
             }
 
-            $handler = ImageHandler::make(
-                $data,
-                'url',
-                [['url', 160, 'webp']],
-                'stacks'
-            )->resize_one();
             $data = $handler->output();
+            ImageHandler::delete_morph_images($stack->id, 'stacks');
         }
 
         add_markdown_field($data, 'body_en', 'html_en');
@@ -110,6 +117,11 @@ class TechStackController extends BaseController
 
         $stack->copyFrom($data);
         $stack->save();
+
+        $img = $f3->get('_IMAGES');
+        $img->load(['imageable_id=? AND imageable_type=?', $stack_id, 'stacks']);
+        $img->copyFrom($data);
+        $img->save();
 
         send_json(['message' => 'Stack successfully updated!']);
     }
@@ -119,17 +131,17 @@ class TechStackController extends BaseController
         $stack = $f3->get('_STACKS');
         $stack->load(['id=?', $f3->get('PARAMS.id')]);
 
-        $file_path = APP_DIR . '/public/' . $stack->url;
-
-        if (file_exists($file_path)) {
-            unlink($file_path);
-        }
-
         $stack->erase();
 
         if (! $stack) {
             send_json(['message' =>  "Stack not found"], 422);
         }
+
+        ImageHandler::delete_morph_images(
+            parent_id: $f3->get('PARAMS.id'),
+            parent_type: 'stacks',
+            cascade: true
+        );
 
         send_json(['message' => 'Stack successfully deleted!']);
     }

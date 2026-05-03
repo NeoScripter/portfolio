@@ -18,7 +18,7 @@ type TechStackUpsertState = {
     body_ru: string;
     alt_en: string;
     alt_ru: string;
-    url: File | null;
+    image: File | null;
 };
 
 const validationRules: ValidationRules<TechStackUpsertState> = {
@@ -35,9 +35,9 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
         () => ({
             body_en: stack?.attr?.body?.en ?? '',
             body_ru: stack?.attr?.body?.ru ?? '',
-            alt_en: stack?.attr?.alt?.en ?? '',
-            alt_ru: stack?.attr?.alt?.ru ?? '',
-            url: null,
+            alt_en: stack?.image?.alt?.en ?? '',
+            alt_ru: stack?.image?.alt?.ru ?? '',
+            image: null,
         }),
         [stack],
     );
@@ -73,7 +73,7 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
         >
             <FormWysiwyg name="body_en" label="Stack (EN)" />
             <FormWysiwyg name="body_ru" label="Stack (RU)" />
-            <FormImage name="url" src={stack?.attr?.url} label="Stack Image" />
+            <FormImage name="image" src={stack?.image?.srcSet?.mb} label="Stack Image" />
             <FormTextArea name="alt_en" label="Alt Text (EN)" required />
             <FormTextArea name="alt_ru" label="Alt Text (RU)" required />
             <FormButtons

@@ -39,6 +39,8 @@ const Index = () => {
         console.error(errors);
     }
 
+    console.log(stacks)
+
     return (
         <DeleteModalProvider>
             <AdminLayout title={{ en: 'Stacks', ru: 'Навыки' }}>
