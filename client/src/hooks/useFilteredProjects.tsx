@@ -39,13 +39,16 @@ const useFilteredProjects = ({ delay = 400 }: Props) => {
                 url: url,
                 onSuccess: (data) => {
                     setProjectData(data);
+
+                    const isInitialVisit =
+                        currentPage === 1 && debouncedQuery === '';
+
+                    if (!projectsRef.current || isInitialVisit) return;
+
+                    projectsRef.current.scrollIntoView({
+                        block: 'start',
+                    });
                 },
-            });
-
-            if (!projectsRef.current) return;
-
-            projectsRef.current.scrollIntoView({
-                block: 'start',
             });
         };
 
@@ -53,19 +56,16 @@ const useFilteredProjects = ({ delay = 400 }: Props) => {
             return;
         }
 
-        // window.scrollTo({
-        //     top: 0,
-        //     left: 0,
-        //     behavior: 'smooth', // animated scrolling
-        // });
         fetchProjects();
 
-        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchProjects);
+        const onFormSuccess = () => fetchProjects();
+
+        window.addEventListener(events.FORM_SUCCESS_EVENT, onFormSuccess);
 
         return () =>
             window.removeEventListener(
                 events.FORM_SUCCESS_EVENT,
-                fetchProjects,
+                onFormSuccess,
             );
     }, [currentPage, debouncedQuery]);
 

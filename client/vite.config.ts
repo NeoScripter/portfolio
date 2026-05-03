@@ -14,7 +14,6 @@ export default defineConfig({
                     '/',
                     '/about',
                     '/gallery',
-                    '/gallery/:slug',
                     '/project',
                     '/login',
                     '/admin',
