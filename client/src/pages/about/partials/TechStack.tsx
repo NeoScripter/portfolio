@@ -1,18 +1,25 @@
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import ApiError from '@/components/ui/ApiError';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import { API_BASE_URL } from '@/lib/const/api';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
 import { locale } from '@/signals/locale';
 import { useEffect, useRef, useState, type FC } from 'preact/compat';
-import { useFetch } from '../../../hooks/useFetch';
 import { canvasSrcSet } from '../data';
 import TechPill, { TechPillFallback } from './TechPill';
 
 const TechStack = () => {
-    const { fetchData, loading, errors } = useFetch();
-    const [stacks, setStacks] = useState<TechStackType[] | null>(null);
+    const {
+        data: stacks,
+        loading,
+        errors,
+    } = useFetchRecords<TechStackType[]>({
+        url: `${API_BASE_URL}tech-stacks/`,
+        shouldCache: true
+    });
+
     const [active, setActive] = useState<number | null>(null);
 
     const lang = locale.value === 'ru' ? 'ru' : 'en';
@@ -48,15 +55,6 @@ const TechStack = () => {
         }
         setActive((prev) => (prev === idx ? null : idx));
     };
-
-    useEffect(() => {
-        fetchData({
-            url: `${API_BASE_URL}tech-stacks/`,
-            onSuccess: (data) => {
-                setStacks(data.data);
-            },
-        });
-    }, []);
 
     if (hasErrorDetails(errors))
         return (
