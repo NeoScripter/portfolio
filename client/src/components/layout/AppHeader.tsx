@@ -67,7 +67,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
         <header
             inert={showModal.value}
             class={cn(
-                'sticky inset-x-0 top-0 isolate z-10 -mt-[100%] h-fit transition-all',
+                'sticky inset-x-0 top-0 isolate z-10 -mt-[100%] h-fit',
                 isBelowPadding ? 'md:top-0' : 'md:top-4',
                 isBelowHero && 'full-bleed',
                 {
@@ -77,7 +77,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
         >
             <div
                 class={cn(
-                    'bg-background/50 mx-auto flex max-w-480 items-center justify-between overflow-x-clip px-7 py-8 backdrop-blur-sm duration-300 ease-in sm:px-15 sm:pt-11 sm:pb-9 lg:px-24 xl:pb-12',
+                    'bg-background/50 mx-auto flex max-w-480 items-center justify-between overflow-x-clip px-7 py-8 backdrop-blur-sm sm:px-15 sm:pt-11 sm:pb-9 lg:px-24 xl:pb-12',
                     className,
                     {
                         'md:rounded-t-xl xl:max-w-432 2xl:max-w-432':

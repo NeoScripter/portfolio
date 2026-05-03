@@ -24,7 +24,7 @@ export default function NavDrawer({ show }: NavDrawerProps) {
             aria-modal="true"
             aria-label="Навигационное меню"
             class={cn(
-                'bg-background ease-nav-drawer fixed top-0 right-0 z-0 w-80 max-w-full overflow-y-auto rounded-bl-2xl bg-cover bg-top-left bg-no-repeat px-8 py-7 transition-transform duration-1000',
+                'bg-background ease-nav-drawer fixed top-0 right-0 z-0 w-80 max-w-full overflow-y-auto rounded-bl-2xl bg-cover bg-top-left bg-no-repeat px-8 py-7 transition-transform duration-900',
                 !show && 'translate-x-full'
             )}
             style={{
