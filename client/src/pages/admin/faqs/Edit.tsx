@@ -1,29 +1,21 @@
 import AppTitle from '@/components/layout/AppTitle';
-import ApiError from '@/components/ui/ApiError';
-import { useFetch } from '@/hooks/useFetch';
-import type { ServerError } from '@/hooks/useForm';
+import StateResolver from '@/components/shared/StateResolver';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { hasErrorDetails } from '@/lib/helpers/utils';
 import type { FaqType } from '@/lib/types/models/faqs';
 import type { FC } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
 import FaqUpsert from './partials/FaqUpsert';
-import StateResolver from '@/components/shared/StateResolver';
 
 const EditFaq: FC<{ id: number }> = ({ id }) => {
-    const { fetchData, loading, errors } = useFetch();
-    const [faq, setFaq] = useState<FaqType | null>(null);
-
-    useEffect(() => {
-        fetchData({
-            url: `${API_BASE_URL}faqs/${id}`,
-            onSuccess: (data) => {
-                setFaq(data.data);
-            },
-        });
-    }, []);
+    const {
+        data: faq,
+        loading,
+        errors,
+    } = useFetchRecords<FaqType>({
+        url: `${API_BASE_URL}faqs/${id}`,
+    });
 
     return (
         <AdminLayout title={{ en: 'Edit Faq', ru: 'Редактировать FAQ' }}>

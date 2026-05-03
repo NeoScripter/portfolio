@@ -9,12 +9,12 @@ import type { CategoryType } from '@/lib/types/models/projects';
 import type { FC } from 'preact/compat';
 import { toast } from 'sonner';
 
-type CategoryUpsertState = {
+type CategoryCreateState = {
     name_en: string;
     name_ru: string;
 };
 
-const validationRules: ValidationRules<CategoryUpsertState> = {
+const validationRules: ValidationRules<CategoryCreateState> = {
     name_en: ['required'],
     name_ru: ['required'],
 };
@@ -22,12 +22,12 @@ const validationRules: ValidationRules<CategoryUpsertState> = {
 const CategoryCreate: FC<{ project?: CategoryType }> = ({ project }) => {
     const { fetchData } = useFetch();
 
-    const initialValues: CategoryUpsertState = {
+    const initialValues: CategoryCreateState = {
         name_en: '',
         name_ru: '',
     };
 
-    async function submit(values: CategoryUpsertState) {
+    async function submit(values: CategoryCreateState) {
         await fetchData({
             url: `${API_BASE_URL}categories`,
             method: 'POST',

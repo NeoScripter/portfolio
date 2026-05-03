@@ -1,27 +1,21 @@
 import AppTitle from '@/components/layout/AppTitle';
-import { useFetch } from '@/hooks/useFetch';
+import StateResolver from '@/components/shared/StateResolver';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { hasErrorDetails } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
 import type { FC } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
 import ReviewUpsert from './partials/ReviewUpsert';
-import StateResolver from '@/components/shared/StateResolver';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
-    const { fetchData, loading, errors } = useFetch();
-    const [review, setReview] = useState<ReviewType | null>(null);
-
-    useEffect(() => {
-        fetchData({
-            url: `${API_BASE_URL}reviews/${id}`,
-            onSuccess: (data) => {
-                setReview(data.data);
-            },
-        });
-    }, []);
+    const {
+        data: review,
+        loading,
+        errors,
+    } = useFetchRecords<ReviewType>({
+        url: `${API_BASE_URL}reviews/${id}`,
+    });
 
     return (
         <AdminLayout title={{ en: 'Edit Review', ru: 'Редактировать отзыв' }}>

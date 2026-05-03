@@ -4,7 +4,7 @@ import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
 import { X } from 'lucide-preact';
 import { toast } from 'sonner';
-import CategoryCreate from './CategoryUpsert';
+import CategoryCreate from './CategoryCreate';
 import { hasErrorDetails } from '@/lib/helpers/utils';
 
 const CategoryList = () => {

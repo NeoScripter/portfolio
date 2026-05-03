@@ -7,6 +7,7 @@ import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
 import type { ValidationRules } from '@/lib/helpers/validation';
 import type { FaqType } from '@/lib/types/models/faqs';
+import { useLocation } from 'preact-iso';
 import type { FC } from 'preact/compat';
 import { useMemo } from 'preact/hooks';
 import { toast } from 'sonner';
@@ -25,6 +26,7 @@ const validationRules: ValidationRules<FaqUpsertState> = {
 
 const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
     const { fetchData } = useFetch();
+    const { route } = useLocation();
 
     const initialValues = useMemo<FaqUpsertState>(
         () => ({
@@ -36,9 +38,12 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
         [faq],
     );
 
-    const url =
-        faq != null ? `${API_BASE_URL}faqs/${faq.id}` : `${API_BASE_URL}faqs`;
-    const method = faq != null ? 'PUT' : 'POST';
+    const isEdit = faq != null;
+
+    const url = isEdit
+        ? `${API_BASE_URL}faqs/${faq.id}`
+        : `${API_BASE_URL}faqs`;
+    const method = isEdit ? 'PUT' : 'POST';
 
     async function submit(values: FaqUpsertState) {
         await fetchData({
@@ -46,6 +51,10 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
             method,
             payload: values,
             onSuccess: (data) => {
+                if (!isEdit) {
+                    route('/admin/videos');
+                }
+
                 toast.success(data.message ?? 'Success!');
                 window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
             },

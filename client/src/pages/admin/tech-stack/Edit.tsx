@@ -1,26 +1,21 @@
-import { useFetch } from '@/hooks/useFetch';
+import AppTitle from '@/components/layout/AppTitle';
+import StateResolver from '@/components/shared/StateResolver';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
-import type { TechStackType } from '@/lib/types/models/tech-stack';
-import { useEffect, useState, type FC } from 'preact/compat';
-import TechStackUpsert from './partials/TechStackUpsert';
-import AppTitle from '@/components/layout/AppTitle';
 import { API_BASE_URL } from '@/lib/const/api';
-import { hasErrorDetails } from '@/lib/helpers/utils';
-import StateResolver from '@/components/shared/StateResolver';
+import type { TechStackType } from '@/lib/types/models/tech-stack';
+import { type FC } from 'preact/compat';
+import TechStackUpsert from './partials/TechStackUpsert';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
-    const { fetchData, loading, errors } = useFetch();
-    const [stack, setStack] = useState<TechStackType | null>(null);
-
-    useEffect(() => {
-        fetchData({
-            url: `${API_BASE_URL}tech-stacks/${id}`,
-            onSuccess: (data) => {
-                setStack(data.data);
-            },
-        });
-    }, []);
+    const {
+        data: stack,
+        loading,
+        errors,
+    } = useFetchRecords<TechStackType>({
+        url: `${API_BASE_URL}tech-stacks/${id}`,
+    });
 
     return (
         <AdminLayout title={{ en: 'Edit Stack', ru: 'Редактировать навык' }}>

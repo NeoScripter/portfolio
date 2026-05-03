@@ -1,42 +1,24 @@
 import AdminShellNav from '@/components/layout/AdminShellNav';
 import AppTitle from '@/components/layout/AppTitle';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
-import { useFetch } from '@/hooks/useFetch';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { events } from '@/lib/const/events';
 import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { ReviewType } from '@/lib/types/models/reviews';
-import { useEffect, useState } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
 import ReviewDelete from './partials/ReviewDelete';
 
 const Reviews = () => {
-    const { fetchData, loading, errors } = useFetch();
-    const [reviews, setReviews] = useState<ReviewType[] | null>(null);
-
-    useEffect(() => {
-        const fetchReviews = () => {
-            fetchData({
-                url: `${API_BASE_URL}reviews`,
-                onSuccess: (data) => {
-                    setReviews(data.data);
-                },
-            });
-        };
-
-        fetchReviews();
-
-        if (typeof window === 'undefined') {
-            return;
-        }
-        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchReviews);
-
-        return () =>
-            window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchReviews);
-    }, []);
+    const {
+        data: reviews,
+        loading,
+        errors,
+    } = useFetchRecords<ReviewType[]>({
+        url: `${API_BASE_URL}reviews`,
+    });
 
     if (hasErrorDetails(errors)) {
         console.error(errors);

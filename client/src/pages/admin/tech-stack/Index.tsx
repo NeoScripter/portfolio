@@ -1,45 +1,28 @@
 import AdminShellNav from '@/components/layout/AdminShellNav';
 import AppTitle from '@/components/layout/AppTitle';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
-import { useFetch } from '@/hooks/useFetch';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { events } from '@/lib/const/events';
 import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { TechStackType } from '@/lib/types/models/tech-stack';
-import { useEffect, useState } from 'preact/hooks';
 import TechStackCard, { TechStackFallback } from './partials/TechStackCard';
 import TechStackDelete from './partials/TechStackDelete';
 
 const Index = () => {
-    const { fetchData, loading, errors } = useFetch();
-    const [stacks, setStacks] = useState<TechStackType[] | null>(null);
-
-    useEffect(() => {
-        const fetchStacks = () => {
-            fetchData({
-                url: `${API_BASE_URL}tech-stacks`,
-                onSuccess: (data) => {
-                    setStacks(data.data);
-                },
-            });
-        };
-
-        fetchStacks();
-
-        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchStacks);
-
-        return () =>
-            window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchStacks);
-    }, []);
+    const {
+        data: stacks,
+        loading,
+        errors,
+    } = useFetchRecords<TechStackType[]>({
+        url: `${API_BASE_URL}tech-stacks`,
+    });
 
     if (hasErrorDetails(errors)) {
         console.error(errors);
     }
-
-    console.log(stacks)
 
     return (
         <DeleteModalProvider>
@@ -63,9 +46,7 @@ const Index = () => {
                                     />
                                 ))
                             ) : (
-                                <p>
-                                    You haven't added any tech stacks yet
-                                </p>
+                                <p>You haven't added any tech stacks yet</p>
                             )}
                         </ul>
                     )}

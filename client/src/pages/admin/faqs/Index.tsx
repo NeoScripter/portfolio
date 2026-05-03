@@ -1,40 +1,28 @@
 import AdminShellNav from '@/components/layout/AdminShellNav';
 import AppTitle from '@/components/layout/AppTitle';
 import { DeleteModalProvider } from '@/context/DeleteModelContext';
-import { useFetch } from '@/hooks/useFetch';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AdminLayout from '@/layouts/AdminLayout';
 import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { events } from '@/lib/const/events';
-import { range } from '@/lib/helpers/utils';
+import { hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { FaqType } from '@/lib/types/models/faqs';
-import { useEffect, useState } from 'preact/hooks';
 import FaqCard, { FaqCardSkeleton } from './partials/FaqCard';
 import FaqDelete from './partials/FaqDelete';
 
 const Faqs = () => {
-    const { fetchData, loading } = useFetch();
-    const [faqs, setFaqs] = useState<FaqType[] | null>(null);
+    const {
+        data: faqs,
+        loading,
+        errors,
+    } = useFetchRecords<FaqType[]>({
+        url: `${API_BASE_URL}faqs`,
+    });
 
-    useEffect(() => {
-        const fetchFaqs = () => {
-            fetchData({
-                url: API_BASE_URL + 'faqs',
-                onSuccess: (data) => {
-                    setFaqs(data.data);
-                },
-                onError: (err) => console.error(err.message),
-            });
-        };
-
-        fetchFaqs();
-
-        window.addEventListener(events.FORM_SUCCESS_EVENT, fetchFaqs);
-
-        return () =>
-            window.removeEventListener(events.FORM_SUCCESS_EVENT, fetchFaqs);
-    }, []);
+    if (hasErrorDetails(errors)) {
+        console.error(errors);
+    }
 
     return (
         <DeleteModalProvider>
