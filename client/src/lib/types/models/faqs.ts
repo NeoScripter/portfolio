@@ -1,8 +1,8 @@
-export interface FaqResource {
+export type FaqResource = {
     data: FaqType[];
 }
 
-export interface FaqType {
+export type FaqType = {
     id: number;
     attr: {
         title: {

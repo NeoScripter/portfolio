@@ -1,10 +1,10 @@
 import type { ImageType } from "../shared";
 
-export interface TechStackResource {
+export type TechStackResource = {
     data: TechStackType[];
 }
 
-export interface TechStackType {
+export type TechStackType = {
     id: number;
     attr: {
         html: {

@@ -1,10 +1,10 @@
 import type { ImageType } from "../shared";
 
-export interface VideoResource {
+export type VideoResource = {
     data: VideoType[];
 }
 
-export interface VideoType {
+export type VideoType = {
     id: number;
     attr: {
         url: string;
