@@ -23,14 +23,7 @@ class EmailController
         $data = $validator->validated();
 
         try {
-            $pdo = new \PDO(
-                "pgsql:host={$f3->get('db_host')};port={$f3->get('db_port')};dbname={$f3->get('db_name')}",
-                $f3->get('db_user'),
-                $f3->get('db_password')
-            );
-
-            $queue = new \n0nag0n\Job_Queue('pgsql');
-            $queue->addQueueConnection($pdo);
+            $queue = $f3->get('JOB_QUEUE');
             $queue->selectPipeline('send_email');
 
             $queue->addJob(json_encode([
@@ -39,6 +32,7 @@ class EmailController
                 'message'   => $data['message'],
                 'telegram'  => $data['telegram'] ?? null,
                 'whatsapp'  => $data['whatsapp'] ?? null,
+                'pipeline'  => 'send_email',
             ]));
 
             send_json(['message' => 'Email successfully sent!']);

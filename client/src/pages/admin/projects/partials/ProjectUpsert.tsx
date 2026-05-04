@@ -87,7 +87,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
             payload: formData,
             onSuccess: (data) => {
                 if (!isEdit) {
-                    route('/admin/project');
+                    route('/admin/projects');
                 }
                 toast.success(data.message ?? 'Success!');
                 window.dispatchEvent(new Event(events.UPDATE_PROJECT_EVENT));

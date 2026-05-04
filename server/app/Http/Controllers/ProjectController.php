@@ -69,20 +69,7 @@ class ProjectController extends BaseController
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $raw = $validator->validated();
-
-        $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
-        $handler = ImageHandler::make($raw, 'image', $sizes, 'projects')
-            ->insert_mockup((int) $raw['mockup'])
-            ->resize_all();
-
-        if ($handler->fails()) {
-            send_json(['message' =>  $handler->error()], 404);
-        }
-
-        $data = $handler->output();
-
-        $data['imageable_type'] = 'projects';
+        $data = $validator->validated();
 
         $data['slug'] = Web::instance()->slug(
             $data['title_en'] . '-' . get_latest_id('projects') + 1
@@ -116,10 +103,34 @@ class ProjectController extends BaseController
         }
 
         $data['imageable_id'] = $project_id;
+        $data['imageable_type'] = 'projects';
 
-        $img = $f3->get('_IMAGES');
-        $img->copyFrom($data);
-        $img->save();
+        $image_file = $data['image'];
+        unset($data['image']);
+
+        $tmp_dir  = APP_DIR . '/storage/private/pending/';
+        if (!is_dir($tmp_dir)) mkdir($tmp_dir, 0755, true);
+        $tmp_path = $tmp_dir . uniqid('img_', true);
+        move_uploaded_file($image_file['tmp_name'], $tmp_path);
+
+        $queue = $f3->get('JOB_QUEUE');
+        $queue->selectPipeline('process_image');
+
+        $queue->addJob(json_encode([
+            'parent_id'     => $project_id,
+            'parent_type'   => 'projects',
+            'mockup'        => (int) $data['mockup'],
+            'subdir'        => 'projects',
+            'sizes'         => [['mb', 520], ['tb', 1000], ['dk', 1700]],
+            'tmp_path'      => $tmp_path,
+            'original_name' => $image_file['name'],
+            'mime_type'     => $image_file['type'],
+            'extra'         => [
+                'alt_en' => $data['alt_en'],
+                'alt_ru' => $data['alt_ru'],
+            ],
+            'pipeline'  => 'process_image',
+        ]));
 
         send_json(['message' => 'Project successfully created!']);
     }
@@ -164,21 +175,34 @@ class ProjectController extends BaseController
         );
 
         if (isset($data['image'])) {
-            $sizes = [['mb', 520], ['tb', 1000], ['dk', 1700]];
-            $handler = ImageHandler::make($data, 'image', $sizes, 'projects')
-                ->insert_mockup((int) $data['mockup'])
-                ->resize_all();
+            $image_file = $data['image'];
+            unset($data['image']);
 
-            if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 422);
-            }
+            ImageHandler::delete_morph_images($project->id, 'projects');
 
-            $data = $handler->output();
+            $tmp_dir  = APP_DIR . '/storage/private/pending/';
+            if (!is_dir($tmp_dir)) mkdir($tmp_dir, 0755, true);
+            $tmp_path = $tmp_dir . uniqid('img_', true);
+            move_uploaded_file($image_file['tmp_name'], $tmp_path);
 
-            ImageHandler::delete_morph_images(
-                $project->id,
-                'projects'
-            );
+            $queue = $f3->get('JOB_QUEUE');
+            $queue->selectPipeline('process_image');
+
+            $queue->addJob(json_encode([
+                'parent_id'     => $project_id,
+                'parent_type'   => 'projects',
+                'mockup'        => (int) $data['mockup'],
+                'subdir'        => 'projects',
+                'sizes'         => [['mb', 520], ['tb', 1000], ['dk', 1700]],
+                'tmp_path'      => $tmp_path,
+                'original_name' => $image_file['name'],
+                'mime_type'     => $image_file['type'],
+                'extra'         => [
+                    'alt_en' => $data['alt_en'],
+                    'alt_ru' => $data['alt_ru'],
+                ],
+                'pipeline'  => 'process_image',
+            ]));
         }
 
         if ($data['title_en'] !== $project->title_en) {
