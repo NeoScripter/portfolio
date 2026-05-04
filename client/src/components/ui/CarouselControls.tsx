@@ -44,8 +44,12 @@ const CarouselBtn: FC<{ className?: string; onClick: () => void }> = ({
     className,
     onClick,
 }) => {
+    const handleClick = (e: MouseEvent) => {
+        e.stopPropagation();
+        onClick();
+    }
     return (
-        <button onClick={onClick} class={cn('xs:block hidden', className)}>
+        <button onClick={handleClick} class={cn('xs:block hidden', className)}>
             <ChevronLeft
                 strokeWidth={3}
                 class="size-12 text-gray-300 md:size-15"

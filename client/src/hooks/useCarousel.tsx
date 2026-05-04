@@ -1,3 +1,4 @@
+import { playAudio } from '@/lib/helpers/playAudio';
 import type { RefObject } from 'preact';
 import { useCallback, useEffect, useReducer } from 'preact/hooks';
 
@@ -170,6 +171,7 @@ export function useCarousel<T>({
 
             dispatch({ type: 'START_SLIDE', direction });
             applyTransform(direction, true);
+            playAudio('slide');
 
             setTimeout(() => {
                 dispatch({ type: 'FINISH_SLIDE', direction });
