@@ -1,10 +1,18 @@
 import { Button } from '@/components/ui/Button';
 import { useModal } from '@/context/ModalContext';
+import { events } from '@/lib/const/events';
 import { locale } from '@/signals/locale';
 
 const HeroBio = () => {
     const { showModal } = useModal();
     const lang = locale.value === 'en' ? 'en' : 'ru';
+
+    const handleClick = () => {
+        window.dispatchEvent(
+            new CustomEvent(events.CHANGE_FORM_STATUS, { detail: 'cancel' }),
+        );
+        showModal.value = true;
+    };
 
     return (
         <div class="md:mx-auto md:max-w-155 lg:mx-0">
@@ -24,10 +32,12 @@ const HeroBio = () => {
             </p>
             <Button
                 class="text-foreground hover:ring-muted-foreground/40 focus-visible:ring-muted-foreground/40 border-muted-foreground hover:bg-zinc-700/20"
-                onClick={() => (showModal.value = true)}
+                onClick={handleClick}
                 variant="hero"
             >
-                Нанять меня
+                <span class="motion-safe:animate-fade-in" key={`${lang}-hire-me`}>
+                    {lang === 'en' ? 'Hire me' : 'Нанять меня'}
+                </span>
             </Button>
         </div>
     );

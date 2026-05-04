@@ -20,11 +20,19 @@ const Hero = () => {
                 class="absolute inset-0 -z-5 bg-black/40"
             ></span>
 
-            <div key={lang} class="lg:max-w-2/3 motion-safe:animate-fade-in xl:max-w-1/2">
-                <h1 class="xs:text-5xl mb-8 text-4xl font-medium text-balance sm:mb-10 sm:text-6xl">
+            <div class="motion-safe:animate-fade-in lg:max-w-2/3 xl:max-w-1/2">
+                <h1
+                    key={`${lang}-heading`}
+                    class="xs:text-5xl motion-safe:animate-fade-in mb-8 text-4xl font-medium text-balance sm:mb-10 sm:text-6xl"
+                >
                     {heading[lang]}
                 </h1>
-                <p class="mb-8 sm:mb-10 lg:mb-12">{intro[lang]}</p>
+                <p
+                    key={`${lang}-subheading`}
+                    class="motion-safe:animate-fade-in mb-8 sm:mb-10 lg:mb-12"
+                >
+                    {intro[lang]}
+                </p>
 
                 <HeroActions />
             </div>

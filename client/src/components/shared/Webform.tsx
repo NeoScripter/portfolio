@@ -1,6 +1,7 @@
 import type { FC } from 'preact/compat';
 
 import { useFetch } from '@/hooks/useFetch';
+import { events } from '@/lib/const/events';
 import { isFormValid, validateAllFields } from '@/lib/helpers/formValidator';
 import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
@@ -8,11 +9,11 @@ import { LoaderCircle } from 'lucide-preact';
 import type { TargetedEvent } from 'preact';
 import { useReducer } from 'preact/hooks';
 import { toast } from 'sonner';
-import InputError from '../form/InputError';
+import GhostInput from '../form/GhostInput';
 import GhostLabel from '../form/GhostLabel';
 import GhostTextArea from '../form/GhostTextArea';
+import InputError from '../form/InputError';
 import { Button } from '../ui/Button';
-import GhostInput from '../form/GhostInput';
 
 export interface WebformState {
     name: string;
@@ -61,6 +62,10 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
 
     async function submit(e: TargetedEvent<HTMLFormElement, Event>) {
         e.preventDefault();
+
+        window.dispatchEvent(
+            new CustomEvent(events.CHANGE_FORM_STATUS, { detail: 'confirm' }),
+        );
 
         if (!isFormValid(state, lang)) {
             const fieldErrors = validateAllFields(state, lang);
