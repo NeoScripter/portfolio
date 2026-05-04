@@ -1,6 +1,4 @@
-import { Button } from '@/components/ui/Button';
 import SecondaryHeading from '@/components/ui/SecondaryHeading';
-import { useModal } from '@/context/ModalContext';
 import AppSection from '@/layouts/SectionLayout';
 import { cn } from '@/lib/helpers/utils';
 import { type FC } from 'preact/compat';
@@ -21,7 +19,7 @@ const Stages: FC<{ className?: string }> = ({ className }) => {
     return (
         <AppSection
             className={cn(
-                'bg-muted full-bleed relative lg:px-27 xl:px-27 isolate xl:flex xl:items-center xl:gap-18 ',
+                'bg-muted full-bleed relative isolate lg:px-27 xl:flex xl:items-center xl:gap-18 xl:px-27',
                 className,
                 'content-visibility-default',
             )}
@@ -48,8 +46,6 @@ const Stages: FC<{ className?: string }> = ({ className }) => {
 export default Stages;
 
 const StagesInfo = () => {
-    const { showModal } = useModal();
-
     return (
         <div class="mb-18 sm:mb-20.5 md:mx-auto md:max-w-155 xl:mx-0 xl:mb-0 xl:max-w-123.5 2xl:max-w-162">
             <SecondaryHeading className="text-center xl:text-left xl:text-5xl">
@@ -61,13 +57,6 @@ const StagesInfo = () => {
                 purus arcu, varius eget velit non, laoreet imperdiet orci.
                 Mauris ultrices eget lorem ac vestibulum. Suspendis imperdiet,
             </p>
-            <Button
-                class="text-foreground hover:ring-muted-foreground/40 focus-visible:ring-muted-foreground/40 border-muted-none mx-auto flex hover:bg-zinc-700/20 xl:mx-0 xl:text-lg 2xl:text-[1.325rem]"
-                onClick={() => (showModal.value = true)}
-                variant="hero"
-            >
-                Нанять меня
-            </Button>
         </div>
     );
 };

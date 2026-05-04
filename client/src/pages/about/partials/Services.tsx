@@ -1,13 +1,8 @@
-import clickSound from '@/assets/audio/click.mp3';
-import { Button } from '@/components/ui/Button';
 import SecondaryHeading from '@/components/ui/SecondaryHeading';
-import { useModal } from '@/context/ModalContext';
 import AppSection from '@/layouts/SectionLayout';
-import { events } from '@/lib/const/events';
 import { cn } from '@/lib/helpers/utils';
 import type { FC } from 'preact/compat';
 import ServiceList from './ServiceList';
-import { playAudio } from '@/lib/helpers/playAudio';
 
 const Services: FC<{ className?: string }> = ({ className }) => {
     return (
@@ -26,16 +21,6 @@ const Services: FC<{ className?: string }> = ({ className }) => {
 export default Services;
 
 const ServicesInfo = () => {
-    const { showModal } = useModal();
-
-    const handleClick = () => {
-        window.dispatchEvent(
-            new CustomEvent(events.CHANGE_FORM_STATUS, { detail: 'cancel' }),
-        );
-        showModal.value = true;
-        playAudio('click');
-    };
-
     return (
         <div class="mb-18 pl-1 sm:mb-20.5 lg:mx-auto lg:max-w-155 xl:mx-0 xl:mb-0 xl:max-w-123.5 2xl:max-w-187">
             <SecondaryHeading className="xl:text-5xl">
@@ -47,13 +32,6 @@ const ServicesInfo = () => {
                 purus arcu, varius eget velit non, laoreet imperdiet orci.
                 Mauris ultrices eget lorem ac vestibulum. Suspendis imperdiet,
             </p>
-            <Button
-                class="text-foreground hover:ring-muted-foreground/40 focus-visible:ring-muted-foreground/40 border-muted-none hover:bg-zinc-700/20 xl:text-lg 2xl:text-[1.325rem]"
-                onClick={handleClick}
-                variant="hero"
-            >
-                Нанять меня
-            </Button>
         </div>
     );
 };
