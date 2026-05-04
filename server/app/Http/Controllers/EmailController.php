@@ -26,7 +26,7 @@ class EmailController
             $this->sendEmail($f3, $data);
             send_json(['message' => 'Email successfully sent!']);
         } catch (\Exception $e) {
-            $logger = new \Log('email_errors.log');
+            $logger = new \Log('../storage/logs/smtp.log');
             $logger->write('Email error: ' . $e->getMessage());
         }
     }
@@ -54,7 +54,7 @@ class EmailController
 
         if (!$result) {
             $log = $smtp->log();
-            $logger = new \Log('smtp_debug.log');
+            $logger = new \Log('../storage/logs/smtp.log');
             $logger->write($log);
         }
 
