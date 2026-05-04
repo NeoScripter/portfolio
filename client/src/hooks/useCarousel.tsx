@@ -195,6 +195,7 @@ export function useCarousel<T>({
             const deltaX = e.changedTouches[0].clientX - state.touchStartX;
 
             if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+                e.preventDefault();
                 deltaX > 0 ? handleDecrement() : handleIncrement();
             }
 
