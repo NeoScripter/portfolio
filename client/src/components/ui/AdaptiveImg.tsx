@@ -40,7 +40,7 @@ export default function AdaptiveImg({
                     : {}
             }
             className={cn(
-                'adaptive-img-blur overflow-clip',
+                'adaptive-img-blur overflow-clip bg-cover bg-center bg-no-repeat',
                 !isLoading && 'bg-none!',
                 isBg
                     ? 'pointer-events-none absolute inset-0 -z-5 select-none'
