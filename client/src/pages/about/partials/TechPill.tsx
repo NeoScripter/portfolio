@@ -26,7 +26,7 @@ const TechPill: FC<{
         >
             <div class="flex size-full items-center relative justify-center">
                 <AdaptiveImg
-                    prtClass="size-3/4 shrink-0"
+                    prtClass="size-3/4 shrink-0 bg-contain"
                     imgClass="object-contain object-center"
                     srcs={stack.image.srcSet}
                     alt={stack.image?.alt?.[locale.value]}

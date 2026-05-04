@@ -30,13 +30,18 @@ export default function AdaptiveImg({
 
     return (
         <div
-            style={{
-                '--dk-src': `url(${srcs.dkTiny})`,
-                '--tb-src': `url(${srcs.tbTiny})`,
-                '--mb-src': `url(${srcs.mbTiny})`,
-            }}
+            style={
+                isLoading
+                    ? {
+                          '--dk-src': `url(${srcs.dkTiny})`,
+                          '--tb-src': `url(${srcs.tbTiny})`,
+                          '--mb-src': `url(${srcs.mbTiny})`,
+                      }
+                    : {}
+            }
             className={cn(
-                'adaptive-img-blur overflow-clip bg-cover bg-center bg-no-repeat',
+                'adaptive-img-blur overflow-clip',
+                !isLoading && 'bg-none!',
                 isBg
                     ? 'pointer-events-none absolute inset-0 -z-5 select-none'
                     : 'relative',

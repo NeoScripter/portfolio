@@ -16,6 +16,8 @@ import InputError from '../form/InputError';
 import { Button } from '../ui/Button';
 import clickSound from '@/assets/audio/click.mp3';
 import { playAudio } from '@/lib/helpers/playAudio';
+import type { ServerError } from '@/hooks/useForm';
+import { API_BASE_URL } from '@/lib/const/api';
 
 export interface WebformState {
     name: string;
@@ -84,15 +86,15 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
         clearErrors();
 
         await fetchData({
-            url: '/email',
+            url: `${API_BASE_URL}email/send`,
             method: 'POST',
             payload: state,
             onSuccess: (data) => {
                 toast.success(data.message);
             },
-            onError: () => {
+            onError: (err: ServerError) => {
                 toast.error(
-                    errors?.general?.[0] ||
+                    err?.message ||
                         'An error occured while sending an email, please try again later',
                 );
             },
@@ -116,7 +118,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                         }
                         placeholder="John Doe"
                     />
-                    <InputError message={errors?.name?.[0] || ''} />
+                    <InputError message={errors?.errors?.name ?? ''} />
                 </div>
 
                 <div class="group grid gap-2">
@@ -134,7 +136,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                         }
                         placeholder="example@gmail.com"
                     />
-                    <InputError message={errors?.email?.[0] || ''} />
+                    <InputError message={errors?.errors?.email ?? ''} />
                 </div>
 
                 <div class="group grid gap-2">
@@ -151,7 +153,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                         }
                         placeholder="@InterestedUser1456"
                     />
-                    <InputError message={errors?.telegram?.[0] || ''} />
+                    <InputError message={errors?.errors?.telegram ?? ''} />
                 </div>
 
                 <div class="group grid gap-2">
@@ -168,7 +170,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                         }
                         placeholder="+1 223 223 22 33"
                     />
-                    <InputError message={errors?.whatsapp?.[0] || ''} />
+                    <InputError message={errors?.errors?.whatsapp ?? ''} />
                 </div>
             </div>
 
@@ -186,7 +188,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                     }
                     placeholder="Help me build a cool and interesting website that will make me happy every day!"
                 />
-                <InputError message={errors?.message?.[0] || ''} />
+                <InputError message={errors?.errors?.message ?? ''} />
             </div>
 
             <Button
