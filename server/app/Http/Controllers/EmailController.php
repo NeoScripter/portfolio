@@ -9,9 +9,9 @@ class EmailController
     public function store($f3)
     {
         $validator = Validator::make(get_json(), [
-            'email' => ['required', 'email', 'min:3', 'max:255'],
-            'name' => ['required', 'string', 'min:3', 'max:2255'],
-            'message' => ['required', 'string', 'min:3', 'max:1255'],
+            'email'    => ['required', 'email', 'min:3', 'max:255'],
+            'name'     => ['required', 'string', 'min:3', 'max:2255'],
+            'message'  => ['required', 'string', 'min:3', 'max:1255'],
             'telegram' => ['nullable', 'max:255'],
             'whatsapp' => ['nullable', 'max:255'],
         ]);
@@ -23,60 +23,29 @@ class EmailController
         $data = $validator->validated();
 
         try {
-            $this->sendEmail($f3, $data);
+            $pdo = new \PDO(
+                "pgsql:host={$f3->get('db_host')};port={$f3->get('db_port')};dbname={$f3->get('db_name')}",
+                $f3->get('db_user'),
+                $f3->get('db_password')
+            );
+
+            $queue = new \n0nag0n\Job_Queue('pgsql');
+            $queue->addQueueConnection($pdo);
+            $queue->selectPipeline('send_email');
+
+            $queue->addJob(json_encode([
+                'name'      => $data['name'],
+                'email'     => $data['email'],
+                'message'   => $data['message'],
+                'telegram'  => $data['telegram'] ?? null,
+                'whatsapp'  => $data['whatsapp'] ?? null,
+            ]));
+
             send_json(['message' => 'Email successfully sent!']);
         } catch (\Exception $e) {
             $logger = new \Log('../storage/logs/smtp.log');
-            $logger->write('Email error: ' . $e->getMessage());
+            $logger->write('Queue dispatch error: ' . $e->getMessage());
+            send_json(['message' => 'Failed to queue email.'], 500);
         }
-    }
-
-    protected function sendEmail($f3, $data)
-    {
-        $smtp = new \SMTP(
-            $f3->get('SMTP.host'),
-            $f3->get('SMTP.port'),
-            $f3->get('SMTP.scheme'),
-            $f3->get('SMTP.user'),
-            $f3->get('SMTP.pw')
-        );
-
-        $smtp->set('From', '"Portfolio" <ask@ilyaandreev.dev>');
-
-        $smtp->set('Reply-To', '"' . $data['name'] . '" <' . $data['email'] . '>');
-
-        $smtp->set('To', '"Your Name" <ask@ilyaandreev.dev>');
-        $smtp->set('Subject', 'Емаил с портфолио от ' . $data['name']);
-
-        $message = $this->buildEmailBody($data);
-
-        $result = $smtp->send($message, true);
-
-        if (!$result) {
-            $log = $smtp->log();
-            $logger = new \Log('../storage/logs/smtp.log');
-            $logger->write($log);
-        }
-
-        return $result;
-    }
-
-    protected function buildEmailBody($data)
-    {
-        $message = "New Contact Form Submission\n\n";
-        $message .= "Name: " . $data['name'] . "\n";
-        $message .= "Email: " . $data['email'] . "\n";
-
-        if (!empty($data['telegram'])) {
-            $message .= "Telegram: " . $data['telegram'] . "\n";
-        }
-
-        if (!empty($data['whatsapp'])) {
-            $message .= "WhatsApp: " . $data['whatsapp'] . "\n";
-        }
-
-        $message .= "\nMessage:\n" . $data['message'] . "\n";
-
-        return $message;
     }
 }
