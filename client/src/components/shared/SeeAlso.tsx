@@ -44,6 +44,7 @@ const SeeAlso: FC<{
                 </SecondaryHeading>
                 <PrimaryLink
                     href="/gallery"
+                    onClick={() => playAudio(clickSound)}
                     className="clickable-btn mx-auto mt-22 mr-0 hidden w-fit xl:flex"
                 >
                     На страницу проектов

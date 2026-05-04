@@ -2,8 +2,9 @@ import AnimatedUnderline from '@/components/ui/AnimatedUnderline';
 import { Button } from '@/components/ui/Button';
 import { useModal } from '@/context/ModalContext';
 import { events } from '@/lib/const/events';
-import { cn } from '@/lib/helpers/utils';
+import { cn, playAudio } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
+import clickSound from '@/assets/audio/click.mp3';
 
 const HeroActions = () => {
     const { showModal } = useModal();
@@ -14,6 +15,7 @@ const HeroActions = () => {
             new CustomEvent(events.CHANGE_FORM_STATUS, { detail: 'cancel' }),
         );
         showModal.value = true;
+        playAudio(clickSound)
     };
 
     return (
