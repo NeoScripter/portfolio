@@ -14,6 +14,7 @@ export default defineConfig({
                     '/',
                     '/about',
                     '/gallery',
+                    '/gallery/harum-aut-qui-omnis',
                     '/project',
                     '/login',
                     '/admin',

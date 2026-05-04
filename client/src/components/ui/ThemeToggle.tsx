@@ -1,10 +1,10 @@
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
-import { cn, playAudio } from '@/lib/helpers/utils';
+import { playAudio } from '@/lib/helpers/playAudio';
+import { cn } from '@/lib/helpers/utils';
 import { getTheme, theme } from '@/signals/theme';
 import type { TargetedEvent } from 'preact';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
-import toggleSound from '@/assets/audio/toggle.mp3';
 
 const ThemeToggle: FC<{ className?: string }> = ({ className }) => {
     const { path } = useRoute();
@@ -16,7 +16,7 @@ const ThemeToggle: FC<{ className?: string }> = ({ className }) => {
         } else {
             theme.value = 'light';
         }
-        playAudio(toggleSound);
+        playAudio('toggle');
     };
 
     const isDark = getTheme() === 'dark';
@@ -39,9 +39,12 @@ const ThemeToggle: FC<{ className?: string }> = ({ className }) => {
             />
             <label
                 htmlFor="switch"
-                class={cn('border-foreground/50 w-17 border-2 border-dotted xl:w-18', {
-                    'lg:border-white/50': variant === 'primary',
-                })}
+                class={cn(
+                    'border-foreground/50 w-17 border-2 border-dotted xl:w-18',
+                    {
+                        'lg:border-white/50': variant === 'primary',
+                    },
+                )}
                 aria-hidden="true"
             />
         </div>

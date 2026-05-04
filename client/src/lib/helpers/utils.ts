@@ -73,8 +73,8 @@ export function getUpdatedUrl(newParams: Record<string, string>[]): string {
     }
 }
 
-export function playAudio(audioSrc: string, volume = 0.15) {
-    const audio = new Audio(audioSrc);
-    audio.volume = volume;
-    audio.play();
-}
+// export function playAudio(audioSrc: string, volume = 0.15) {
+//     const audio = new Audio(audioSrc);
+//     audio.volume = volume;
+//     audio.play();
+// }

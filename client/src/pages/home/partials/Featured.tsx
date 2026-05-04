@@ -5,7 +5,7 @@ import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import { useFetch } from '@/hooks/useFetch';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { cn, playAudio } from '@/lib/helpers/utils';
+import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { locale } from '@/signals/locale';
 import { getTheme } from '@/signals/theme';
@@ -13,6 +13,7 @@ import { type FC } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 import { featuredBgDarkSrcSet, featuredBgSrcSet } from '../data';
 import clickSound from '@/assets/audio/click.mp3';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 const Featured: FC<{ className?: string }> = ({ className }) => {
     const { fetchData, loading, errors } = useFetch();
@@ -74,7 +75,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
 
             <PrimaryLink
                 key={`${lang}-gallery-btn`}
-                onClick={() => playAudio(clickSound)}
+                onClick={() => playAudio('click')}
                 href="/gallery"
                 className="motion-safe:animate-fade-in mx-auto mt-22 w-fit clickable-btn"
             >

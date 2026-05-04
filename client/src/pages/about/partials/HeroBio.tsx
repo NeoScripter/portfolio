@@ -3,7 +3,7 @@ import { useModal } from '@/context/ModalContext';
 import { events } from '@/lib/const/events';
 import { locale } from '@/signals/locale';
 import clickSound from '@/assets/audio/click.mp3';
-import { playAudio } from '@/lib/helpers/utils';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 const HeroBio = () => {
     const { showModal } = useModal();
@@ -14,7 +14,7 @@ const HeroBio = () => {
             new CustomEvent(events.CHANGE_FORM_STATUS, { detail: 'cancel' }),
         );
         showModal.value = true;
-        playAudio(clickSound)
+        playAudio('click')
     };
 
     return (

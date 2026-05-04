@@ -3,7 +3,7 @@ import type { FC } from 'preact/compat';
 import { useFetch } from '@/hooks/useFetch';
 import { events } from '@/lib/const/events';
 import { isFormValid, validateAllFields } from '@/lib/helpers/formValidator';
-import { cn, playAudio } from '@/lib/helpers/utils';
+import { cn} from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import { LoaderCircle } from 'lucide-preact';
 import type { TargetedEvent } from 'preact';
@@ -15,6 +15,7 @@ import GhostTextArea from '../form/GhostTextArea';
 import InputError from '../form/InputError';
 import { Button } from '../ui/Button';
 import clickSound from '@/assets/audio/click.mp3';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 export interface WebformState {
     name: string;
@@ -192,7 +193,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                 type="submit"
                 class="mx-auto mt-12 lg:mr-0"
                 variant="primary"
-                onClick={() => playAudio(clickSound)}
+                onClick={() => playAudio('click')}
                 disabled={loading}
             >
                 {loading && <LoaderCircle class="h-4 w-4 animate-spin" />}

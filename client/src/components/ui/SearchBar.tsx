@@ -1,17 +1,16 @@
-import clickSound from '@/assets/audio/click.mp3';
-import { cn, getUpdatedUrl, playAudio } from '@/lib/helpers/utils';
+import { cn, getUpdatedUrl } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
 import { locale } from '@/signals/locale';
 import { Search } from 'lucide-preact';
 import { useLocation } from 'preact-iso';
 import { useState, type ChangeEvent, type FC } from 'preact/compat';
 import Input from '../form/Input';
+import clickSound from '@/assets/audio/click.mp3';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 const SearchBar: FC<NodeProps> = ({ className }) => {
     const { route, query } = useLocation();
-    const [searchQuery, setSearchQuery] = useState(
-        query?.search ? query?.search : '',
-    );
+    const [searchQuery, setSearchQuery] = useState(query?.search ? query?.search : '');
 
     const lang = locale.value === 'en' ? 'en' : 'ru';
     const placeholder =
@@ -24,7 +23,7 @@ const SearchBar: FC<NodeProps> = ({ className }) => {
 
         const url = getUpdatedUrl([
             { name: 'search', val: searchQuery },
-            { name: 'page', val: '1' },
+            { name: 'page', val: "1" },
         ]);
         route(url);
     };
@@ -49,7 +48,7 @@ const SearchBar: FC<NodeProps> = ({ className }) => {
             <button
                 type="submit"
                 className="focus-visible:border-ring bg-foreground text-user-background hover:ring-footer-text focus-visible:ring-footer-text flex items-center justify-center gap-[0.5em] rounded-xl py-[0.5em] pr-[1em] pl-[1.5em] font-medium shadow-xs transition-[color,box-shadow,opacity] outline-none hover:ring-[3px] focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0"
-                onClick={() => playAudio(clickSound)}
+                onClick={() => playAudio('click')}
             >
                 <span
                     key={`${lang}-find-btn`}

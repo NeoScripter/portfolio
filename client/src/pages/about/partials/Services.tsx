@@ -4,9 +4,10 @@ import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import { useModal } from '@/context/ModalContext';
 import AppSection from '@/layouts/SectionLayout';
 import { events } from '@/lib/const/events';
-import { cn, playAudio } from '@/lib/helpers/utils';
+import { cn } from '@/lib/helpers/utils';
 import type { FC } from 'preact/compat';
 import ServiceList from './ServiceList';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 const Services: FC<{ className?: string }> = ({ className }) => {
     return (
@@ -32,11 +33,11 @@ const ServicesInfo = () => {
             new CustomEvent(events.CHANGE_FORM_STATUS, { detail: 'cancel' }),
         );
         showModal.value = true;
-        playAudio(clickSound);
+        playAudio('click');
     };
 
     return (
-        <div class="mb-18 sm:mb-20.5 lg:mx-auto lg:max-w-155 xl:mx-0  pl-1 xl:mb-0 xl:max-w-123.5 2xl:max-w-187">
+        <div class="mb-18 pl-1 sm:mb-20.5 lg:mx-auto lg:max-w-155 xl:mx-0 xl:mb-0 xl:max-w-123.5 2xl:max-w-187">
             <SecondaryHeading className="xl:text-5xl">
                 Что я делаю?
             </SecondaryHeading>

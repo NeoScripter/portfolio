@@ -1,10 +1,10 @@
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
-import { cn, playAudio } from '@/lib/helpers/utils';
+import { playAudio } from '@/lib/helpers/playAudio';
+import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import type { TargetedEvent } from 'preact';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
-import toggleSound from '@/assets/audio/toggle.mp3';
 
 const LangToggle: FC<{ className?: string }> = ({ className }) => {
     const { path } = useRoute();
@@ -16,17 +16,14 @@ const LangToggle: FC<{ className?: string }> = ({ className }) => {
         } else {
             locale.value = 'ru';
         }
-        playAudio(toggleSound);
+        playAudio('toggle');
     };
 
     return (
         <div
-            className={cn(
-                'flex items-center justify-center gap-3',
-                className,
-            )}
+            className={cn('flex items-center justify-center gap-3', className)}
         >
-            <Button lang='ru' />
+            <Button lang="ru" />
             <div class={cn('lang-switch relative flex items-center gap-3')}>
                 <input
                     id="lang-toggle"
@@ -39,13 +36,16 @@ const LangToggle: FC<{ className?: string }> = ({ className }) => {
                 />
                 <label
                     htmlFor="lang-toggle"
-                    class={cn('border-foreground/50 w-15 border-2 border-dotted xl:w-16', {
-                        'lg:border-white/50': variant === 'primary',
-                    })}
+                    class={cn(
+                        'border-foreground/50 w-15 border-2 border-dotted xl:w-16',
+                        {
+                            'lg:border-white/50': variant === 'primary',
+                        },
+                    )}
                     aria-hidden="true"
                 />
             </div>
-            <Button lang='en' />
+            <Button lang="en" />
         </div>
     );
 };
