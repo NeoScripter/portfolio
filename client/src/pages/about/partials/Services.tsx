@@ -22,7 +22,7 @@ export default Services;
 
 const ServicesInfo = () => {
     return (
-        <div class="mb-18 pl-1 sm:mb-20.5 lg:mx-auto lg:max-w-155 xl:mx-0 xl:mb-0 xl:max-w-123.5 2xl:max-w-187">
+        <div class="mb-18 sm:mb-20.5 lg:mx-auto lg:max-w-155 xl:mx-0 xl:mb-0 xl:max-w-123.5 2xl:max-w-187">
             <SecondaryHeading className="xl:text-5xl">
                 Что я делаю?
             </SecondaryHeading>
