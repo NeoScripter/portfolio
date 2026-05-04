@@ -2,13 +2,14 @@ import BgDark from '@/assets/imgs/shared/mb-menu-dark.webp';
 import BgLight from '@/assets/imgs/shared/mb-menu-light.webp';
 import LangToggle from '@/components/ui/LangToggle';
 import Logo from '@/components/ui/Logo';
+import MuteBtn from '@/components/ui/MuteBtn';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
 import { cn } from '@/lib/helpers/utils';
+import { locale } from '@/signals/locale';
 import { getTheme } from '@/signals/theme';
 import { useRoute } from 'preact-iso';
 import { NavMenu } from './NavMenu';
-import { locale } from '@/signals/locale';
 
 type NavDrawerProps = { show: boolean };
 
@@ -25,7 +26,7 @@ export default function NavDrawer({ show }: NavDrawerProps) {
             aria-label="Навигационное меню"
             class={cn(
                 'bg-background ease-nav-drawer fixed top-0 right-0 z-0 w-80 max-w-full overflow-y-auto rounded-bl-2xl bg-cover bg-top-left bg-no-repeat px-8 py-7 transition-transform duration-900',
-                !show && 'translate-x-full'
+                !show && 'translate-x-full',
             )}
             style={{
                 backgroundImage: `url(${getTheme() === 'dark' ? BgDark : BgLight})`,
@@ -35,9 +36,13 @@ export default function NavDrawer({ show }: NavDrawerProps) {
                 <div>
                     <div
                         key={lang}
-                        class={cn('mt-3 motion-safe:animate-fade-in mb-8 w-36', show && 'slide-in', {
-                            'text-foreground': variant === 'primary',
-                        })}
+                        class={cn(
+                            'motion-safe:animate-fade-in mt-3 mb-8 w-36',
+                            show && 'slide-in',
+                            {
+                                'text-foreground': variant === 'primary',
+                            },
+                        )}
                     >
                         <Logo className="w-32" />
                     </div>
@@ -51,9 +56,10 @@ export default function NavDrawer({ show }: NavDrawerProps) {
             <NavMenu show={show} />
 
             <footer>
-                <div class="text-foreground flex items-center justify-between font-bold">
+                <div class="text-foreground flex items-center justify-between gap-3 font-bold">
                     <LangToggle />
                     <ThemeToggle />
+                    <MuteBtn />
                 </div>
             </footer>
         </div>

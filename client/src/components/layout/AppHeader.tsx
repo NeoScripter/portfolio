@@ -20,6 +20,7 @@ import NavDrawer from './partials/NavDrawer';
 import { NavMenu } from './partials/NavMenu';
 import Overlay from './partials/Overlay';
 import Separator from './partials/Separator';
+import MuteBtn from '../ui/MuteBtn';
 
 const AppHeader: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
@@ -77,7 +78,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
         >
             <div
                 class={cn(
-                    'bg-background/50 mx-auto flex max-w-480 items-center justify-between overflow-x-clip px-7 py-8 backdrop-blur-sm sm:px-15 sm:pt-11 sm:pb-9 lg:px-24 xl:pb-12',
+                    'bg-background/50 mx-auto flex max-w-480 items-center justify-between overflow-x-clip px-7 py-8 backdrop-blur-sm sm:px-15 sm:pt-11 sm:pb-9 lg:px-14 2xl:px-24 xl:pb-12',
                     className,
                     {
                         'md:rounded-t-xl xl:max-w-432 2xl:max-w-432':
@@ -112,9 +113,10 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
 
                 {!showDrawer && (
                     <div class="flex items-center gap-11 xl:w-full xl:gap-14">
-                        <LangToggle className="mr-5 xl:ml-auto" />
-                        <NavMenu className="mr-10 xl:mr-auto" />
+                        <LangToggle className="xl:ml-auto" />
+                        <NavMenu className="xl:mr-auto" />
                         <ThemeToggle />
+                        <MuteBtn />
                     </div>
                 )}
 
