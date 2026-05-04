@@ -75,6 +75,7 @@ class Validator
                     'required' => $this->required($this->values[$key]),
                     'required_with' => $this->required_with($this->values[$key], $param),
                     'string' => $this->string($this->values[$key]),
+                    'email' => $this->email($this->values[$key]),
                     'integer' => $this->integer($this->values[$key]),
                     'min' => $this->min_length($this->values[$key], (int) $param),
                     'max' => $this->max_length($this->values[$key], (int) $param),
@@ -226,6 +227,23 @@ class Validator
             return (int) $value > $limit ? $error_message : '';
 
         return 'Invalid value format';
+    }
+
+    private function email($value)
+    {
+        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            return "Invalid email format";
+        }
+
+        $domain = substr(strrchr($value, "@"), 1);
+
+        $domain = rtrim($domain, '.') . '.';
+
+        if (! checkdnsrr($domain, 'MX')) {
+            return "Email domain does not exist";
+        }
+
+        return '';
     }
 
     public function fails()

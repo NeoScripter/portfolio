@@ -1,9 +1,12 @@
 import type { FC } from 'preact/compat';
 
 import { useFetch } from '@/hooks/useFetch';
+import type { ServerError } from '@/hooks/useForm';
+import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
 import { isFormValid, validateAllFields } from '@/lib/helpers/formValidator';
-import { cn} from '@/lib/helpers/utils';
+import { playAudio } from '@/lib/helpers/playAudio';
+import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import { LoaderCircle } from 'lucide-preact';
 import type { TargetedEvent } from 'preact';
@@ -14,10 +17,6 @@ import GhostLabel from '../form/GhostLabel';
 import GhostTextArea from '../form/GhostTextArea';
 import InputError from '../form/InputError';
 import { Button } from '../ui/Button';
-import clickSound from '@/assets/audio/click.mp3';
-import { playAudio } from '@/lib/helpers/playAudio';
-import type { ServerError } from '@/hooks/useForm';
-import { API_BASE_URL } from '@/lib/const/api';
 
 export interface WebformState {
     name: string;
@@ -67,10 +66,6 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
     async function submit(e: TargetedEvent<HTMLFormElement, Event>) {
         e.preventDefault();
 
-        window.dispatchEvent(
-            new CustomEvent(events.CHANGE_FORM_STATUS, { detail: 'confirm' }),
-        );
-
         if (!isFormValid(state, lang)) {
             const fieldErrors = validateAllFields(state, lang);
             const errors: Record<string, string[]> = {};
@@ -86,13 +81,20 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
         clearErrors();
 
         await fetchData({
-            url: `${API_BASE_URL}email/send`,
+            url: `${API_BASE_URL}email`,
             method: 'POST',
             payload: state,
             onSuccess: (data) => {
                 toast.success(data.message);
+
+                window.dispatchEvent(
+                    new CustomEvent(events.CHANGE_FORM_STATUS, {
+                        detail: 'confirm',
+                    }),
+                );
             },
             onError: (err: ServerError) => {
+                console.error(err);
                 toast.error(
                     err?.message ||
                         'An error occured while sending an email, please try again later',
