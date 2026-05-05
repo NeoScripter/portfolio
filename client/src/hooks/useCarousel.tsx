@@ -143,7 +143,10 @@ export function useCarousel<T>({
         const firstSlide = container?.firstElementChild as HTMLElement | null;
         if (!firstSlide) return 0;
 
-        const viewportWidth = Math.min(isBrowser ? window.innerWidth : 0, MAX_SCREEN_SIZE);
+        const viewportWidth = Math.min(
+            isBrowser ? window.innerWidth : 0,
+            MAX_SCREEN_SIZE,
+        );
         return (viewportWidth - firstSlide.offsetWidth) / 2;
     }, [containerRef]);
 
@@ -185,6 +188,8 @@ export function useCarousel<T>({
     const handleDecrement = useCallback(() => handleSlide(-1), [handleSlide]);
 
     const handleTouchStart = useCallback((e: TouchEvent) => {
+        e.preventDefault();
+
         dispatch({ type: 'TOUCH_START', x: e.touches[0].clientX });
     }, []);
 
@@ -196,6 +201,13 @@ export function useCarousel<T>({
 
             if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
                 e.preventDefault();
+
+                if (containerRef.current) {
+                    containerRef.current.scrollIntoView({
+                        block: 'start',
+                    });
+                }
+
                 deltaX > 0 ? handleDecrement() : handleIncrement();
             }
 
