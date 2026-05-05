@@ -3,8 +3,9 @@ import AppHeader from '@/components/layout/AppHeader';
 import Webform from '@/components/shared/Webform';
 import { ModalProvider } from '@/context/ModalContext';
 import { cn } from '@/lib/helpers/utils';
+import { Howler } from 'howler';
 import type { ComponentChildren } from 'preact';
-import { type FC } from 'preact/compat';
+import { useEffect, type FC } from 'preact/compat';
 import { Toaster } from 'sonner';
 import ModalLayout from './ModalLayout';
 
@@ -12,6 +13,16 @@ const AppLayout: FC<{
     children: ComponentChildren;
     className?: string;
 }> = ({ children, className }) => {
+    useEffect(() => {
+        document.addEventListener(
+            'touchstart',
+            () => {
+                Howler.ctx?.resume();
+            },
+            { once: true, passive: true },
+        );
+    }, []);
+
     return (
         <ModalProvider>
             <main
