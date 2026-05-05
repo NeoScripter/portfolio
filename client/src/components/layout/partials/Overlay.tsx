@@ -1,7 +1,7 @@
 import { cn } from '@/lib/helpers/utils';
 import { createPortal, type FC } from 'preact/compat';
 
-const Overlay: FC<{ show: boolean }> = ({ show }) => {
+const Overlay: FC<{ show: boolean, className?: string }> = ({ show, className }) => {
     const isBrowser = typeof window !== 'undefined';
 
     if (!isBrowser) {
@@ -17,6 +17,7 @@ const Overlay: FC<{ show: boolean }> = ({ show }) => {
                     'opacity-100': show,
                     'pointer-events-none opacity-0': !show,
                 },
+                className
             )}
         />,
         document.getElementById('portals')!,

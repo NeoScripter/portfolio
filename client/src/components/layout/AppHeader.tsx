@@ -100,11 +100,11 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                 {showDrawer && (
                     <>
                         {' '}
-                        <Overlay show={showMenu} />
+                        <Overlay show={showMenu} className='lg:hidden' />
                         <BurgerMenu
                             show={showMenu}
                             onClick={toggleMenu}
-                            className="z-5"
+                            className="z-5 lg:hidden"
                             aria-label={
                                 showMenu ? 'Закрыть меню' : 'Открыть меню'
                             }
@@ -116,7 +116,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                 )}
 
                 {!showDrawer && (
-                    <div class="flex items-center gap-11 xl:w-full xl:gap-14">
+                    <div class="items-center gap-11 xl:w-full xl:gap-14 hidden lg:flex">
                         <LangToggle className="xl:ml-auto" />
                         <NavMenu className="xl:mr-auto" />
                         <ThemeToggle />
