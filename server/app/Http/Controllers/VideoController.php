@@ -58,20 +58,7 @@ class VideoController extends BaseController
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $raw = $validator->validated();
-
-        $handler = ImageHandler::make(
-            $raw,
-            'image',
-            [['mb', 500], ['tb', 600], ['dk', 900]],
-            'videos'
-        )->resize_all();
-
-        if ($handler->fails()) {
-            send_json(['message' =>  $handler->error()], 404);
-        }
-
-        $data = $handler->output();
+        $data = $validator->validated();
 
         $video = $f3->get('_VIDEOS');
         $video->copyFrom($data);
@@ -79,12 +66,8 @@ class VideoController extends BaseController
 
         $video_id = $f3->get('DB')->lastInsertId();
 
-        $data['imageable_id'] = $video_id;
-        $data['imageable_type'] = 'videos';
-
-        $img = $f3->get('_IMAGES');
-        $img->copyFrom($data);
-        $img->save();
+        ImageHandler::make($data, 'image', [['mb', 500], ['tb', 600], ['dk', 900]], 'videos')
+            ->enqueue($video_id, 'videos');
 
         send_json(['message' => 'Video successfully created!']);
     }
@@ -107,33 +90,15 @@ class VideoController extends BaseController
         $data = $validator->validated();
         $video_id = $f3->get('PARAMS.id');
 
-        if (isset($data['image'])) {
-            $handler = ImageHandler::make(
-                $data,
-                'image',
-                [['mb', 500], ['tb', 600], ['dk', 900]],
-                'videos'
-            )->resize_all();
-
-            if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 404);
-            }
-
-            $data = $handler->output();
-            ImageHandler::delete_morph_images($video_id, 'videos');
-        }
-
         $video = $f3->get('_VIDEOS');
         $video->load(['id=?', $video_id]);
         $video->copyFrom($data);
         $video->save();
 
-        $data['imageable_id'] = $video_id;
-
-        $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $video_id, 'videos']);
-        $img->copyFrom($data);
-        $img->save();
+        if (isset($data['image'])) {
+            ImageHandler::make($data, 'image', [['mb', 500], ['tb', 600], ['dk', 900]], 'videos')
+                ->enqueue($video_id, 'videos');
+        }
 
         send_json(['message' => 'Video successfully updated!']);
     }
@@ -152,12 +117,9 @@ class VideoController extends BaseController
 
         ImageHandler::delete_morph_images(
             $video_id,
-            'videos'
+            'videos',
+            cascade: true
         );
-
-        $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $video_id, 'videos']);
-        $img->erase();
 
         send_json(['message' => 'Video successfully deleted!']);
     }

@@ -50,18 +50,7 @@ class TechStackController extends BaseController
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $raw = $validator->validated();
-
-        $handler = ImageHandler::make($raw, 'image', [['mb', 50]], 'stacks')
-            ->resize_all();
-
-        if ($handler->fails()) {
-            send_json(['message' =>  $handler->error()], 404);
-        }
-
-        $data = $handler->output();
-
-        $data['imageable_type'] = 'stacks';
+        $data = $validator->validated();
 
         add_markdown_field($data, 'body_en', 'html_en');
         add_markdown_field($data, 'body_ru', 'html_ru');
@@ -71,11 +60,8 @@ class TechStackController extends BaseController
         $stack->save();
         $stack_id = $f3->get('DB')->lastInsertId();
 
-        $data['imageable_id'] = $stack_id;
-
-        $img = $f3->get('_IMAGES');
-        $img->copyFrom($data);
-        $img->save();
+        ImageHandler::make($data, 'image', [['mb', 50]], 'stacks')
+            ->enqueue($stack_id, 'stacks');
 
         send_json(['message' => 'Stack successfully created!']);
     }
@@ -100,28 +86,16 @@ class TechStackController extends BaseController
         $stack = $f3->get('_STACKS');
         $stack->load(['id=?', $stack_id]);
 
-        if (isset($data['image'])) {
-            $handler = ImageHandler::make($data, 'image', [['mb', 50]], 'stacks')
-                ->resize_all();
-
-            if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 404);
-            }
-
-            $data = $handler->output();
-            ImageHandler::delete_morph_images($stack->id, 'stacks');
-        }
-
         add_markdown_field($data, 'body_en', 'html_en');
         add_markdown_field($data, 'body_ru', 'html_ru');
 
         $stack->copyFrom($data);
         $stack->save();
 
-        $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $stack_id, 'stacks']);
-        $img->copyFrom($data);
-        $img->save();
+        if (isset($data['image'])) {
+            ImageHandler::make($data, 'image', [['mb', 50]], 'stacks')
+                ->enqueue($stack_id, 'stacks');
+        }
 
         send_json(['message' => 'Stack successfully updated!']);
     }

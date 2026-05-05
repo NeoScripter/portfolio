@@ -64,29 +64,15 @@ class ReviewController extends BaseController
             send_json(['errors' => $validator->errors()], 422);
         }
 
-        $raw = $validator->validated();
-
-        $handler = ImageHandler::make($raw, 'image', [['mb', 180]], 'reviews')
-            ->resize_all();
-
-        if ($handler->fails()) {
-            send_json(['message' =>  $handler->error()], 404);
-        }
-
-        $data = $handler->output();
-
-        $data['imageable_type'] = 'reviews';
+        $data = $validator->validated();
 
         $review = $f3->get('_REVIEWS');
         $review->copyFrom($data);
         $review->save();
         $review_id = $f3->get('DB')->lastInsertId();
 
-        $data['imageable_id'] = $review_id;
-
-        $img = $f3->get('_IMAGES');
-        $img->copyFrom($data);
-        $img->save();
+        ImageHandler::make($data, 'image', [['mb', 180]], 'reviews')
+            ->enqueue($review_id, 'reviews');
 
         send_json(['message' => 'Review successfully created!']);
     }
@@ -110,27 +96,15 @@ class ReviewController extends BaseController
         $data = $validator->validated();
         $review_id = $f3->get('PARAMS.id');
 
-        if (isset($data['image'])) {
-            $handler = ImageHandler::make($data, 'image', [['mb', 180]], 'reviews')
-                ->resize_all();
-
-            if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 404);
-            }
-
-            $data = $handler->output();
-            ImageHandler::delete_morph_images($review_id, 'reviews');
-        }
-
         $review = $f3->get('_REVIEWS');
         $review->load(['id=?', $review_id]);
         $review->copyFrom($data);
         $review->save();
 
-        $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $review_id, 'reviews']);
-        $img->copyFrom($data);
-        $img->save();
+        if (isset($data['image'])) {
+            ImageHandler::make($data, 'image', [['mb', 180]], 'reviews')
+                ->enqueue($review_id, 'reviews');
+        }
 
         send_json(['message' => 'review successfully updated!']);
     }

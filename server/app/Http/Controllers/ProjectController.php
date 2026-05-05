@@ -223,12 +223,9 @@ class ProjectController extends BaseController
 
         ImageHandler::delete_morph_images(
             $project_id,
-            'projects'
+            'projects',
+            cascade: true
         );
-
-        $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $project_id, 'projects']);
-        $img->erase();
 
         $project->erase();
 
