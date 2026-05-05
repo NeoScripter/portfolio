@@ -9,6 +9,12 @@ const ProjectBrief: FC<{ project: ProjectType; className?: string }> = ({
     className,
 }) => {
     const lang = locale.value === 'en' ? 'en' : 'ru';
+    const noLink = project.attr.link == null;
+
+    const tooltipMessage =
+        lang === 'ru'
+            ? 'К сожалению, данный сайт больше не работает :( Такое иногда случается, когда владелец сайта забывает заплатить за хостинг. Тем не менее, вы можете посмотреть его скриншоты с тех недавних времен, когда он радовал своих пользователей каждый день :)'
+            : 'Unfortunately, the website is no longer online :( Maybe the its owner forgot to pay for the hosting or was too busy to do it. But you can still see the screenshots of it on this page from the bright times when it was still online :)';
 
     return (
         <div
@@ -21,14 +27,23 @@ const ProjectBrief: FC<{ project: ProjectType; className?: string }> = ({
                 {project.attr.description[lang]}
             </p>
 
-            <Button
-                class="ml-auto xl:ml-0"
-                href={project.attr.link}
-                target="_blank"
-                variant="primary"
-            >
-                {lang === 'ru' ? 'Перейти на сайт' : 'Visit website'}
-            </Button>
+            <div class="group relative z-10 w-fit">
+                {noLink && (
+                    <span class="bg-background border-muted-foreground/50 pointer-events-none absolute inset-x-0 xl:top-auto xl:bottom-0 -translate-y-[110%] xl:translate-y-[110%] rounded-md border p-3 text-sm text-balance opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+                        {' '}
+                        {tooltipMessage}
+                    </span>
+                )}
+                <Button
+                    class="ml-auto xl:ml-0"
+                    href={project.attr.link ?? ''}
+                    target="_blank"
+                    variant="primary"
+                    disabled={noLink}
+                >
+                    {lang === 'ru' ? 'Перейти на сайт' : 'Visit website'}
+                </Button>
+            </div>
         </div>
     );
 };

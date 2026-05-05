@@ -23,7 +23,7 @@ type ProjectUpsertState = {
     title_ru: string;
     description_en: string;
     description_ru: string;
-    link: string;
+    link: string | null;
     category_id: number | null;
     technologies: string[];
     priority: number;
@@ -37,7 +37,6 @@ const validationRules: ValidationRules<ProjectUpsertState> = {
     category_id: ['required'],
     title_en: ['required'],
     title_ru: ['required'],
-    link: ['required'],
     description_en: ['required'],
     description_ru: ['required'],
     alt_en: ['required'],
@@ -63,7 +62,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         title_ru: project?.attr?.title?.ru ?? '',
         description_en: project?.attr?.description?.en ?? '',
         description_ru: project?.attr?.description?.ru ?? '',
-        link: project?.attr?.link ?? '',
+        link: project?.attr?.link ?? null,
         category_id: project?.category_id ?? null,
         technologies: project?.attr?.stacks ?? [],
         priority: project?.attr?.priority ?? 100,
@@ -117,7 +116,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                 label="Description (RU)"
                 required
             />
-            <FormInput name="link" label="Link" required />
+            <FormInput name="link" label="Link" />
             <FormStackPicker
                 name="technologies"
                 label="Stacks"
