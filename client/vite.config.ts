@@ -14,7 +14,7 @@ export default defineConfig({
                     '/',
                     '/about',
                     '/gallery',
-                    '/gallery/harum-aut-qui-omnis',
+                    '/gallery/healthy-lifestyle-website-way-to-self-2',
                     '/project',
                     '/login',
                     '/admin',
