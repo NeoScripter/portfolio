@@ -24,11 +24,18 @@ const ProjectTile: FC<NodeProps<{ project: ProjectType }>> = ({
         >
             <div class="mb-12 md:flex md:items-start md:justify-between md:gap-15 lg:order-2 lg:mb-0 lg:block lg:max-w-1/2 lg:basis-full">
                 {img && (
-                    <AdaptiveImg
-                        prtClass="rounded-3xl md:max-w-2/5 md:order-2 lg:max-w-full"
-                        alt={project.image?.alt?.[lang]}
-                        srcs={img.srcSet}
-                    />
+                    <div class="group relative overflow-clip rounded-3xl md:order-2 md:max-w-2/5 lg:max-w-full">
+                        <AdaptiveImg
+                            prtClass=""
+                            alt={project.image?.alt?.[lang]}
+                            srcs={img.srcSet}
+                        />
+                        <span
+                            aria-hidden="true"
+                            class="shine-element block group-hover:motion-safe:animate-[shine_750ms]"
+                        />
+                        <a class="absolute inset-0 z-10" href={`/gallery/${project.attr.slug}`} />
+                    </div>
                 )}
                 <ProjectInfo project={project} className="lg:hidden" />
             </div>
@@ -40,19 +47,17 @@ const ProjectTile: FC<NodeProps<{ project: ProjectType }>> = ({
                     />
                 </div>
                 <div>
-                    <p class="mb-12 lg:mb-7 xl:mb-13.5 xl:text-xl">
+                    <p class="mb-12 max-w-xl lg:mb-7 xl:mb-13.5 xl:text-xl">
                         {project.attr.description[lang]}
                     </p>
 
                     <Button
-                        class="ml-auto md:mr-auto lg:ml-0 clickable-btn"
+                        class="ml-auto sm:ml-0 lg:ml-0 xl:mr-auto"
                         href={`/gallery/${project.attr.slug}`}
                         variant="primary"
                         onClick={() => playAudio('click')}
                     >
-                        {lang === 'ru'
-                            ? 'Перейти к проекту'
-                            : 'View project'}
+                        {lang === 'ru' ? 'Перейти к проекту' : 'View project'}
                     </Button>
                 </div>
             </div>
