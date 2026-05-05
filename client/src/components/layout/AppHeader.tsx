@@ -33,14 +33,18 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
         '#burger-menu',
     ]);
 
-    const { isBelow: isBelowPadding } = useScrollOffset(16);
+    let { isBelow: isBelowPadding } = useScrollOffset(16);
     const hide = useAutoHideOnScroll();
 
     const isBrowser = typeof window !== 'undefined';
 
-    const { isBelow: isBelowHero } = useScrollOffset(
+    let { isBelow: isBelowHero } = useScrollOffset(
         isBrowser ? getHeroOffset(window.innerWidth) : 0,
     );
+
+    if (variant === 'ghost') {
+        isBelowHero = isBelowPadding = true;
+    }
 
     useEscapeKey(() => setShowMenu(false));
 

@@ -14,10 +14,14 @@ export default function useAutoHideOnScroll() {
             const currentScrollTop =
                 window.scrollY || document.documentElement.scrollTop;
 
-            if (currentScrollTop > lastScrollTopRef.current + 30) {
+            if (currentScrollTop < 200) {
+                setHide(false);
+                return;
+            }
+            if (currentScrollTop > lastScrollTopRef.current + 15) {
                 // User is scrolling down
                 setHide(true);
-            } else if (currentScrollTop < lastScrollTopRef.current) {
+            } else if (currentScrollTop < lastScrollTopRef.current - 85) {
                 // User is scrolling up
                 setHide(false);
             }
