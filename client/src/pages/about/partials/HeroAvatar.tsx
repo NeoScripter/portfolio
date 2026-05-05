@@ -11,7 +11,7 @@ const HeroAvatar = () => {
     return (
         <div class="relative isolate mx-auto mb-16 w-fit sm:mb-20 md:mb-24 lg:order-2 lg:mx-0 lg:mb-0 xl:mx-auto">
             <AdaptiveImg
-                prtClass="max-w-75 2xl:max-w-95 rounded-3xl w-[50vw]"
+                prtClass="max-w-75 2xl:max-w-95 rounded-3xl aspect-[1/1.1] w-[55vw]"
                 srcs={heroAvatarSrcSet}
                 alt={avatarAlt}
             />
