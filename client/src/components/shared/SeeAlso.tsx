@@ -1,37 +1,34 @@
-import clickSound from '@/assets/audio/click.mp3';
-import { useFetch } from '@/hooks/useFetch';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
-import { cn} from '@/lib/helpers/utils';
+import { playAudio } from '@/lib/helpers/playAudio';
+import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import type { FC } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
 import PrimaryLink from '../ui/PrimaryLink';
 import SecondaryHeading from '../ui/SecondaryHeading';
 import Projects from './Projects';
-import { playAudio } from '@/lib/helpers/playAudio';
 
 const SeeAlso: FC<{
     className?: string;
     title: string;
     excludedId?: number;
 }> = ({ className, title, excludedId }) => {
-    const { fetchData, loading, errors } = useFetch();
-    const [projects, setProjects] = useState<ProjectType[] | null>(null);
 
-    useEffect(() => {
-        let req = `${API_BASE_URL}projects?limit=3`;
+    let req = `${API_BASE_URL}projects?limit=3`;
 
-        if (excludedId != null) {
-            req = `${req}&exclude=${excludedId}`;
-        }
-        fetchData({
-            url: req,
-            onSuccess: (data) => {
-                setProjects(data.data);
-            },
-        });
-    }, [excludedId]);
+    if (excludedId != null) {
+        req = `${req}&exclude=${excludedId}`;
+    }
+
+    const {
+        data: projects,
+        loading,
+        errors,
+    } = useFetchRecords<ProjectType[]>({
+        url: req,
+        shouldCache: true,
+    });
 
     if (projects && projects.length === 0) {
         return null;

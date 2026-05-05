@@ -4,7 +4,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { useFetch } from './useFetch';
 import type { ServerError } from './useForm';
 
-const CACHE_TTL_SEC = 60;
+const CACHE_TTL_SEC = 10;
 const recordsCache = signal<Map<string, CacheEntry>>(new Map());
 
 type CacheEntry = {

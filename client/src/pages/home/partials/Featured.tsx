@@ -2,32 +2,28 @@ import Projects from '@/components/shared/Projects';
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import PrimaryLink from '@/components/ui/PrimaryLink';
 import SecondaryHeading from '@/components/ui/SecondaryHeading';
-import { useFetch } from '@/hooks/useFetch';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { locale } from '@/signals/locale';
 import { getTheme } from '@/signals/theme';
 import { type FC } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
 import { featuredBgDarkSrcSet, featuredBgSrcSet } from '../data';
-import clickSound from '@/assets/audio/click.mp3';
-import { playAudio } from '@/lib/helpers/playAudio';
 
 const Featured: FC<{ className?: string }> = ({ className }) => {
-    const { fetchData, loading, errors } = useFetch();
-    const [projects, setProjects] = useState<ProjectType[] | null>(null);
-    const lang = locale.value === 'ru' ? 'ru' : 'en';
+    const {
+        data: projects,
+        loading,
+        errors,
+    } = useFetchRecords<ProjectType[]>({
+        url: `${API_BASE_URL}projects?limit=6`,
+        shouldCache: true
+    });
 
-    useEffect(() => {
-        fetchData({
-            url: `${API_BASE_URL}projects?limit=6`,
-            onSuccess: (data) => {
-                setProjects(data.data);
-            },
-        });
-    }, []);
+    const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     return (
         <AppSection
@@ -77,7 +73,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
                 key={`${lang}-gallery-btn`}
                 onClick={() => playAudio('click')}
                 href="/gallery"
-                className="motion-safe:animate-fade-in mx-auto mt-22 w-fit clickable-btn"
+                className="motion-safe:animate-fade-in clickable-btn mx-auto mt-22 w-fit"
             >
                 {lang === 'en' ? 'All projects' : 'На страницу проектов'}
             </PrimaryLink>

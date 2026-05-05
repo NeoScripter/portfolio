@@ -30,10 +30,10 @@ const ProjectTile: FC<NodeProps<{ project: ProjectType }>> = ({
                             alt={project.image?.alt?.[lang]}
                             srcs={img.srcSet}
                         />
-                        <span
-                            aria-hidden="true"
-                            class="shine-element block group-hover:motion-safe:animate-[shine_750ms]"
-                        />
+                        {/* <span */}
+                        {/*     aria-hidden="true" */}
+                        {/*     class="shine-element block group-hover:motion-safe:animate-[shine_750ms]" */}
+                        {/* /> */}
                         <a class="absolute inset-0 z-10" href={`/gallery/${project.attr.slug}`} />
                     </div>
                 )}
