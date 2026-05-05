@@ -84,8 +84,8 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
             url: `${API_BASE_URL}email`,
             method: 'POST',
             payload: state,
-            onSuccess: (data) => {
-                toast.success(data.message);
+            onSuccess: () => {
+                toast.success(lang === 'ru' ? 'Ваше письмо было успешно отправлено! Постараюсь вам ответить в ближайшее время. Хорошего вам дня и настроения :)' : 'Your message was successfully sent! I will try to get back to you as soon as possible. Have a wonderful day :)');
 
                 window.dispatchEvent(
                     new CustomEvent(events.CHANGE_FORM_STATUS, {
