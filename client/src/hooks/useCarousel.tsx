@@ -188,7 +188,7 @@ export function useCarousel<T>({
     const handleDecrement = useCallback(() => handleSlide(-1), [handleSlide]);
 
     const handleTouchStart = useCallback((e: TouchEvent) => {
-        e.preventDefault();
+        // e.preventDefault();
 
         dispatch({ type: 'TOUCH_START', x: e.touches[0].clientX });
     }, []);
@@ -200,7 +200,7 @@ export function useCarousel<T>({
             const deltaX = e.changedTouches[0].clientX - state.touchStartX;
 
             if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
-                e.preventDefault();
+                // e.preventDefault();
 
                 if (containerRef.current) {
                     containerRef.current.scrollIntoView({
