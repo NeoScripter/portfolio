@@ -1,7 +1,11 @@
 /storage/*.key
 /vendor
 public/storage/*
+storage/private/*
 .env
 public/storage
 config/config.ini
 db/database.sqlite
+storage/private/*
+!storage/private/mockups/
+!storage/private/mockups/**
