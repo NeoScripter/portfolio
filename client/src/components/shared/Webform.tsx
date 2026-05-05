@@ -68,13 +68,7 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
 
         if (!isFormValid(state, lang)) {
             const fieldErrors = validateAllFields(state, lang);
-            const errors: Record<string, string[]> = {};
-
-            Object.entries(fieldErrors).forEach(([field, error]) => {
-                if (error) errors[field] = [error];
-            });
-
-            setErrors(errors);
+            setErrors({ errors: fieldErrors, message: 'Invalid form' });
             return;
         }
 
@@ -85,7 +79,11 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
             method: 'POST',
             payload: state,
             onSuccess: () => {
-                toast.success(lang === 'ru' ? 'Ваше письмо было успешно отправлено! Постараюсь вам ответить в ближайшее время. Хорошего вам дня и настроения :)' : 'Your message was successfully sent! I will try to get back to you as soon as possible. Have a wonderful day :)');
+                toast.success(
+                    lang === 'ru'
+                        ? 'Ваше письмо было успешно отправлено! Постараюсь вам ответить в ближайшее время. Хорошего вам дня и настроения :)'
+                        : 'Your message was successfully sent! I will try to get back to you as soon as possible. Have a wonderful day :)',
+                );
 
                 window.dispatchEvent(
                     new CustomEvent(events.CHANGE_FORM_STATUS, {
@@ -95,9 +93,12 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
             },
             onError: (err: ServerError) => {
                 console.error(err);
+                setErrors(err);
+
                 toast.error(
-                    err?.message ||
-                        'An error occured while sending an email, please try again later',
+                    lang === 'ru'
+                        ? 'Не удалось отправить форму'
+                        : 'Error sending the webform',
                 );
             },
         });

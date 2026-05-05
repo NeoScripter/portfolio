@@ -11,6 +11,7 @@ const Hero = () => {
         <HeroLayout className="min-h-210 text-white sm:min-h-291 md:min-h-212">
             <AdaptiveImg
                 prtClass="bg-home-hero-bg -z-5"
+                imgClass='object-right'
                 srcs={heroSrcSet}
                 variant="bg"
             />

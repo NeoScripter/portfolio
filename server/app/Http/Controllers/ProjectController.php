@@ -117,7 +117,7 @@ class ProjectController extends BaseController
             'description_en' => ['sometimes', 'string', 'max:5000'],
             'description_ru' => ['sometimes', 'string', 'max:5000'],
             'category_id' => ['required', 'exists:categories,id'],
-            'link' => ['sometimes', 'string', 'max:300'],
+            'link' => ['nullable', 'string', 'max:300'],
             'priority' => ['sometimes', 'max:300'],
             'alt_en' => ['sometimes', 'string', 'max:500'],
             'alt_ru' => ['sometimes', 'string', 'max:500'],

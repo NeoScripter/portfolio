@@ -17,7 +17,7 @@ class EmailController
         ]);
 
         if ($validator->fails()) {
-            send_json(['errors' => $validator->errors()], 422);
+            send_json(['errors' => $validator->errors(), 'message' => 'Invalid form'], 422);
         }
 
         $data = $validator->validated();
