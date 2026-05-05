@@ -102,35 +102,8 @@ class ProjectController extends BaseController
             );
         }
 
-        $data['imageable_id'] = $project_id;
-        $data['imageable_type'] = 'projects';
-
-        $image_file = $data['image'];
-        unset($data['image']);
-
-        $tmp_dir  = APP_DIR . '/storage/private/pending/';
-        if (!is_dir($tmp_dir)) mkdir($tmp_dir, 0755, true);
-        $tmp_path = $tmp_dir . uniqid('img_', true);
-        move_uploaded_file($image_file['tmp_name'], $tmp_path);
-
-        $queue = $f3->get('JOB_QUEUE');
-        $queue->selectPipeline('process_image');
-
-        $queue->addJob(json_encode([
-            'parent_id'     => $project_id,
-            'parent_type'   => 'projects',
-            'mockup'        => (int) $data['mockup'],
-            'subdir'        => 'projects',
-            'sizes'         => [['mb', 520], ['tb', 1000], ['dk', 1700]],
-            'tmp_path'      => $tmp_path,
-            'original_name' => $image_file['name'],
-            'mime_type'     => $image_file['type'],
-            'extra'         => [
-                'alt_en' => $data['alt_en'],
-                'alt_ru' => $data['alt_ru'],
-            ],
-            'pipeline'  => 'process_image',
-        ]));
+        ImageHandler::make($data, 'image', [['mb', 520], ['tb', 1000], ['dk', 1700]], 'projects')
+            ->enqueue($project_id, 'projects');
 
         send_json(['message' => 'Project successfully created!']);
     }
@@ -173,37 +146,6 @@ class ProjectController extends BaseController
             ),
             'name'
         );
-
-        if (isset($data['image'])) {
-            $image_file = $data['image'];
-            unset($data['image']);
-
-            ImageHandler::delete_morph_images($project->id, 'projects');
-
-            $tmp_dir  = APP_DIR . '/storage/private/pending/';
-            if (!is_dir($tmp_dir)) mkdir($tmp_dir, 0755, true);
-            $tmp_path = $tmp_dir . uniqid('img_', true);
-            move_uploaded_file($image_file['tmp_name'], $tmp_path);
-
-            $queue = $f3->get('JOB_QUEUE');
-            $queue->selectPipeline('process_image');
-
-            $queue->addJob(json_encode([
-                'parent_id'     => $project_id,
-                'parent_type'   => 'projects',
-                'mockup'        => (int) $data['mockup'],
-                'subdir'        => 'projects',
-                'sizes'         => [['mb', 520], ['tb', 1000], ['dk', 1700]],
-                'tmp_path'      => $tmp_path,
-                'original_name' => $image_file['name'],
-                'mime_type'     => $image_file['type'],
-                'extra'         => [
-                    'alt_en' => $data['alt_en'],
-                    'alt_ru' => $data['alt_ru'],
-                ],
-                'pipeline'  => 'process_image',
-            ]));
-        }
 
         if ($data['title_en'] !== $project->title_en) {
             $data['slug'] = Web::instance()->slug($data['title_en'] . "-{$project_id}");
@@ -257,12 +199,13 @@ class ProjectController extends BaseController
                 );");
         }
 
-        $data['imageable_id'] = $project_id;
 
-        $img = $f3->get('_IMAGES');
-        $img->load(['imageable_id=? AND imageable_type=?', $project_id, 'projects']);
-        $img->copyFrom($data);
-        $img->save();
+        if (isset($data['image'])) {
+            ImageHandler::make($data, 'image', [['mb', 520], ['tb', 1000], ['dk', 1700]], 'projects')
+                ->enqueue($project_id, 'projects');
+
+            unset($data['image']);
+        }
 
         send_json(['message' => 'Project successfully updated!']);
     }

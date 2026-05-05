@@ -18,7 +18,6 @@ $f3->set('DB', new SQL(
     "{$f3->get('db_password')}"
 ));
 
-
 $pdo = $f3->get('DB')->pdo();
 
 $queue = new n0nag0n\Job_Queue('pgsql');
@@ -42,7 +41,7 @@ while (true) {
         match ($payload['pipeline'] ?? 'process_image') {
             'send_email' => (new \Jobs\SendEmailJob())->handle($payload),
             'process_image' => (new \Jobs\ProcessImageJob())->handle($payload),
-            default      => throw new \Exception("Unknown pipeline: {$payload['pipeline']}"),
+            default      => throw new \Exception("Unknown pipeline"),
         };
 
         $queue->deleteJob($job);

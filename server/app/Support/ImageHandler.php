@@ -20,7 +20,8 @@ class ImageHandler
         private array $data,
         private string $key,
         private array $sizes,
-        string $subdir = '',
+        private string $subdir = '',
+        private string $filename = 'tmp_name',
     ) {
         if (! isset($this->data[$this->key])) {
             $this->error = "The key does not exist in the data array: $this->key";
@@ -56,6 +57,34 @@ class ImageHandler
         return $this->output;
     }
 
+    public function enqueue(int $parent_id, string $parent_type): static
+    {
+        if ($this->fails()) return $this;
+
+        $tmp_dir = APP_DIR . '/storage/private/pending/';
+        if (!is_dir($tmp_dir)) mkdir($tmp_dir, 0755, true);
+        $tmp_path = $tmp_dir . uniqid('img_', true);
+
+        if (!move_uploaded_file($this->file['tmp_name'], $tmp_path)) {
+            $this->error = "Failed to move uploaded file to pending directory";
+            return $this;
+        }
+
+        $queue = Base::instance()->get('JOB_QUEUE');
+        $queue->selectPipeline('process_image');
+        $queue->addJob(json_encode([
+            'parent_id'     => $parent_id,
+            'parent_type'   => $parent_type,
+            'subdir'        => $parent_type,
+            'sizes'         => $this->sizes,
+            'tmp_path'      => $tmp_path,
+            'original_name' => $this->file['name'],
+            'data'         => $this->data,
+            'pipeline'  => 'process_image',
+        ]));
+
+        return $this;
+    }
     public function resize_all(): static
     {
         try {
@@ -145,7 +174,7 @@ class ImageHandler
         int $width,
         ?string $format = 'webp',
     ): string {
-        $source = $this->file['tmp_name'];
+        $source = $this->file[$this->filename];
         $filename = $this->generate_filename();
         $dest = "{$this->upload_dir}/{$filename}.{$format}";
         $dest = str_replace('//', '/', $dest);
@@ -179,7 +208,7 @@ class ImageHandler
         $tmp_png = sys_get_temp_dir() . '/compressed_' . uniqid() . '.png';
 
         try {
-            $img = new Imagick($this->file['tmp_name']);
+            $img = new Imagick($this->file[$this->filename]);
             $img->stripImage();
             $img->setImageFormat('png');
             $img->writeImage($tmp_png);
@@ -196,7 +225,7 @@ class ImageHandler
                 throw new RuntimeException('PNG compression failed: ' . implode("\n", $output));
             }
 
-            $this->file['tmp_name'] = $tmp_png;
+            $this->file[$this->filename] = $tmp_png;
         } catch (RuntimeException $e) {
             $this->error = $e->getMessage();
             if (file_exists($tmp_png)) unlink($tmp_png);
@@ -233,7 +262,7 @@ class ImageHandler
         $tmp_out     = sys_get_temp_dir() . '/mockup_' . uniqid() . '.webp';
 
         try {
-            $img = new Imagick($this->file['tmp_name']);
+            $img = new Imagick($this->file[$this->filename]);
             $img->cropThumbnailImage($crop_w, $crop_h);
             $img->stripImage();
             $img->writeImage($tmp_cropped);
@@ -253,7 +282,7 @@ class ImageHandler
                 throw new RuntimeException('Mockup compositing failed: ' . implode("\n", $output));
             }
 
-            $this->file['tmp_name'] = $tmp_out;
+            $this->file[$this->filename] = $tmp_out;
         } catch (RuntimeException $e) {
             $this->error = $e->getMessage();
         } catch (ImagickException $e) {
