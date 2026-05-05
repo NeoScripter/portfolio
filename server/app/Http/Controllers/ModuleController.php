@@ -79,28 +79,15 @@ class ModuleController extends BaseController
         $module->save();
         $module_id = $f3->get('DB')->lastInsertId();
 
-        $data['imageable_type'] = 'modules';
-        $data['imageable_id'] = $module_id;
-
         if (isset($data['first_image'])) {
 
             $data['variant'] = 'first_image';
             $data['alt_ru'] = $data['first_alt_ru'];
             $data['alt_en'] = $data['first_alt_en'];
+            $data['where'] =  "variant = 'first_image'";
 
-            $sizes = [['mb', 520], ['tb', 750]];
-            $handler = ImageHandler::make($data, 'first_image', $sizes, 'modules')
-                ->resize_all();
-
-            if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 404);
-            }
-
-            $data = $handler->output();
-
-            $img = $f3->get('_IMAGES');
-            $img->copyFrom($data);
-            $img->save();
+            ImageHandler::make($data, 'first_image', [['mb', 520], ['tb', 750]], 'modules')
+                ->enqueue($module_id, 'modules');
         }
 
         if (isset($data['second_image'])) {
@@ -108,21 +95,12 @@ class ModuleController extends BaseController
             $data['variant'] = 'second_image';
             $data['alt_ru'] = $data['second_alt_ru'];
             $data['alt_en'] = $data['second_alt_en'];
+            $data['where'] =  "variant = 'second_image'";
 
-            $sizes = [['mb', 520], ['tb', 750]];
-            $handler = ImageHandler::make($data, 'second_image', $sizes, 'modules')
-                ->resize_all();
-
-            if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 404);
-            }
-
-            $data = $handler->output();
-
-            $img = $f3->get('_IMAGES');
-            $img->copyFrom($data);
-            $img->save();
+            ImageHandler::make($data, 'second_image', [['mb', 520], ['tb', 750]], 'modules')
+                ->enqueue($module_id, 'modules');
         }
+
 
         send_json(['message' => 'Module successfully created!']);
     }
@@ -160,13 +138,19 @@ class ModuleController extends BaseController
         $errors = [];
 
         if (in_array($new_type, [ModuleType::TWO_IMAGE_BLOCK->value, ModuleType::TWO_IMAGE_SPLIT->value, ModuleType::ONE_IMAGE_SPLIT->value])) {
-            validate_required($data, 'first_image', $errors);
+            if (! is_image_attached($module_id, 'modules', "variant = 'first_image'")) {
+                validate_required($data, 'first_image', $errors);
+            }
+
             validate_required($data, 'first_alt_ru', $errors);
             validate_required($data, 'first_alt_en', $errors);
         }
 
         if (in_array($new_type, [ModuleType::TWO_IMAGE_BLOCK->value, ModuleType::TWO_IMAGE_SPLIT->value])) {
-            validate_required($data, 'second_image', $errors);
+            if (! is_image_attached($module_id, 'modules', "variant = 'second_image'")) {
+                validate_required($data, 'second_image', $errors);
+            }
+
             validate_required($data, 'second_alt_ru', $errors);
             validate_required($data, 'second_alt_en', $errors);
         }
@@ -197,31 +181,15 @@ class ModuleController extends BaseController
             }
         }
 
-        $data['imageable_type'] = 'modules';
-        $data['imageable_id'] = $module_id;
-
         if (isset($data['first_image'])) {
 
             $data['variant'] = 'first_image';
             $data['alt_ru'] = $data['first_alt_ru'];
             $data['alt_en'] = $data['first_alt_en'];
+            $data['where'] =  "variant = 'first_image'";
 
-            $sizes = [['mb', 520], ['tb', 750]];
-            $handler = ImageHandler::make($data, 'first_image', $sizes, 'modules')
-                ->resize_all();
-
-            if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 404);
-            }
-
-            $data = $handler->output();
-
-            ImageHandler::delete_morph_images($module->id, 'modules', 1, false, "variant = 'first_image'");
-
-            $img = $f3->get('_IMAGES');
-            $img->load(['imageable_id=? AND imageable_type=? AND variant=?', $module_id, 'modules', 'first_image']);
-            $img->copyFrom($data);
-            $img->save();
+            ImageHandler::make($data, 'first_image', [['mb', 520], ['tb', 750]], 'modules')
+                ->enqueue($module->id, 'modules');
         }
 
         if (isset($data['second_image'])) {
@@ -229,23 +197,10 @@ class ModuleController extends BaseController
             $data['variant'] = 'second_image';
             $data['alt_ru'] = $data['second_alt_ru'];
             $data['alt_en'] = $data['second_alt_en'];
+            $data['where'] =  "variant = 'second_image'";
 
-            $sizes = [['mb', 520], ['tb', 750]];
-            $handler = ImageHandler::make($data, 'second_image', $sizes, 'modules')
-                ->resize_all();
-
-            if ($handler->fails()) {
-                send_json(['message' =>  $handler->error()], 404);
-            }
-
-            $data = $handler->output();
-
-            ImageHandler::delete_morph_images($module->id, 'modules', 1, false, "variant = 'second_image'");
-
-            $img = $f3->get('_IMAGES');
-            $img->load(['imageable_id=? AND imageable_type=? AND variant=?', $module_id, 'modules', 'second_image']);
-            $img->copyFrom($data);
-            $img->save();
+            ImageHandler::make($data, 'second_image', [['mb', 520], ['tb', 750]], 'modules')
+                ->enqueue($module->id, 'modules');
         }
 
         send_json(['message' => 'Module successfully updated!']);

@@ -200,15 +200,31 @@ function build_pagination_links(string $base_url, int $current, int $last, array
     return $links;
 }
 
-function cli_echo(string $message, string $type = 'success'): void 
+function cli_echo(string $message, string $type = 'success'): void
 {
-    $color = match($type) {
+    $color = match ($type) {
         'success' => '32',
         'error'   => '31',
         'warning' => '33',
         'info'    => '36',
         default   => '0'
     };
-    
+
     echo "\033[{$color}m{$message}\033[0m\n";
+}
+
+function is_image_attached(int $parent_id, string $parent_type, ?string $where = ''): bool
+{
+    $where = $where ? "AND $where " : '';
+
+    $rows = Base::instance()->get('DB')->exec(
+        "SELECT * FROM images WHERE imageable_id = ? AND imageable_type = ? {$where}LIMIT 1",
+        [$parent_id, $parent_type]
+    );
+
+    if (empty($rows)) {
+        return false;
+    }
+
+    return true;
 }
