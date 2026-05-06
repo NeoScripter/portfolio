@@ -1,3 +1,4 @@
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn, getUpdatedUrl } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
 import { locale } from '@/signals/locale';
@@ -5,25 +6,25 @@ import { Search } from 'lucide-preact';
 import { useLocation } from 'preact-iso';
 import { useState, type ChangeEvent, type FC } from 'preact/compat';
 import Input from '../form/Input';
-import clickSound from '@/assets/audio/click.mp3';
-import { playAudio } from '@/lib/helpers/playAudio';
 
 const SearchBar: FC<NodeProps> = ({ className }) => {
     const { route, query } = useLocation();
-    const [searchQuery, setSearchQuery] = useState(query?.search ? query?.search : '');
+    const [searchQuery, setSearchQuery] = useState(
+        query?.search ? query?.search : '',
+    );
 
     const lang = locale.value === 'en' ? 'en' : 'ru';
     const placeholder =
         lang === 'en'
-            ? 'Search by project name or stack'
-            : 'Поиск по названию или стэку проекта';
+            ? 'Search by project name, description or stack'
+            : 'Поиск по названию, описанию или стэку проекта';
 
     const handleSubmit = (e: SubmitEvent) => {
         e.preventDefault();
 
         const url = getUpdatedUrl([
             { name: 'search', val: searchQuery },
-            { name: 'page', val: "1" },
+            { name: 'page', val: '1' },
         ]);
         route(url);
     };
@@ -54,7 +55,7 @@ const SearchBar: FC<NodeProps> = ({ className }) => {
                     key={`${lang}-find-btn`}
                     className="motion-safe:animate-fade-in"
                 >
-                    Найти
+                    {lang === 'ru' ? 'Найти' : 'Search'}
                 </span>
                 <Search className="size-5" />
             </button>
