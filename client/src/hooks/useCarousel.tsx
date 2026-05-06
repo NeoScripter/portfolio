@@ -200,7 +200,7 @@ export function useCarousel<T>({
             const deltaX = e.changedTouches[0].clientX - state.touchStartX;
 
             if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
-                // e.preventDefault();
+                e.preventDefault();
 
                 if (containerRef.current) {
                     containerRef.current.scrollIntoView({
