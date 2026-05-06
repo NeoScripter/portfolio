@@ -1,9 +1,10 @@
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import HeroLayout from '@/layouts/HeroLayout';
 import { locale } from '@/signals/locale';
+import { lazy } from 'preact-iso';
 import { heroSrcSet } from '../data';
 import HeroActions from './HeroActions';
-import OptimizedVideo from './OptimizedVideo';
+const OptimizedVideo = lazy(() => import('./OptimizedVideo'));
 
 const Hero = () => {
     const lang = locale.value === 'en' ? 'en' : 'ru';
