@@ -1,3 +1,4 @@
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn, getUpdatedUrl } from '@/lib/helpers/utils';
 import type { NodeProps } from '@/lib/types/shared';
 import { useLocation } from 'preact-iso';
@@ -28,6 +29,7 @@ const Badge: FC<NodeProps<{ label: string; isClickable?: boolean }>> = ({
                     href={getUpdatedUrl([
                         { name: 'search', val: isActive ? '' : label },
                     ])}
+                    onClick={() => playAudio('nextPage')}
                 >
                     {label}
                 </a>

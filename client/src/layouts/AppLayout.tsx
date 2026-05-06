@@ -39,7 +39,7 @@ const AppLayout: FC<{
 
                 <AppFooter />
 
-                <ModalLayout className="max-w-100 px-10 py-14 lg:max-w-160">
+                <ModalLayout className="max-w-120 px-10 py-14 lg:max-w-160">
                     <Webform />
                 </ModalLayout>
 

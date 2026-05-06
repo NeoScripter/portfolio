@@ -5,6 +5,7 @@ import { locale } from '@/signals/locale';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
 import type { NavLinkType } from '../data';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 const NavLink: FC<{
     className?: string;
@@ -32,6 +33,7 @@ const NavLink: FC<{
                     className,
                 )}
                 href={link.path}
+                onClick={() => playAudio('nextPage')}
                 aria-current={active ? 'page' : undefined}
                 style={{
                     '--slide-delay': `${show ? idx * 200 + 100 : 100}ms`,

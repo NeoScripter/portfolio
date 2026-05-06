@@ -12,6 +12,7 @@ import type { ComponentChildren } from 'preact';
 import type { FC } from 'preact/compat';
 import { useState } from 'preact/hooks';
 import FaqCard, { FaqFallback } from './FaqCard';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 const Faqs = () => {
     const [currentIdx, setCurrentIdx] = useState<number | null>(null);
@@ -19,6 +20,7 @@ const Faqs = () => {
 
     const selectFaq = (idx: number) => {
         setCurrentIdx((prev) => (idx === prev ? null : idx));
+        playAudio('slide');
     };
     const {
         data: faqs,

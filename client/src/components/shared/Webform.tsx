@@ -31,6 +31,7 @@ type Action =
     | { type: 'SET_EMAIL'; payload: string }
     | { type: 'SET_TELEGRAM'; payload: string }
     | { type: 'SET_WHATSAPP'; payload: string }
+    | { type: 'CLEAR'; payload: WebformState }
     | { type: 'SET_MESSAGE'; payload: string };
 
 const initialState: WebformState = {
@@ -53,6 +54,8 @@ function reducer(state: WebformState, action: Action): WebformState {
             return { ...state, whatsapp: action.payload };
         case 'SET_MESSAGE':
             return { ...state, message: action.payload };
+        case 'CLEAR':
+            return action.payload;
         default:
             throw new Error('Unexpected action type');
     }
@@ -84,6 +87,11 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                         ? 'Ваше письмо было успешно отправлено! Постараюсь вам ответить в ближайшее время. Хорошего вам дня и настроения :)'
                         : 'Your message was successfully sent! I will try to get back to you as soon as possible. Have a wonderful day :)',
                 );
+                playAudio('formSuccess');
+                dispatch({
+                    type: 'CLEAR',
+                    payload: initialState,
+                });
 
                 window.dispatchEvent(
                     new CustomEvent(events.CHANGE_FORM_STATUS, {

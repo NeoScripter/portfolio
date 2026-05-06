@@ -34,7 +34,11 @@ const ProjectTile: FC<NodeProps<{ project: ProjectType }>> = ({
                         {/*     aria-hidden="true" */}
                         {/*     class="shine-element block group-hover:motion-safe:animate-[shine_750ms]" */}
                         {/* /> */}
-                        <a class="absolute inset-0 z-10" href={`/gallery/${project.attr.slug}`} />
+                        <a
+                            onClick={() => playAudio('nextPage')}
+                            class="absolute inset-0 z-10"
+                            href={`/gallery/${project.attr.slug}`}
+                        />
                     </div>
                 )}
                 <ProjectInfo project={project} className="lg:hidden" />

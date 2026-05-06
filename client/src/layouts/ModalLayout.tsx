@@ -1,6 +1,7 @@
 import { useModal } from '@/context/ModalContext';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import { events } from '@/lib/const/events';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import { useSignal } from '@preact/signals';
 import { X } from 'lucide-preact';
@@ -17,14 +18,18 @@ const ModalLayout: FC<{
     const { showModal } = useModal();
     const formStatus = useSignal<FormStatusType>('cancel');
 
-    useEscapeKey(() => (showModal.value = false));
+    const closeModal = () => {
+        playAudio('formFail');
+        showModal.value = false;
+    };
+    useEscapeKey(closeModal);
 
     const isBrowser = typeof window !== 'undefined';
 
     const handleClick = (e: Event) => {
         const target = e.target as HTMLElement;
         if (target.id === 'email-form-modal') {
-            showModal.value = false;
+            closeModal();
         }
     };
 
@@ -90,7 +95,7 @@ const ModalLayout: FC<{
                 )}
             >
                 <button
-                    onClick={() => (showModal.value = false)}
+                    onClick={closeModal}
                     type="button"
                     class="absolute top-5 right-5 flex size-6 items-center justify-center sm:size-8"
                 >

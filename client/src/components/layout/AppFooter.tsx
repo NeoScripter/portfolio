@@ -1,14 +1,15 @@
 import Ellipse from '@/assets/svgs/Ellipse';
 import Mail from '@/assets/svgs/Mail';
 import { useModal } from '@/context/ModalContext';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import type { RouteMatch } from '@/lib/types/shared';
 import { PhoneCall } from 'lucide-preact';
 import type { ComponentChildren } from 'preact';
 import { useRoute } from 'preact-iso';
-import type { FC } from 'preact/compat';
-import { Button } from '../ui/Button';
+import { useRef, type FC } from 'preact/compat';
 import Webform from '../shared/Webform';
+import { Button } from '../ui/Button';
 
 const AppFooter: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
@@ -63,6 +64,7 @@ const FooterInfo = () => {
                 className="mt-23 sm:mt-10 lg:mt-19"
                 label="+63 950 464 35 91"
                 href="tel:+639504643591"
+                onMouseEnter={() => playAudio('call')}
             >
                 <PhoneCall class="group-hover:motion-safe:animate-wiggle size-full" />
             </FooterLink>
@@ -71,6 +73,7 @@ const FooterInfo = () => {
                 className="mt-3.5 sm:mt-4.5"
                 label="ask@ilyaandreev.dev"
                 href="mailto:ask@ilyaandreev.dev"
+                onMouseEnter={() => playAudio('email')}
             >
                 <Mail className="size-full" />
             </FooterLink>
@@ -82,12 +85,26 @@ const FooterInfo = () => {
     );
 };
 
+const DEBOUNCE_DELAY_MS = 1500;
+
 const FooterLink: FC<{
     className?: string;
     label: string;
     href: string;
     children: ComponentChildren;
-}> = ({ className, label, href, children }) => {
+    onMouseEnter: () => void;
+}> = ({ className, label, href, children, onMouseEnter }) => {
+    const timeoutRef = useRef<boolean>(true);
+
+    const handleMouseEnter = () => {
+        if (!timeoutRef.current) return;
+
+        onMouseEnter();
+        timeoutRef.current = false;
+
+        setTimeout(() => (timeoutRef.current = true), DEBOUNCE_DELAY_MS);
+    };
+
     return (
         <a
             target="_blank"
@@ -96,6 +113,7 @@ const FooterLink: FC<{
                 'ease group flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-xl xl:text-[1.325rem]',
                 className,
             )}
+            onMouseEnter={handleMouseEnter}
         >
             <div class="size-5 shrink-0 sm:size-6 xl:size-7">{children}</div>
             <span>{label}</span>
