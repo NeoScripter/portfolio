@@ -90,7 +90,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     <Logo />
                 </div>
 
-                <div className="lg:hidden">
+                <div className="lg:hidden flex items-center justify-between">
                     {' '}
                     <Overlay show={showMenu} />
                     <BurgerMenu

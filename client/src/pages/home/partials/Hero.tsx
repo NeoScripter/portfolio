@@ -3,6 +3,7 @@ import HeroLayout from '@/layouts/HeroLayout';
 import { locale } from '@/signals/locale';
 import { heroSrcSet } from '../data';
 import HeroActions from './HeroActions';
+import OptimizedVideo from './OptimizedVideo';
 
 const Hero = () => {
     const lang = locale.value === 'en' ? 'en' : 'ru';
@@ -11,14 +12,15 @@ const Hero = () => {
         <HeroLayout className="min-h-210 text-white sm:min-h-291 md:min-h-212">
             <AdaptiveImg
                 prtClass="bg-home-hero-bg -z-5"
-                imgClass='object-right'
+                imgClass="object-bottom-right sm:object-right"
                 srcs={heroSrcSet}
                 variant="bg"
             />
 
+            <OptimizedVideo />
             <span
                 aria-hidden="true"
-                class="absolute inset-0 -z-5 bg-black/40"
+                class="absolute inset-0 -z-3 bg-black/40"
             ></span>
 
             <div class="motion-safe:animate-fade-in lg:max-w-2/3 xl:max-w-1/2">
