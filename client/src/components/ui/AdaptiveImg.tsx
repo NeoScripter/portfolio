@@ -82,7 +82,7 @@ export default function AdaptiveImg({
                             [srcs.tbAvif2x, '2x'],
                             [srcs.tbAvif3x, '3x'],
                         ])}
-                        media="(min-width: 31rem)"
+                        media="(min-width: 31.25rem)"
                     />
                 )}
                 {srcs.tb && (
@@ -93,7 +93,7 @@ export default function AdaptiveImg({
                             [srcs.tb2x, '2x'],
                             [srcs.tb3x, '3x'],
                         ])}
-                        media="(min-width: 31rem)"
+                        media="(min-width: 31.25rem)"
                     />
                 )}
                 {srcs.mbAvif && (

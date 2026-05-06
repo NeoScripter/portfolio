@@ -19,8 +19,10 @@ const ModalLayout: FC<{
     const formStatus = useSignal<FormStatusType>('cancel');
 
     const closeModal = () => {
-        playAudio('formFail');
-        showModal.value = false;
+        if (showModal.value === true) {
+            playAudio('formFail');
+            showModal.value = false;
+        }
     };
     useEscapeKey(closeModal);
 

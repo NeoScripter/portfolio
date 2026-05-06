@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'preact/hooks';
 
-export const useClickOutside = (selectors: string[], initialState = false) => {
+export const useClickOutside = (
+    selectors: string[],
+    initialState = false,
+    cb = () => {},
+) => {
     const [show, setShow] = useState(initialState);
 
     const isBrowser = typeof window !== 'undefined';
@@ -11,7 +15,15 @@ export const useClickOutside = (selectors: string[], initialState = false) => {
             if (!el) return;
 
             const inside = selectors.some((sel) => el.closest(sel));
-            if (!inside) setShow(false);
+            if (!inside) {
+                setShow((prev) => {
+                    if (prev === true) {
+                        cb();
+                    }
+
+                    return false;
+                });
+            }
         };
 
         if (!isBrowser) {

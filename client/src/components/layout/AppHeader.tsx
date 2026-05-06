@@ -10,7 +10,7 @@ import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import { useRoute } from 'preact-iso';
-import { useEffect, type FC } from 'preact/compat';
+import { type FC } from 'preact/compat';
 import BurgerMenu from '../ui/BurgerMenu';
 import LangToggle from '../ui/LangToggle';
 import Logo from '../ui/Logo';
@@ -27,10 +27,11 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
 
     const variant: VariantType = getHeaderVariant(path);
 
-    const { show: showMenu, setShow: setShowMenu } = useClickOutside([
-        '#nav-drawer',
-        '#burger-menu',
-    ]);
+    const { show: showMenu, setShow: setShowMenu } = useClickOutside(
+        ['#nav-drawer', '#burger-menu'],
+        false,
+        () => playAudio('closeMenu'),
+    );
 
     let { isBelow: isBelowPadding } = useScrollOffset(16);
     const hide = useAutoHideOnScroll();
@@ -45,20 +46,26 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
         isBelowHero = true;
     }
 
-    useEscapeKey(() => setShowMenu(false));
-
-    useEffect(() => {
-        if (showMenu) {
-            playAudio('closeMenu');
-        } else {
-            playAudio('openMenu');
-        }
-    }, [showMenu]);
+    useEscapeKey(() => {
+        setShowMenu((p) => {
+            if (p === true) {
+                playAudio('closeMenu');
+            }
+            return false;
+        });
+    });
 
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     const toggleMenu = () => {
-        setShowMenu((p) => !p);
+        setShowMenu((p) => {
+            if (p === true) {
+                playAudio('closeMenu');
+                return false;
+            }
+            playAudio('openMenu');
+            return true;
+        });
     };
 
     return (
@@ -90,7 +97,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     <Logo />
                 </div>
 
-                <div className="lg:hidden flex items-center justify-between">
+                <div className="flex items-center justify-between lg:hidden">
                     {' '}
                     <Overlay show={showMenu} />
                     <BurgerMenu
