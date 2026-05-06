@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/Button';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { locale } from '@/signals/locale';
@@ -29,7 +30,7 @@ const ProjectBrief: FC<{ project: ProjectType; className?: string }> = ({
 
             <div class="group relative z-10 w-fit">
                 {noLink && (
-                    <span class="bg-background border-muted-foreground/50 pointer-events-none absolute inset-x-0 xl:top-auto xl:bottom-0 -translate-y-[110%] xl:translate-y-[110%] rounded-md border p-3 text-sm text-balance opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+                    <span class="bg-background border-muted-foreground/50 pointer-events-none absolute inset-x-0 -translate-y-[110%] rounded-md border p-3 text-sm text-balance opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 xl:top-auto xl:bottom-0 xl:translate-y-[110%]">
                         {' '}
                         {tooltipMessage}
                     </span>
@@ -40,6 +41,7 @@ const ProjectBrief: FC<{ project: ProjectType; className?: string }> = ({
                     target="_blank"
                     variant="primary"
                     disabled={noLink}
+                    onClick={() => playAudio('click')}
                 >
                     {lang === 'ru' ? 'Перейти на сайт' : 'Visit website'}
                 </Button>

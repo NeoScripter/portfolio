@@ -4,8 +4,12 @@ import { locale } from '@/signals/locale';
 import { getTheme } from '@/signals/theme';
 import type { FC } from 'preact/compat';
 import AdaptiveImg from '../ui/AdaptiveImg';
+import useThrottle from '@/hooks/useThrottle';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
+    const throttledMouseEnter = useThrottle(() => playAudio('hover'), 300);
+
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     return (
@@ -17,7 +21,9 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
         >
             <a
                 href={`/gallery/${project.attr?.slug}`}
-                class="absolute clickable-btn inset-0 z-1 block size-full focus:outline-none"
+                class="clickable-btn absolute inset-0 z-1 block size-full focus:outline-none"
+                onMouseEnter={throttledMouseEnter}
+                onClick={() => playAudio('nextPage')}
             />
             {project.image && (
                 <div class="group relative">

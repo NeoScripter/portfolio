@@ -87,7 +87,14 @@ const StateResolver: FC<{
 
     if (hasErrorDetails(errors)) {
         console.error(errors);
-        return <ApiError resourceRu="FAQs" mb={true} resourceEn="FAQs" />;
+        return (
+            <ApiError
+                resourceRu="FAQs"
+                mb={true}
+                resourceEn="FAQs"
+                className="mx-auto"
+            />
+        );
     }
 
     return children;

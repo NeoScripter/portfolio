@@ -1,13 +1,14 @@
 import Ellipse from '@/assets/svgs/Ellipse';
 import Mail from '@/assets/svgs/Mail';
 import { useModal } from '@/context/ModalContext';
+import useThrottle from '@/hooks/useThrottle';
 import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import type { RouteMatch } from '@/lib/types/shared';
 import { PhoneCall } from 'lucide-preact';
 import type { ComponentChildren } from 'preact';
 import { useRoute } from 'preact-iso';
-import { useRef, type FC } from 'preact/compat';
+import { type FC } from 'preact/compat';
 import Webform from '../shared/Webform';
 import { Button } from '../ui/Button';
 
@@ -41,6 +42,11 @@ export default AppFooter;
 const FooterInfo = () => {
     const { showModal } = useModal();
 
+    const handleClick = () => {
+        playAudio('click');
+        showModal.value = true;
+    };
+
     return (
         <div class="bg-footer-bg text-footer-text relative isolate overflow-clip rounded-t-md px-10 pt-10 pb-7 sm:px-14 sm:pb-10 lg:w-125 lg:pb-11 lg:pl-10 xl:w-150 xl:pt-15 xl:pr-8 xl:pl-18">
             <ArtLayer />
@@ -53,7 +59,7 @@ const FooterInfo = () => {
             </p>
 
             <Button
-                onClick={() => (showModal.value = true)}
+                onClick={handleClick}
                 variant="footer"
                 class="mt-7 rounded-2xl sm:mt-6 lg:mt-19 lg:hidden"
             >
@@ -85,8 +91,6 @@ const FooterInfo = () => {
     );
 };
 
-const DEBOUNCE_DELAY_MS = 1500;
-
 const FooterLink: FC<{
     className?: string;
     label: string;
@@ -94,16 +98,7 @@ const FooterLink: FC<{
     children: ComponentChildren;
     onMouseEnter: () => void;
 }> = ({ className, label, href, children, onMouseEnter }) => {
-    const timeoutRef = useRef<boolean>(true);
-
-    const handleMouseEnter = () => {
-        if (!timeoutRef.current) return;
-
-        onMouseEnter();
-        timeoutRef.current = false;
-
-        setTimeout(() => (timeoutRef.current = true), DEBOUNCE_DELAY_MS);
-    };
+    const throttledMouseEnter = useThrottle(onMouseEnter, 1500);
 
     return (
         <a
@@ -113,7 +108,7 @@ const FooterLink: FC<{
                 'ease group flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-xl xl:text-[1.325rem]',
                 className,
             )}
-            onMouseEnter={handleMouseEnter}
+            onMouseEnter={throttledMouseEnter}
         >
             <div class="size-5 shrink-0 sm:size-6 xl:size-7">{children}</div>
             <span>{label}</span>

@@ -3,24 +3,23 @@ import useAutoHideOnScroll from '@/hooks/useAutoHideOnScroll';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import useScrollOffset from '@/hooks/useScrollOffset';
-import { LG } from '@/lib/const/breakpoints';
 import type { VariantType } from '@/lib/helpers/getHeaderVariant';
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
 import getHeroOffset from '@/lib/helpers/getHeroOffset';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import { useRoute } from 'preact-iso';
-import { type FC } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, type FC } from 'preact/compat';
 import BurgerMenu from '../ui/BurgerMenu';
 import LangToggle from '../ui/LangToggle';
 import Logo from '../ui/Logo';
+import MuteBtn from '../ui/MuteBtn';
 import ThemeToggle from '../ui/ThemeToggle';
 import NavDrawer from './partials/NavDrawer';
 import { NavMenu } from './partials/NavMenu';
 import Overlay from './partials/Overlay';
 import Separator from './partials/Separator';
-import MuteBtn from '../ui/MuteBtn';
 
 const AppHeader: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
@@ -48,25 +47,19 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
 
     useEscapeKey(() => setShowMenu(false));
 
-    const [showDrawer, setShowDrawer] = useState(false);
+    useEffect(() => {
+        if (showMenu) {
+            playAudio('closeMenu');
+        } else {
+            playAudio('openMenu');
+        }
+    }, [showMenu]);
 
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     const toggleMenu = () => {
         setShowMenu((p) => !p);
     };
-
-    useEffect(() => {
-        if (typeof window === 'undefined') {
-            return;
-        }
-        const mq = window.matchMedia(`(max-width: ${LG}px)`);
-        setShowDrawer(mq.matches);
-
-        const update = (e: MediaQueryListEvent) => setShowDrawer(e.matches);
-        mq.addEventListener('change', update);
-        return () => mq.removeEventListener('change', update);
-    }, []);
 
     return (
         <header
@@ -82,7 +75,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
         >
             <div
                 class={cn(
-                    'bg-background/50 mx-auto flex max-w-480 items-center justify-between overflow-x-clip px-7 py-8 backdrop-blur-sm sm:px-15 sm:pt-11 sm:pb-9 lg:px-14 2xl:px-24 xl:pb-12',
+                    'bg-background/50 mx-auto flex max-w-480 items-center justify-between overflow-x-clip px-7 py-8 backdrop-blur-sm sm:px-15 sm:pt-11 sm:pb-9 lg:px-14 xl:pb-12 2xl:px-24',
                     className,
                     {
                         'md:rounded-t-xl xl:max-w-432 2xl:max-w-432':
@@ -97,32 +90,26 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     <Logo />
                 </div>
 
-                {showDrawer && (
-                    <>
-                        {' '}
-                        <Overlay show={showMenu} className='lg:hidden' />
-                        <BurgerMenu
-                            show={showMenu}
-                            onClick={toggleMenu}
-                            className="z-5 lg:hidden"
-                            aria-label={
-                                showMenu ? 'Закрыть меню' : 'Открыть меню'
-                            }
-                            aria-expanded={showMenu}
-                            aria-controls="nav-drawer"
-                        />
-                        <NavDrawer show={showMenu} />
-                    </>
-                )}
+                <div className="lg:hidden">
+                    {' '}
+                    <Overlay show={showMenu} />
+                    <BurgerMenu
+                        show={showMenu}
+                        onClick={toggleMenu}
+                        className="z-5"
+                        aria-label={showMenu ? 'Закрыть меню' : 'Открыть меню'}
+                        aria-expanded={showMenu}
+                        aria-controls="nav-drawer"
+                    />
+                    <NavDrawer show={showMenu} />
+                </div>
 
-                {!showDrawer && (
-                    <div class="items-center gap-11 xl:w-full xl:gap-14 hidden lg:flex">
-                        <LangToggle className="xl:ml-auto" />
-                        <NavMenu className="xl:mr-auto" />
-                        <ThemeToggle />
-                        <MuteBtn />
-                    </div>
-                )}
+                <div class="hidden items-center gap-11 lg:flex xl:w-full xl:gap-14">
+                    <LangToggle className="xl:ml-auto" />
+                    <NavMenu className="xl:mr-auto" />
+                    <ThemeToggle />
+                    <MuteBtn />
+                </div>
 
                 {!isBelowHero &&
                     (variant === 'primary' || variant === 'secondary') && (

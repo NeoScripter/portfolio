@@ -11,11 +11,15 @@ import nextPageSound from '@/assets/audio/next-page.mp3';
 import slideSound from '@/assets/audio/slide.mp3';
 import hoverSound from '@/assets/audio/hover.mp3';
 import toggleSound from '@/assets/audio/toggle.mp3';
+import menuOpenSound from '@/assets/audio/menu-open.mp3';
+import menuCloseSound from '@/assets/audio/menu-close.mp3';
 import { prefersSound } from '@/signals/sound';
 import { Howl } from 'howler';
 
 const sounds = {
     click: new Howl({ src: [clickSound], volume: 1 }),
+    openMenu: new Howl({ src: [menuOpenSound], volume: 1 }),
+    closeMenu: new Howl({ src: [menuCloseSound], volume: 1 }),
     hover: new Howl({ src: [hoverSound], volume: 1 }),
     toggle: new Howl({ src: [toggleSound], volume: 1 }),
     disable: new Howl({ src: [disableSound], volume: 1 }),
