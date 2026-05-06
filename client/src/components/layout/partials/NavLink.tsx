@@ -1,11 +1,11 @@
 import AnimatedUnderline from '@/components/ui/AnimatedUnderline';
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import { useRoute } from 'preact-iso';
 import type { FC } from 'preact/compat';
 import type { NavLinkType } from '../data';
-import { playAudio } from '@/lib/helpers/playAudio';
 
 const NavLink: FC<{
     className?: string;
@@ -25,7 +25,7 @@ const NavLink: FC<{
         <li class="select-none">
             <a
                 class={cn(
-                    'group motion-safe:animate-fade-in relative transition-transform duration-300 ease-in-out  mx-auto flex w-fit min-w-30 items-center gap-3 font-medium lg:min-w-0 lg:font-normal',
+                    'group motion-safe:animate-fade-in relative mx-auto flex w-fit min-w-30 items-center gap-3 font-medium transition-transform duration-300 ease-in-out lg:min-w-0 lg:font-normal',
                     {
                         'cursor-default lg:font-bold': active,
                         'slide-in': show,
@@ -33,7 +33,7 @@ const NavLink: FC<{
                     className,
                 )}
                 href={link.path}
-                onClick={() => playAudio('nextPage')}
+                onClick={() => (active ? {} : playAudio('nextPage'))}
                 aria-current={active ? 'page' : undefined}
                 style={{
                     '--slide-delay': `${show ? idx * 200 + 100 : 100}ms`,

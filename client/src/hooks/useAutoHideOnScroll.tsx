@@ -21,7 +21,7 @@ export default function useAutoHideOnScroll() {
             if (currentScrollTop > lastScrollTopRef.current + 15) {
                 // User is scrolling down
                 setHide(true);
-            } else if (currentScrollTop < lastScrollTopRef.current - 85) {
+            } else if (currentScrollTop < lastScrollTopRef.current - 60) {
                 // User is scrolling up
                 setHide(false);
             }

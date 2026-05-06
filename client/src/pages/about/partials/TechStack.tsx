@@ -9,6 +9,7 @@ import { locale } from '@/signals/locale';
 import { useEffect, useRef, useState, type FC } from 'preact/compat';
 import { canvasSrcSet } from '../data';
 import TechPill, { TechPillFallback } from './TechPill';
+import { playAudio } from '@/lib/helpers/playAudio';
 
 const TechStack = () => {
     const {
@@ -17,7 +18,7 @@ const TechStack = () => {
         errors,
     } = useFetchRecords<TechStackType[]>({
         url: `${API_BASE_URL}tech-stacks/`,
-        shouldCache: true
+        shouldCache: true,
     });
 
     const [active, setActive] = useState<number | null>(null);
@@ -53,7 +54,18 @@ const TechStack = () => {
         if (typeof idx === 'number') {
             lastContent.current = stacks?.[idx].attr.html[lang];
         }
-        setActive((prev) => (prev === idx ? null : idx));
+        setActive((prev) => {
+            if (prev === null && idx === null) {
+                return null;
+            }
+            if (idx === prev || idx === null) {
+                playAudio('closeFaq');
+                return null;
+            }
+
+            playAudio('openFaq');
+            return idx;
+        });
     };
 
     if (hasErrorDetails(errors))

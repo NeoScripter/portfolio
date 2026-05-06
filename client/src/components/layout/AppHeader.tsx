@@ -43,7 +43,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
     );
 
     if (variant === 'ghost') {
-        isBelowHero = isBelowPadding = true;
+        isBelowHero = true;
     }
 
     useEscapeKey(() => setShowMenu(false));

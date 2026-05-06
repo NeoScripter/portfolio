@@ -5,6 +5,7 @@ import type { ServerError } from '@/hooks/useForm';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { FaqType } from '@/lib/types/models/faqs';
 import { locale } from '@/signals/locale';
@@ -12,15 +13,21 @@ import type { ComponentChildren } from 'preact';
 import type { FC } from 'preact/compat';
 import { useState } from 'preact/hooks';
 import FaqCard, { FaqFallback } from './FaqCard';
-import { playAudio } from '@/lib/helpers/playAudio';
 
 const Faqs = () => {
     const [currentIdx, setCurrentIdx] = useState<number | null>(null);
     const [ref, isIntersecting] = useIntersectionObserver<HTMLUListElement>();
 
     const selectFaq = (idx: number) => {
-        setCurrentIdx((prev) => (idx === prev ? null : idx));
-        playAudio('slide');
+        setCurrentIdx((prev) => {
+            playAudio('closeFaq');
+            if (idx === prev) {
+                return null;
+            }
+
+            playAudio('openFaq');
+            return idx;
+        });
     };
     const {
         data: faqs,
