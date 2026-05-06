@@ -60,7 +60,7 @@ export default function AdaptiveImg({
                             [srcs.dkAvif2x, '2x'],
                             [srcs.dkAvif3x, '3x'],
                         ])}
-                        media="(min-width: 1024px)"
+                        media="(min-width: 64rem)"
                     />
                 )}
                 {srcs.dk && (
@@ -71,7 +71,7 @@ export default function AdaptiveImg({
                             [srcs.dk2x, '2x'],
                             [srcs.dk3x, '3x'],
                         ])}
-                        media="(min-width: 1024px)"
+                        media="(min-width: 64rem)"
                     />
                 )}
                 {srcs.tbAvif && (
@@ -82,7 +82,7 @@ export default function AdaptiveImg({
                             [srcs.tbAvif2x, '2x'],
                             [srcs.tbAvif3x, '3x'],
                         ])}
-                        media="(min-width: 500px)"
+                        media="(min-width: 31rem)"
                     />
                 )}
                 {srcs.tb && (
@@ -93,7 +93,7 @@ export default function AdaptiveImg({
                             [srcs.tb2x, '2x'],
                             [srcs.tb3x, '3x'],
                         ])}
-                        media="(min-width: 500px)"
+                        media="(min-width: 31rem)"
                     />
                 )}
                 {srcs.mbAvif && (
