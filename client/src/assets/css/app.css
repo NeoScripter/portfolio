@@ -670,6 +670,12 @@ h5 {
             grid-auto-rows: 35rem;
         }
     }
+    @container (width >= calc(90rem + 2.5rem * 3)) {
+        .uneven-grid-rows {
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 31rem;
+        }
+    }
 }
 
 .uneven-grid-rows {
@@ -694,7 +700,7 @@ h5 {
             align-self: end;
         }
     }
-    @container (calc(67.5rem + 2rem * 2) <= width < calc(90rem + 2.5rem * 3)) {
+    @container (width >= calc(67.5rem + 2rem * 2)) {
         min-height: calc(35rem - 5rem);
         &:nth-child(3n - 2) {
             align-self: start;
@@ -702,5 +708,8 @@ h5 {
         &:nth-child(3n) {
             align-self: end;
         }
+    }
+    @container (width >= calc(90rem + 2.5rem * 3)) {
+        min-height: calc(31rem - 5rem);
     }
 }
