@@ -30,18 +30,20 @@ const Stages: FC<{ className?: string }> = ({ className }) => {
         >
             <StagesInfo />
 
-            <ul class="uneven-grid-rows mx-auto grid gap-8">
-                {stages.map((stage, idx) => (
-                    <StageItem
-                        onMouseEnter={() => handleMouseEnter(idx)}
-                        onMouseLeave={() => handleMouseLeave()}
-                        key={stage.id}
-                        active={active === idx}
-                        stage={stage}
-                        order={idx + 1}
-                    />
-                ))}
-            </ul>
+            <div class="uneven-grid-rows-wrapper">
+                <ul class="uneven-grid-rows mx-auto grid gap-8">
+                    {stages.map((stage, idx) => (
+                        <StageItem
+                            onMouseEnter={() => handleMouseEnter(idx)}
+                            onMouseLeave={() => handleMouseLeave()}
+                            key={stage.id}
+                            active={active === idx}
+                            stage={stage}
+                            order={idx + 1}
+                        />
+                    ))}
+                </ul>
+            </div>
         </AppSection>
     );
 };
@@ -50,12 +52,12 @@ export default Stages;
 
 const StagesInfo = () => {
     return (
-        <div class="mb-18 sm:mb-20.5 md:mx-auto md:max-w-155 lg:mb-24 xl:mx-0 xl:max-w-162">
-            <SecondaryHeading className="text-center xl:text-left xl:text-5xl">
+        <div class="mb-18 sm:mb-20.5 md:mx-auto md:max-w-130 lg:mb-24 xl:mx-0 xl:max-w-162">
+            <SecondaryHeading className="xl:text-5xl">
                 Рабочий процесс
             </SecondaryHeading>
 
-            <p class="text-center text-balance sm:text-lg xl:text-left xl:text-[1.225rem]">
+            <p class="text-balance sm:text-lg xl:text-[1.325rem]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
                 purus arcu, varius eget velit non, laoreet imperdiet orci.
                 Mauris ultrices eget lorem ac vestibulum. Suspendis imperdiet,
