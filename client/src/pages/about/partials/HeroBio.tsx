@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/Button';
 import { useModal } from '@/context/ModalContext';
 import { events } from '@/lib/const/events';
-import { locale } from '@/signals/locale';
-import clickSound from '@/assets/audio/click.mp3';
 import { playAudio } from '@/lib/helpers/playAudio';
+import { locale } from '@/signals/locale';
 
 const HeroBio = () => {
     const { showModal } = useModal();
@@ -14,11 +13,11 @@ const HeroBio = () => {
             new CustomEvent(events.CHANGE_FORM_STATUS, { detail: 'cancel' }),
         );
         showModal.value = true;
-        playAudio('click')
+        playAudio('click');
     };
 
     return (
-        <div class="md:mx-auto md:max-w-155 lg:mx-0">
+        <div class="md:mx-auto md:max-w-155 lg:mx-0 2xl:ml-auto">
             <h1
                 key={`${lang}-heading`}
                 class="xs:text-4xl motion-safe:animate-fade-in mb-5 text-3xl font-medium text-balance sm:mb-10 sm:text-6xl lg:text-5xl 2xl:text-6xl"
@@ -38,7 +37,10 @@ const HeroBio = () => {
                 onClick={handleClick}
                 variant="hero"
             >
-                <span class="motion-safe:animate-fade-in" key={`${lang}-hire-me`}>
+                <span
+                    class="motion-safe:animate-fade-in"
+                    key={`${lang}-hire-me`}
+                >
                     {lang === 'en' ? 'Hire me' : 'Нанять меня'}
                 </span>
             </Button>
