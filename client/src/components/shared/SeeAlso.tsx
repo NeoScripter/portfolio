@@ -4,6 +4,7 @@ import { API_BASE_URL } from '@/lib/const/api';
 import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
+import { locale } from '@/signals/locale';
 import type { FC } from 'preact/compat';
 import PrimaryLink from '../ui/PrimaryLink';
 import SecondaryHeading from '../ui/SecondaryHeading';
@@ -14,7 +15,6 @@ const SeeAlso: FC<{
     title: string;
     excludedId?: number;
 }> = ({ className, title, excludedId }) => {
-
     let req = `${API_BASE_URL}projects?limit=3`;
 
     if (excludedId != null) {
@@ -45,7 +45,14 @@ const SeeAlso: FC<{
                     onClick={() => playAudio('click')}
                     className="clickable-btn mx-auto mt-22 mr-0 hidden w-fit xl:flex"
                 >
-                    На страницу проектов
+                    <span
+                        key={`${locale.value}-link`}
+                        class="motion-safe:animate-fade-in"
+                    >
+                        {locale.value === 'en'
+                            ? 'All projects'
+                            : 'На страницу проектов'}
+                    </span>
                 </PrimaryLink>
             </div>
 
@@ -61,7 +68,14 @@ const SeeAlso: FC<{
                 className="mx-auto mt-22 w-fit xl:hidden"
                 onClick={() => playAudio('click')}
             >
-                На страницу проектов
+                <span
+                    key={`${locale.value}-link`}
+                    class="motion-safe:animate-fade-in"
+                >
+                    {locale.value === 'en'
+                        ? 'All projects'
+                        : 'На страницу проектов'}
+                </span>
             </PrimaryLink>
         </AppSection>
     );

@@ -5,6 +5,7 @@ import useThrottle from '@/hooks/useThrottle';
 import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import type { RouteMatch } from '@/lib/types/shared';
+import { locale } from '@/signals/locale';
 import { PhoneCall } from 'lucide-preact';
 import type { ComponentChildren } from 'preact';
 import { useRoute } from 'preact-iso';
@@ -51,11 +52,19 @@ const FooterInfo = () => {
         <div class="bg-footer-bg text-footer-text relative isolate overflow-clip rounded-t-md px-10 pt-10 pb-7 sm:px-14 sm:pb-10 lg:w-125 lg:pb-11 lg:pl-10 xl:w-150 xl:pt-15 xl:pr-8 xl:pl-18">
             <ArtLayer />
 
-            <h3 class="mb-4 text-4xl font-bold text-white sm:text-5xl xl:mb-6">
-                Контакты
+            <h3
+                key={`${locale.value}-heading`}
+                class="motion-safe:animate-fade-in mb-4 text-4xl font-bold text-white sm:text-5xl xl:mb-6"
+            >
+                {locale.value === 'en' ? 'Contacts' : 'Контакты'}
             </h3>
-            <p class="sm:mr-10 sm:text-lg xl:text-[1.325rem]">
-                Всегда рад ответить на любые ваши вопросы
+            <p
+                key={`${locale.value}-description`}
+                class="motion-safe:animate-fade-in sm:mr-10 sm:text-lg xl:text-[1.325rem]"
+            >
+                {locale.value === 'en'
+                    ? 'Feel free to reach out if you have any questions'
+                    : 'Всегда рад ответить на любые ваши вопросы'}
             </p>
 
             <Button
@@ -63,7 +72,12 @@ const FooterInfo = () => {
                 variant="footer"
                 class="mt-7 rounded-2xl sm:mt-6 lg:mt-19 lg:hidden"
             >
-                Форма для связи
+                <span
+                    key={`${locale.value}-webform`}
+                    class="motion-safe:animate-fade-in"
+                >
+                    {locale.value === 'en' ? 'Webform' : 'Форма для связи'}
+                </span>
             </Button>
 
             <FooterLink
@@ -84,8 +98,15 @@ const FooterInfo = () => {
                 <Mail className="size-full" />
             </FooterLink>
 
-            <p class="mt-15 sm:mt-13 lg:mt-50 xl:text-right xl:text-lg">
-                © Илья Андреев, {new Date().getFullYear()}. Все права защищены
+            <p
+                key={`${locale.value}-legal`}
+                class="motion-safe:animate-fade-in mt-15 sm:mt-13 lg:mt-50 xl:text-right xl:text-lg"
+            >
+                © {locale.value === 'en' ? 'Ilya Andreev' : 'Илья Андреев'},{' '}
+                {new Date().getFullYear()}.{' '}
+                {locale.value === 'en'
+                    ? 'All rights reversed'
+                    : 'Все права защищены'}
             </p>
         </div>
     );
