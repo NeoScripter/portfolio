@@ -88,7 +88,7 @@ import CanvasMb3xAvif from "@/assets/imgs/about/tech-stack/canvas-mb3x.avif";
 import CanvasMb3xWebp from "@/assets/imgs/about/tech-stack/canvas-mb3x.webp";
 
 import type { ImageSrcSet } from '@/lib/types/shared';
-import { ChartLine, Code, Laptop, NotepadText, Palette, Pencil, Presentation, Search, Shield, Smartphone, Users, Zap, type LucideIcon } from "lucide-preact";
+import { ChartLine, Clock8, Code, Handshake, Laptop, NotepadText, Palette, Pencil, Presentation, Search, Shield, Smartphone, Users, Zap, type LucideIcon } from "lucide-preact";
 import type { ServiceType } from "../home/data";
 
 export const heroBgSrcSet: ImageSrcSet = {
@@ -274,46 +274,71 @@ export const stages: StageType[] = [
             en: 'Discussion',
         },
         description: {
-            ru: 'Профессиональные презентации, которые впечатляют клиентов и эффективно доносят ваши идеи',
-            en: 'Professional presentations that impress clients and effectively communicate your ideas',
+            ru: "В первую очередь, нам необходимо обсудить детали вашего проекта, сроки выполнения, бюджет и саму возможность реализации проекта в соответствии с поставленными вами условиями.",
+            en: "First of all, we need to discuss your project requirements, deadlines, estimated budget, and the possibility of what you want to achieve as the end result.",
         },
     },
     {
         id: crypto.randomUUID(),
         icon: ChartLine,
         title: {
-            ru: 'Анализ',
-            en: 'Analisys',
+            ru: 'Планирование',
+            en: 'Planning',
         },
         description: {
-            ru: 'Чистый и поддерживаемый код с использованием современных технологий и лучших практик разработки',
-            en: 'Clean, maintainable code using modern technologies and development best practices',
+            ru: "Разбиваем работу на этапы, обсуждаем примерный срок завершения каждого этапа,а также порядок оплаты.",
+            en: "We break the project into stages, discuss the approximate deadline for each stage and payment after completing it.",
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Pencil,
         title: {
-            ru: 'Дизайн-макет',
-            en: 'Design mockup',
+            ru: "Дизайн-макет",
+            en: "Design mockup",
         },
         description: {
-            ru: 'Эстетичный дизайн, ориентированный на пользовательский опыт и визуальную привлекательность',
-            en: 'Aesthetic design focused on user experience and visual appeal',
+            ru: "Как правило, к работе подключается профессиональный дизайнер, который создает дизайн-макет в соответствии с вашими требованиями. После завершения работы с дизайнером, у вас на руках будет готовый дизайн вашего проекта.",
+            en: "In the majority of cases, we involve a professional designer in order to create a project mockup according to your requirements. You start working with them until the final design of your project is done.",
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Laptop,
         title: {
-            ru: 'Верстка',
-            en: 'Development',
+            ru: "Верстка",
+            en: "Development",
         },
         description: {
-            ru: 'Полная адаптивность для всех устройств — от смартфонов до десктопных компьютеров',
-            en: 'Fully responsive across all devices',
+            ru: "Я начинаю работу над проектом с соответствии с готовым дизайном. После завершения каждого этапа, я показываю вам промежуточный результат.",
+            en: "I start working on the project according to the design mockup stage by stage, demonstrating you intermediate results throughout the project development stages.",
         },
     },
+    {
+        id: crypto.randomUUID(),
+        icon: Handshake,
+        title: {
+            ru: "Завершение",
+            en: "Completion",
+        },
+        description: {
+            ru: "После завершения работы, я настраиваю ваш сервер (при необходимости), вы проверяете функционал сайта и после внесения всех доработок, происходит расчет за финальный этап.",
+            en: "After completing the last stage, I set up your server if necessary, and you test the website's functionality. After final corrections, we settle the payment for the last stage.",
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        icon: Clock8,
+        title: {
+            ru: "Последующее взаимодействие",
+            en: "Post-Completion",
+        },
+        description: {
+            ru: "Я всегда несу ответственность за свою работу и если вы заметите недочет в работе сайта даже спустя год, я исправлю его бесплатно. Тем не менее, любые правки, которые не являются моим недочетом, потребуют дополнительной оплаты.",
+            en: "I take responsibility for my work and if any issue appears after some time, I will fix it for you with no extra charge, even after a year since the work completion. However, any adjustments that do not represent an issue will come at extra cost.",
+        },
+    },
+
 ];
 
 export const services: ServiceType[] = [

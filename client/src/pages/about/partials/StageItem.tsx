@@ -8,10 +8,9 @@ const StageItem: FC<{
     stage: StageType;
     active: boolean;
     order: number;
-    isEven: boolean;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
-}> = ({ stage, active, order, isEven, onMouseEnter, onMouseLeave }) => {
+}> = ({ stage, active, order, onMouseEnter, onMouseLeave }) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     return (
@@ -19,11 +18,9 @@ const StageItem: FC<{
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             class={cn(
-                'bg-user-background ring-accent-foreground/15 max-w-110 rounded-md p-8 ring-1 transition-[shadow,scale]',
+                'bg-user-background ring-accent-foreground/15 rounded-md p-8 ring-1 transition-[shadow,scale]',
                 {
                     'shadow-video scale-102': active,
-                    'md:mt-8': isEven,
-                    'md:mb-8': !isEven,
                 },
             )}
         >
