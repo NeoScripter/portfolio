@@ -36,8 +36,8 @@ const StageItem: FC<{
             >
                 <stage.icon class="size-8" />
             </div>
-            <h3 class="mb-3 text-xl font-bold xl:mb-4 xl:text-[1.325rem]">{`${order}. ${stage.title[lang]}`}</h3>
-            <p class="text-sm sm:text-base xl:text-lg">
+            <h3 key={`${lang}-heading`} class="motion-safe:animate-fade-in mb-3 text-xl font-bold xl:mb-4 xl:text-[1.325rem]">{`${order}. ${stage.title[lang]}`}</h3>
+            <p key={`${lang}-content`} class="motion-safe:animate-fade-in text-sm sm:text-base xl:text-lg">
                 {stage.description[lang]}
             </p>
         </li>
