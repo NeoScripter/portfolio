@@ -13,7 +13,7 @@ const Hero = () => {
                 srcs={heroBgSrcSet}
             />
 
-            <div class="mt-4 gap-x-2 lg:mt-0 lg:flex lg:items-start lg:justify-between 2xl:items-center">
+            <div class="mt-4 gap-x-2 md:gap-x-8 lg:mt-0 lg:flex lg:items-start lg:justify-between 2xl:items-center">
                 <HeroAvatar />
                 <HeroBio />
             </div>
