@@ -16,7 +16,7 @@ const FeaturedQuote: FC<{ className?: string }> = ({ className }) => {
             <blockquote class="relative isolate m-auto mx-auto max-w-9/10 sm:max-w-147 lg:max-w-208 2xl:max-w-307">
                 <p
                     key={`${locale.value}-quote`}
-                    class="motion-safe:animate-fade-in mx-auto 2xl:max-w-9/10 text-center text-balance sm:text-xl xl:text-3xl 2xl:text-4xl"
+                    class="motion-safe:animate-fade-in mx-auto 2xl:max-w-9/10 text-center text-balance sm:text-xl xl:text-3xl"
                 >
                     {locale.value === 'en'
                         ? 'Nothing worthwhile comes easily. Half effort does not produce half results. It produces no results. Continuous and hard work is the only way to accomplish results that last.'
