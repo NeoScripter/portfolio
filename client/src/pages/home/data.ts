@@ -155,7 +155,6 @@ import {
 
 export type ServiceType = {
     id: string;
-    icon: LucideIcon;
     title: {
         ru: string;
         en: string;
@@ -169,98 +168,101 @@ export type ServiceType = {
 export const services: ServiceType[] = [
     {
         id: crypto.randomUUID(),
-        icon: Presentation,
         title: {
             ru: 'Лендинг',
             en: 'Landing Page',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Статичный или динамичный лендинг, состоящий из нескольких секций. Как правило, с подключением админ-панели и интерактивными анимациями.',
+            en: 'Static or dynamic langing page with several sections. Oftentimes, with backend intergration and interactive animations.',
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Code,
         title: {
-            ru: 'Веб-разработка',
-            en: 'Web Development',
+            ru: 'Портфолио',
+            en: 'Portfolio',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Сайт-портфолио с админ-панелью, несколькими интерактивными страницами и вебформой.',
+            en: 'Portfolio website with an admin panel, several interactive pages and a webform.',
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Palette,
         title: {
-            ru: 'UI/UX Дизайн',
-            en: 'UI/UX Design',
+            ru: 'Сайт-визитка',
+            en: 'Business Card Site',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Простой одностраничный сайт-визитка с контактной информацией владельца',
+            en: 'Just a simple page with contact data that can be used as a business card',
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Smartphone,
         title: {
-            ru: 'Мобильные приложения',
-            en: 'Mobile Applications',
+            ru: 'Система взаимодействия сотрудников',
+            en: 'Internal collaboration platform',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Сложная кастомная система взаимодействия между сотрудниками компании с интеграцией бэкэнда и внешних сервисов',
+            en: "Complex internal collaboration platform with backend and external services integration",
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Search,
         title: {
-            ru: 'SEO Оптимизация',
-            en: 'SEO Optimization',
+            ru: 'Интернет-магазин',
+            en: 'Online store',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Многостраничный интернет-магазин с подключением оплаты, личным кабинетов и корзиной',
+            en: 'Multipage online store with payment integration, user account and shopping cart',
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Zap,
         title: {
-            ru: 'Технический аудит',
-            en: 'Technical Audit',
+            ru: 'Вебсайт с анимацией',
+            en: 'Animated website',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Вебсайт с анимированными перехода между страницами, вращающимися элементами и интерактивными играми',
+            en: 'Website with animated page transitions, sliding elements and interactive games',
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Shield,
         title: {
-            ru: 'Кибербезопасность',
-            en: 'Cybersecurity',
+            ru: 'Сайт с интеграцией ИИ',
+            en: 'Website with AI integration',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Сайт с подключением ИИ для взаимодействия с пользователем',
+            en: 'Website conntected to AI chatbot that uses it to interact with the user',
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Users,
         title: {
-            ru: 'Техническая поддержка',
-            en: 'Technical Support',
+            ru: 'Многостраничный сайт',
+            en: 'Multipage website',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Простой многостраничный сайт с базовым бэкэндом и несколькими информационными страницами',
+            en: 'Multipage website with basic backend functionality and several informational pages',
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        title: {
+            ru: 'Вебсайт-реестр',
+            en: 'Registry website',
+        },
+        description: {
+            ru: 'Онлайн реестр товаров либо животных со сложной схемой взаимодействия сущностей базы данных',
+            en: 'Website with a registry of items or animals with complex database entities',
         },
     },
 ];

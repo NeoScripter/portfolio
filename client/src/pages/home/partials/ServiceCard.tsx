@@ -8,7 +8,6 @@ const ServiceCard: FC<{ service: ServiceType; active: boolean }> = ({
     active,
 }) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
-    const Icon = service.icon;
 
     return (
         <li
@@ -17,18 +16,15 @@ const ServiceCard: FC<{ service: ServiceType; active: boolean }> = ({
                 !active && 'opacity-30',
             )}
         >
-            <div class="mb-4.5">
-                <Icon class="size-12" strokeWidth={1.5} />
-            </div>
-            <p
+            <h3
                 key={`${lang}-heading`}
-                class="motion-safe:animate-fade-in mb-6.5 text-xl font-semibold sm:text-[1.325rem]"
+                class="motion-safe:animate-fade-in mb-3.5 text-lg font-bold md:text-xl lg:mb-4.5 lg:text-[1.325rem]"
             >
                 {service.title[lang]}
-            </p>
+            </h3>
             <p
                 key={`${lang}-content`}
-                class="motion-safe:animate-fade-in sm:text-xl"
+                class="motion-safe:animate-fade-in sm:text-base lg:text-xl"
             >
                 {service.description[lang]}
             </p>

@@ -60,7 +60,7 @@ const FooterInfo = () => {
             </h3>
             <p
                 key={`${locale.value}-description`}
-                class="motion-safe:animate-fade-in sm:mr-10 sm:text-lg xl:text-[1.325rem]"
+                class="motion-safe:animate-fade-in sm:mr-10 sm:text-lg 2xl:text-xl"
             >
                 {locale.value === 'en'
                     ? 'Feel free to reach out if you have any questions'
@@ -126,7 +126,7 @@ const FooterLink: FC<{
             target="_blank"
             href={href}
             class={cn(
-                'ease group flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-xl xl:text-[1.325rem]',
+                'ease group flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-lg 2xl:text-xl',
                 className,
             )}
             onMouseEnter={throttledMouseEnter}
