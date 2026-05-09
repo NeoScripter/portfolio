@@ -15,16 +15,14 @@ const Upsides = () => {
                 className="motion-safe:animate-fade-in text-balance"
             >
                 {lang === 'en'
-                    ? 'Why should you hire me?'
-                    : 'Преимущества работы со мной'}
+                    ? 'How I work'
+                    : 'Принципы моей работы'}
             </SecondaryHeading>
             <p
                 key={`${lang}-subheading`}
                 class="motion-safe:animate-fade-in max-w-208"
             >
-                Я специализируюсь на создании качественных и надежных сайтов. За
-                годы работы я помог многим клиентам реализовать их проекты — от
-                простых портфолио до сложных интернет-магазинов.
+                {lang === 'en' ? 'Over the years of working with clients, I have developed a set of principles that guide me during my collaboraition with clients.' : 'За годы работы с клиентами, я выработал для себя несколько важных принципов, которых я всегда стараюсь придерживаться при деловом сотрудничестве.'}
             </p>
 
             <div className="mt-16 sm:mt-19">

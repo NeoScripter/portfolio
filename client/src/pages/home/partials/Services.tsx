@@ -14,7 +14,7 @@ const Services = () => {
             >
                 {lang === 'en'
                     ? 'Various website categories'
-                    : 'Разные категории сайтов'}
+                    : 'Различные категории сайтов'}
             </SecondaryHeading>
             <p
                 key={`${lang}-subheading`}

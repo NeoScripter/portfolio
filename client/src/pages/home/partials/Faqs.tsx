@@ -46,13 +46,13 @@ const Faqs = () => {
 
             <div>
                 <div className="relative mt-16 mb-40 sm:mt-19">
-                    <ul
-                        ref={ref}
-                        className={cn(
-                            'isolate grid items-start gap-7 lg:grid-cols-2 lg:gap-x-11',
-                        )}
-                    >
-                        <StateResolver loading={loading} errors={errors}>
+                    <StateResolver loading={loading} errors={errors}>
+                        <ul
+                            ref={ref}
+                            className={cn(
+                                'isolate grid items-start gap-7 lg:grid-cols-2 lg:gap-x-11',
+                            )}
+                        >
                             {faqs &&
                                 faqs?.map((faq, idx) => (
                                     <FaqCard
@@ -64,8 +64,8 @@ const Faqs = () => {
                                         faq={faq}
                                     />
                                 ))}
-                        </StateResolver>
-                    </ul>
+                        </ul>
+                    </StateResolver>
                 </div>
             </div>
         </AppSection>
