@@ -89,7 +89,6 @@ import CanvasMb3xWebp from "@/assets/imgs/about/tech-stack/canvas-mb3x.webp";
 
 import type { ImageSrcSet } from '@/lib/types/shared';
 import { ChartLine, Clock8, Code, Handshake, Laptop, NotepadText, Palette, Pencil, Presentation, Search, Shield, Smartphone, Users, Zap, type LucideIcon } from "lucide-preact";
-import type { ServiceType } from "../home/data";
 
 export const heroBgSrcSet: ImageSrcSet = {
     dk: BgDkWebp,
@@ -341,10 +340,21 @@ export const stages: StageType[] = [
 
 ];
 
+type ServiceType = {
+    id: string;
+    title: {
+        ru: string;
+        en: string;
+    };
+    description: {
+        ru: string;
+        en: string;
+    };
+}
+
 export const services: ServiceType[] = [
     {
         id: crypto.randomUUID(),
-        icon: Presentation,
         title: {
             ru: 'Создание вебсайта',
             en: 'Creating a website',
@@ -356,7 +366,6 @@ export const services: ServiceType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Code,
         title: {
             ru: 'Создание веб приложения',
             en: 'Creating SPA',
@@ -368,7 +377,6 @@ export const services: ServiceType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Palette,
         title: {
             ru: 'Telegram бот',
             en: 'Telegram bot',
@@ -380,7 +388,6 @@ export const services: ServiceType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Smartphone,
         title: {
             ru: 'Верстка фронтэнда',
             en: 'Frontend',
@@ -392,50 +399,79 @@ export const services: ServiceType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Search,
         title: {
             ru: 'Оптимизация сайта',
             en: 'Website optimization',
         },
         description: {
-            ru: '',
-            en: '',
+            ru: 'Оптимизация скорости загрузки вашего сайта (только для сайтов, написанных на коде)',
+            en: 'Optimizing the loading speed of your website (only websites made with code)',
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Zap,
         title: {
-            ru: 'Технический аудит',
-            en: 'Technical Audit',
+            ru: 'Оптимизация бэкэнда',
+            en: 'Backend optimization',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Оптимизация бэкэнда вашего сайта, устранение медленных запросов в базу данных и оптимизация кода',
+            en: 'Optimizing the backend of your website or app, eliminating database queries bottlenecks and inefficient code',
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Shield,
         title: {
-            ru: 'Кибербезопасность',
-            en: 'Cybersecurity',
+            ru: 'Аудит кибербезопасности',
+            en: 'Cybersecurity audit',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Нахождения уязвимостей вашего сайта к взлому и их устранение',
+            en: "Checking your website's code for security vulnerabilities and eliminating them",
         },
     },
     {
         id: crypto.randomUUID(),
-        icon: Users,
         title: {
-            ru: 'Техническая поддержка',
-            en: 'Technical Support',
+            ru: 'Выравнивание элементов интерфейса',
+            en: 'UI bug fixes',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Исправление неправильного расположения элементов на готовом сайте',
+            en: "Adjusting and fixing broken layout of your website",
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        title: {
+            ru: 'Настройка почтового ящика на сайте',
+            en: 'Setting up email delivery',
+        },
+        description: {
+            ru: 'Создание и настройка почтового ящика сайта и отправление электронных писем с него',
+            en: "Creating and setting up website's mailbox and adjusting SMTP settings",
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        title: {
+            ru: 'Создание сложной анимации на сайте',
+            en: 'Creating a complex UI animation',
+        },
+        description: {
+            ru: 'Создание сложной анимации на странице или секции вашего сайта с использованием нативного JavaScript и CSS',
+            en: "Creating complex animiation on a particular page or section of your website using vanilla JS and CSS",
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        title: {
+            ru: 'Консультация',
+            en: 'Consulation',
+        },
+        description: {
+            ru: 'Консультация по созданию или исправлению вашего текущего сайта во время которой я помогу вам определиться, как лучше всего начать разработку и как избежать часто возникающих проблем',
+            en: "Consultation regarding your future or current website with the advice on how to create it in the best way and how to avoid common pitfalls",
         },
     },
 ];
