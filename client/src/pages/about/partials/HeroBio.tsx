@@ -31,8 +31,8 @@ const HeroBio = () => {
                 class="motion-safe:animate-fade-in mb-8 text-balance sm:mb-10 sm:text-lg lg:mb-12 2xl:text-xl"
             >
                 {lang === 'en'
-                    ? 'I will definitely have to write something here later, now nothing comes to my mind yet'
-                    : 'с опытом создания full-stack приложений и глубокими знаниями паттернов проектирования, оптимизации и основных принципов программирования для написания чистого и надежного кода.'}
+                    ? 'passionate about creating websites and apps with user-friendly, appealing, and convenient interfaces and fast loading speed.'
+                    : 'с большим энтузиазмом и опытом создания различных сайтов и приложений с удобными и практичными интерфейсами, которыми приятно пользоваться.'}
             </p>
             <Button
                 class="text-foreground hover:ring-muted-foreground/40 focus-visible:ring-muted-foreground/40 border-muted-foreground hover:bg-zinc-700/20"

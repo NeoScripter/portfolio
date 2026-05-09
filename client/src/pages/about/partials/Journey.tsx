@@ -11,8 +11,13 @@ const Journey: FC<{ className?: string }> = ({ className }) => {
         <AppSection
             className={cn('full-bleed px-0 sm:px-0 lg:px-0', className)}
         >
-            <SecondaryHeading className="xs:text-center px-5 xs:text-balance">
-                Как я стал программистом
+            <SecondaryHeading
+                key={`${locale.value}-subheading`}
+                className="xs:text-center xs:text-balance motion-safe:animate-fade-in px-5"
+            >
+                {locale.value === 'en'
+                    ? 'My programming journey'
+                    : 'Как я стал программистом'}
             </SecondaryHeading>
 
             <div class="mt-16 mb-13 space-y-11 sm:my-19 sm:space-y-16 lg:mb-23 xl:mt-25 xl:space-y-22">
