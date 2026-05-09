@@ -1,4 +1,6 @@
+import useThrottle from '@/hooks/useThrottle';
 import checkMotionPreferences from '@/lib/helpers/checkMotionPreference';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { services } from '../data';
 import ServiceItem from './ServiceItem';
@@ -7,9 +9,11 @@ const ServiceList = () => {
     const [active, setActive] = useState(0);
     const [offset, setOffset] = useState(3);
     const isMotionEnabled = checkMotionPreferences();
+    const throttledMouseEnter = useThrottle(() => playAudio('hover'), 300);
 
     const handleMouseEnter = (idx: number) => {
         setActive(idx);
+        throttledMouseEnter();
     };
     const handleMouseLeave = () => {
         setActive(0);
