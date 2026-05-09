@@ -1,3 +1,4 @@
+import { events } from '@/lib/const/events';
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
 import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
@@ -17,6 +18,7 @@ const LangToggle: FC<{ className?: string }> = ({ className }) => {
             locale.value = 'ru';
         }
         playAudio('toggle');
+        window.dispatchEvent(new CustomEvent(events.LOCALE_TOGGLE));
     };
 
     return (

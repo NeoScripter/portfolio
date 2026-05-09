@@ -1,3 +1,4 @@
+import { events } from '@/lib/const/events';
 import { effect, signal } from '@preact/signals';
 
 const isBrowser = typeof window !== 'undefined';
@@ -5,13 +6,11 @@ const isBrowser = typeof window !== 'undefined';
 export type LocaleType = 'en' | 'ru';
 
 export const locale = signal<LocaleType>(
-    isBrowser
-        ? ((localStorage.getItem('locale') as 'en' | 'ru') || 'ru')
-        : 'ru',
+    isBrowser ? (localStorage.getItem('locale') as 'en' | 'ru') || 'ru' : 'ru',
 );
 
 export const prefersRussian = () =>
-    isBrowser && (navigator.language.startsWith('ru'));
+    isBrowser && navigator.language.startsWith('ru');
 
 const applyLocale = (lang: 'en' | 'ru') => {
     if (!isBrowser) return;
@@ -24,6 +23,7 @@ if (isBrowser) {
         const lang = locale.value;
         localStorage.setItem('locale', lang);
         applyLocale(lang);
+
     });
 
     window.addEventListener('languagechange', () => {

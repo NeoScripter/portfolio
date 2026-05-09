@@ -1,7 +1,9 @@
+import { events } from '@/lib/const/events';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 export default function useAutoHideOnScroll() {
     const [hide, setHide] = useState(false);
+    const timeoutRef = useRef<number | null>(null);
     const lastScrollTopRef = useRef(0);
 
     const isBrowser = typeof window !== 'undefined';
@@ -29,9 +31,23 @@ export default function useAutoHideOnScroll() {
             lastScrollTopRef.current = currentScrollTop;
         };
 
-        window.addEventListener('scroll', handleScrollDown);
+        const handleLocaleToggle = () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+            timeoutRef.current = setTimeout(() => setHide(false), 10);
+        };
 
-        return () => window.removeEventListener('scroll', handleScrollDown);
+        window.addEventListener('scroll', handleScrollDown);
+        window.addEventListener(events.LOCALE_TOGGLE, handleLocaleToggle);
+
+        return () => {
+            window.removeEventListener('scroll', handleScrollDown);
+            window.removeEventListener(
+                events.LOCALE_TOGGLE,
+                handleLocaleToggle,
+            );
+        };
     }, []);
 
     return hide;
