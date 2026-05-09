@@ -24,7 +24,7 @@ const Stages: FC<{ className?: string }> = ({ className }) => {
     return (
         <AppSection
             className={cn(
-                'bg-muted full-bleed relative isolate lg:px-27 xl:gap-18 xl:px-27',
+                'bg-muted full-bleed relative isolate lg:px-(--padding) xl:gap-18',
                 className,
                 'content-visibility-default',
             )}
@@ -56,14 +56,14 @@ const StagesInfo = () => {
         <div class="mb-18 sm:mb-20.5 md:mx-auto md:max-w-130 lg:mb-24 xl:mx-0 xl:max-w-162">
             <SecondaryHeading
                 key={`${locale.value}-heading`}
-                className="motion-safe:animate-fade-in xl:text-5xl"
+                className="motion-safe:animate-fade-in mb-5 sm:mb-9 xl:mb-9 xl:text-5xl"
             >
                 {locale.value === 'en' ? 'Project stages' : 'Рабочий процесс'}
             </SecondaryHeading>
 
             <p
                 key={`${locale.value}-description`}
-                class="motion-safe:animate-fade-in text-balance sm:text-lg xl:text-[1.325rem]"
+                class="motion-safe:animate-fade-in text-balance sm:text-lg lg:mb-12 2xl:text-xl"
             >
                 {locale.value === 'en'
                     ? 'Each project requires an individual approach based on the requirements. However, this is how I generally structure my collaboration with clients when working on a project.'

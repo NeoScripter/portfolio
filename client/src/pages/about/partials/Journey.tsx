@@ -39,9 +39,9 @@ const JourneyItem: FC<{ item: JourneyItemType; isEven: boolean }> = ({
 
     return (
         <div
-            class={cn('xl:flex xl:items-stretch xl:gap-16 2xl:px-23', {
-                'xl:pl-23': isEven,
-                'xl:pr-23': !isEven,
+            class={cn('xl:flex xl:items-stretch xl:gap-16 2xl:px-(--padding)', {
+                'xl:pl-(--padding)': isEven,
+                'xl:pr-(--padding)': !isEven,
             })}
         >
             <AdaptiveImg

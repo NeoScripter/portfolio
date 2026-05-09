@@ -346,60 +346,60 @@ export const services: ServiceType[] = [
         id: crypto.randomUUID(),
         icon: Presentation,
         title: {
-            ru: 'Лендинг',
-            en: 'Landing Page',
+            ru: 'Создание вебсайта',
+            en: 'Creating a website',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Создания вебсайта с нуля под ключ, включая создание дизайна и настройку сервера.',
+            en: 'Creating a website from scratch including design mockup and server setup',
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Code,
         title: {
-            ru: 'Веб-разработка',
-            en: 'Web Development',
+            ru: 'Создание веб приложения',
+            en: 'Creating SPA',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Создание интерактивного одностраничного веб-приложения с нуля',
+            en: 'Creating a SPA with backend from scratch with highly-interactive UI.',
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Palette,
         title: {
-            ru: 'UI/UX Дизайн',
-            en: 'UI/UX Design',
+            ru: 'Telegram бот',
+            en: 'Telegram bot',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Создание и настройка телеграм бота в соответствии с вашими требованиями',
+            en: 'Creating and setting up a Telegram bot according to your requirements',
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Smartphone,
         title: {
-            ru: 'Мобильные приложения',
-            en: 'Mobile Applications',
+            ru: 'Верстка фронтэнда',
+            en: 'Frontend',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: 'Верстка фронтэнда с соответствии с дизайн-файлом и его подключение к вашему бэкэнду',
+            en: 'Creating frontend from scrach according to a design mockup and connecting it to your backend',
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Search,
         title: {
-            ru: 'SEO Оптимизация',
-            en: 'SEO Optimization',
+            ru: 'Оптимизация сайта',
+            en: 'Website optimization',
         },
         description: {
-            ru: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
-            en: 'Lorem ipsum dolor sit amet consectetur. Morbi diam nisi nam diam interdum',
+            ru: '',
+            en: '',
         },
     },
     {

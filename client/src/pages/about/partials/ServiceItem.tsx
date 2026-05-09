@@ -1,7 +1,7 @@
-import { cn } from "@/lib/helpers/utils";
-import type { ServiceType } from "@/pages/home/data";
-import { locale } from "@/signals/locale";
-import type { FC } from "preact/compat";
+import { cn } from '@/lib/helpers/utils';
+import type { ServiceType } from '@/pages/home/data';
+import { locale } from '@/signals/locale';
+import type { FC } from 'preact/compat';
 
 const ServiceItem: FC<{
     service: ServiceType;
@@ -29,7 +29,7 @@ const ServiceItem: FC<{
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             class={cn(
-                'bg-user-background ring-accent-foreground/15 rounded-md px-8 py-9.5 ring-1 transition-[shadow,scale,border] sm:p-8',
+                'bg-user-background ring-accent-foreground/15 w-full rounded-md px-8 py-9.5 ring-1 transition-[shadow,scale,border] sm:p-8',
                 {
                     'shadow-video border-foreground scale-102 border-l-4':
                         active,
@@ -40,10 +40,16 @@ const ServiceItem: FC<{
                 },
             )}
         >
-            <h4 class="mb-3 text-2xl font-bold 2xl:text-2xl">
+            <h4
+                key={`${lang}-service-heading`}
+                class="motion-safe:animate-fade-in mb-3 text-2xl font-bold 2xl:text-2xl"
+            >
                 {service.title[lang]}
             </h4>
-            <p class="xl:text-base 2xl:text-lg max-w-[calc(100%-5px)]">
+            <p
+                key={`${lang}-service-description`}
+                class="motion-safe:animate-fade-in max-w-[calc(100%-5px)] xl:text-base 2xl:text-lg"
+            >
                 {service.description[lang]}
             </p>
         </li>
