@@ -15,7 +15,7 @@ const ProjectBrief: FC<{ project: ProjectType; className?: string }> = ({
     const tooltipMessage =
         lang === 'ru'
             ? 'К сожалению, данный сайт больше не работает :( Такое иногда случается, когда владелец сайта забывает заплатить за хостинг. Тем не менее, вы можете посмотреть его скриншоты с тех недавних времен, когда он радовал своих пользователей каждый день :)'
-            : 'Unfortunately, the website is no longer online :( Maybe the its owner forgot to pay for the hosting or was too busy to do it. But you can still see the screenshots of it on this page from the bright times when it was still online :)';
+            : 'Unfortunately, the website is no longer online :( Maybe the owner forgot to pay for the hosting or was too busy to do it. But you can still see the screenshots of it on this page from the bright times when it was still online :)';
 
     return (
         <div

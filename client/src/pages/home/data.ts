@@ -147,9 +147,7 @@ import {
     Palette,
     Presentation,
     Search,
-    Shield,
     Smartphone,
-    Users,
     Zap,
 } from 'lucide-preact';
 
@@ -281,48 +279,48 @@ export const upsides: UpsideType[] = [
         id: crypto.randomUUID(),
         icon: Presentation,
         description: {
-            ru: 'Профессиональные презентации, которые впечатляют клиентов и эффективно доносят ваши идеи',
-            en: 'Professional presentations that impress clients and effectively communicate your ideas',
+            ru: 'Взаимные честность и уважение являются ключевыми элементами любого продуктивного сотрудничества.',
+            en: 'Mutual honesty and respect are a must. Without them, no productive collaboration is possible.',
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Code,
         description: {
-            ru: 'Чистый и поддерживаемый код с использованием современных технологий и лучших практик разработки',
-            en: 'Clean, maintainable code using modern technologies and development best practices',
+            ru: 'Большинство кода сайта я пишу самостоятельно, не используя генераторы ИИ.',
+            en: "I write the vast majority of code by myself without generating it with LLMs.",
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Palette,
         description: {
-            ru: 'Эстетичный дизайн, ориентированный на пользовательский опыт и визуальную привлекательность',
-            en: 'Aesthetic design focused on user experience and visual appeal',
+            ru: 'Дизайн сайта всегда важен. Если клиенту нужен красивый сайт, то в любом случае придется нанимать профессионального дизайнера.',
+            en: 'Website design always matters. If a client wants their website to look good, they do need to hire a professional designer.',
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Smartphone,
         description: {
-            ru: 'Полная адаптивность для всех устройств — от смартфонов до десктопных компьютеров',
-            en: 'Fully responsive across all devices',
+            ru: 'Для того чтобы убить муху, не нужно использовать гранотомет. Я всегда стараюсь найти максимально простое и надежное решение в соответствии с техническими требованиями проекта.',
+            en: "There is no need to use a bazuka when you need to kill a fly. I always try to find the simplest and most reliable solution based on the project requirements.",
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Search,
         description: {
-            ru: 'Оптимизация для поисковых систем, помогающая вашему сайту занимать высокие позиции в результатах поиска и привлекать целевую аудиторию',
-            en: 'Search engine optimization to help your site rank higher and attract targeted traffic',
+            ru: 'Будь готов помочь клиенту менять и поддерживать сайт в будущем. Найти разработчика для изменения готового сайта намного сложнее, чем для создания нового.',
+            en: "Be ready to help the client to maintain the website in the future. It's way harder to find a dev for changing an old project than for building a new one.",
         },
     },
     {
         id: crypto.randomUUID(),
         icon: Zap,
         description: {
-            ru: 'Молниеносная производительность',
-            en: 'Lightning-fast performance with optimized loading times and smooth interactions',
+            ru: 'Я стараюсь не давать обещаний, которые не могу выполнить. Если я допустил ошибку и мое обещание было нарушено, я признаю свою вину и беру за это ответственность.',
+            en: "I try not to give promises that I cannot keep. If I estimated something wrong and my promise was broken, I always explain myself and take responsibility for it.",
         },
     },
 ];

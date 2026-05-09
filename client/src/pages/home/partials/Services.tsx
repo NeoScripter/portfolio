@@ -21,7 +21,7 @@ const Services = () => {
                 class="motion-safe:animate-fade-in max-w-208"
             >
                 {lang === 'en'
-                    ? 'There are various different website categories. All of them are different in terms of the scale and complexity. Here are the categories of the websites that I have worked on.'
+                    ? 'There are various website categories. All of them are different in terms of the scale and complexity. Here are the categories of the websites that I have worked on.'
                     : 'Существует большое количество различных категорий вебсайтов. Все они кардинально отличаются друг от друга в зависимости от объема и сложности функционала. Вот категории сайтов, с которыми мне доводилось работать.'}
             </p>
 
