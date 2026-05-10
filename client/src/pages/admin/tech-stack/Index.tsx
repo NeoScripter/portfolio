@@ -7,18 +7,18 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { TechStackType } from '@/lib/types/models/tech-stack';
+import type { TechStackResource } from '@/lib/types/models/tech-stack';
 import TechStackCard, { TechStackFallback } from './partials/TechStackCard';
 import TechStackDelete from './partials/TechStackDelete';
 
 const Index = () => {
     const {
-        data: stacks,
+        data: stackData,
         loading,
         errors,
-    } = useFetchRecords<TechStackType[]>({
+    } = useFetchRecords<TechStackResource>({
         url: `${API_BASE_URL}tech-stacks`,
-        shouldCache: true
+        shouldCache: true,
     });
 
     if (hasErrorDetails(errors)) {
@@ -39,8 +39,8 @@ const Index = () => {
                         </ul>
                     ) : (
                         <ul className="flex flex-wrap gap-6">
-                            {stacks && stacks.length > 0 ? (
-                                stacks.map((stack) => (
+                            {stackData?.data && stackData.data.length > 0 ? (
+                                stackData.data.map((stack) => (
                                     <TechStackCard
                                         key={stack.id}
                                         stack={stack}

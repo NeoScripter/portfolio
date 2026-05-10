@@ -27,19 +27,19 @@ const skeletonTypes = [
 
 const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
     const {
-        data: project,
+        data: projectData,
         loading: projectLoading,
         errors: projectErrors,
-    } = useFetchRecords<ProjectType>({
+    } = useFetchRecords<{ data: ProjectType }>({
         url: `${API_BASE_URL}projects/${slug}`,
         shouldCache: true,
     });
 
     const {
-        data: modules,
+        data: moduleData,
         loading: moduleLoading,
         errors: moduleErrors,
-    } = useFetchRecords<ModuleType[]>({
+    } = useFetchRecords<{ data: ModuleType[] }>({
         url: `${API_BASE_URL}modules/${slug}`,
         shouldCache: true,
     });
@@ -57,6 +57,8 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
             </AppLayout>
         );
 
+    const project = projectData?.data;
+
     return (
         <AppLayout className="full-bleed-wrapper md:px-0 xl:px-0">
             {project && (
@@ -68,8 +70,8 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
             <Hero loading={projectLoading} project={project} />
 
             <StateResolver errors={moduleErrors} loading={moduleLoading}>
-                {modules &&
-                    modules?.map((module, idx) => (
+                {moduleData?.data &&
+                    moduleData.data.map((module, idx) => (
                         <Module
                             key={module.id}
                             className={cn(

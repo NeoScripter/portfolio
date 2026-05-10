@@ -7,16 +7,16 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { FaqType } from '@/lib/types/models/faqs';
+import type { FaqResource } from '@/lib/types/models/faqs';
 import FaqCard, { FaqCardSkeleton } from './partials/FaqCard';
 import FaqDelete from './partials/FaqDelete';
 
 const Faqs = () => {
     const {
-        data: faqs,
+        data: faqData,
         loading,
         errors,
-    } = useFetchRecords<FaqType[]>({
+    } = useFetchRecords<FaqResource>({
         url: `${API_BASE_URL}faqs`,
     });
 
@@ -38,8 +38,8 @@ const Faqs = () => {
                         </ul>
                     ) : (
                         <ul className="space-y-6">
-                            {faqs && faqs.length > 0 ? (
-                                faqs.map((faq) => (
+                            {faqData?.data && faqData.data.length > 0 ? (
+                                faqData.data.map((faq) => (
                                     <FaqCard key={faq.id} faq={faq} />
                                 ))
                             ) : (

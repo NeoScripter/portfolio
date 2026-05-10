@@ -6,7 +6,7 @@ import type { FC } from 'preact/compat';
 import ProjectBrief, { ProjectBriefFallback } from './ProjectBrief';
 import ProjectMeta, { ProjectMetaFallback } from './ProjectMeta';
 
-const Hero: FC<{ project: ProjectType | null; loading: boolean }> = ({
+const Hero: FC<{ project: ProjectType | undefined; loading: boolean }> = ({
     project,
     loading,
 }) => {

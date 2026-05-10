@@ -15,6 +15,7 @@ type CacheEntry = {
 type FetchRecordParams = {
     url: string;
     shouldCache?: boolean;
+    cb?: () => void;
 };
 
 type FetchRecordReturn<T> = {
@@ -32,6 +33,7 @@ function getCachedEntry<T>(url: string): T | null {
 export default function useFetchRecords<T>({
     url,
     shouldCache = false,
+    cb,
 }: FetchRecordParams): FetchRecordReturn<T> {
     const { fetchData, loading, errors } = useFetch();
     const [data, setData] = useState<T | null>(() =>
@@ -57,7 +59,7 @@ export default function useFetchRecords<T>({
             fetchData({
                 url,
                 onSuccess: (res) => {
-                    const result = res.data as T;
+                    const result = res as T;
                     if (shouldCache) {
                         recordsCache.value = new Map(recordsCache.value).set(
                             url,
@@ -69,6 +71,10 @@ export default function useFetchRecords<T>({
                         );
                     }
                     setData(result);
+
+                    if (cb) {
+                        cb();
+                    }
                 },
             });
         }

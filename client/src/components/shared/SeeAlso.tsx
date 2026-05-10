@@ -3,7 +3,7 @@ import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
-import type { ProjectType } from '@/lib/types/models/projects';
+import type { ProjectResource, ProjectType } from '@/lib/types/models/projects';
 import { locale } from '@/signals/locale';
 import type { FC } from 'preact/compat';
 import PrimaryLink from '../ui/PrimaryLink';
@@ -22,15 +22,15 @@ const SeeAlso: FC<{
     }
 
     const {
-        data: projects,
+        data: projectData,
         loading,
         errors,
-    } = useFetchRecords<ProjectType[]>({
+    } = useFetchRecords<ProjectResource>({
         url: req,
         shouldCache: true,
     });
 
-    if (projects && projects.length === 0) {
+    if (projectData?.data == null || projectData?.data.length === 0) {
         return null;
     }
 
@@ -58,7 +58,7 @@ const SeeAlso: FC<{
 
             <Projects
                 errors={errors}
-                projects={projects}
+                projects={projectData.data}
                 loading={loading}
                 className="mx-auto max-w-100 sm:max-w-full sm:grid-cols-4 sm:*:col-span-2 sm:*:last-of-type:col-start-2 xl:grid-cols-3 xl:*:col-span-1 xl:*:last-of-type:col-start-auto"
             />

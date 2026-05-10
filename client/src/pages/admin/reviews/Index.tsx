@@ -7,16 +7,16 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { ReviewType } from '@/lib/types/models/reviews';
+import type { ReviewResource } from '@/lib/types/models/reviews';
 import ReviewCard, { ReviewFallback } from './partials/ReviewCard';
 import ReviewDelete from './partials/ReviewDelete';
 
 const Reviews = () => {
     const {
-        data: reviews,
+        data: reviewData,
         loading,
         errors,
-    } = useFetchRecords<ReviewType[]>({
+    } = useFetchRecords<ReviewResource>({
         url: `${API_BASE_URL}reviews`,
     });
 
@@ -38,8 +38,8 @@ const Reviews = () => {
                         </ul>
                     ) : (
                         <ul className="space-y-12">
-                            {reviews && reviews.length > 0 ? (
-                                reviews.map((review) => (
+                            {reviewData?.data && reviewData?.data.length > 0 ? (
+                                reviewData.data.map((review) => (
                                     <ReviewCard
                                         key={review.id}
                                         review={review}

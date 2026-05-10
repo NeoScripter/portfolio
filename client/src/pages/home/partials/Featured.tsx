@@ -7,7 +7,7 @@ import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
-import type { ProjectType } from '@/lib/types/models/projects';
+import type { ProjectResource, ProjectType } from '@/lib/types/models/projects';
 import { locale } from '@/signals/locale';
 import { getTheme } from '@/signals/theme';
 import { type FC } from 'preact/compat';
@@ -15,10 +15,10 @@ import { featuredBgDarkSrcSet, featuredBgSrcSet } from '../data';
 
 const Featured: FC<{ className?: string }> = ({ className }) => {
     const {
-        data: projects,
+        data: projectData,
         loading,
         errors,
-    } = useFetchRecords<ProjectType[]>({
+    } = useFetchRecords<ProjectResource>({
         url: `${API_BASE_URL}projects?limit=6`,
         shouldCache: true,
     });
@@ -64,7 +64,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
             <Projects
                 className="sm:-mx-5 xl:-mx-15"
                 errors={errors}
-                projects={projects}
+                projects={projectData?.data}
                 loading={loading}
             />
 

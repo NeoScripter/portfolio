@@ -10,10 +10,10 @@ import VideoUpsert from './partials/VideoUpsert';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const {
-        data: video,
+        data: videoData,
         loading,
         errors,
-    } = useFetchRecords<VideoType>({
+    } = useFetchRecords<{data: VideoType}>({
         url: `${API_BASE_URL}videos/${id}`,
     });
 
@@ -22,7 +22,7 @@ const Edit: FC<{ id: number }> = ({ id }) => {
             <AppTitle titleEn="Edit Video" titleRu="Редактировать видео" />
             <AdminShellLayout>
                 <StateResolver errors={errors} loading={loading}>
-                    {video && <VideoUpsert video={video} />}
+                    {videoData?.data && <VideoUpsert video={videoData.data} />}
                 </StateResolver>
             </AdminShellLayout>
         </AdminLayout>

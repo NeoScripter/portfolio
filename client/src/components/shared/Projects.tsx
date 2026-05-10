@@ -7,7 +7,7 @@ import ProjectCard, { ProjectFallback } from './ProjectCard';
 
 const Projects: FC<{
     className?: string;
-    projects: ProjectType[] | null;
+    projects: ProjectType[] | undefined;
     loading: boolean;
     errors: unknown | null;
 }> = ({ className, projects, loading, errors }) => {

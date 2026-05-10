@@ -7,16 +7,16 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { VideoType } from '@/lib/types/models/videos';
+import type { VideoResource, VideoType } from '@/lib/types/models/videos';
 import VideoCard, { VideoFallback } from './partials/VideoCard';
 import VideoDelete from './partials/VideoDelete';
 
 const Index = () => {
     const {
-        data: videos,
+        data: videoData,
         loading,
         errors,
-    } = useFetchRecords<VideoType[]>({
+    } = useFetchRecords<VideoResource>({
         url: `${API_BASE_URL}videos`,
     });
 
@@ -38,8 +38,8 @@ const Index = () => {
                         </ul>
                     ) : (
                         <ul className="space-y-8">
-                            {videos && videos.length > 0 ? (
-                                videos.map((video) => (
+                            {videoData?.data && videoData?.data.length > 0 ? (
+                                videoData?.data.map((video) => (
                                     <VideoCard key={video.id} video={video} />
                                 ))
                             ) : (

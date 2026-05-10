@@ -4,7 +4,7 @@ import { useEscapeKey } from '@/hooks/useEscapeKey';
 import useFetchRecords from '@/hooks/useFetchRecords';
 import { API_BASE_URL } from '@/lib/const/api';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { TechStackType } from '@/lib/types/models/tech-stack';
+import type { TechStackResource, TechStackType } from '@/lib/types/models/tech-stack';
 import { locale } from '@/signals/locale';
 import { useEffect, useRef, useState, type FC } from 'preact/compat';
 import { canvasSrcSet } from '../data';
@@ -13,13 +13,15 @@ import { playAudio } from '@/lib/helpers/playAudio';
 
 const TechStack = () => {
     const {
-        data: stacks,
+        data: stackData,
         loading,
         errors,
-    } = useFetchRecords<TechStackType[]>({
+    } = useFetchRecords<TechStackResource>({
         url: `${API_BASE_URL}tech-stacks/`,
         shouldCache: true,
     });
+
+    const stacks = stackData?.data;
 
     const [active, setActive] = useState<number | null>(null);
 

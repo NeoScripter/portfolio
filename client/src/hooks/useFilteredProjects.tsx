@@ -1,20 +1,15 @@
 import { useDebounce } from '@/hooks/useDebounce';
-import { useFetch } from '@/hooks/useFetch';
 import { API_BASE_URL } from '@/lib/const/api';
-import { events } from '@/lib/const/events';
 import type { ProjectResource } from '@/lib/types/models/projects';
 import { useLocation } from 'preact-iso';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useMemo, useRef } from 'preact/hooks';
+import useFetchRecords from './useFetchRecords';
 
 type Props = {
     delay?: number;
 };
 
 const useFilteredProjects = ({ delay = 400 }: Props) => {
-    const { fetchData, loading, errors } = useFetch();
-    const [projectData, setProjectData] = useState<ProjectResource | null>(
-        null,
-    );
     const { query } = useLocation();
     const search = query?.search == null ? '' : query.search;
     const debouncedQuery = useDebounce(search, delay);
@@ -22,52 +17,36 @@ const useFilteredProjects = ({ delay = 400 }: Props) => {
     const currentPage = query?.page == null ? 1 : query.page;
     const projectsRef = useRef<HTMLUListElement | null>(null);
 
-    const isBrowser = typeof window !== 'undefined';
+    const handleFetchSuccess = () => {
+        const isInitialVisit = currentPage === 1 && debouncedQuery === '';
 
-    useEffect(() => {
-        const fetchProjects = () => {
-            const params = new URLSearchParams();
-            params.set('page', currentPage.toString());
+        if (!projectsRef.current || isInitialVisit) return;
 
-            if (debouncedQuery !== '') {
-                params.set('search', debouncedQuery);
-            }
+        projectsRef.current.scrollIntoView({
+            block: 'start',
+        });
+    };
 
-            let url = `${API_BASE_URL}projects?${params.toString()}`;
+    const url = useMemo(() => {
+        const params = new URLSearchParams();
+        params.set('page', currentPage.toString());
 
-            fetchData({
-                url: url,
-                onSuccess: (data) => {
-                    setProjectData(data);
-
-                    const isInitialVisit =
-                        currentPage === 1 && debouncedQuery === '';
-
-                    if (!projectsRef.current || isInitialVisit) return;
-
-                    projectsRef.current.scrollIntoView({
-                        block: 'start',
-                    });
-                },
-            });
-        };
-
-        if (!isBrowser) {
-            return;
+        if (debouncedQuery !== '') {
+            params.set('search', debouncedQuery);
         }
 
-        fetchProjects();
-
-        const onFormSuccess = () => fetchProjects();
-
-        window.addEventListener(events.FORM_SUCCESS_EVENT, onFormSuccess);
-
-        return () =>
-            window.removeEventListener(
-                events.FORM_SUCCESS_EVENT,
-                onFormSuccess,
-            );
+        return `${API_BASE_URL}projects?${params.toString()}`;
     }, [currentPage, debouncedQuery]);
+
+    const {
+        data: projectData,
+        loading,
+        errors,
+    } = useFetchRecords<ProjectResource | null>({
+        url,
+        shouldCache: true,
+        cb: handleFetchSuccess,
+    });
 
     return { projectData, errors, loading, projectsRef };
 };

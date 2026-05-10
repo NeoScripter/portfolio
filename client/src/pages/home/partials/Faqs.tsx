@@ -7,7 +7,7 @@ import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { playAudio } from '@/lib/helpers/playAudio';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { FaqType } from '@/lib/types/models/faqs';
+import type { FaqResource, FaqType } from '@/lib/types/models/faqs';
 import { locale } from '@/signals/locale';
 import type { ComponentChildren } from 'preact';
 import type { FC } from 'preact/compat';
@@ -30,13 +30,15 @@ const Faqs = () => {
         });
     };
     const {
-        data: faqs,
+        data: faqData,
         loading,
         errors,
-    } = useFetchRecords<FaqType[]>({
+    } = useFetchRecords<FaqResource>({
         url: `${API_BASE_URL}faqs`,
         shouldCache: true,
     });
+
+    const faqs = faqData?.data;
 
     return (
         <AppSection>

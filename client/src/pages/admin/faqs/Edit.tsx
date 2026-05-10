@@ -10,10 +10,10 @@ import FaqUpsert from './partials/FaqUpsert';
 
 const EditFaq: FC<{ id: number }> = ({ id }) => {
     const {
-        data: faq,
+        data: faqData,
         loading,
         errors,
-    } = useFetchRecords<FaqType>({
+    } = useFetchRecords<{ data: FaqType }>({
         url: `${API_BASE_URL}faqs/${id}`,
     });
 
@@ -22,7 +22,7 @@ const EditFaq: FC<{ id: number }> = ({ id }) => {
             <AppTitle titleEn="Edit Faq" titleRu="Редактировать FAQ" />
             <AdminShellLayout>
                 <StateResolver errors={errors} loading={loading}>
-                    {faq && <FaqUpsert faq={faq} />}
+                    {faqData?.data && <FaqUpsert faq={faqData.data} />}
                 </StateResolver>
             </AdminShellLayout>
         </AdminLayout>

@@ -10,10 +10,10 @@ import TechStackUpsert from './partials/TechStackUpsert';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const {
-        data: stack,
+        data: stackData,
         loading,
         errors,
-    } = useFetchRecords<TechStackType>({
+    } = useFetchRecords<{data: TechStackType}>({
         url: `${API_BASE_URL}tech-stacks/${id}`,
     });
 
@@ -22,7 +22,7 @@ const Edit: FC<{ id: number }> = ({ id }) => {
             <AppTitle titleEn="Edit Stack" titleRu="Редактировать навык" />
             <AdminShellLayout>
                 <StateResolver errors={errors} loading={loading}>
-                    {stack && <TechStackUpsert stack={stack} />}
+                    {stackData?.data && <TechStackUpsert stack={stackData.data} />}
                 </StateResolver>
             </AdminShellLayout>
         </AdminLayout>

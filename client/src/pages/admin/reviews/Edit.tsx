@@ -10,10 +10,10 @@ import ReviewUpsert from './partials/ReviewUpsert';
 
 const Edit: FC<{ id: number }> = ({ id }) => {
     const {
-        data: review,
+        data: reviewData,
         loading,
         errors,
-    } = useFetchRecords<ReviewType>({
+    } = useFetchRecords<{ data: ReviewType }>({
         url: `${API_BASE_URL}reviews/${id}`,
     });
 
@@ -22,7 +22,9 @@ const Edit: FC<{ id: number }> = ({ id }) => {
             <AppTitle titleEn="Edit Review" titleRu="Редактировать отзыв" />
             <AdminShellLayout>
                 <StateResolver errors={errors} loading={loading}>
-                    {review && <ReviewUpsert review={review} />}
+                    {reviewData?.data && (
+                        <ReviewUpsert review={reviewData.data} />
+                    )}
                 </StateResolver>
             </AdminShellLayout>
         </AdminLayout>
