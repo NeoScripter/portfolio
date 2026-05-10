@@ -15,7 +15,9 @@ SELECT
     i.mb_avif_3x,
     i.mb_avif_2x,
     i.mb_avif,
-    i.mb_tiny
+    i.mb_tiny,
+    s.created_at
 
 FROM stacks s
-LEFT JOIN images i ON i.imageable_id = s.id AND i.imageable_type = 'stacks';
+LEFT JOIN images i ON i.imageable_id = s.id AND i.imageable_type = 'stacks'
+ORDER BY s.created_at;

@@ -36,4 +36,5 @@ SELECT
     i.created_at AS image_created_at
 
 FROM reviews r
-LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews';
+LEFT JOIN images i ON i.imageable_id = r.id AND i.imageable_type = 'reviews'
+ORDER BY r.created_at;

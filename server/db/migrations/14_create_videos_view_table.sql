@@ -29,4 +29,6 @@ SELECT
     i.alt_ru,
     i.alt_en
 FROM videos v
-LEFT JOIN images i ON i.imageable_id = v.id AND i.imageable_type = 'videos';
+LEFT JOIN images i ON i.imageable_id = v.id AND i.imageable_type = 'videos'
+ORDER BY v.created_at;
+
