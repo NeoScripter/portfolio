@@ -73,7 +73,7 @@ const SlideMarker: FC<{ active: boolean; slideNumber: number }> = ({
     return (
         <div
             class={cn(
-                'h-2 w-8 max-w-12 min-w-6 flex-1 rounded-sm bg-gray-300 md:h-3 md:w-12',
+                'h-2 w-3 sm:w-8 max-w-12 min-w-6 flex-1 rounded-sm bg-gray-300 md:h-3 md:w-12',
                 active && 'bg-slide-marker',
             )}
             role="presentation"
