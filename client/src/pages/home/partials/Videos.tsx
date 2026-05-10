@@ -72,7 +72,7 @@ const Videos = () => {
                 <ul
                     ref={carouselRef}
                     className={cn(
-                        'flex w-max scroll-m-30 items-start sm:scroll-m-40 md:-ml-5 lg:-ml-27 lg:scroll-m-50 xl:-ml-47',
+                        'flex w-max -ml-5 scroll-m-30 sm:-ml-15 items-start sm:scroll-m-40 md:-ml-5 lg:-ml-27 lg:scroll-m-50 xl:-ml-47',
                         {
                             'gap-2 sm:gap-5 md:gap-8 xl:gap-10': loading,
                         },
