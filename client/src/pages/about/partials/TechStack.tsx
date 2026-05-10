@@ -46,7 +46,7 @@ const TechStack = () => {
         stackBtns.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, []);
 
-    useClickOutside(['#stack-btns', '#stack-canvas'], () =>
+    useClickOutside(['#stack-btns', '#stack-canvas', '.theme-switch', "#lang-toggle-wrapper"], () =>
         handleSetActive(null),
     );
 
@@ -137,7 +137,8 @@ const TechStackCanvas: FC<{
             />
 
             <div
-                class="prose sm:prose-base prose-sm max-w-full text-white! [&>h2,h3,h4,h5,h6,p,strong,ol,*]:text-white!"
+                key={`${locale.value}-canvas`}
+                class="prose sm:prose-base prose-sm motion-safe:animate-fade-in max-w-full text-white! [&>h2,h3,h4,h5,h6,p,strong,ol,*]:text-white!"
                 dangerouslySetInnerHTML={{
                     __html: content || '',
                 }}

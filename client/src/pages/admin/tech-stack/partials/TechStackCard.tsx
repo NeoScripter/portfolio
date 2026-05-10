@@ -12,7 +12,7 @@ const TechStackCard: FC<{ stack: TechStackType }> = ({ stack }) => {
             <div class="mb-4 flex items-center gap-3">
                 <div class="border-foreground/40 flex size-18 shrink-0 items-center justify-center overflow-clip rounded-sm border">
                     <AdaptiveImg
-                        prtClass="size-4/5"
+                        prtClass="size-4/5 dark:invert"
                         imgClass="object-contain object-center"
                         srcs={stack.image.srcSet}
                         alt={stack.image?.alt?.[locale.value]}

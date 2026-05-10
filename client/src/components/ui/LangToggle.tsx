@@ -23,6 +23,7 @@ const LangToggle: FC<{ className?: string }> = ({ className }) => {
 
     return (
         <div
+            id="lang-toggle-wrapper"
             className={cn('flex items-center justify-center gap-3', className)}
         >
             <Button lang="ru" />
