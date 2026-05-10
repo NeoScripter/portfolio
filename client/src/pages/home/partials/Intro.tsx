@@ -1,19 +1,24 @@
 import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import AppSection from '@/layouts/SectionLayout';
+import { locale } from '@/signals/locale';
 import Reviews from './Reviews';
 
 const Intro = () => {
     return (
-        <AppSection className='full-bleed full-bleed-wrapper'>
+        <AppSection className="full-bleed full-bleed-wrapper">
             <SecondaryHeading>
-                Уникальные и профессиональные сайты, которые невозможно не
-                заметить
+                {locale.value === 'en'
+                    ? 'Unique and professional websites made with love'
+                    : 'Уникальные и профессиональные сайты, сделанные с душой'}
             </SecondaryHeading>
 
-            <p class="max-w-208">
-                Я специализируюсь на создании качественных и надежных сайтов. За
-                годы работы я помог многим клиентам реализовать их проекты — от
-                простых портфолио до сложных интернет-магазинов.
+            <p
+                key={`${locale.value}-description`}
+                class="motion-safe:animate-fade-in max-w-208"
+            >
+                {locale.value === 'en'
+                    ? "Whenever I work, I always try to deliver the best result possible so that my clients and the users of their websites feel happy to use the product. Here are some of my clients' reviews"
+                    : 'При работе над сайтом я всегда стараюсь достичь наилучшего результата, дабы потом клиент и пользователи его сайта получали радость от его использования. Вот мнения клиентов о результате моей работы.'}
             </p>
 
             <Reviews />

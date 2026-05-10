@@ -33,7 +33,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                             'lg:mb-0':
                                 type === 'one_image_split' ||
                                 type === 'two_image_split',
-                            'lg:order-2 lg:basis-1/3':
+                            'lg:order-2 lg:basis-1/2':
                                 type === 'one_image_split',
                             'items-stretch lg:flex-[1_0_0]':
                                 type === 'two_image_split',
@@ -42,7 +42,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                         {module.firstImage && (
                             <AdaptiveImg
                                 prtClass={cn('mx-auto w-full rounded-sm', {
-                                    'max-w-80': [
+                                    'max-w-150': [
                                         'one_image_split',
                                     ].includes(type),
                                     'max-w-140': [
@@ -110,7 +110,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                     )}
 
                     <div
-                        class="[&>p]:mb-[1.5em]"
+                        class="[&>p]:mb-[1.5em] break-all"
                         dangerouslySetInnerHTML={{
                             __html: module.attr.html[locale.value],
                         }}

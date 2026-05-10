@@ -35,7 +35,7 @@ const HeroActions = () => {
                 onClick={() => playAudio('nextPage')}
                 class="group relative ml-5 motion-safe:animate-fade-in"
             >
-                {lang === 'en' ? 'About me' : 'Узнать больше'}
+                {lang === 'en' ? 'About me' : 'Мои навыки'}
                 <AnimatedUnderline className={cn('z-10 bg-white')} />
             </a>
         </nav>

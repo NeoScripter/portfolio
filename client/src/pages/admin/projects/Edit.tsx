@@ -8,7 +8,6 @@ import AdminShellLayout from '@/layouts/AdminShellLayout';
 import DeleteModalLayout from '@/layouts/DeleteModalLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { events } from '@/lib/const/events';
-import { hasErrorDetails } from '@/lib/helpers/utils';
 import type { ModuleType } from '@/lib/types/models/module';
 import type { ProjectType } from '@/lib/types/models/projects';
 import { Clapperboard, PanelsTopLeft } from 'lucide-preact';
