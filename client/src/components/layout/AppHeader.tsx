@@ -93,9 +93,9 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     },
                 )}
             >
-                <div key={lang} class="motion-safe:animate-fade-in w-40">
+                <a href='/' key={lang} class="block motion-safe:animate-fade-in w-40">
                     <Logo />
-                </div>
+                </a>
 
                 <div className="flex items-center justify-between lg:hidden">
                     {' '}
