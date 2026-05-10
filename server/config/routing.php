@@ -53,10 +53,10 @@ foreach ($controllers as $controller) {
 
         if ($method !== 'GET') {
             $mw->before("$method $url", $auth);
+            $f3->route($pattern, "$base->$action");
+        } else {
+            $f3->route($pattern, "$base->$action", $f3->cache_ttl);
         }
-
-        // Automatically assign crud routes
-        $f3->route($pattern, "$base->$action");
     }
 }
 

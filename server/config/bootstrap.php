@@ -20,6 +20,8 @@ $f3->set('DB', new SQL(
     "{$f3->get('db_password')}"
 ));
 
+$f3->set('CACHE', "redis={$f3->get('redis_host')}:{$f3->get('redis_port')}");
+
 Falsum\Run::handler();
 
 $Job_Queue = new n0nag0n\Job_Queue('pgsql');
