@@ -1,7 +1,7 @@
 import AppTitle from '@/components/layout/AppTitle';
 import SeeAlso from '@/components/shared/SeeAlso';
 import ApiError from '@/components/ui/ApiError';
-import { useFetch } from '@/hooks/useFetch';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import type { ServerError } from '@/hooks/useForm';
 import AppLayout from '@/layouts/AppLayout';
 import { API_BASE_URL } from '@/lib/const/api';
@@ -10,7 +10,6 @@ import type { ModuleType } from '@/lib/types/models/module';
 import type { ProjectType } from '@/lib/types/models/projects';
 import type { ComponentChildren, FunctionalComponent } from 'preact';
 import type { FC } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
 import Hero from './partials/Hero';
 import Module from './partials/Module';
 import ModuleFallback from './partials/ModuleFallback';
@@ -27,26 +26,25 @@ const skeletonTypes = [
 ];
 
 const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
-    const { fetchData, loading, errors } = useFetch();
-    const [project, setProject] = useState<ProjectType | null>(null);
-    const [modules, setModules] = useState<ModuleType[] | null>(null);
+    const {
+        data: project,
+        loading: projectLoading,
+        errors: projectErrors,
+    } = useFetchRecords<ProjectType>({
+        url: `${API_BASE_URL}projects/${slug}`,
+        shouldCache: true,
+    });
 
-    useEffect(() => {
-        fetchData({
-            url: `${API_BASE_URL}projects/${slug}`,
-            onSuccess: (data) => {
-                setProject(data.data);
-            },
-        });
-        fetchData({
-            url: `${API_BASE_URL}modules/${slug}`,
-            onSuccess: (data) => {
-                setModules(data.data);
-            },
-        });
-    }, [slug]);
+    const {
+        data: modules,
+        loading: moduleLoading,
+        errors: moduleErrors,
+    } = useFetchRecords<ModuleType[]>({
+        url: `${API_BASE_URL}modules/${slug}`,
+        shouldCache: true,
+    });
 
-    if (hasErrorDetails(errors))
+    if (hasErrorDetails(projectErrors))
         return (
             <AppLayout className="mt-40 px-5">
                 <AppTitle titleEn="Error" titleRu="Ошибка" />
@@ -67,9 +65,9 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
                     titleRu={project.attr.title.ru}
                 />
             )}
-            <Hero loading={loading} project={project} />
+            <Hero loading={projectLoading} project={project} />
 
-            <StateResolver errors={errors} loading={loading}>
+            <StateResolver errors={moduleErrors} loading={moduleLoading}>
                 {modules &&
                     modules?.map((module, idx) => (
                         <Module
