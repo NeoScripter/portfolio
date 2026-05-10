@@ -1,5 +1,6 @@
 import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import ApiError from '@/components/ui/ApiError';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import useFetchRecords from '@/hooks/useFetchRecords';
 import { API_BASE_URL } from '@/lib/const/api';
@@ -7,7 +8,7 @@ import { playAudio } from '@/lib/helpers/playAudio';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { TechStackResource } from '@/lib/types/models/tech-stack';
 import { locale } from '@/signals/locale';
-import { useEffect, useRef, useState, type FC } from 'preact/compat';
+import { useCallback, useRef, useState, type FC } from 'preact/compat';
 import { canvasSrcSet } from '../data';
 import TechPill, { TechPillFallback } from './TechPill';
 
@@ -29,28 +30,25 @@ const TechStack = () => {
     const content = active ? stacks?.[active].attr.html[lang] : null;
     const lastContent = useRef(content);
 
-    const isBrowser = typeof window !== 'undefined';
-
     useEscapeKey(() => handleSetActive(null));
 
-    useEffect(() => {
-        if (!isBrowser) {
+    const scrollToStacks = useCallback(() => {
+        if (typeof window === 'undefined') {
             return;
         }
 
-        const onClick = (e: MouseEvent) => {
-            const el = e.target as HTMLElement | null;
-            if (!el) return;
+        const stackBtns = document.querySelector('#stack-btns');
 
-            const inside = ['#stack-btns', '#stack-canvas'].some((sel) =>
-                el.closest(sel),
-            );
-            if (!inside) handleSetActive(null);
-        };
+        if (!stackBtns) {
+            return;
+        }
 
-        window.addEventListener('click', onClick);
-        return () => window.removeEventListener('click', onClick);
+        stackBtns.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, []);
+
+    useClickOutside(['#stack-btns', '#stack-canvas'], () =>
+        handleSetActive(null),
+    );
 
     const handleSetActive = (idx: number | null) => {
         if (typeof idx === 'number') {
@@ -61,6 +59,7 @@ const TechStack = () => {
                 return null;
             }
             if (idx === prev || idx === null) {
+                scrollToStacks();
                 playAudio('closeFaq');
                 return null;
             }

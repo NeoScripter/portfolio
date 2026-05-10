@@ -5,7 +5,7 @@ import { currentUser } from '@/signals/auth';
 import { locale } from '@/signals/locale';
 import { hide, isHidden, isMini, isWide } from '@/signals/sidebar-state';
 import { ChevronsUpDown } from 'lucide-preact';
-import { useId } from 'preact/hooks';
+import { useId, useState } from 'preact/hooks';
 import AuthLogo from '../ui/AuthLogo';
 import Monogram from '../ui/Monogram';
 import { sidebarLinks } from './data';
@@ -60,12 +60,12 @@ const Header = () => {
 
     return (
         <header
-            class={cn('flex items-center relative select-none', {
+            class={cn('relative flex items-center select-none', {
                 'm-2 gap-4': !isMini.value,
                 'mx-auto my-2': isMini.value,
             })}
         >
-            <a href="/" className='absolute inset-0'/>
+            <a href="/" className="absolute inset-0" />
             <div
                 class={cn(
                     'bg-sidebar-primary text-sidebar-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-[2px] p-1',
@@ -114,7 +114,11 @@ const Footer = () => {
     const id = useId();
     const menuId = `${id}-menu`,
         btnId = `${id}-btn`;
-    const { show, setShow } = useClickOutside([`#${menuId}`, `#${btnId}`]);
+    const [show, setShow] = useState(false);
+
+    useClickOutside([`#${menuId}`, `#${btnId}`], () => {
+        setShow(false);
+    });
 
     useEscapeKey(() => setShow(false));
 

@@ -10,7 +10,7 @@ import { playAudio } from '@/lib/helpers/playAudio';
 import { cn } from '@/lib/helpers/utils';
 import { locale } from '@/signals/locale';
 import { useRoute } from 'preact-iso';
-import { type FC } from 'preact/compat';
+import { useState, type FC } from 'preact/compat';
 import BurgerMenu from '../ui/BurgerMenu';
 import LangToggle from '../ui/LangToggle';
 import Logo from '../ui/Logo';
@@ -24,14 +24,19 @@ import Separator from './partials/Separator';
 const AppHeader: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
     const { path } = useRoute();
+    const [showMenu, setShowMenu] = useState(false);
 
     const variant: VariantType = getHeaderVariant(path);
 
-    const { show: showMenu, setShow: setShowMenu } = useClickOutside(
-        ['#nav-drawer', '#burger-menu'],
-        false,
-        () => playAudio('closeMenu'),
-    );
+    useClickOutside(['#nav-drawer', '#burger-menu'], () => {
+        setShowMenu((prev) => {
+            if (prev === true) {
+                playAudio('closeMenu');
+            }
+
+            return false;
+        });
+    });
 
     let { isBelow: isBelowPadding } = useScrollOffset(16);
     const hide = useAutoHideOnScroll();
@@ -93,7 +98,12 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     },
                 )}
             >
-                <a href='/' key={lang} class="block motion-safe:animate-fade-in w-40">
+                <a
+                    href="/"
+                    onClick={() => playAudio('nextPage')}
+                    key={lang}
+                    class="motion-safe:animate-fade-in block w-40"
+                >
                     <Logo />
                 </a>
 
