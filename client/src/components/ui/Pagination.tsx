@@ -1,3 +1,4 @@
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn, range } from '@/lib/helpers/utils';
 import type { PaginationMeta } from '@/lib/types/models/projects';
 import { ChevronLeftIcon } from 'lucide-preact';
@@ -6,18 +7,6 @@ import type { FC } from 'preact/compat';
 type PaginationProps = {
     meta: PaginationMeta;
     className?: string;
-};
-
-const getPageNumber = (): number => {
-    if (typeof window === 'undefined') return 1;
-
-    try {
-        const params = new URLSearchParams(window.location.search);
-        const page = params.get('page');
-        return page ? parseInt(page, 10) : 1;
-    } catch {
-        return 1;
-    }
 };
 
 const getPageUrl = (newPage: number): string => {
@@ -90,6 +79,7 @@ const PageLink: FC<PageLinkProps> = ({ className, currentPage, to, total }) => {
     return (
         <a
             href={getPageUrl(to)}
+            onClick={() => playAudio('click')}
             className={cn(
                 'relative hidden size-12 items-center justify-center rounded-sm text-xl font-medium ring-1 transition duration-200 ease-in ring-inset sm:inline-flex sm:size-12',
                 {
