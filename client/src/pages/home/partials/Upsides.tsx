@@ -1,3 +1,4 @@
+import AdaptiveImg from '@/components/ui/AdaptiveImg';
 import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import AppSection from '@/layouts/SectionLayout';
 import { cn } from '@/lib/helpers/utils';
@@ -14,21 +15,21 @@ const Upsides = () => {
                 key={`${lang}-heading`}
                 className="motion-safe:animate-fade-in text-balance"
             >
-                {lang === 'en'
-                    ? 'How I work'
-                    : 'Принципы моей работы'}
+                {lang === 'en' ? 'How I work' : 'Принципы моей работы'}
             </SecondaryHeading>
             <p
                 key={`${lang}-subheading`}
                 class="motion-safe:animate-fade-in max-w-208"
             >
-                {lang === 'en' ? 'Over the years of working with clients, I have developed a set of principles that guide me during my collaboraition with clients.' : 'За годы работы с клиентами, я выработал для себя несколько важных принципов, которых я всегда стараюсь придерживаться при деловом сотрудничестве.'}
+                {lang === 'en'
+                    ? 'Over the years of working with clients, I have developed a set of principles that guide me during my collaboraition with clients.'
+                    : 'За годы работы с клиентами, я выработал для себя несколько важных принципов, которых я всегда стараюсь придерживаться при деловом сотрудничестве.'}
             </p>
 
             <div className="mt-16 sm:mt-19">
                 <ul
                     className={cn(
-                        'grid gap-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-15 md:py-5 lg:grid-cols-3 lg:gap-x-28 lg:gap-y-17 lg:py-8 xl:gap-x-32 xl:gap-y-30 xl:py-12',
+                        'justsify-items-center grid gap-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-15 md:py-5 lg:grid-cols-3 lg:gap-x-28 lg:gap-y-17 lg:py-8 xl:gap-x-32 xl:gap-y-30 xl:py-12',
                     )}
                 >
                     {upsides.map((upside) => (
@@ -43,19 +44,20 @@ const Upsides = () => {
 export default Upsides;
 
 const UpsideCard: FC<{ upside: UpsideType }> = ({
-    upside: { icon: Icon, description },
+    upside: { icon, description },
 }) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     return (
-        <li>
-            <Icon
-                strokeWidth={1.5}
-                class="mx-auto mb-3 size-8 sm:mb-4.5 sm:ml-0 lg:mb-6 xl:mb-7 xl:size-12"
+        <li class="mx-auto w-fit">
+            <AdaptiveImg
+                srcs={icon}
+                prtClass="max-w-55 h-28 mx-auto mb-3 -translate-x-[7%] lg:h-32 sm:mb-4 dark:invert"
+                imgClass="object-contain"
             />
             <p
                 key={`${lang}-content`}
-                class="motion-safe:animate-fade-in mx-auto max-w-110 text-center text-balance sm:mx-0 sm:max-w-full sm:text-left"
+                class="motion-safe:animate-fade-in max-w-110 sm:mx-0 sm:max-w-full"
             >
                 {description[lang]}
             </p>

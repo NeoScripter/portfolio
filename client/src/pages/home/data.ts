@@ -65,6 +65,48 @@ import BgDarkTb2xWebp from "@/assets/imgs/home/featured/bg-dark-tb2x.webp";
 import BgDarkTb3xAvif from "@/assets/imgs/home/featured/bg-dark-tb3x.avif";
 import BgDarkTb3xWebp from "@/assets/imgs/home/featured/bg-dark-tb3x.webp";
 
+import Icon1MbTinyWebp from "@/assets/imgs/home/upsides/icon-1-mb-tiny.webp";
+import Icon1MbAvif from "@/assets/imgs/home/upsides/icon-1-mb.avif";
+import Icon1MbWebp from "@/assets/imgs/home/upsides/icon-1-mb.webp";
+import Icon1Mb2xAvif from "@/assets/imgs/home/upsides/icon-1-mb2x.avif";
+import Icon1Mb2xWebp from "@/assets/imgs/home/upsides/icon-1-mb2x.webp";
+import Icon1Mb3xAvif from "@/assets/imgs/home/upsides/icon-1-mb3x.avif";
+import Icon1Mb3xWebp from "@/assets/imgs/home/upsides/icon-1-mb3x.webp";
+import Icon2MbTinyWebp from "@/assets/imgs/home/upsides/icon-2-mb-tiny.webp";
+import Icon2MbAvif from "@/assets/imgs/home/upsides/icon-2-mb.avif";
+import Icon2MbWebp from "@/assets/imgs/home/upsides/icon-2-mb.webp";
+import Icon2Mb2xAvif from "@/assets/imgs/home/upsides/icon-2-mb2x.avif";
+import Icon2Mb2xWebp from "@/assets/imgs/home/upsides/icon-2-mb2x.webp";
+import Icon2Mb3xAvif from "@/assets/imgs/home/upsides/icon-2-mb3x.avif";
+import Icon2Mb3xWebp from "@/assets/imgs/home/upsides/icon-2-mb3x.webp";
+import Icon3MbTinyWebp from "@/assets/imgs/home/upsides/icon-3-mb-tiny.webp";
+import Icon3MbAvif from "@/assets/imgs/home/upsides/icon-3-mb.avif";
+import Icon3MbWebp from "@/assets/imgs/home/upsides/icon-3-mb.webp";
+import Icon3Mb2xAvif from "@/assets/imgs/home/upsides/icon-3-mb2x.avif";
+import Icon3Mb2xWebp from "@/assets/imgs/home/upsides/icon-3-mb2x.webp";
+import Icon3Mb3xAvif from "@/assets/imgs/home/upsides/icon-3-mb3x.avif";
+import Icon3Mb3xWebp from "@/assets/imgs/home/upsides/icon-3-mb3x.webp";
+import Icon4MbTinyWebp from "@/assets/imgs/home/upsides/icon-4-mb-tiny.webp";
+import Icon4MbAvif from "@/assets/imgs/home/upsides/icon-4-mb.avif";
+import Icon4MbWebp from "@/assets/imgs/home/upsides/icon-4-mb.webp";
+import Icon4Mb2xAvif from "@/assets/imgs/home/upsides/icon-4-mb2x.avif";
+import Icon4Mb2xWebp from "@/assets/imgs/home/upsides/icon-4-mb2x.webp";
+import Icon4Mb3xAvif from "@/assets/imgs/home/upsides/icon-4-mb3x.avif";
+import Icon4Mb3xWebp from "@/assets/imgs/home/upsides/icon-4-mb3x.webp";
+import Icon5MbTinyWebp from "@/assets/imgs/home/upsides/icon-5-mb-tiny.webp";
+import Icon5MbAvif from "@/assets/imgs/home/upsides/icon-5-mb.avif";
+import Icon5MbWebp from "@/assets/imgs/home/upsides/icon-5-mb.webp";
+import Icon5Mb2xAvif from "@/assets/imgs/home/upsides/icon-5-mb2x.avif";
+import Icon5Mb2xWebp from "@/assets/imgs/home/upsides/icon-5-mb2x.webp";
+import Icon5Mb3xAvif from "@/assets/imgs/home/upsides/icon-5-mb3x.avif";
+import Icon5Mb3xWebp from "@/assets/imgs/home/upsides/icon-5-mb3x.webp";
+import Icon6MbTinyWebp from "@/assets/imgs/home/upsides/icon-6-mb-tiny.webp";
+import Icon6MbAvif from "@/assets/imgs/home/upsides/icon-6-mb.avif";
+import Icon6MbWebp from "@/assets/imgs/home/upsides/icon-6-mb.webp";
+import Icon6Mb2xAvif from "@/assets/imgs/home/upsides/icon-6-mb2x.avif";
+import Icon6Mb2xWebp from "@/assets/imgs/home/upsides/icon-6-mb2x.webp";
+import Icon6Mb3xAvif from "@/assets/imgs/home/upsides/icon-6-mb3x.avif";
+import Icon6Mb3xWebp from "@/assets/imgs/home/upsides/icon-6-mb3x.webp";
 
 import type { ImageSrcSet } from '@/lib/types/shared';
 
@@ -265,9 +307,69 @@ export const services: ServiceType[] = [
     },
 ];
 
+const upside1SrcSet: ImageSrcSet = {
+    mb: Icon1MbWebp,
+    mbAvif: Icon1MbAvif,
+    mb2x: Icon1Mb2xWebp,
+    mbAvif2x: Icon1Mb2xAvif,
+    mb3x: Icon1Mb3xWebp,
+    mbAvif3x: Icon1Mb3xAvif,
+    mbTiny: Icon1MbTinyWebp,
+};
+
+const upside2SrcSet: ImageSrcSet = {
+    mb: Icon2MbWebp,
+    mbAvif: Icon2MbAvif,
+    mb2x: Icon2Mb2xWebp,
+    mbAvif2x: Icon2Mb2xAvif,
+    mb3x: Icon2Mb3xWebp,
+    mbAvif3x: Icon2Mb3xAvif,
+    mbTiny: Icon2MbTinyWebp,
+};
+
+const upside3SrcSet: ImageSrcSet = {
+    mb: Icon3MbWebp,
+    mbAvif: Icon3MbAvif,
+    mb2x: Icon3Mb2xWebp,
+    mbAvif2x: Icon3Mb2xAvif,
+    mb3x: Icon3Mb3xWebp,
+    mbAvif3x: Icon3Mb3xAvif,
+    mbTiny: Icon3MbTinyWebp,
+};
+
+const upside4SrcSet: ImageSrcSet = {
+    mb: Icon4MbWebp,
+    mbAvif: Icon4MbAvif,
+    mb2x: Icon4Mb2xWebp,
+    mbAvif2x: Icon4Mb2xAvif,
+    mb3x: Icon4Mb3xWebp,
+    mbAvif3x: Icon4Mb3xAvif,
+    mbTiny: Icon4MbTinyWebp,
+};
+
+const upside5SrcSet: ImageSrcSet = {
+    mb: Icon5MbWebp,
+    mbAvif: Icon5MbAvif,
+    mb2x: Icon5Mb2xWebp,
+    mbAvif2x: Icon5Mb2xAvif,
+    mb3x: Icon5Mb3xWebp,
+    mbAvif3x: Icon5Mb3xAvif,
+    mbTiny: Icon5MbTinyWebp,
+};
+
+const upside6SrcSet: ImageSrcSet = {
+    mb: Icon6MbWebp,
+    mbAvif: Icon6MbAvif,
+    mb2x: Icon6Mb2xWebp,
+    mbAvif2x: Icon6Mb2xAvif,
+    mb3x: Icon6Mb3xWebp,
+    mbAvif3x: Icon6Mb3xAvif,
+    mbTiny: Icon6MbTinyWebp,
+};
+
 export interface UpsideType {
     id: string;
-    icon: LucideIcon;
+    icon: ImageSrcSet;
     description: {
         ru: string;
         en: string;
@@ -277,7 +379,7 @@ export interface UpsideType {
 export const upsides: UpsideType[] = [
     {
         id: crypto.randomUUID(),
-        icon: Presentation,
+        icon: upside1SrcSet,
         description: {
             ru: 'Взаимные честность и уважение являются ключевыми элементами любого продуктивного сотрудничества.',
             en: 'Mutual honesty and respect are a must. Without them, no productive collaboration is possible.',
@@ -285,7 +387,7 @@ export const upsides: UpsideType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Code,
+        icon: upside2SrcSet,
         description: {
             ru: 'Большинство кода сайта я пишу самостоятельно, не используя генераторы ИИ.',
             en: "I write the vast majority of code by myself without generating it with LLMs.",
@@ -293,7 +395,7 @@ export const upsides: UpsideType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Palette,
+        icon: upside3SrcSet,
         description: {
             ru: 'Дизайн сайта всегда важен. Если клиенту нужен красивый сайт, то в любом случае придется нанимать профессионального дизайнера.',
             en: 'Website design always matters. If a client wants their website to look good, they do need to hire a professional designer.',
@@ -301,7 +403,7 @@ export const upsides: UpsideType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Smartphone,
+        icon: upside4SrcSet,
         description: {
             ru: 'Для того чтобы убить муху, не нужно использовать гранотомет. Я всегда стараюсь найти максимально простое и надежное решение в соответствии с техническими требованиями проекта.',
             en: "There is no need to use a bazuka when you need to kill a fly. I always try to find the simplest and most reliable solution based on the project requirements.",
@@ -309,7 +411,7 @@ export const upsides: UpsideType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Search,
+        icon: upside5SrcSet,
         description: {
             ru: 'Будь готов помочь клиенту менять и поддерживать сайт в будущем. Найти разработчика для изменения готового сайта намного сложнее, чем для создания нового.',
             en: "Be ready to help the client to maintain the website in the future. It's way harder to find a dev for changing an old project than for building a new one.",
@@ -317,7 +419,7 @@ export const upsides: UpsideType[] = [
     },
     {
         id: crypto.randomUUID(),
-        icon: Zap,
+        icon: upside6SrcSet,
         description: {
             ru: 'Я стараюсь не давать обещаний, которые не могу выполнить. Если я допустил ошибку и мое обещание было нарушено, я признаю свою вину и беру за это ответственность.',
             en: "I try not to give promises that I cannot keep. If I estimated something wrong and my promise was broken, I always explain myself and take responsibility for it.",
