@@ -45,7 +45,7 @@ const TechStack = () => {
 
         const distanceBottom = stackBtns.getBoundingClientRect().bottom;
 
-        if (Math.abs(distanceBottom) < 1200) {
+        if (Math.abs(distanceBottom) < 1700) {
             stackBtns.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }, []);
