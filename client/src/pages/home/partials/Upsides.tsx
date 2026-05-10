@@ -52,7 +52,7 @@ const UpsideCard: FC<{ upside: UpsideType }> = ({
         <li class="mx-auto w-fit">
             <AdaptiveImg
                 srcs={icon}
-                prtClass="max-w-55 h-28 mx-auto mb-3 -translate-x-[7%] lg:h-32 sm:mb-4 dark:invert"
+                prtClass="max-w-55 h-28 mx-auto mb-3 sm:-translate-x-[7%] lg:h-32 sm:mb-4 dark:invert"
                 imgClass="object-contain"
             />
             <p
