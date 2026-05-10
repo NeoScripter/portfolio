@@ -16,11 +16,11 @@ const Hero = () => {
                     </h1>
                     <p
                         key={`${lang}-intro`}
-                        class="motion-safe:animate-fade-in text-balance sm:text-lg 2xl:text-xl"
+                        class="motion-safe:animate-fade-in text-left sm:text-lg 2xl:text-xl"
                     >
                         {lang === 'ru'
                             ? 'На этой странице представлены некоторые из проектов, над которыми я работал (как правило, создавал с нуля). При переходе на отдельную страницу каждого проекты вы можете ознакомиться с историей того, как я его создавал, с какими трудностями столкнулся во время его выполнения, посмотреть скриншоты готового сайта, а также перейти по ссылке на него, если она есть. Для вашего удобства вы можете воспользоваться поиском для нахождения нужного вам стэка или тематики проекта. Приятного просмотра! :-)'
-                            : "These are some of the projects that I have created or worked on throughout my career. Each project page describes the details of the project, the difficulties that I faced while working on it (there are usually a lot, that's what makes the job interesting :-). It also includes project screenshots and a link to the website if it is online (sometimes it is not :-(). For your convenience, you can use the search bar to sort projects based on your interests. I hope you enjoy! :-)"}
+                            : "These are some of the projects that I have created or worked on throughout my career. Each project page describes the details of the project, the difficulties that I faced while working on it (there are usually a lot which makes the job interesting). It also includes project screenshots and a link to the website if it is online (sometimes it is not, alas). For your convenience, you can use the search bar to sort projects based on your interests. I hope you enjoy! :-)"}
                     </p>
                 </div>
             </div>
