@@ -2,12 +2,25 @@
 
 namespace Http\Controllers;
 
+use Cache;
 use Support\Validator;
 
 class EmailController
 {
     public function store($f3)
     {
+        $cache = \Cache::instance();
+        $ip = $f3->get('IP');
+        $key = "ratelimit:$ip";
+        $hits = $cache->get($key) ?: 0;
+
+        if ($hits >= 5) {
+            send_json(['error' => 'Too many requests'], 429);
+            exit;
+        }
+
+        $cache->set($key, $hits + 1, 60);
+
         $validator = Validator::make(get_json(), [
             'email'    => ['required', 'email', 'min:3', 'max:255'],
             'name'     => ['required', 'string', 'min:3', 'max:2255'],
