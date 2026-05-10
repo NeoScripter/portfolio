@@ -21,7 +21,7 @@ const Edit = () => {
     const { fetchData, loading, errors } = useFetch();
     const [project, setProject] = useState<ProjectType | null>(null);
     const [modules, setModules] = useState<ModuleType[] | null>(null);
-    const [visibleItem, setVisibleItem] = useState<number | null>(0);
+    const [visibleItem, setVisibleItem] = useState<number | null>(null);
 
     const { route } = useLocation();
     const {
