@@ -1,4 +1,3 @@
-import { events } from '@/lib/const/events';
 import { effect, signal } from '@preact/signals';
 
 const isBrowser = typeof window !== 'undefined';
@@ -15,7 +14,6 @@ export const prefersRussian = () =>
 const applyLocale = (lang: 'en' | 'ru') => {
     if (!isBrowser) return;
     document.documentElement.lang = lang;
-    // window.scrollTo(0, 0);
 };
 
 if (isBrowser) {

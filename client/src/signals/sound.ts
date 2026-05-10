@@ -1,3 +1,15 @@
-import { signal } from '@preact/signals';
+import { effect, signal } from '@preact/signals';
 
-export const prefersSound = signal<boolean>(true);
+const isBrowser = typeof window !== 'undefined';
+
+export const prefersSound = signal<boolean>(
+    isBrowser
+        ? localStorage.getItem('soundPreference') !== 'false'
+        : true,
+);
+
+if (isBrowser) {
+    effect(() => {
+        localStorage.setItem('soundPreference', String(prefersSound.value));
+    });
+}
