@@ -37,21 +37,31 @@ const TechStack = () => {
             return;
         }
 
+        const stackCanvas = document.querySelector('#stack-canvas');
         const stackBtns = document.querySelector('#stack-btns');
 
-        if (!stackBtns) {
+        if (!stackBtns || !stackCanvas) {
             return;
         }
 
-        const distanceBottom = stackBtns.getBoundingClientRect().bottom;
+        const rect = stackCanvas.getBoundingClientRect();
 
-        if (Math.abs(distanceBottom) < 1700) {
+        if (
+            (rect.top < 500 && rect.top > 0) ||
+            (rect.bottom < 500 && rect.bottom > -100)
+        ) {
             stackBtns.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }, []);
 
-    useClickOutside(['#stack-btns', '#stack-canvas', '.theme-switch', "#lang-toggle-wrapper"], () =>
-        handleSetActive(null),
+    useClickOutside(
+        [
+            '#stack-btns',
+            '#stack-canvas',
+            '.theme-switch',
+            '#lang-toggle-wrapper',
+        ],
+        () => handleSetActive(null),
     );
 
     const handleSetActive = (idx: number | null) => {
