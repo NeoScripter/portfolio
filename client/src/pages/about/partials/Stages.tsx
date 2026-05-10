@@ -32,7 +32,7 @@ const Stages: FC<{ className?: string }> = ({ className }) => {
             <StagesInfo />
 
             <div class="uneven-grid-rows-wrapper">
-                <ul class="uneven-grid-rows mx-auto grid gap-8">
+                <ul class="uneven-grid-rows items-start mx-auto grid gap-8">
                     {stages.map((stage, idx) => (
                         <StageItem
                             onMouseEnter={() => handleMouseEnter(idx)}

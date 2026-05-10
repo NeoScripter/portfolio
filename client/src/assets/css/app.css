@@ -691,7 +691,9 @@ h5 {
 }
 
 .uneven-grid-rows > * {
-    min-height: calc(30rem - 3rem);
+    @media screen and (min-width: 55rem) {
+        min-height: calc(30rem - 3rem);
+    }
     @container (calc(45rem + 2rem) <= width < calc(67.5rem + 2rem * 2)) {
         &:nth-child(odd) {
             align-self: start;

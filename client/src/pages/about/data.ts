@@ -285,7 +285,7 @@ export const stages: StageType[] = [
             en: 'Planning',
         },
         description: {
-            ru: "Разбиваем работу на этапы, обсуждаем примерный срок завершения каждого этапа,а также порядок оплаты.",
+            ru: "Разбиваем работу на этапы, обсуждаем примерный срок завершения каждого этапа, а также порядок оплаты.",
             en: "We break the project into stages, discuss the approximate deadline for each stage and payment after completing it.",
         },
     },
