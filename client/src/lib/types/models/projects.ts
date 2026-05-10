@@ -60,6 +60,7 @@ export type ProjectType = {
         mockup: number;
         slug: string;
         priority: number;
+        is_featured: boolean;
         url: string;
         link: string;
     };

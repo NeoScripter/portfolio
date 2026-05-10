@@ -1,5 +1,6 @@
 import { Form } from '@/components/form/Form';
 import { FormButtons } from '@/components/form/FormButtons';
+import { FormCheckbox } from '@/components/form/FormCheckbox';
 import { FormImage } from '@/components/form/FormImage';
 import { FormInput } from '@/components/form/FormInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
@@ -28,6 +29,7 @@ type ProjectUpsertState = {
     technologies: string[];
     priority: number;
     mockup: number;
+    is_featured: boolean;
     image: File | null;
     alt_en: string;
     alt_ru: string;
@@ -67,6 +69,7 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
         technologies: project?.attr?.stacks ?? [],
         priority: project?.attr?.priority ?? 100,
         mockup: isEdit ? project?.attr?.mockup : 1,
+        is_featured: isEdit ? project?.attr?.is_featured : false,
         image: null,
         alt_en: project?.image?.alt?.en ?? '',
         alt_ru: project?.image?.alt?.ru ?? '',
@@ -146,6 +149,8 @@ const ProjectUpsert: FC<{ project?: ProjectType }> = ({ project }) => {
                 pattern="\d*"
                 className="h-auto max-w-40 px-0 text-center text-3xl! tracking-[0.5em]"
             />
+            <FormCheckbox name="is_featured" label="Featured" />
+
             <FormMockupPicker name="mockup" label="Mockup" />
             <FormImage
                 name="image"

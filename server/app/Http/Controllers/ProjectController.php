@@ -14,6 +14,7 @@ class ProjectController extends BaseController
     {
         $handler = Paginator::make($f3->GET);
         $handler->apply_limit_filter();
+        $handler->apply_featured_filter();
         $handler->apply_exclude_filter();
         $handler->apply_search_filter();
         $meta = $handler->apply_pagination(5, '_PROJECTS_VIEW', 'projects');
@@ -59,6 +60,7 @@ class ProjectController extends BaseController
             'category_id' => ['required', 'exists:categories,id'],
             'link' => ['nullable', 'string', 'max:300'],
             'priority' => ['required', 'max:300'],
+            'is_featured' => ['required'],
             'alt_en' => ['required', 'string', 'max:500'],
             'alt_ru' => ['required', 'string', 'max:500'],
             'technologies' => ['nullable'],
@@ -119,6 +121,7 @@ class ProjectController extends BaseController
             'category_id' => ['required', 'exists:categories,id'],
             'link' => ['nullable', 'string', 'max:300'],
             'priority' => ['sometimes', 'max:300'],
+            'is_featured' => ['required'],
             'alt_en' => ['sometimes', 'string', 'max:500'],
             'alt_ru' => ['sometimes', 'string', 'max:500'],
             'technologies' => ['sometimes'],

@@ -29,6 +29,7 @@ class ProjectResource
                 'link' => $project['link'],
                 'mockup' => $project['mockup'],
                 'priority' => $project['priority'],
+                'is_featured' => $project['is_featured'],
             ],
             'category_id' => $project['category_id'],
             'image' => [

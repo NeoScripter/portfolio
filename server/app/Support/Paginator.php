@@ -41,6 +41,16 @@ final class Paginator
         }
     }
 
+    public function apply_featured_filter()
+    {
+        $request = $this->request;
+
+        if (isset($request['featured']) && (in_array($request['featured'], ['true', 'false']))) {
+            $this->filters[] = 'is_featured = ?';
+            $this->args[] = (bool)$request['featured'];
+        }
+    }
+
     public function apply_search_filter()
     {
         $request = $this->request;

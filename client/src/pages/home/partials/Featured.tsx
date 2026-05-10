@@ -19,7 +19,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
         loading,
         errors,
     } = useFetchRecords<ProjectResource>({
-        url: `${API_BASE_URL}projects?limit=6`,
+        url: `${API_BASE_URL}projects?limit=6&featured=true`,
         shouldCache: true,
     });
 
