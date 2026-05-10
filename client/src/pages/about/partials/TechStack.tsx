@@ -3,13 +3,13 @@ import ApiError from '@/components/ui/ApiError';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import useFetchRecords from '@/hooks/useFetchRecords';
 import { API_BASE_URL } from '@/lib/const/api';
+import { playAudio } from '@/lib/helpers/playAudio';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { TechStackResource, TechStackType } from '@/lib/types/models/tech-stack';
+import type { TechStackResource } from '@/lib/types/models/tech-stack';
 import { locale } from '@/signals/locale';
 import { useEffect, useRef, useState, type FC } from 'preact/compat';
 import { canvasSrcSet } from '../data';
 import TechPill, { TechPillFallback } from './TechPill';
-import { playAudio } from '@/lib/helpers/playAudio';
 
 const TechStack = () => {
     const {

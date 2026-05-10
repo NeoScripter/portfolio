@@ -35,7 +35,7 @@ export default function useAutoHideOnScroll() {
             if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
             }
-            timeoutRef.current = setTimeout(() => setHide(false), 10);
+            timeoutRef.current = setTimeout(() => setHide(false), 100);
         };
 
         window.addEventListener('scroll', handleScrollDown);

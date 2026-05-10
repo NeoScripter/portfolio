@@ -5,12 +5,12 @@ import { useFetch } from '@/hooks/useFetch';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { VideoType } from '@/lib/types/models/videos';
+import type { VideoResource, VideoType } from '@/lib/types/models/videos';
 import { useEffect, useRef } from 'preact/hooks';
 import VideoTile, { VideoFallback } from './VideoTile';
+import useFetchRecords from '@/hooks/useFetchRecords';
 
 const Videos = () => {
-    const { fetchData, loading, errors } = useFetch();
     const carouselRef = useRef<HTMLUListElement | null>(null);
 
     const {
@@ -26,6 +26,21 @@ const Videos = () => {
         containerRef: carouselRef,
     });
 
+    const {
+        data: videoData,
+        loading,
+        errors,
+    } = useFetchRecords<VideoResource>({
+        url: `${API_BASE_URL}videos?duplicated=false`,
+        shouldCache: true,
+    });
+
+    useEffect(() => {
+        if (videoData) {
+            setter(videoData.data);
+        }
+    }, [videoData]);
+
     const handleClick = (cb: () => void) => {
         cb();
 
@@ -35,15 +50,6 @@ const Videos = () => {
             block: 'start',
         });
     };
-
-    useEffect(() => {
-        fetchData({
-            url: `${API_BASE_URL}videos?duplicated=false`,
-            onSuccess: (data) => {
-                setter(data.data);
-            },
-        });
-    }, []);
 
     if (hasErrorDetails(errors))
         return (

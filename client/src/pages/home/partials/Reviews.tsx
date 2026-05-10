@@ -1,16 +1,15 @@
 import ApiError from '@/components/ui/ApiError';
 import CarouselControls from '@/components/ui/CarouselControls';
 import { useCarousel } from '@/hooks/useCarousel';
-import { useFetch } from '@/hooks/useFetch';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import { API_BASE_URL } from '@/lib/const/api';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { ReviewType } from '@/lib/types/models/reviews';
+import type { ReviewResource, ReviewType } from '@/lib/types/models/reviews';
 import { locale } from '@/signals/locale';
 import { useEffect, useRef } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './ReviewCard';
 
 const Reviews = () => {
-    const { fetchData, loading, errors } = useFetch();
     const carouselRef = useRef<HTMLUListElement | null>(null);
     const {
         slides: carouselSlides,
@@ -25,14 +24,20 @@ const Reviews = () => {
         containerRef: carouselRef,
     });
 
+    const {
+        data: reviewData,
+        loading,
+        errors,
+    } = useFetchRecords<ReviewResource>({
+        url: `${API_BASE_URL}reviews?duplicated=true`,
+        shouldCache: true,
+    });
+
     useEffect(() => {
-        fetchData({
-            url: `${API_BASE_URL}reviews?duplicated=true`,
-            onSuccess: (data) => {
-                setter(data.data);
-            },
-        });
-    }, []);
+        if (reviewData) {
+            setter(reviewData.data);
+        }
+    }, [reviewData]);
 
     const handleClick = (cb: () => void) => {
         cb();
