@@ -43,7 +43,11 @@ const TechStack = () => {
             return;
         }
 
-        stackBtns.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const distanceBottom = stackBtns.getBoundingClientRect().bottom;
+
+        if (Math.abs(distanceBottom) < 1200) {
+            stackBtns.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }, []);
 
     useClickOutside(['#stack-btns', '#stack-canvas', '.theme-switch', "#lang-toggle-wrapper"], () =>
