@@ -2,6 +2,8 @@ import { useModal } from '@/context/ModalContext';
 import useAutoHideOnScroll from '@/hooks/useAutoHideOnScroll';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
+import { useLockScroll } from '@/hooks/useLockScroll';
+import useMediaQuery from '@/hooks/useMediaQuery';
 import useScrollOffset from '@/hooks/useScrollOffset';
 import type { VariantType } from '@/lib/helpers/getHeaderVariant';
 import getHeaderVariant from '@/lib/helpers/getHeaderVariant';
@@ -25,6 +27,9 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
     const { showModal } = useModal();
     const { path } = useRoute();
     const [showMenu, setShowMenu] = useState(false);
+
+    const isMobile = useMediaQuery(`(max-width: 64rem)`);
+    useLockScroll(showMenu && isMobile);
 
     const variant: VariantType = getHeaderVariant(path);
 
