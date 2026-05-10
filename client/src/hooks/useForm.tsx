@@ -12,7 +12,6 @@ export type FormValues = Record<string, unknown>;
 type FormErrors<T extends FormValues> = Partial<Record<keyof T, string>>;
 type FormTouched<T extends FormValues> = Partial<Record<keyof T, boolean>>;
 
-type ValidateFn<T extends FormValues> = (values: T) => FormErrors<T>;
 type SubmitFn<T extends FormValues> = (values: T) => Promise<void> | void;
 
 type ServerFieldErrors = Record<string, string>;

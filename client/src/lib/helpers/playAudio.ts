@@ -16,22 +16,24 @@ import menuCloseSound from '@/assets/audio/menu-close.mp3';
 import { prefersSound } from '@/signals/sound';
 import { Howl } from 'howler';
 
+const volume = 0.75;
+
 const sounds = {
-    click: new Howl({ src: [clickSound], volume: 1 }),
-    openMenu: new Howl({ src: [menuOpenSound], volume: 1 }),
-    closeMenu: new Howl({ src: [menuCloseSound], volume: 1 }),
-    hover: new Howl({ src: [hoverSound], volume: 1 }),
-    toggle: new Howl({ src: [toggleSound], volume: 1 }),
-    disable: new Howl({ src: [disableSound], volume: 1 }),
-    enable: new Howl({ src: [enableSound], volume: 1 }),
-    slide: new Howl({ src: [slideSound], volume: 1 }),
-    email: new Howl({ src: [emailSound], volume: 1 }),
-    openFaq: new Howl({ src: [openFaqSound], volume: 1 }),
-    closeFaq: new Howl({ src: [closeFaqSound], volume: 1 }),
-    call: new Howl({ src: [callSound], volume: 1 }),
-    nextPage: new Howl({ src: [nextPageSound], volume: 1 }),
-    formFail: new Howl({ src: [formFailSound], volume: 1 }),
-    formSuccess: new Howl({ src: [formSuccessSound], volume: 1 }),
+    click: new Howl({ src: [clickSound], volume }),
+    openMenu: new Howl({ src: [menuOpenSound], volume }),
+    closeMenu: new Howl({ src: [menuCloseSound], volume }),
+    hover: new Howl({ src: [hoverSound], volume }),
+    toggle: new Howl({ src: [toggleSound], volume }),
+    disable: new Howl({ src: [disableSound], volume }),
+    enable: new Howl({ src: [enableSound], volume }),
+    slide: new Howl({ src: [slideSound], volume }),
+    email: new Howl({ src: [emailSound], volume }),
+    openFaq: new Howl({ src: [openFaqSound], volume }),
+    closeFaq: new Howl({ src: [closeFaqSound], volume }),
+    call: new Howl({ src: [callSound], volume }),
+    nextPage: new Howl({ src: [nextPageSound], volume }),
+    formFail: new Howl({ src: [formFailSound], volume }),
+    formSuccess: new Howl({ src: [formSuccessSound], volume }),
 };
 
 export function playAudio(type: keyof typeof sounds) {
