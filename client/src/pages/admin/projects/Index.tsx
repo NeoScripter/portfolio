@@ -40,7 +40,7 @@ const Index = () => {
                         <CategoryList />
                     </AccordionLayout>
 
-                    <AdminShellNav href={'projects/create'} />
+                    <AdminShellNav href={'/admin/projects/create'} />
                     <div className="bg-background sticky top-0 z-10">
                         <SearchBox />
                     </div>

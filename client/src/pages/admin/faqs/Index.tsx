@@ -29,7 +29,7 @@ const Faqs = () => {
             <AdminLayout title={{ en: 'Faqs', ru: 'Часто задаваемые вопросы' }}>
                 <AppTitle titleEn="FAQs" titleRu="FAQs" />
                 <AdminShellLayout>
-                    <AdminShellNav href={'faqs/create'} />
+                    <AdminShellNav href={'/admin/faqs/create'} />
                     {loading ? (
                         <ul className="space-y-6">
                             {range(0, 8).map((idx) => (

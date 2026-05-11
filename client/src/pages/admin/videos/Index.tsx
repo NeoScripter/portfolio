@@ -29,7 +29,7 @@ const Index = () => {
             <AdminLayout title={{ en: 'Videos', ru: 'Видео' }}>
                 <AppTitle titleEn="Videos" titleRu="Видео" />
                 <AdminShellLayout>
-                    <AdminShellNav href={'videos/create'} />
+                    <AdminShellNav href={'/admin/videos/create'} />
                     {loading ? (
                         <ul className="space-y-8">
                             {range(0, 8).map((idx) => (
