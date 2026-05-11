@@ -16,6 +16,7 @@ const MuteBtn: FC<NodeProps> = ({ className }) => {
         <button
             onClick={handleClick}
             type="button"
+            aria-label="Mute sound button"
             class={cn('relative size-6 shrink-0 lg:size-8', className)}
         >
             <span className="absolute -inset-3 hidden pointer-coarse:block" />

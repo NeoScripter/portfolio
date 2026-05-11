@@ -15,6 +15,7 @@ const BurgerMenu: FC<{
         <button
             onClick={onClick}
             id="burger-menu"
+            aria-label="Menu"
             class={cn(
                 'size-9 transition-transform duration-300 ease-in',
                 {
@@ -23,7 +24,7 @@ const BurgerMenu: FC<{
                     'scale-50 text-gray-400 sm:translate-x-8 sm:-translate-y-3':
                         show,
                 },
-                className
+                className,
             )}
         >
             <svg
@@ -37,7 +38,7 @@ const BurgerMenu: FC<{
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 class={cn(
-                    'lucide lucide-menu-icon lucide-menu overflow-visible'
+                    'lucide lucide-menu-icon lucide-menu overflow-visible',
                 )}
             >
                 <path
@@ -45,14 +46,14 @@ const BurgerMenu: FC<{
                         'burger',
                         show
                             ? 'burger-open rotate-45'
-                            : 'burger-close -translate-y-[9px]'
+                            : 'burger-close -translate-y-[9px]',
                     )}
                     d="M0 18h36"
                 />
                 <path
                     class={cn(
                         'transition-opacity duration-300 ease-in',
-                        show && 'opacity-0'
+                        show && 'opacity-0',
                     )}
                     d="M0 18h36"
                 />
@@ -61,7 +62,7 @@ const BurgerMenu: FC<{
                         'burger',
                         show
                             ? 'burger-open -rotate-45'
-                            : 'burger-close translate-y-[9px]'
+                            : 'burger-close translate-y-[9px]',
                     )}
                     d="M0 18h36"
                 />

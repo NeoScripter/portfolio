@@ -99,6 +99,7 @@ const ModalLayout: FC<{
                 <button
                     onClick={closeModal}
                     type="button"
+                    aria-label="Close Dialog"
                     class="absolute top-5 right-5 flex size-6 items-center justify-center sm:size-8"
                 >
                     <span aria-hidden="true" class="absolute -inset-2" />
