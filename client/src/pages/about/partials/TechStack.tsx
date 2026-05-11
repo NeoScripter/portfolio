@@ -149,10 +149,11 @@ const TechStackCanvas: FC<{
                 prtClass="absolute -inset-4 -z-4"
                 srcs={canvasSrcSet}
             />
+            <span aria-hidden="true" class="absolute inset-0 size-full bg-black/50" />
 
             <div
                 key={`${locale.value}-canvas`}
-                class="prose sm:prose-base prose-sm motion-safe:animate-fade-in max-w-full text-white! [&>h2,h3,h4,h5,h6,p,strong,ol,*]:text-white!"
+                class="prose prose-base lg:prose-lg motion-safe:animate-fade-in max-w-full text-white! [&>h2,h3,h4,h5,h6,p,strong,ol,*]:text-white!"
                 dangerouslySetInnerHTML={{
                     __html: content || '',
                 }}
