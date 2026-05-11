@@ -11,7 +11,6 @@ const Projects: FC<{
     loading: boolean;
     errors: unknown | null;
 }> = ({ className, projects, loading, errors }) => {
-    const listLabel = locale.value === 'ru' ? 'проекты' : 'projects';
 
     if (hasErrorDetails(errors))
         return (
@@ -25,9 +24,6 @@ const Projects: FC<{
                         'grid place-content-center gap-y-15 sm:grid-cols-2 sm:gap-8 xl:grid-cols-3 xl:gap-6 2xl:gap-15',
                         className,
                     )}
-                    role="tablist"
-                    aria-label={listLabel}
-                    aria-live="polite"
                 >
                     {!loading
                         ? projects

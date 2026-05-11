@@ -49,8 +49,6 @@ const Reviews = () => {
         });
     };
 
-    const listLabel =
-        locale.value === 'ru' ? 'Отзывы клиентов' : 'Customer reviews';
     const numSlides = Math.floor(carouselSlides.length / 2);
 
     if (hasErrorDetails(errors))
@@ -74,9 +72,6 @@ const Reviews = () => {
                     className={cn(
                         '-ml-5 flex w-max scroll-m-30 items-start gap-6 sm:-ml-15 sm:scroll-m-40 sm:gap-10 lg:-ml-22 lg:scroll-m-50 lg:gap-13',
                     )}
-                    role="tablist"
-                    aria-label={listLabel}
-                    aria-live="polite"
                 >
                     {!loading
                         ? carouselSlides?.map((review, idx) => (

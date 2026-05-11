@@ -23,15 +23,14 @@ const CarouselControls: FC<{
         >
             <CarouselBtn onClick={handlePrev} className="" />
 
-            <div class="flex items-center justify-center gap-2">
+            <ol class="flex items-center justify-center gap-2">
                 {range(1, slides).map((dot) => (
                     <SlideMarker
                         key={dot}
-                        slideNumber={current}
                         active={dot === current}
                     />
                 ))}
-            </div>
+            </ol>
 
             <CarouselBtn onClick={handleNext} className="rotate-180" />
         </nav>
@@ -59,25 +58,15 @@ const CarouselBtn: FC<{ className?: string; onClick: () => void }> = ({
     );
 };
 
-const SlideMarker: FC<{ active: boolean; slideNumber: number }> = ({
+const SlideMarker: FC<{ active: boolean }> = ({
     active,
-    slideNumber,
 }) => {
-    const markerLabel = active
-        ? locale.value === 'ru'
-            ? `Текущий слайд, слайд ${slideNumber}`
-            : `Current slide, slide ${slideNumber}`
-        : locale.value === 'ru'
-          ? `Слайд ${slideNumber}`
-          : `Slide ${slideNumber}`;
     return (
-        <div
+        <li
             class={cn(
                 'h-2 w-3 sm:w-8 max-w-12 min-w-6 flex-1 rounded-sm bg-gray-300 md:h-3 md:w-12',
                 active && 'bg-slide-marker',
             )}
-            role="presentation"
-            aria-label={markerLabel}
         />
     );
 };
