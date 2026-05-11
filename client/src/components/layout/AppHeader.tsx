@@ -107,6 +107,7 @@ const AppHeader: FC<{ className?: string }> = ({ className }) => {
                     href="/"
                     onClick={() => playAudio('nextPage')}
                     key={lang}
+                    aria-label="Back to home page"
                     class="motion-safe:animate-fade-in block w-40"
                 >
                     <Logo />

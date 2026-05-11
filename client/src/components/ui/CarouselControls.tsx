@@ -21,34 +21,40 @@ const CarouselControls: FC<{
             )}
             aria-label={navLabel}
         >
-            <CarouselBtn onClick={handlePrev} className="" />
+            <CarouselBtn onClick={handlePrev} label="Previous slide" />
 
             <ol class="flex items-center justify-center gap-2">
                 {range(1, slides).map((dot) => (
-                    <SlideMarker
-                        key={dot}
-                        active={dot === current}
-                    />
+                    <SlideMarker key={dot} active={dot === current} />
                 ))}
             </ol>
 
-            <CarouselBtn onClick={handleNext} className="rotate-180" />
+            <CarouselBtn
+                onClick={handleNext}
+                className="rotate-180"
+                label="Next slide"
+            />
         </nav>
     );
 };
 
 export default CarouselControls;
 
-const CarouselBtn: FC<{ className?: string; onClick: () => void }> = ({
-    className,
-    onClick,
-}) => {
+const CarouselBtn: FC<{
+    className?: string;
+    onClick: () => void;
+    label: string;
+}> = ({ className, onClick, label }) => {
     const handleClick = (e: MouseEvent) => {
         e.stopPropagation();
         onClick();
-    }
+    };
     return (
-        <button onClick={handleClick} class={cn('xs:block hidden', className)}>
+        <button
+            aria-label={label}
+            onClick={handleClick}
+            class={cn('xs:block hidden', className)}
+        >
             <ChevronLeft
                 strokeWidth={3}
                 class="size-12 text-gray-300 md:size-15"
@@ -58,13 +64,11 @@ const CarouselBtn: FC<{ className?: string; onClick: () => void }> = ({
     );
 };
 
-const SlideMarker: FC<{ active: boolean }> = ({
-    active,
-}) => {
+const SlideMarker: FC<{ active: boolean }> = ({ active }) => {
     return (
         <li
             class={cn(
-                'h-2 w-3 sm:w-8 max-w-12 min-w-6 flex-1 rounded-sm bg-gray-300 md:h-3 md:w-12',
+                'h-2 w-3 max-w-12 min-w-6 flex-1 rounded-sm bg-gray-300 sm:w-8 md:h-3 md:w-12',
                 active && 'bg-slide-marker',
             )}
         />
