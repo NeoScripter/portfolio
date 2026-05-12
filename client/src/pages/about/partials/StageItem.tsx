@@ -8,9 +8,10 @@ const StageItem: FC<{
     stage: StageType;
     active: boolean;
     order: number;
+    className?: string;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
-}> = ({ stage, active, order, onMouseEnter, onMouseLeave }) => {
+}> = ({ stage, active, order, onMouseEnter, onMouseLeave, className }) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     return (
@@ -22,6 +23,7 @@ const StageItem: FC<{
                 {
                     'shadow-video scale-102': active,
                 },
+                className
             )}
         >
             <div

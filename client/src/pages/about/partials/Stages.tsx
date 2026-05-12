@@ -24,15 +24,15 @@ const Stages: FC<{ className?: string }> = ({ className }) => {
     return (
         <AppSection
             className={cn(
-                'bg-muted full-bleed relative isolate lg:px-(--padding) xl:gap-18',
+                'bg-muted full-bleed relative isolate px-(--padding) xl:gap-18',
                 className,
                 'content-visibility-default',
             )}
         >
             <StagesInfo />
 
-            <div class="uneven-grid-rows-wrapper">
-                <ul class="uneven-grid-rows items-start mx-auto grid gap-8">
+            <div class="@container w-full">
+                <ul class="grid items-start gap-8 @min-[47rem]:auto-rows-[30rem] @min-[47rem]:grid-cols-[repeat(auto-fill,minmax(22.5rem,1fr))] @min-[47rem]:items-center @min-[71.5rem]:gap-y-0 @min-[71.5rem]:auto-rows-[35rem] @min-[72.5rem]:gap-x-10 @min-[97.5rem]:auto-rows-[38rem] @min-[97.5rem]:grid-cols-3 @min-[97.5rem]:gap-x-14">
                     {stages.map((stage, idx) => (
                         <StageItem
                             onMouseEnter={() => handleMouseEnter(idx)}
@@ -41,6 +41,7 @@ const Stages: FC<{ className?: string }> = ({ className }) => {
                             active={active === idx}
                             stage={stage}
                             order={idx + 1}
+                            className="@min-[47rem]:min-h-108 @min-[47rem]:@max-[71.5rem]:odd:self-start @min-[47rem]:@max-[71.5rem]:even:self-end @min-[71.5rem]:min-h-120 @min-[71.5rem]:nth-[3n]:self-end @min-[71.5rem]:nth-[3n-2]:self-start @min-[97.5rem]:min-h-124"
                         />
                     ))}
                 </ul>
