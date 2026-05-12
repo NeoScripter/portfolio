@@ -38,11 +38,11 @@ const StageItem: FC<{
             </div>
             <h3
                 key={`${lang}-heading`}
-                class="motion-safe:animate-fade-in mb-3 text-xl font-bold xl:mb-4 xl:text-[1.325rem]"
+                class="motion-safe:animate-fade-in mb-3 text-xl font-bold sm:mb-4 sm:text-2xl"
             >{`${order}. ${stage.title[lang]}`}</h3>
             <p
                 key={`${lang}-content`}
-                class="motion-safe:animate-fade-in text-base lg:text-lg"
+                class="motion-safe:animate-fade-in"
             >
                 {stage.description[lang]}
             </p>

@@ -66,7 +66,7 @@ const JourneyItem: FC<{ item: JourneyItemType; isEven: boolean }> = ({
             />
             <div
                 key={`${lang}-${id}`}
-                class="prose motion-safe:animate-fade-in lg:prose-lg prose-base 2xl:prose-xl text-foreground [&>h2]:text-foreground max-w-full px-5 sm:px-15 xl:px-0"
+                class="prose motion-safe:animate-fade-in sm:prose-lg prose-base 2xl:prose-xl text-foreground [&>h2]:text-foreground max-w-full px-5 sm:px-15 xl:px-0"
                 dangerouslySetInnerHTML={{
                     __html: item.text[lang] || '',
                 }}

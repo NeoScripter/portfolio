@@ -5,7 +5,6 @@ import useFetchRecords from '@/hooks/useFetchRecords';
 import { API_BASE_URL } from '@/lib/const/api';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { ReviewResource, ReviewType } from '@/lib/types/models/reviews';
-import { locale } from '@/signals/locale';
 import { useEffect, useRef } from 'preact/hooks';
 import ReviewCard, { ReviewFallback } from './ReviewCard';
 

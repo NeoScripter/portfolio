@@ -63,7 +63,8 @@ const StagesInfo = () => {
 
             <p
                 key={`${locale.value}-description`}
-                class="motion-safe:animate-fade-in text-balance sm:text-lg lg:mb-12 2xl:text-xl"
+                // class="motion-safe:animate-fade-in text-balance sm:text-lg lg:mb-12 2xl:text-xl"
+                class="motion-safe:animate-fade-in text-balance lg:mb-12"
             >
                 {locale.value === 'en'
                     ? 'Each project requires an individual approach based on the requirements. However, this is how I generally structure my collaboration with clients when working on a project.'

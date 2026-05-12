@@ -47,7 +47,7 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
                 </h4>
                 <p
                     key={`${lang}-content`}
-                    class="text-foreground/60 ellipsis-multiline motion-safe:animate-fade-in text-sm md:text-base xl:text-lg"
+                    class="text-foreground/80 ellipsis-multiline motion-safe:animate-fade-in text-sm md:text-base xl:text-lg"
                 >
                     {project.attr?.description?.[lang]}
                 </p>

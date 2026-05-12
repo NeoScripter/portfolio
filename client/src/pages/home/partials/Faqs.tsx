@@ -7,7 +7,7 @@ import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { playAudio } from '@/lib/helpers/playAudio';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
-import type { FaqResource, FaqType } from '@/lib/types/models/faqs';
+import type { FaqResource } from '@/lib/types/models/faqs';
 import { locale } from '@/signals/locale';
 import type { ComponentChildren } from 'preact';
 import type { FC } from 'preact/compat';

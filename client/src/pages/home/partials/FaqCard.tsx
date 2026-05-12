@@ -47,7 +47,7 @@ const FaqCard: FC<{
                 </span>
             </button>
 
-            <div class="flex items-start gap-5 sm:gap-7 xl:gap-9.5">
+            <div class="flex items-start gap-5 sm:gap-7">
                 <div>
                     <SvgIcon open={open} />
                 </div>
@@ -55,7 +55,7 @@ const FaqCard: FC<{
                     <h3
                         key={`title-${lang}`}
                         id={`faq-title-${faq.id}`}
-                        class="xs:text-lg motion-safe:animate-fade-in font-bold xl:text-[1.325rem]"
+                        class="text-lg sm:text-2xl motion-safe:animate-fade-in font-bold"
                     >
                         {faq.attr.title[lang]}
                     </h3>
@@ -71,7 +71,7 @@ const FaqCard: FC<{
                         )}
                         aria-hidden={!open}
                     >
-                        <p class="mt-6 text-sm text-pretty lg:mt-7 xl:text-xl">
+                        <p class="mt-6 text-pretty lg:mt-7">
                             {faq.attr.content?.[lang]}
                         </p>
                     </div>
@@ -99,7 +99,7 @@ const SvgIcon: FC<{ open: boolean }> = ({ open }) => {
     return (
         <span
             aria-hidden="true"
-            class="mt-1 block size-4.5 sm:size-6 xl:mt-0 xl:size-8"
+            class="mt-0.5 sm:mt-1 block size-4.5 sm:size-6"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -1,7 +1,6 @@
 import ApiError from '@/components/ui/ApiError';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { ProjectType } from '@/lib/types/models/projects';
-import { locale } from '@/signals/locale';
 import type { FC } from 'preact/compat';
 import ProjectCard, { ProjectFallback } from './ProjectCard';
 
@@ -11,7 +10,6 @@ const Projects: FC<{
     loading: boolean;
     errors: unknown | null;
 }> = ({ className, projects, loading, errors }) => {
-
     if (hasErrorDetails(errors))
         return (
             <ApiError resourceRu="проектов" resourceEn="projects" mt={true} />

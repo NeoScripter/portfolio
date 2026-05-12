@@ -1,14 +1,13 @@
 import ApiError from '@/components/ui/ApiError';
 import CarouselControls from '@/components/ui/CarouselControls';
 import { useCarousel } from '@/hooks/useCarousel';
-import { useFetch } from '@/hooks/useFetch';
+import useFetchRecords from '@/hooks/useFetchRecords';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { VideoResource, VideoType } from '@/lib/types/models/videos';
 import { useEffect, useRef } from 'preact/hooks';
 import VideoTile, { VideoFallback } from './VideoTile';
-import useFetchRecords from '@/hooks/useFetchRecords';
 
 const Videos = () => {
     const carouselRef = useRef<HTMLUListElement | null>(null);
@@ -72,7 +71,7 @@ const Videos = () => {
                 <ul
                     ref={carouselRef}
                     className={cn(
-                        'flex w-max -ml-5 scroll-m-30 sm:-ml-15 items-start sm:scroll-m-40 md:-ml-5 lg:-ml-27 lg:scroll-m-50 xl:-ml-47',
+                        '-ml-5 flex w-max scroll-m-30 items-start sm:-ml-15 sm:scroll-m-40 md:-ml-5 lg:-ml-27 lg:scroll-m-50 xl:-ml-47',
                         {
                             'gap-2 sm:gap-5 md:gap-8 xl:gap-10': loading,
                         },

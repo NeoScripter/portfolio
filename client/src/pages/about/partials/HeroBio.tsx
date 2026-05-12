@@ -28,7 +28,7 @@ const HeroBio = () => {
             </h1>
             <p
                 key={`${lang}-subheading`}
-                class="motion-safe:animate-fade-in mb-8 text-balance sm:mb-10 sm:text-lg lg:mb-12 2xl:text-xl"
+                class="motion-safe:animate-fade-in mb-8 text-balance sm:mb-10 lg:mb-12"
             >
                 {lang === 'en'
                     ? 'passionate about creating websites and apps with user-friendly, appealing, and convenient interfaces and fast loading speed.'

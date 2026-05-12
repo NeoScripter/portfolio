@@ -33,7 +33,7 @@ const ServicesInfo = () => {
 
             <p
                 key={`${locale.value}-description`}
-                class="motion-safe:animate-fade-in mb-8 text-balance sm:mb-10 sm:text-lg lg:mb-12 xl:text-left 2xl:text-xl"
+                class="motion-safe:animate-fade-in mb-8 text-balance sm:mb-10 lg:mb-12 xl:text-left"
             >
                 {locale.value === 'en'
                     ? 'These are the types of services that I can provide my clients with. I specialize in fullstack development, as well as devops. If a project requires other types of services, I prefer to delegate them to my colleagues who are professionals in those areas.'

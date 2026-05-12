@@ -18,13 +18,13 @@ const ServiceCard: FC<{ service: ServiceType; active: boolean }> = ({
         >
             <h3
                 key={`${lang}-heading`}
-                class="motion-safe:animate-fade-in mb-3.5 text-lg font-bold md:text-xl lg:mb-4.5 lg:text-[1.325rem]"
+                class="motion-safe:animate-fade-in mb-4 text-lg font-bold sm:mb-5 sm:text-2xl"
             >
                 {service.title[lang]}
             </h3>
             <p
                 key={`${lang}-content`}
-                class="motion-safe:animate-fade-in sm:text-base lg:text-xl"
+                class="motion-safe:animate-fade-in"
             >
                 {service.description[lang]}
             </p>

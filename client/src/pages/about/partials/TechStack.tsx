@@ -153,7 +153,7 @@ const TechStackCanvas: FC<{
 
             <div
                 key={`${locale.value}-canvas`}
-                class="prose prose-base lg:prose-lg motion-safe:animate-fade-in max-w-full text-white! [&>h2,h3,h4,h5,h6,p,strong,ol,*]:text-white!"
+                class="prose prose-base sm:prose-lg motion-safe:animate-fade-in max-w-full text-white! [&>h2,h3,h4,h5,h6,p,strong,ol,*]:text-white!"
                 dangerouslySetInnerHTML={{
                     __html: content || '',
                 }}
