@@ -56,12 +56,14 @@ const SeeAlso: FC<{
                 </PrimaryLink>
             </div>
 
-            <Projects
-                errors={errors}
-                projects={projectData.data}
-                loading={loading}
-                // className="mx-auto max-w-100 sm:max-w-full sm:grid-cols-4 sm:*:col-span-2 sm:*:last-of-type:col-start-2 xl:grid-cols-3 xl:*:col-span-1 xl:*:last-of-type:col-start-auto"
-            />
+            <div className="@container w-full">
+                <Projects
+                    errors={errors}
+                    projects={projectData.data}
+                    loading={loading}
+                    className="@min-[46rem]:@max-[71rem]:grid-cols-4 @min-[46rem]:@max-[71rem]:*:col-span-2 @min-[46rem]:@max-[71rem]:*:last-of-type:col-start-2"
+                />
+            </div>
 
             <PrimaryLink
                 href="/gallery"
