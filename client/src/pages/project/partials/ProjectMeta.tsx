@@ -11,16 +11,16 @@ const ProjectMeta: FC<{ project: ProjectType; className?: string }> = ({
     const lang = locale.value === 'en' ? 'en' : 'ru';
     return (
         <div className={cn('', className)}>
-            <span class="mb-4 block text-lg uppercase sm:mb-4.5 sm:text-2xl xl:mb-5 xl:text-2xl">
+            <span class="mb-4 block text-lg uppercase sm:mb-5 sm:text-2xl">
                 {project.attr.category?.[lang]}
             </span>
-            <h2 class="mb-7 text-3xl font-semibold hyphens-auto sm:mb-7.5 sm:text-5xl 2xl:mb-8">
+            <h2 class="mb-7 text-3xl font-semibold hyphens-auto sm:mb-8 sm:text-5xl">
                 {project.attr.title[lang]}
             </h2>
             <ul class="flex flex-wrap gap-3 xl:gap-4">
                 {project.attr.stacks.map((stack) => (
                     <Badge
-                        className="xl:text-lg"
+                        className="sm:text-lg"
                         label={stack}
                         isClickable={false}
                     />
@@ -32,10 +32,10 @@ const ProjectMeta: FC<{ project: ProjectType; className?: string }> = ({
 export const ProjectMetaFallback = () => {
     return (
         <div>
-            <span class="skeleton mb-4 block w-fit rounded-sm text-xl uppercase sm:mb-4.5 sm:text-2xl xl:mb-5 xl:text-3xl">
+            <span class="skeleton mb-4 block w-fit rounded-sm text-lg uppercase sm:mb-5 sm:text-2xl">
                 Lorem ipsum
             </span>
-            <h2 class="skeleton mb-7 rounded-sm text-4xl font-semibold hyphens-auto sm:mb-7.5 sm:text-6xl xl:text-7xl 2xl:mb-8">
+            <h2 class="skeleton mb-7 rounded-sm text-3xl font-semibold hyphens-auto sm:mb-8 sm:text-5xl">
                 Lorem ipsum dummy text
             </h2>
             <ul class="flex flex-wrap gap-3 xl:gap-4">

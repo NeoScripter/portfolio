@@ -47,7 +47,7 @@ const Faqs = () => {
             </SecondaryHeading>
 
             <div>
-                <div className="relative mt-16 mb-40 sm:mt-19">
+                <div className="relative mt-16 mb-14 sm:mb-22.5 lg:mb-27 xl:mb-26 sm:mt-19">
                     <StateResolver loading={loading} errors={errors}>
                         <ul
                             ref={ref}

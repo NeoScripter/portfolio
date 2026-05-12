@@ -13,7 +13,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
 
     return (
         <AppSection
-            className={cn('sm:text-xl xl:px-0 2xl:px-8 2xl:text-xl', className)}
+            className={cn('xl:px-0 2xl:px-8', className)}
         >
             <div
                 className={cn('pt-15 pb-13.5 sm:pt-20 sm:pb-18 xl:py-0', {
@@ -104,7 +104,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                     })}
                 >
                     {module.attr.heading && (
-                        <h3 className="mb-5.5 font-bold">
+                        <h3 className="mb-5.5 text-lg sm:mb-6.5 sm:text-2xl font-bold">
                             {module.attr.heading[locale.value]}
                         </h3>
                     )}

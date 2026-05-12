@@ -16,7 +16,7 @@ const Projects: FC<{
         );
     return (
         <div className="relative z-10">
-            <div className="relative mt-16 sm:mt-26 lg:mt-28">
+            <div className="relative mt-20 sm:mt-26">
                 <ul
                     className={cn(
                         'grid place-content-center gap-y-15 sm:grid-cols-2 sm:gap-8 xl:grid-cols-3 xl:gap-6 2xl:gap-15',

@@ -86,6 +86,7 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
             {project && (
                 <SeeAlso title="Другие проекты" excludedId={project.id} />
             )}
+            <div class="mb-14 sm:mb-22.5 lg:mb-27 xl:mb-26" />
         </AppLayout>
     );
 };

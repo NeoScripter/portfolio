@@ -62,7 +62,7 @@ const Featured: FC<{ className?: string }> = ({ className }) => {
             </p>
 
             <Projects
-                className="sm:-mx-5 xl:-mx-15"
+                // className="sm:-mx-5 xl:-mx-15"
                 errors={errors}
                 projects={projectData?.data}
                 loading={loading}

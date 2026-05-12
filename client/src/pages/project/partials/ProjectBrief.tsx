@@ -24,7 +24,7 @@ const ProjectBrief: FC<{ project: ProjectType; className?: string }> = ({
                 className,
             )}
         >
-            <p class="mb-10 text-base sm:mb-12 sm:text-xl xl:mb-8.5 2xl:mb-10">
+            <p class="mb-10 sm:mb-12 max-w-2xl xl:mb-8.5 2xl:mb-10">
                 {project.attr.description[lang]}
             </p>
 

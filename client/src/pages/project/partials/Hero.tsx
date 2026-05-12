@@ -30,7 +30,7 @@ const Project: FC<{ project: ProjectType }> = ({ project }) => {
         <>
             <div class="mb-13 px-5 sm:mb-14 sm:px-15 xl:mb-19.5 xl:flex xl:px-0 xl:*:flex-[1_1_0] 2xl:mb-22 2xl:pr-0 2xl:pl-8">
                 <ProjectMeta project={project} />
-                <ProjectBrief className="hidden xl:block" project={project} />
+                <ProjectBrief className="hidden xl:flex xl:flex-col xl:justify-between" project={project} />
             </div>
 
             {project.image && (
