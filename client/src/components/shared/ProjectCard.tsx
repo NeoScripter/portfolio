@@ -41,13 +41,13 @@ const ProjectCard: FC<{ project: ProjectType }> = ({ project }) => {
             <div class="px-5 pt-5 pb-7 sm:px-6 sm:pt-6 md:px-7 xl:px-8 xl:pt-8">
                 <h4
                     key={`${lang}-heading`}
-                    class="motion-safe:animate-fade-in mb-5.5 text-2xl font-medium hyphens-auto md:text-3xl xl:mb-7 2xl:text-4xl"
+                    class="motion-safe:animate-fade-in mb-5.5 text-xl font-medium hyphens-auto sm:text-2xl"
                 >
                     {project.attr?.title?.[lang]}
                 </h4>
                 <p
                     key={`${lang}-content`}
-                    class="text-foreground/80 ellipsis-multiline motion-safe:animate-fade-in text-sm md:text-base xl:text-lg"
+                    class="text-foreground/80 ellipsis-multiline motion-safe:animate-fade-in"
                 >
                     {project.attr?.description?.[lang]}
                 </p>

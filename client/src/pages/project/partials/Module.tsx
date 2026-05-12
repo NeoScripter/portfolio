@@ -16,7 +16,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
             className={cn('xl:px-0 2xl:px-8', className)}
         >
             <div
-                className={cn('pt-15 pb-13.5 sm:pt-20 sm:pb-18 xl:py-0', {
+                className={cn('pt-1 2xl:px-5 lg:mx-0 pb-13.5 sm:pt-20 sm:pb-18 xl:py-0', {
                     'lg:flex lg:items-center lg:gap-19 2xl:gap-21':
                         type === 'one_image_split' ||
                         type === 'two_image_split',

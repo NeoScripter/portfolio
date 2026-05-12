@@ -35,7 +35,7 @@ const SeeAlso: FC<{
     }
 
     return (
-        <AppSection className={cn('xl:px-0', className)}>
+        <AppSection className={cn('full-bleed xl:px-(--padding)!', className)}>
             <div className="xl:flex xl:items-baseline xl:justify-between">
                 <SecondaryHeading className="xs:text-center xs:text-balance text-center text-4xl xl:text-5xl">
                     {title}
@@ -60,7 +60,7 @@ const SeeAlso: FC<{
                 errors={errors}
                 projects={projectData.data}
                 loading={loading}
-                className="mx-auto max-w-100 sm:max-w-full sm:grid-cols-4 sm:*:col-span-2 sm:*:last-of-type:col-start-2 xl:grid-cols-3 xl:*:col-span-1 xl:*:last-of-type:col-start-auto"
+                // className="mx-auto max-w-100 sm:max-w-full sm:grid-cols-4 sm:*:col-span-2 sm:*:last-of-type:col-start-2 xl:grid-cols-3 xl:*:col-span-1 xl:*:last-of-type:col-start-auto"
             />
 
             <PrimaryLink
