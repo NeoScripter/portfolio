@@ -19,7 +19,7 @@ const Projects: FC<{
             <div className="relative mt-20 sm:mt-26">
                 <ul
                     className={cn(
-                        'grid grid-cols-[repeat(auto-fill,minmax(22rem,1fr))] place-content-center gap-x-8 gap-y-15 xl:gap-x-10 2xl:grid-cols-3',
+                        'grid sm:grid-cols-[repeat(auto-fill,minmax(22rem,1fr))] place-content-center gap-x-8 gap-y-15 xl:gap-x-10 2xl:grid-cols-3',
                         className,
                     )}
                 >

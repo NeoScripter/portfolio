@@ -24,7 +24,7 @@ const Stages: FC<{ className?: string }> = ({ className }) => {
     return (
         <AppSection
             className={cn(
-                'bg-muted full-bleed relative isolate px-(--padding) xl:gap-18',
+                'bg-muted full-bleed relative isolate px-4 lg:px-(--padding) xl:gap-18',
                 className,
                 'content-visibility-default',
             )}
