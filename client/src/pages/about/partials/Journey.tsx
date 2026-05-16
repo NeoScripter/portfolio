@@ -26,6 +26,7 @@ const Journey: FC<{ className?: string }> = ({ className }) => {
                         key={item.id}
                         item={item}
                         isEven={(idx + 1) % 2 === 0}
+                        idx={idx}
                     />
                 ))}
             </div>
@@ -35,9 +36,10 @@ const Journey: FC<{ className?: string }> = ({ className }) => {
 
 export default Journey;
 
-const JourneyItem: FC<{ item: JourneyItemType; isEven: boolean }> = ({
+const JourneyItem: FC<{ item: JourneyItemType; isEven: boolean; idx: number }> = ({
     item,
     isEven,
+    idx
 }) => {
     const lang = locale.value === 'ru' ? 'ru' : 'en';
     const id = useId();
@@ -62,6 +64,7 @@ const JourneyItem: FC<{ item: JourneyItemType; isEven: boolean }> = ({
                 imgClass={cn('2xl:rounded-[1.5rem]', {
                     'md:rounded-l-[1.5rem]': isEven,
                     'md:rounded-r-[1.5rem]': !isEven,
+                    'object-left': idx === 2,
                 })}
             />
             <div
