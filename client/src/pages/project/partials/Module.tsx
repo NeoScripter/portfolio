@@ -12,15 +12,16 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
     const type = module.attr.type;
 
     return (
-        <AppSection
-            className={cn('xl:px-0 2xl:px-8', className)}
-        >
+        <AppSection className={cn('xl:px-0 2xl:px-8', className)}>
             <div
-                className={cn('pt-1 2xl:px-5 lg:mx-0 pb-13.5 sm:pt-20 sm:pb-18 xl:py-0', {
-                    'lg:flex lg:items-center lg:gap-19 2xl:gap-21':
-                        type === 'one_image_split' ||
-                        type === 'two_image_split',
-                })}
+                className={cn(
+                    'pt-1 sm:pt-20 sm:pb-18 lg:mx-0 xl:py-0',
+                    {
+                        'lg:flex lg:items-center lg:gap-19 2xl:gap-21':
+                            type === 'one_image_split' ||
+                            type === 'two_image_split',
+                    },
+                )}
             >
                 {type !== 'only_text' && (
                     <div
@@ -42,13 +43,13 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                         {module.firstImage && (
                             <AdaptiveImg
                                 prtClass={cn('mx-auto w-full rounded-sm', {
-                                    'max-w-150': [
-                                        'one_image_split',
-                                    ].includes(type),
-                                    'max-w-140': [
-                                        'two_image_split',
-                                    ].includes(type),
-                                    'max-w-200 aspect-video': [
+                                    'max-w-150': ['one_image_split'].includes(
+                                        type,
+                                    ),
+                                    'max-w-140': ['two_image_split'].includes(
+                                        type,
+                                    ),
+                                    'aspect-video max-w-200': [
                                         'two_image_block',
                                     ].includes(type),
                                 })}
@@ -70,13 +71,13 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                         {module.secondImage && (
                             <AdaptiveImg
                                 prtClass={cn('mx-auto w-full rounded-sm', {
-                                    'max-w-80': [
-                                        'one_image_split',
-                                    ].includes(type),
-                                    'max-w-140': [
-                                        'two_image_split',
-                                    ].includes(type),
-                                    'max-w-200 aspect-video': [
+                                    'max-w-80': ['one_image_split'].includes(
+                                        type,
+                                    ),
+                                    'max-w-140': ['two_image_split'].includes(
+                                        type,
+                                    ),
+                                    'aspect-video max-w-200': [
                                         'two_image_block',
                                     ].includes(type),
                                 })}
@@ -98,19 +99,19 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                     </div>
                 )}
                 <div
-                    className={cn({
+                    className={cn('max-w-[85ch]', {
                         'lg:basis-2/3': type === 'one_image_split',
                         'lg:flex-[1_0_0]': type === 'two_image_split',
                     })}
                 >
                     {module.attr.heading && (
-                        <h3 className="mb-5.5 text-lg sm:mb-6.5 sm:text-2xl font-bold">
+                        <h3 className="mb-5.5 text-lg font-bold sm:mb-6.5 sm:text-2xl">
                             {module.attr.heading[locale.value]}
                         </h3>
                     )}
 
                     <div
-                        class="[&>p]:mb-[1.5em] [&>p]:break-text"
+                        class="[&>p]:break-text [&>p]:mb-[1.5em]"
                         dangerouslySetInnerHTML={{
                             __html: module.attr.html[locale.value],
                         }}
