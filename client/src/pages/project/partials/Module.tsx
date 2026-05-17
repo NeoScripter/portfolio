@@ -110,7 +110,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                     )}
 
                     <div
-                        class="[&>p]:mb-[1.5em] break-all"
+                        class="[&>p]:mb-[1.5em] [&>p]:break-text"
                         dangerouslySetInnerHTML={{
                             __html: module.attr.html[locale.value],
                         }}
