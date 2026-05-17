@@ -52,7 +52,7 @@ const FaqUpsert: FC<{ faq?: FaqType }> = ({ faq }) => {
             payload: values,
             onSuccess: (data) => {
                 if (!isEdit) {
-                    route('/admin/videos');
+                    route('/admin/faqs');
                 }
 
                 toast.success(data.message ?? 'Success!');
