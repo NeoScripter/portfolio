@@ -97,8 +97,8 @@ const ModuleUpsert: FC<{ module?: ModuleType; projectId: number }> = ({
         >
             {({ values }) => (
                 <>
-                    <FormInput name="heading_en" label="Title (EN)" required />
-                    <FormInput name="heading_ru" label="Title (RU)" required />
+                    <FormInput name="heading_en" label="Title (EN)" />
+                    <FormInput name="heading_ru" label="Title (RU)" />
                     <FormWysiwyg name="body_en" label="Content (EN)" required />
                     <FormWysiwyg name="body_ru" label="Content (RU)" required />
                     <FormLayoutPicker name="type" label="Layout" required />
