@@ -116,7 +116,9 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
         <form class={cn('w-full max-w-220', className)} onSubmit={submit}>
             <div class="grid items-start gap-11 lg:grid-cols-2">
                 <div class="group grid gap-2">
-                    <GhostLabel htmlFor="name">Full Name</GhostLabel>
+                    <GhostLabel htmlFor="name">
+                        {lang === 'ru' ? 'Имя' : 'Name'}
+                    </GhostLabel>
                     <GhostInput
                         id="name"
                         autoComplete="name"
@@ -127,13 +129,15 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                                 payload: (e.target as HTMLInputElement).value,
                             })
                         }
-                        placeholder="John Doe"
+                        placeholder={lang === 'ru' ? 'Вася Теркин' : 'John Doe'}
                     />
                     <InputError message={errors?.errors?.name ?? ''} />
                 </div>
 
                 <div class="group grid gap-2">
-                    <GhostLabel htmlFor="email">Email</GhostLabel>
+                    <GhostLabel htmlFor="email">
+                        {lang === 'ru' ? 'Почта' : 'Email'}
+                    </GhostLabel>
                     <GhostInput
                         id="email"
                         type="email"
@@ -151,7 +155,9 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                 </div>
 
                 <div class="group grid gap-2">
-                    <GhostLabel htmlFor="telegram">Telegram</GhostLabel>
+                    <GhostLabel htmlFor="telegram">
+                        {lang === 'ru' ? 'Телеграм' : 'Telegram'}
+                    </GhostLabel>
                     <GhostInput
                         id="telegram"
                         autoComplete="telegram"
@@ -162,7 +168,9 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                                 payload: (e.target as HTMLInputElement).value,
                             })
                         }
-                        placeholder="@InterestedUser1456"
+                        placeholder={
+                            lang === 'ru' ? '@ВасяТеркин1456' : '@JohnDoe1456'
+                        }
                     />
                     <InputError message={errors?.errors?.telegram ?? ''} />
                 </div>
@@ -186,7 +194,10 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
             </div>
 
             <div class="group mt-11 grid gap-2">
-                <GhostLabel htmlFor="message">Message</GhostLabel>
+                <GhostLabel htmlFor="message">
+                    {lang === 'ru' ? 'Сообщение' : 'Message'}
+                </GhostLabel>
+
                 <GhostTextArea
                     id="message"
                     autoComplete="message"
@@ -197,7 +208,11 @@ const Webform: FC<{ className?: string }> = ({ className }) => {
                             payload: (e.target as HTMLInputElement).value,
                         })
                     }
-                    placeholder="Help me build a cool and interesting website that will make me happy every day!"
+                    placeholder={
+                        lang === 'ru'
+                            ? 'Пожалуйста, сделайте для меня крутой и интересный сайт, который будет радовать меня и моих пользователей!'
+                            : 'Help me build a cool and interesting website that will make me happy every day!'
+                    }
                 />
                 <InputError message={errors?.errors?.message ?? ''} />
             </div>
