@@ -38,8 +38,6 @@ type ModuleUpsertState = {
 };
 
 const validationRules: ValidationRules<ModuleUpsertState> = {
-    heading_en: ['required'],
-    heading_ru: ['required'],
     body_en: ['required'],
     body_ru: ['required'],
     type: ['required'],
