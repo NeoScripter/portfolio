@@ -37,7 +37,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                                 type === 'two_image_split',
                         })}
                     >
-                        {module.firstImage && (
+                        {module.firstImage?.srcSet?.mb && (
                             <AdaptiveImg
                                 key='first_image'
                                 prtClass={cn('mx-auto w-full rounded-sm', {
@@ -66,7 +66,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                                 srcs={module.firstImage.srcSet}
                             />
                         )}
-                        {module.secondImage && (
+                        {module.secondImage?.srcSet?.mb && (
                             <AdaptiveImg
                                 key='second_image'
                                 prtClass={cn('mx-auto w-full rounded-sm', {
