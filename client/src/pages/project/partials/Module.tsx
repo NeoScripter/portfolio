@@ -14,14 +14,11 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
     return (
         <AppSection className={cn('xl:px-0 2xl:px-8', className)}>
             <div
-                className={cn(
-                    'pt-1 sm:pt-20 sm:pb-18 lg:mx-0 xl:py-0',
-                    {
-                        'lg:flex lg:items-center lg:gap-19 2xl:gap-21':
-                            type === 'one_image_split' ||
-                            type === 'two_image_split',
-                    },
-                )}
+                className={cn('pt-1 sm:pt-20 sm:pb-18 lg:mx-0 xl:py-0', {
+                    'lg:flex lg:items-center lg:gap-19 2xl:gap-21':
+                        type === 'one_image_split' ||
+                        type === 'two_image_split',
+                })}
             >
                 {type !== 'only_text' && (
                     <div
@@ -105,13 +102,17 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                     })}
                 >
                     {module.attr.heading && (
-                        <h3 className="mb-5.5 text-lg font-bold sm:mb-6.5 sm:text-2xl">
+                        <h3
+                            key={`${locale.value}-heading`}
+                            className="motion-safe:animate-fade-in mb-5.5 text-lg font-bold sm:mb-6.5 sm:text-2xl"
+                        >
                             {module.attr.heading[locale.value]}
                         </h3>
                     )}
 
                     <div
-                        class="[&>p]:break-text [&>p]:mb-[1.5em]"
+                        key={`${locale.value}-content`}
+                        class="[&>p]:break-text motion-safe:animate-fade-in [&>p]:mb-[1.5em]"
                         dangerouslySetInnerHTML={{
                             __html: module.attr.html[locale.value],
                         }}
