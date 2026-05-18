@@ -329,7 +329,7 @@
     }
 }
 
-p {
+p, li {
     line-height: 165% !important;
 }
 h1,
