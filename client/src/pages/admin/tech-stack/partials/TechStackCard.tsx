@@ -21,7 +21,7 @@ const TechStackCard: FC<{ stack: TechStackType }> = ({ stack }) => {
             </div>
 
             <CardActions
-                path={`/admin/stacks/${stack.id}`}
+                path={`/admin/tech-stacks/${stack.id}`}
                 onClick={() => (itemToDelete.value = stack)}
             />
         </li>

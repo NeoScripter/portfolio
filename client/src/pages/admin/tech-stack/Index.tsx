@@ -30,7 +30,7 @@ const Index = () => {
             <AdminLayout title={{ en: 'Stacks', ru: 'Навыки' }}>
                 <AppTitle titleEn="Stacks" titleRu="Навыки" />
                 <AdminShellLayout>
-                    <AdminShellNav href={'/admin/stacks/create'} />
+                    <AdminShellNav href={'/admin/tech-stacks/create'} />
                     {loading ? (
                         <ul className="flex flex-wrap gap-6">
                             {range(0, 8).map((idx) => (

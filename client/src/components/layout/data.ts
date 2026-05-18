@@ -94,7 +94,7 @@ export const sidebarLinks: SidebarLinkType[] = [
             ru: 'Навыки',
             en: 'Tech Stack',
         },
-        path: '/admin/stacks',
+        path: '/admin/tech-stacks',
     },
     {
         id: crypto.randomUUID(),

@@ -58,9 +58,9 @@ export const routes = [
     { component: VideoCreate, path: '/admin/videos/create' , protected: true},
     { component: VideoEdit, path: '/admin/videos/:id' , protected: true},
 
-    { component: TechStackIndex, path: '/admin/stacks', protected: true },
-    { component: TechStackCreate, path: '/admin/stacks/create', protected: true },
-    { component: TechStackEdit, path: '/admin/stacks/:id', protected: true },
+    { component: TechStackIndex, path: '/admin/tech-stacks', protected: true },
+    { component: TechStackCreate, path: '/admin/tech-stacks/create', protected: true },
+    { component: TechStackEdit, path: '/admin/tech-stacks/:id', protected: true },
 
     { component: ProjectIndex, path: '/admin/projects' , protected: true},
     { component: ProjectCreate, path: '/admin/projects/create' , protected: true},

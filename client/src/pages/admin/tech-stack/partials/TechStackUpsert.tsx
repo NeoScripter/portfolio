@@ -58,7 +58,7 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
                 toast.success(data.message ?? 'Success!');
                 window.dispatchEvent(new Event(events.FORM_SUCCESS_EVENT));
                 if (!isEdit) {
-                    route('/admin/stacks');
+                    route('/admin/tech-stacks');
                 }
             },
             onError: () => toast.error('Error'),
@@ -84,7 +84,7 @@ const TechStackUpsert: FC<{ stack?: TechStackType }> = ({ stack }) => {
             <FormTextArea name="alt_ru" label="Alt Text (RU)" required />
             <FormButtons
                 submitText={stack ? 'Update' : 'Create'}
-                cancelLink="/admin/stacks"
+                cancelLink="/admin/tech-stacks"
                 shouldBackup={true}
             />
         </Form>
