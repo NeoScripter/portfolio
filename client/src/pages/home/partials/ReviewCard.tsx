@@ -28,14 +28,20 @@ const ReviewCard: FC<{ review: ReviewType; active: boolean }> = ({
             )}
             <div>
                 <blockquote
+                    key={`${lang}-quote`}
                     className={cn(
-                        'overflow-clip transition-[max-height] duration-500 ease-in-out',
+                        'motion-safe:animate-fade-in overflow-clip transition-[max-height] duration-500 ease-in-out',
                         active ? 'max-h-500' : 'max-h-80',
                     )}
                 >
                     <p class="mb-6">{attr.description[lang]}</p>
                 </blockquote>
-                <p class={cn('font-bold sm:text-xl xl:text-2xl')}>
+                <p
+                    key={`${lang}-author`}
+                    class={cn(
+                        'motion-safe:animate-fade-in font-bold sm:text-xl xl:text-2xl',
+                    )}
+                >
                     <cite class="not-italic">{attr.author[lang]}</cite>
                 </p>
             </div>
