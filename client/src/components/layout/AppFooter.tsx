@@ -126,7 +126,7 @@ const FooterLink: FC<{
             target="_blank"
             href={href}
             class={cn(
-                'ease group flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-lg 2xl:text-xl',
+                'ease group w-fit flex items-center gap-5 transition-colors duration-300 hover:text-white sm:gap-6 sm:text-lg 2xl:text-xl',
                 className,
             )}
             onMouseEnter={throttledMouseEnter}
