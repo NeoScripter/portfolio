@@ -11,7 +11,7 @@ const Badge: FC<NodeProps<{ label: string; isClickable?: boolean }>> = ({
 }) => {
     const { query } = useLocation();
     const search = query?.search ?? '';
-    const isActive = label.toLowerCase() === search.toLowerCase();
+    const isActive = label.trim().toLowerCase() === search.trim().toLowerCase();
 
     return (
         <li
