@@ -50,7 +50,7 @@ const ProjectFeed: FC<NodeProps> = ({ className }) => {
                     meta={projectData.meta}
                 />
             ) : (
-                <span className="mb-13.5 md:mb-27 xl:mb-21 2xl:mb-21" />
+                <span className="block mb-13.5 md:mb-27 xl:mb-21 2xl:mb-21" />
             )}
         </div>
     );
