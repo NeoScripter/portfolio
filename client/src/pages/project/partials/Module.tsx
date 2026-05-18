@@ -112,7 +112,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
 
                     <div
                         key={`${locale.value}-content`}
-                        class="[&>p]:break-text motion-safe:animate-fade-in [&>p]:mb-[1.5em]"
+                        class="[&>p]:break-text motion-safe:animate-fade-in [&>p]:mb-[1.5em] [&>ul,&>ol]:list-inside [&>ul,&>ol]:list-[revert] [&>ul,&>ol]:space-y-2"
                         dangerouslySetInnerHTML={{
                             __html: module.attr.html[locale.value],
                         }}
