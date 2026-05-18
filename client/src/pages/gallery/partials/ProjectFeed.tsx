@@ -44,11 +44,13 @@ const ProjectFeed: FC<NodeProps> = ({ className }) => {
                 </StateResolver>
             </section>
 
-            {hasProjects && projectData?.meta && projectData.meta.total > 5 && (
+            {hasProjects && projectData?.meta && projectData.meta.total > 5 ? (
                 <Pagination
                     className="mt-12.5 mb-13.5 md:mt-17.5 md:mb-27 xl:mt-13.5 xl:mb-21 2xl:mt-13.5 2xl:mb-21"
                     meta={projectData.meta}
                 />
+            ) : (
+                <span className="mb-13.5 md:mb-27 xl:mb-21 2xl:mb-21" />
             )}
         </div>
     );
@@ -80,11 +82,7 @@ const StateResolver: FC<{
     if (hasErrorDetails(errors)) {
         console.error(errors);
         return (
-            <ApiError
-                resourceRu="проектов"
-                resourceEn="projects"
-                mb={true}
-            />
+            <ApiError resourceRu="проектов" resourceEn="projects" mb={true} />
         );
     }
 
