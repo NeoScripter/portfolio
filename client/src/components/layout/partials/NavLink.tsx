@@ -16,7 +16,8 @@ const NavLink: FC<{
     const { path } = useRoute();
     const variant = getHeaderVariant(path);
 
-    const active = path === link.path;
+    const active =
+        link.path === '/' ? path === link.path : path.startsWith(link.path);
     const lang = locale.value === 'ru' ? 'ru' : 'en';
 
     const Icon = link.icon;
