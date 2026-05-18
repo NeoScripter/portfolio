@@ -39,6 +39,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                     >
                         {module.firstImage && (
                             <AdaptiveImg
+                                key='first_image'
                                 prtClass={cn('mx-auto w-full rounded-sm', {
                                     'max-w-150': ['one_image_split'].includes(
                                         type,
@@ -67,6 +68,7 @@ const Module: FC<{ className?: string; module: ModuleType }> = ({
                         )}
                         {module.secondImage && (
                             <AdaptiveImg
+                                key='second_image'
                                 prtClass={cn('mx-auto w-full rounded-sm', {
                                     'max-w-80': ['one_image_split'].includes(
                                         type,
