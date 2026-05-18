@@ -74,7 +74,7 @@ export async function prerender(data) {
             dynamicLinks.push(`/admin/${model}/${id}`);
 
             if (model === 'projects') {
-                dynamicLinks.push(`/admin/projects/${id}`);
+                dynamicLinks.push(`/gallery/${id}`);
             }
         });
 
