@@ -7,7 +7,12 @@ class ProjectResource
     public static function to_resource($project)
     {
         $stacks = !empty($project['tech_stack']) ?
-            explode(',', $project['tech_stack']) : [];
+            array_unique(
+                array_map(
+                    'trim',
+                    explode(',', $project['tech_stack'])
+                )
+            ) : [];
 
         return [
             'id' => $project['id'],
