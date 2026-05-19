@@ -66,6 +66,5 @@ export const routes = [
     { component: ProjectCreate, path: '/admin/projects/create' , protected: true},
     { component: ProjectEdit, path: '/admin/projects/:slug' , protected: true},
 
-    { component: NotFound, path: '/404' },
     { component: NotFound, path: '*' },
 ];
