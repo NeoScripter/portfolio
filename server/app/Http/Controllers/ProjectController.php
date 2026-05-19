@@ -17,7 +17,7 @@ class ProjectController extends BaseController
         $handler->apply_featured_filter();
         $handler->apply_exclude_filter();
         $handler->apply_search_filter();
-        $meta = $handler->apply_pagination(5, '_PROJECTS_VIEW', 'projects');
+        $meta = $handler->apply_pagination('_PROJECTS_VIEW', 'projects');
 
         $projects = $f3->get('_PROJECTS_VIEW')
             ->find(...$handler->output());

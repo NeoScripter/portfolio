@@ -65,13 +65,16 @@ final class Paginator
         }
     }
 
-    public function apply_pagination(int $per_page, string $table, string $url_suffix)
+    public function apply_pagination(string $table, string $url_suffix)
     {
         $request = $this->request;
 
         if (empty($table) || ! array_key_exists('page', $request) || ! is_numeric($request['page'])) {
             return;
         }
+
+        $per_page = (isset($request['limit']) && is_numeric($request['limit']))
+            ? (int) $request['limit'] : 5;
 
         $total = Base::instance()->get($table)->count($this->merge_filters());
         $last_page    = (int) ceil($total / $per_page);
