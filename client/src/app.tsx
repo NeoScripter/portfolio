@@ -52,6 +52,7 @@ if (typeof window !== 'undefined') {
 const staticLinks = [
     '/admin',
     '/login',
+    '/404',
     '/admin',
     '/admin/settings/profile',
     '/admin/settings/password',
