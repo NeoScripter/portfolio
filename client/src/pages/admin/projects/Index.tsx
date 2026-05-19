@@ -17,7 +17,7 @@ import SearchBox from './partials/SearchBox';
 const Index = () => {
     const showCategoryPanel = useSignal(false);
 
-    const { projectData, errors, loading, projectsRef } = useFilteredProjects({delay: 400});
+    const { projectData, errors, loading, projectsRef } = useFilteredProjects({delay: 400, limit: 40 });
 
     if (hasErrorDetails(errors)) {
         console.error(errors);

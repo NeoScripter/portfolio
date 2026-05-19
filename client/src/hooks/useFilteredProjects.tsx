@@ -7,9 +7,10 @@ import useFetchRecords from './useFetchRecords';
 
 type Props = {
     delay?: number;
+    limit?: number;
 };
 
-const useFilteredProjects = ({ delay = 400 }: Props) => {
+const useFilteredProjects = ({ delay = 400, limit = 5 }: Props) => {
     const { query } = useLocation();
     const search = query?.search == null ? '' : query.search;
     const debouncedQuery = useDebounce(search, delay);
@@ -30,6 +31,7 @@ const useFilteredProjects = ({ delay = 400 }: Props) => {
     const url = useMemo(() => {
         const params = new URLSearchParams();
         params.set('page', currentPage.toString());
+        params.set('limit', limit.toString());
 
         if (debouncedQuery !== '') {
             params.set('search', debouncedQuery);
