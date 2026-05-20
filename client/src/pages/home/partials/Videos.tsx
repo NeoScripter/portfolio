@@ -1,11 +1,13 @@
 import ApiError from '@/components/ui/ApiError';
 import CarouselControls from '@/components/ui/CarouselControls';
+import SecondaryHeading from '@/components/ui/SecondaryHeading';
 import { useCarousel } from '@/hooks/useCarousel';
 import useFetchRecords from '@/hooks/useFetchRecords';
 import AppSection from '@/layouts/SectionLayout';
 import { API_BASE_URL } from '@/lib/const/api';
 import { cn, hasErrorDetails, range } from '@/lib/helpers/utils';
 import type { VideoResource, VideoType } from '@/lib/types/models/videos';
+import { locale } from '@/signals/locale';
 import { useEffect, useRef } from 'preact/hooks';
 import VideoTile, { VideoFallback } from './VideoTile';
 
@@ -68,6 +70,15 @@ const Videos = () => {
                 onTouchEnd={handleTouchEnd}
                 className="relative mt-16 mb-40 sm:mt-19"
             >
+                <SecondaryHeading
+                    key={`${locale.value}-heading`}
+                    className="motion-safe:animate-fade-in text-balance"
+                >
+                    {locale.value === 'en'
+                        ? 'Live coding videos'
+                        : 'Видео где я пишу код'}
+                </SecondaryHeading>
+
                 <ul
                     ref={carouselRef}
                     className={cn(
