@@ -72,7 +72,7 @@ const Videos = () => {
             >
                 <SecondaryHeading
                     key={`${locale.value}-heading`}
-                    className="motion-safe:animate-fade-in text-balance"
+                    className="motion-safe:animate-fade-in mb-20 sm:mb-20 xl:mb-20"
                 >
                     {locale.value === 'en'
                         ? 'Live coding videos'
