@@ -37,7 +37,10 @@ const SeeAlso: FC<{
     return (
         <AppSection className={cn('full-bleed xl:px-(--padding)!', className)}>
             <div className="xl:flex xl:items-baseline xl:justify-between">
-                <SecondaryHeading className="xs:text-center xs:text-balance text-center text-4xl xl:text-5xl">
+                <SecondaryHeading
+                    key={`${locale.value}-heading`}
+                    className="xs:text-center xs:text-balance motion-safe:animate-fade-in text-center text-4xl xl:text-5xl"
+                >
                     {title}
                 </SecondaryHeading>
                 <PrimaryLink

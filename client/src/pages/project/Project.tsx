@@ -8,6 +8,7 @@ import { API_BASE_URL } from '@/lib/const/api';
 import { cn, hasErrorDetails } from '@/lib/helpers/utils';
 import type { ModuleType } from '@/lib/types/models/module';
 import type { ProjectType } from '@/lib/types/models/projects';
+import { locale } from '@/signals/locale';
 import type { ComponentChildren, FunctionalComponent } from 'preact';
 import type { FC } from 'preact/compat';
 import Hero from './partials/Hero';
@@ -84,7 +85,14 @@ const Project: FunctionalComponent<ProjectProps> = ({ slug }) => {
             </StateResolver>
 
             {project && (
-                <SeeAlso title="Другие проекты" excludedId={project.id} />
+                <SeeAlso
+                    title={
+                        locale.value === 'ru'
+                            ? 'Другие проекты'
+                            : 'Other projects'
+                    }
+                    excludedId={project.id}
+                />
             )}
             <div class="mb-14 sm:mb-22.5 lg:mb-27 xl:mb-26" />
         </AppLayout>
