@@ -30,7 +30,7 @@ const Videos = () => {
         loading,
         errors,
     } = useFetchRecords<VideoResource>({
-        url: `${API_BASE_URL}videos?duplicated=false`,
+        url: `${API_BASE_URL}videos?duplicated=true`,
         shouldCache: true,
     });
 
