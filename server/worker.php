@@ -33,6 +33,8 @@ while (true) {
     }
 
     echo "Processing {$job['id']}\n";
+    $logger = new \Log('./storage/logs/smtp.log');
+    $logger->write("Processing {$job['id']}");
     $payload = json_decode($job['payload'], true);
 
     try {
