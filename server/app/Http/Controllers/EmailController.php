@@ -2,6 +2,7 @@
 
 namespace Http\Controllers;
 
+use Base;
 use Cache;
 use Support\Validator;
 
@@ -36,8 +37,8 @@ class EmailController
         $data = $validator->validated();
 
         try {
-            $queue = $f3->get('JOB_QUEUE');
-            $queue->selectPipeline('send_email');
+            $queue = Base::instance()->get('JOB_QUEUE');
+            $queue->selectPipeline('run_processes');
 
             $queue->addJob(json_encode([
                 'name'      => $data['name'],

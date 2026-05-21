@@ -26,7 +26,7 @@ class SendEmailJob
         $result = $smtp->send($message, true);
 
         if (!$result) {
-            $logger = new \Log('../storage/logs/smtp.log');
+            $logger = new \Log('./storage/logs/smtp.log');
             $logger->write($smtp->log());
             throw new \Exception('SMTP send failed. See smtp.log for details.');
         }

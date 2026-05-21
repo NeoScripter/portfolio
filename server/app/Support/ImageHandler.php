@@ -71,7 +71,7 @@ class ImageHandler
         }
 
         $queue = Base::instance()->get('JOB_QUEUE');
-        $queue->selectPipeline('process_image');
+        $queue->selectPipeline('run_processes');
         $queue->addJob(json_encode([
             'parent_id'     => $parent_id,
             'parent_type'   => $parent_type,

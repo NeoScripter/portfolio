@@ -13,7 +13,7 @@ class ProcessImageJob
     public function handle(array $payload): void
     {
         $f3 = Base::instance();
-        $this->logger = new \Log('../storage/logs/worker.log');
+        $this->logger = new \Log('./storage/logs/worker.log');
 
         echo "[ProcessImageJob] Starting for {$payload['parent_type']} #{$payload['parent_id']}\n";
 

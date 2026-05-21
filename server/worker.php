@@ -22,8 +22,7 @@ $pdo = $f3->get('DB')->pdo();
 
 $queue = new n0nag0n\Job_Queue('pgsql');
 $queue->addQueueConnection($pdo);
-$queue->watchPipeline('send_email');
-$queue->watchPipeline('process_image');
+$queue->watchPipeline('run_processes');
 
 while (true) {
     $job = $queue->getNextJobAndReserve();
@@ -38,7 +37,7 @@ while (true) {
 
     try {
         // handle the job
-        match ($payload['pipeline'] ?? 'process_image') {
+        match ($payload['pipeline']) {
             'send_email' => (new \Jobs\SendEmailJob())->handle($payload),
             'process_image' => (new \Jobs\ProcessImageJob())->handle($payload),
             default      => throw new \Exception("Unknown pipeline"),
