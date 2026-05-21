@@ -11,7 +11,7 @@ const Hero: FC<{ project: ProjectType | undefined; loading: boolean }> = ({
     loading,
 }) => {
     return (
-        <HeroLayout className="full-bleed-wrapper full-bleed px-0 pb-10 sm:px-0 sm:pb-12 lg:px-0 xl:pb-10 2xl:pb-12">
+        <HeroLayout className="full-bleed-wrapper full-bleed px-0 pb-0 sm:px-0 sm:pb-12 lg:px-0 xl:pb-0 2xl:pb-0">
             {loading || project == null ? (
                 <Skeleton />
             ) : (
