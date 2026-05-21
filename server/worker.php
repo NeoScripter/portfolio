@@ -4,6 +4,8 @@ use DB\SQL;
 
 require __DIR__ . '/vendor/autoload.php';
 
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 $f3 = Base::instance();
 
 define('APP_DIR', __DIR__);
@@ -33,8 +35,6 @@ while (true) {
     }
 
     echo "Processing {$job['id']}\n";
-    $logger = new \Log('./storage/logs/smtp.log');
-    $logger->write("Processing {$job['id']}");
     $payload = json_decode($job['payload'], true);
 
     try {
