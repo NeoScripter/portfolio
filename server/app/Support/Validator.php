@@ -38,6 +38,17 @@ class Validator
                 return true;
             }
         );
+
+        $booleans = array_filter(
+            $this->rules,
+            function ($rule) {
+                return in_array('boolean', $rule);
+            }
+        );
+
+        foreach($booleans as $key => $val) {
+            $this->values[$key] = filter_var($this->values[$key], FILTER_VALIDATE_BOOLEAN);
+        }
     }
 
     public function validate()
@@ -77,6 +88,7 @@ class Validator
                     'string' => $this->string($this->values[$key]),
                     'email' => $this->email($this->values[$key]),
                     'integer' => $this->integer($this->values[$key]),
+                    'boolean' => $this->boolean($this->values[$key]),
                     'min' => $this->min_length($this->values[$key], (int) $param),
                     'max' => $this->max_length($this->values[$key], (int) $param),
                     'image' => $this->image($this->values[$key], (int) $param),
@@ -151,6 +163,14 @@ class Validator
     {
         if (! is_int($value))
             return 'This field must be an integer';
+
+        return '';
+    }
+
+    private function boolean($value)
+    {
+        if (! is_bool($value))
+            return 'This field must be a boolean';
 
         return '';
     }
